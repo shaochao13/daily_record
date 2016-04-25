@@ -44,3 +44,94 @@ python manage.py loaddata appname.json
 #Django 会自动进入在settings.py中设置的数据库，如果是 MySQL 或 postgreSQL 会要求输入数据库用户密码。在这个终端可以执行数据库的SQL语句。
 python manage.py dbshell
 ```
+
+
+- 模板中的for 循环        
+
+变量                     |   描述
+:---:                   |   :---:
+forloop.counter         |   索引从 1 开始算
+forloop.counter0        |   索引从 0 开始算
+forloop.revcounter	    |   索引从最大长度到 1
+forloop.revcounter0     |   索引从最大长度到 0
+forloop.first           |   当遍历的元素为第一项时为真
+forloop.last            |   当遍历的元素为最后一项时为真
+forloop.parentloop      |   用在嵌套的 for 循环中，获取上一层 for 循环的 forloop
+                        |
+- 当列表中可能为空值时用 for  empty
+```python
+<ul>
+{% for athlete in athlete_list %}
+    <li>{{ athlete.name }}</li>
+{% empty %}
+    <li>抱歉，列表为空</li>
+{% endfor %}
+</ul>
+```
+                        
+- 逻辑操作
+***==, !=, >=, <=, >, < ***这些比较都可以在模板中使用，比如：  
+```python
+{% if var >= 90 %}
+成绩优秀，自强学堂你没少去吧！学得不错
+{% elif var >= 80 %}
+成绩良好
+{% elif var >= 70 %}
+成绩一般
+{% elif var >= 60 %}
+需要努力
+{% else %}
+不及格啊，大哥！多去自强学堂学习啊！
+{% endif %}
+```
+***and, or, not, in, not in ***也可以在模板中使用:   
+```python
+{% if num <= 100 and num >= 0 %}
+num在0到100之间
+{% else %}
+数值不在范围之内！
+{% endif %}
+```
+```python
+{% if 'ziqiangxuetang' in List %}
+自强学堂在名单中
+{% endif %}
+```
+- 模板中 获取当前网址，当前用户等： 
+Django 1.8 及以后 修改 settings.py :
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                ...
+                'django.template.context_processors.request',
+                ...
+            ],
+        },
+    },
+]
+```
+获取当前用户：
+```python
+{{ request.user }}
+```
+如果登陆就显示内容，不登陆就不显示内容：
+```python
+{% if request.user.is_authenticated %}
+    {{ request.user.username }}，您好！
+{% else %}
+    请登陆，这里放登陆链接
+{% endif %}
+```
+获取当前网址：
+```python
+{{ request.path }}
+```
+获取当前 GET 参数：
+```python
+{{ request.GET.urlencode }}
+```
