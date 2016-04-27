@@ -135,3 +135,81 @@ TEMPLATES = [
 ```python
 {{ request.GET.urlencode }}
 ```
+
+# 数据导入方法
+- 批量导入
+
+```python
+#coding:utf-8
+
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE","mysite_2.settings")
+
+import django
+if django.VERSION >= (1,7):
+    django.setup()
+
+def main():
+    from blog.models import Blog
+    f = open('oldblog.txt')
+    for line in f:
+        title, content = line.split("****")
+        # Blog.objects.create(title = title, content=content)
+        #可以避免重复导入数据
+        Blog.objects.get_or_create(title=title,content=content)
+
+    f.close()
+
+if __name__ == '__main__':
+    main()
+    print "Done!"
+```
+- 用fixture导入      
+最常见的fixture文件就是用python manage.py dumpdata 导出的文件,示例如下:   
+```json
+[
+  {
+    "model": "myapp.person",
+    "pk": 1,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Lennon"
+    }
+  },
+  {
+    "model": "myapp.person",
+    "pk": 2,
+    "fields": {
+      "first_name": "Paul",
+      "last_name": "McCartney"
+    }
+  }]
+```
+可以根据自己的models,创建这样的json文件,然后用 python manage.py loaddata fixture.json 导入。
+
+- Model.objects.bulk_create() 更快    
+
+```python
+#!/usr/bin/env python
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+ 
+def main():
+    from blog.models import Blog
+    f = open('oldblog.txt')
+    BlogList = []
+    for line in f:
+        title,content = line.split('****')
+        blog = Blog(title=title,content=content)
+        BlogList.append(blog)
+    # 以上四行 也可以用 列表解析 写成下面这样
+    # BlogList = [Blog(title=line.split('****')[0], content=line.split('****')[1]) for line in f]
+    f.close()
+     
+    Blog.objects.bulk_create(BlogList)
+ 
+if __name__ == "__main__":
+    main()
+    print('Done!')
+```
+
