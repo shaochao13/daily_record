@@ -55,8 +55,14 @@
 4. slice() 切片函数，与python中的切片功能一样。
     > 语法：
     arrayObject.slice(start,end);    
-5. sort() 排列。
+5. sort() 排列。默认情况下会调用每个数组项的toString()转型方法，然后比较得到的字符串，从而确定如何排序。***即默认情况下是按字符串进行排序的***
     > 语法：
     arrayObject.sort(方法函数);  // “方法函数”可以没有。
+6. 栈方法(LIFO后进先出): 
+   > push() & pop()
+7. 队列方法(FIFO先进先出): 
+   > shift()：从数组前端取出一项  
+    push()  
+    unshift() 在数组前端添加任意个项并返回新数组的长度。    
     
 
