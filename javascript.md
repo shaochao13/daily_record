@@ -64,5 +64,80 @@
    > shift()：从数组前端取出一项  
     push()  
     unshift() 在数组前端添加任意个项并返回新数组的长度。    
-    
+   
+# Function 类型(函数类型)
+1. 没有重载概念。
+2. arguments 主要用途是保存函数参数。但 其中有一个名叫***callee***的属性，该属性是一个指针，指向拥有这个arguments对象的函数。
+    ```javascript
+function factorial(num){
+    if(num<=1){
+        return 1;
+    } else{
+        return num * arguments.callee(num -1);
+    }
+}       
+```
+    caller 保存着调用当前函数的函数的引用，如果是在全局作用域中调用当前函数，它的值为null。
+    ```javascript
+    function outer(){
+        inner();
+    }
+    function inner(){
+        alert(arguments.callee.caller);
+    }
+    outer();
+    ````
+3. 每个函数都包含: ***length***    表示函数希望接收的命名参数的个数。
+        ```javascript
+        function sayName(name){
+            alert(name);
+        }
+        function sum(num1, num2){
+            return num1 + num2;
+        }
+        function sayHi(){
+            albert("hi");
+        }
+        
+        albert(sayName.length); //1
+        albert(sum.length);     //2
+        albert(sayHi.length);   //0
+        ```
+4. 每个函数都包含两个非继承而来的方法：apply() & call()   
+    - apply() 方法接收两个参数：一个是在其中运行函数的作用域， 另一个是参数数组。    
+    ```javascript
+    function sum(sum1, sum2){
+        return num1 + num2;
+    }
+    function callSum1(num1, num2){
+        return sum.apply(this, arguments);  //传入arguments对象
+    }
+    function callSum2(num1, num2){
+        return sum.apply(this, [num1, num2]);   //传入数组
+    }
+    alert(callSum1(10,10)); //20
+    alert(callSum2(10,10)); //20
+    ```
+    - call() 一个参数也是作用域，其余参数都直接传递给函数。传递给函数的参数必须逐个列举出来。
+    ```javascript
+    function sum(sum1, sum2){
+        return num1 * num2;
+    }
+    function callSum(num1, num2){
+        return sum.call(this, num1, num2);
+    }
+    albert(callSum(10,10)); //20
+    ```
+    apply() & call()真正的用武之地，是能够扩充函数赖以运行的用途域,这样对象不需要与函数有任何耦合关系。
+    ```javascript
+    window.color = 'red';
+    var o = {color: 'blue';}
+    function sayColor(){
+        alert(this.color);
+    }
+    sayColor();     //red
+    sayColor.call(this);    //red
+    sayColor.call(window);  //red
+    sayColor.call(o);       //blue
+    ```    
 
