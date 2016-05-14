@@ -45,21 +45,21 @@
 数组对象是一个对象的集合，里边的对象可以是不同类型的。
 1. concat() 用于连接两个或多个数组，此方法返回一个新数组，不改变原来的数组。
     > 语法：
-    arrayObject.concat(array1,array2,...,arrayN);
+    arrayObject.concat(array1,array2,...,arrayN);   
 2. join() 用于把数组中的所有元素通过指定的分隔符放入一个字符串。
     > 语法：
-    arrayObject.join(分隔符);  //如果省略“分隔符”， 则使用逗号作用分隔符。
+    arrayObject.join(分隔符);  //如果省略“分隔符”， 则使用逗号作用分隔符。    
 3. reverse() 用于颠倒数组中元素的顺序。
     > 语法：
-    arrayObject.reverse()  会改变原来的数组，而不会创建新的数组。
+    arrayObject.reverse()  会改变原来的数组，而不会创建新的数组。  
 4. slice() 切片函数，与python中的切片功能一样。
     > 语法：
-    arrayObject.slice(start,end);    
+    arrayObject.slice(start,end);       
 5. sort() 排列。默认情况下会调用每个数组项的toString()转型方法，然后比较得到的字符串，从而确定如何排序。***即默认情况下是按字符串进行排序的***
     > 语法：
-    arrayObject.sort(方法函数);  // “方法函数”可以没有。
+    arrayObject.sort(方法函数);  // “方法函数”可以没有。     
 6. 栈方法(LIFO后进先出): 
-   > push() & pop()
+   > push() & pop()     
 7. 队列方法(FIFO先进先出): 
    > shift()：从数组前端取出一项  
     push()  
