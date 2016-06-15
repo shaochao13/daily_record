@@ -92,61 +92,61 @@ if 1{
     }
     ```
     + 使用where：
-        ```
-let point = (1,1)
-switch point{
-case let (x,y) where x == y:
-    print("It's on the line x == y!")
-case let(x,y) where x == -y:
-    print("It's on the line x == -y!")
-case let (x,y):
-    print("It's just an ordinary point.")
-    print("The point is (\(x), \(y))")
-}
-        ```
+    ```
+    let point = (1,1)
+    switch point{
+    case let (x,y) where x == y:
+        print("It's on the line x == y!")
+    case let(x,y) where x == -y:
+        print("It's on the line x == -y!")
+    case let (x,y):
+        print("It's just an ordinary point.")
+        print("The point is (\(x), \(y))")
+    }
+    ```
 
 6. case where 组合的一些用法：
     ```
-let age = 19
-if age >= 10 && age <= 19{
-    print("You're a teenager.")
-}
+    let age = 19
+    if age >= 10 && age <= 19{
+        print("You're a teenager.")
+    }
     ```
-可使用如下语句替换
+    可使用如下语句替换
     ```
-if case 10...19 = age{
-    print("You're a teenager.")
-}   
-    ```
-    ```
-if age >= 10 && age <= 19 && age >= 18{
-    print("You're a teeenage and in a college.")
-}
-    ```
-可使用如下语句替换
-    ```
-if case 10...19 = age where age >= 18{
-    print("You're a teeenage and in a college.")
-}
+    if case 10...19 = age{
+        print("You're a teenager.")
+    }   
     ```
     ```
-let vector = (4,0)
-if case (let x , 0) = vector where x > 2 && x < 5 {
-    print("It's the vector.")
-}
+    if age >= 10 && age <= 19 && age >= 18{
+        print("You're a teeenage and in a college.")
+    }
+    ```
+    可使用如下语句替换
+    ```
+    if case 10...19 = age where age >= 18{
+        print("You're a teeenage and in a college.")
+    }
     ```
     ```
-for i in 1...100{
-    if i%3 == 0{
+    let vector = (4,0)
+    if case (let x , 0) = vector where x > 2 && x < 5 {
+        print("It's the vector.")
+    }
+    ```
+    ```
+    for i in 1...100{
+        if i%3 == 0{
+            print(i)
+        }
+    }
+    ```
+    可使用如下语句替换
+    ```
+    for case let i in 1...100 where i%3==0 {
         print(i)
     }
-}
-    ```
-可使用如下语句替换
-    ```
-for case let i in 1...100 where i%3==0 {
-    print(i)
-}
     ```
 
 7. guard 关键字的使用
