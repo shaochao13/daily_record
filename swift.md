@@ -19,7 +19,7 @@ if 1{
 5. switch 用法
     + 可以使用fallthrough 跳转到下一个case语句块中, 但 当case 中有let 解包时，不能 使用fallthrough
     + case 中可以使用区间运算符：
-        ```swift
+        ```
 let score = 90
 switch score{
 case 0:
@@ -150,7 +150,7 @@ for case let i in 1...100 where i%3==0 {
     ```
 
 7. guard 关键字的使用
-```
+    ```
 func buy(money:Int, price:Int, capacity:Int, volume: Int){
     if money >= price{
         if capacity >= volume{
@@ -166,9 +166,9 @@ func buy(money:Int, price:Int, capacity:Int, volume: Int){
         print("Not enough money")
     }
 }
-```
+    ```
 可使用如下语句替换
-```
+    ```
 func buy2(money:Int, price:Int, capacity:Int, volume: Int){
     guard money >= price else{
         print("Not enough money")
@@ -183,5 +183,5 @@ func buy2(money:Int, price:Int, capacity:Int, volume: Int){
     print("\(capacity-volume) cubic meters left.")
 }
 //这样的写法，条理很清晰。先把一些边界情况判断完，再进行主体的编写。
-```
+    ```
     
