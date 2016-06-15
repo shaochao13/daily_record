@@ -151,37 +151,37 @@ if 1{
 
 7. guard 关键字的使用
     ```
-func buy(money:Int, price:Int, capacity:Int, volume: Int){
-    if money >= price{
-        if capacity >= volume{
-            print("I can by it!")
-            print("\(money-price) Yuan left.")
-            print("\(capacity-volume) cubic meters left.")
+    func buy(money:Int, price:Int, capacity:Int, volume: Int){
+        if money >= price{
+            if capacity >= volume{
+                print("I can by it!")
+                print("\(money-price) Yuan left.")
+                print("\(capacity-volume) cubic meters left.")
+            }
+            else{
+                print("Not enough capacity")
+            }
         }
         else{
-            print("Not enough capacity")
+            print("Not enough money")
         }
     }
-    else{
-        print("Not enough money")
-    }
-}
     ```
-可使用如下语句替换
+    可使用如下语句替换
     ```
-func buy2(money:Int, price:Int, capacity:Int, volume: Int){
-    guard money >= price else{
-        print("Not enough money")
-        return
+    func buy2(money:Int, price:Int, capacity:Int, volume: Int){
+        guard money >= price else{
+            print("Not enough money")
+            return
+        }
+        guard capacity >= volume else{
+            print("Not enough capacity")
+            return
+        }
+        print("I can by it!")
+        print("\(money-price) Yuan left.")
+        print("\(capacity-volume) cubic meters left.")
     }
-    guard capacity >= volume else{
-        print("Not enough capacity")
-        return
-    }
-    print("I can by it!")
-    print("\(money-price) Yuan left.")
-    print("\(capacity-volume) cubic meters left.")
-}
-//这样的写法，条理很清晰。先把一些边界情况判断完，再进行主体的编写。
+    //这样的写法，条理很清晰。先把一些边界情况判断完，再进行主体的编写。
     ```
     
