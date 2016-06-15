@@ -17,6 +17,7 @@ if 1{
 4. do while 在swift 中 使用 repeat while
 
 5. switch 用法
+    + 可以使用fallthrough 跳转到下一个case语句块中, 但 当case 中有let 解包时，不能 使用fallthrough
     + case 中可以使用区间运算符：
         ```swift
 let score = 90
@@ -90,3 +91,97 @@ case (let x, let y):
     print("The point is (\(x), \(y))")
 }
         ```
+    + 使用where：
+        ```
+let point = (1,1)
+switch point{
+case let (x,y) where x == y:
+    print("It's on the line x == y!")
+case let(x,y) where x == -y:
+    print("It's on the line x == -y!")
+case let (x,y):
+    print("It's just an ordinary point.")
+    print("The point is (\(x), \(y))")
+}
+        ```
+
+6. case where 组合的一些用法：
+    ```
+let age = 19
+if age >= 10 && age <= 19{
+    print("You're a teenager.")
+}
+    ```
+可使用如下语句替换
+    ```
+if case 10...19 = age{
+    print("You're a teenager.")
+}   
+    ```
+    ```
+if age >= 10 && age <= 19 && age >= 18{
+    print("You're a teeenage and in a college.")
+}
+    ```
+可使用如下语句替换
+    ```
+if case 10...19 = age where age >= 18{
+    print("You're a teeenage and in a college.")
+}
+    ```
+    ```
+let vector = (4,0)
+if case (let x , 0) = vector where x > 2 && x < 5 {
+    print("It's the vector.")
+}
+    ```
+    ```
+for i in 1...100{
+    if i%3 == 0{
+        print(i)
+    }
+}
+    ```
+可使用如下语句替换
+    ```
+for case let i in 1...100 where i%3==0 {
+    print(i)
+}
+    ```
+
+7. guard 关键字的使用
+```
+func buy(money:Int, price:Int, capacity:Int, volume: Int){
+    if money >= price{
+        if capacity >= volume{
+            print("I can by it!")
+            print("\(money-price) Yuan left.")
+            print("\(capacity-volume) cubic meters left.")
+        }
+        else{
+            print("Not enough capacity")
+        }
+    }
+    else{
+        print("Not enough money")
+    }
+}
+```
+可使用如下语句替换
+```
+func buy2(money:Int, price:Int, capacity:Int, volume: Int){
+    guard money >= price else{
+        print("Not enough money")
+        return
+    }
+    guard capacity >= volume else{
+        print("Not enough capacity")
+        return
+    }
+    print("I can by it!")
+    print("\(money-price) Yuan left.")
+    print("\(capacity-volume) cubic meters left.")
+}
+//这样的写法，条理很清晰。先把一些边界情况判断完，再进行主体的编写。
+```
+    
