@@ -19,7 +19,7 @@ if 1{
 5. switch 用法
     + 可以使用fallthrough 跳转到下一个case语句块中, 但 当case 中有let 解包时，不能 使用fallthrough
     + case 中可以使用区间运算符：
-        ```
+```
 let score = 90
 switch score{
 case 0:
@@ -39,7 +39,7 @@ case 100:
 default:
     print("Error score.")
 }
-        ```
+```
     + case 可以使用元组Tuple：
         ```
 let vector = (1,1)
