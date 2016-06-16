@@ -184,4 +184,22 @@ if 1{
     }
     //这样的写法，条理很清晰。先把一些边界情况判断完，再进行主体的编写。
     ```
-    
+
+8. "??" 运算符
+    对于可选类型Optional可以使用“??”类型来简化代码：
+    ```
+    var errorMessage: String? = nil
+
+    let message:String
+    //第一个种方式
+    if let errorMessage = errorMessage{
+        message = errorMessage
+    }
+    else{
+        message = "No Error"
+    }
+    //第二种方式
+    let message2 = errorMessage == nil ? "No Error" : errorMessage
+    //第三种方式 ，这种 方式简化也代码
+    let message3 = errorMessage ?? "No Error"
+    ```
