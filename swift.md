@@ -203,3 +203,19 @@ if 1{
     //第三种方式 ，这种 方式简化也代码
     let message3 = errorMessage ?? "No Error"
     ```
+
+9. 按引用转值
+    - 在方法如果想要按引用转值，参数需要使用inout：
+    ```
+    func swapTwoInts(inout a: Int, inout _ b: Int) {
+    (a,b) = (b,a)//使用元组交换两值，跟python很相似。
+    }
+
+    var x:Int = 1
+    var y:Int = 2
+    swapTwoInts(&x, &y)//传参数的地址
+    ```
+
+10. 在swift中，方法中传递的数组、集合、字典都是按值类型进行传入的。
+
+11. 函数和闭包是引用类型
