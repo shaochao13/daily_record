@@ -338,3 +338,36 @@ if 1{
 14. "==","!=" & "===","!==":   
     "==","!=" 是进行值的比较，不能直接用在引用类型身上.   
     “===”,"!==" 用于引用类型的比较，即地址是否相同。    
+
+15. 属性观查器 didSet willSet     
+    ```swift
+    class LightBulb{
+        static let maxCurrent = 30
+        var current = 0 {
+            //执行顺序 willSet --> didSet
+            //willSet中能通过newValue 得到新赋的值
+            //didSet中能通过oldValue 得到赋值之前的值
+            
+            willSet{
+                print("The new value is \(newValue)")
+            }
+            
+            didSet{
+                print("The old value is \(oldValue)")
+                print("The current is \(current)")
+                
+                if current == LightBulb.maxCurrent {
+                    print("Pay attention, the current value get to the maximum point.")
+                }
+                else if current > LightBulb.maxCurrent{
+                    print("Current too high")
+                    current = oldValue
+                }
+            }
+        }
+    }
+    ```
+    #### 注意事项：
+    属性观查器的方法，在init方法中是不会被执行的，也就是说在init方法中对属性进行赋值，是不会被执行的；
+    在声明时赋值，此时也是不会被执行的。如：
+        var current = 0 { didSet{....}} ,当赋值为0时，此时的didSet是不会被执行的。
