@@ -371,3 +371,19 @@ if 1{
     属性观查器的方法，在init方法中是不会被执行的，也就是说在init方法中对属性进行赋值，是不会被执行的；
     在声明时赋值，此时也是不会被执行的。如：
         var current = 0 { didSet{....}} ,当赋值为0时，此时的didSet是不会被执行的。
+
+16. 延迟属性Lazy Property   
+    ```swift
+    class Web{
+        let url: String
+        lazy var html: String? = {
+            //从网络读取url对应的html
+            return nil
+        }()
+        
+        init(url:String){
+            self.url = url
+        }
+    }
+    ```
+    延迟属性也可以看作是闭包的一种使用。
