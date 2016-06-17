@@ -221,7 +221,7 @@ if 1{
 11. 函数和闭包是引用类型
 
 12. 枚举enum
-    - Raw Value:
+    - 原始值Raw Value:
     ```
     enum Coin:Int{
     case Penny = 1
@@ -232,7 +232,7 @@ if 1{
     //可以使用rawValue来得到原始值 
     Coin.Penny.rawValue 可以得到 1
     ``` 
-    - Associate Value:  
+    - 关联值Associate Value:  
     ```
     enum Shape{
     case Square(side: Double)
@@ -258,5 +258,31 @@ if 1{
     }
     ```
     Raw Value 与 Associate Value 不能同时出来在一个enum中。
+    - Optional 可选型实际就是enum
+    - enum 中对自我的引用 ，使用indirect
+    ```
+    enum ArithmeticExpression {
+    case Numer(Int)
+    indirect case Addtion(ArithmeticExpression, ArithmeticExpression) //可以indirect 可以实现在enum内部对自身的引用
+    indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
+    }
+    // (5 + 4) * 2
+    let five = ArithmeticExpression.Numer(5)
+    let four = ArithmeticExpression.Numer(4)
+    let sum = ArithmeticExpression.Addtion(five, four)
+    let two = ArithmeticExpression.Numer(2)
+    let product = ArithmeticExpression.Multiplication(sum, two)
+    //计算
+    func evaluate(expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let ArithmeticExpression.Numer(value):
+    return value
+    case let ArithmeticExpression.Addtion(left, right):
+    return evaluate(left)+evaluate(right)
+    case let ArithmeticExpression.Multiplication(left, right):
+    return evaluate(right) * evaluate(left)
+    }
+    }
+    ```
 
 13.
