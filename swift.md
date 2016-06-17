@@ -309,4 +309,28 @@ if 1{
             }
         } 
         ```
-13.
+13. 值类型如何在其内部通过方法的形式修改其自身的数据：       
+    ```swift
+    enum Switch{
+        case On
+        case Off
+        //使用mutating 作用于func之前，可以让值类型的类型在其内部可以修改其自身的值。
+        mutating func click(){
+            switch self {
+            case .On:
+                self = .Off
+            case .Off:
+                self = .On
+            }
+        }
+    }
+
+    struct Location {
+        var x = 0
+        var y = 0
+        //使用mutating 作用于func之前，可以让值类型的类型在其内部可以修改其自身的值。
+        mutating func goEast(){
+            self.x += 1
+        }
+    }
+    ```
