@@ -205,8 +205,8 @@ if 1{
     ```
 
 9. 按引用转值
-    - 在方法如果想要按引用转值，参数需要使用inout：
-    ```
+    在方法如果想要按引用转值，参数需要使用inout：   
+    ```swift
     func swapTwoInts(inout a: Int, inout _ b: Int) {
     (a,b) = (b,a)//使用元组交换两值，跟python很相似。
     }
@@ -222,7 +222,7 @@ if 1{
 
 12. 枚举enum
     - 原始值Raw Value:
-    ```
+    ```swift
     enum Coin:Int{
     case Penny = 1
     case Nickel = 5
@@ -232,35 +232,37 @@ if 1{
     //可以使用rawValue来得到原始值 
     Coin.Penny.rawValue 可以得到 1
     ``` 
-    - 关联值Associate Value:  
-    ```
+    - 关联值Associate Value:   
+    ```swift
     enum Shape{
-    case Square(side: Double)
-    case Rectangle(width: Double, height: Double)
-    case Circle(centerx: Double, centery: Double, radius: Double)
-    case Point
+        case Square(side: Double)
+        case Rectangle(width: Double, height: Double)
+        case Circle(centerx: Double, centery: Double, radius: Double)
+        case Point
     }
     let square = Shape.Square(side: 10)
     let rectange = Shape.Rectangle(width: 20, height: 30)
     let circle = Shape.Circle(centerx: 0, centery: 0, radius: 15)
     let point = Shape.Point
     func area(shape: Shape) -> Double {
-    switch shape {
-    case let Shape.Square(side)://可以使用 let 来对enum中的值 进行解包出来，从而使用其值
-    return side * side
-    case let Shape.Rectangle(width, height):
-    return width * height
-    case let Shape.Circle(_, _, radius)://使用“_“忽略没需要使用的参数
-    return M_PI * radius
-    default:
-    return 0
+        switch shape {
+            case let Shape.Square(side)://可以使用 let 来对enum中的值 进行解包出来，从而使用其值
+                return side * side
+            case let Shape.Rectangle(width, height):
+                return width * height
+            case let Shape.Circle(_, _, radius)://使用“_“忽略没需要使用的参数
+                return M_PI * radius
+            default:
+                return 0
+        }
     }
-    }
-    ```
+    ```     
     Raw Value 与 Associate Value 不能同时出来在一个enum中。
+
     - Optional 可选型实际就是enum
-    - enum 中对自我的引用 ，使用indirect
-        ```swift
+
+    - enum 中对自我的引用 ，使用indirect  
+        ```swift
         enum ArithmeticExpression {
             case Numer(Int)
             indirect case Addtion(ArithmeticExpression, ArithmeticExpression) //可以indirect 可以实现在enum内部对自身的引用
