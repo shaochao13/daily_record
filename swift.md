@@ -219,3 +219,44 @@ if 1{
 10. 在swift中，方法中传递的数组、集合、字典都是按值类型进行传入的。
 
 11. 函数和闭包是引用类型
+
+12. 枚举enum
+    - Raw Value:
+    ```
+    enum Coin:Int{
+    case Penny = 1
+    case Nickel = 5
+    case Dime = 10
+    case Quarter = 25
+    }
+    //可以使用rawValue来得到原始值 
+    Coin.Penny.rawValue 可以得到 1
+    ``` 
+    - Associate Value:  
+    ```
+    enum Shape{
+    case Square(side: Double)
+    case Rectangle(width: Double, height: Double)
+    case Circle(centerx: Double, centery: Double, radius: Double)
+    case Point
+    }
+    let square = Shape.Square(side: 10)
+    let rectange = Shape.Rectangle(width: 20, height: 30)
+    let circle = Shape.Circle(centerx: 0, centery: 0, radius: 15)
+    let point = Shape.Point
+    func area(shape: Shape) -> Double {
+    switch shape {
+    case let Shape.Square(side)://可以使用 let 来对enum中的值 进行解包出来，从而使用其值
+    return side * side
+    case let Shape.Rectangle(width, height):
+    return width * height
+    case let Shape.Circle(_, _, radius)://使用“_“忽略没需要使用的参数
+    return M_PI * radius
+    default:
+    return 0
+    }
+    }
+    ```
+    Raw Value 与 Associate Value 不能同时出来在一个enum中。
+
+13.
