@@ -1,5 +1,5 @@
-1. 不能进行自动类型转换。必须显式地进行类型转换。
-```
+1. 不能进行自动类型转换。必须显式地进行类型转换。  
+```swift
 let x :UInt16 = 100
 let y :UInt8 = 20
 x+y //这里是不能进行成功操作的。
@@ -18,8 +18,8 @@ if 1{
 
 5. switch 用法
     + 可以使用fallthrough 跳转到下一个case语句块中, 但 当case 中有let 解包时，不能 使用fallthrough
-    + case 中可以使用区间运算符：
-    ```
+    + case 中可以使用区间运算符：      
+    ```swift
     let score = 90
     switch score{
     case 0:
@@ -40,8 +40,8 @@ if 1{
         print("Error score.")
     }
     ```
-    + case 可以使用元组Tuple：
-    ```
+    + case 可以使用元组Tuple：     
+    ```swift
     let vector = (1,1)
     switch vector{
     case (0,0):
@@ -58,8 +58,8 @@ if 1{
         print("It's just an ordinary vector.")
     }        
     ```
-    还可以使用"_"来只匹配元组中的一部分 
-    ```
+    还可以使用"_"来只匹配元组中的一部分     
+    ```swift
     let point = (1,1)
     switch point{
     case (0,0):
@@ -74,8 +74,8 @@ if 1{
         print("It's just an ordinary point.")
     }
     ```
-    + 解包：
-    ```
+    + 解包：       
+    ```swift
     let point = (0,0)
     switch point{
     case (0,0):
@@ -91,8 +91,8 @@ if 1{
         print("The point is (\(x), \(y))")
     }
     ```
-    + 使用where：
-    ```
+    + 使用where：      
+    ```swift
     let point = (1,1)
     switch point{
     case let (x,y) where x == y:
@@ -105,52 +105,52 @@ if 1{
     }
     ```
 
-6. case where 组合的一些用法：
-    ```
+6. case where 组合的一些用法：      
+    ```swift
     let age = 19
     if age >= 10 && age <= 19{
         print("You're a teenager.")
     }
     ```
-    可使用如下语句替换
-    ```
+    可使用如下语句替换       
+    ```swift
     if case 10...19 = age{
         print("You're a teenager.")
     }   
-    ```
-    ```
+    ```     
+    ```swift
     if age >= 10 && age <= 19 && age >= 18{
         print("You're a teeenage and in a college.")
     }
     ```
-    可使用如下语句替换
-    ```
+    可使用如下语句替换       
+    ```swift
     if case 10...19 = age where age >= 18{
         print("You're a teeenage and in a college.")
     }
-    ```
-    ```
+    ```     
+    ```swift
     let vector = (4,0)
     if case (let x , 0) = vector where x > 2 && x < 5 {
         print("It's the vector.")
     }
-    ```
-    ```
+    ```     
+    ```swift
     for i in 1...100{
         if i%3 == 0{
             print(i)
         }
     }
     ```
-    可使用如下语句替换
-    ```
+    可使用如下语句替换       
+    ```swift
     for case let i in 1...100 where i%3==0 {
         print(i)
     }
     ```
 
-7. guard 关键字的使用
-    ```
+7. guard 关键字的使用     
+    ```swift
     func buy(money:Int, price:Int, capacity:Int, volume: Int){
         if money >= price{
             if capacity >= volume{
@@ -167,8 +167,8 @@ if 1{
         }
     }
     ```
-    可使用如下语句替换
-    ```
+    可使用如下语句替换   
+    ```swift
     func buy2(money:Int, price:Int, capacity:Int, volume: Int){
         guard money >= price else{
             print("Not enough money")
@@ -186,8 +186,8 @@ if 1{
     ```
 
 8. "??" 运算符
-    对于可选类型Optional可以使用“??”类型来简化代码：
-    ```
+    对于可选类型Optional可以使用“??”类型来简化代码：      
+    ```swift
     var errorMessage: String? = nil
 
     let message:String
@@ -205,10 +205,10 @@ if 1{
     ```
 
 9. 按引用转值
-    在方法如果想要按引用转值，参数需要使用inout：   
+    在方法如果想要按引用转值，参数需要使用inout：    
     ```swift
     func swapTwoInts(inout a: Int, inout _ b: Int) {
-    (a,b) = (b,a)//使用元组交换两值，跟python很相似。
+        (a,b) = (b,a) //使用元组交换两值，跟python很相似。
     }
 
     var x:Int = 1
