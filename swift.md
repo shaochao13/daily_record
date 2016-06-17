@@ -260,29 +260,51 @@ if 1{
     Raw Value 与 Associate Value 不能同时出来在一个enum中。
     - Optional 可选型实际就是enum
     - enum 中对自我的引用 ，使用indirect
-    ```
-    enum ArithmeticExpression {
-    case Numer(Int)
-    indirect case Addtion(ArithmeticExpression, ArithmeticExpression) //可以indirect 可以实现在enum内部对自身的引用
-    indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
-    }
-    // (5 + 4) * 2
-    let five = ArithmeticExpression.Numer(5)
-    let four = ArithmeticExpression.Numer(4)
-    let sum = ArithmeticExpression.Addtion(five, four)
-    let two = ArithmeticExpression.Numer(2)
-    let product = ArithmeticExpression.Multiplication(sum, two)
-    //计算
-    func evaluate(expression: ArithmeticExpression) -> Int {
-    switch expression {
-    case let ArithmeticExpression.Numer(value):
-    return value
-    case let ArithmeticExpression.Addtion(left, right):
-    return evaluate(left)+evaluate(right)
-    case let ArithmeticExpression.Multiplication(left, right):
-    return evaluate(right) * evaluate(left)
-    }
-    }
-    ```
-
+        ```swift
+        enum ArithmeticExpression {
+            case Numer(Int)
+            indirect case Addtion(ArithmeticExpression, ArithmeticExpression) //可以indirect 可以实现在enum内部对自身的引用
+            indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
+        }
+        // (5 + 4) * 2
+        let five = ArithmeticExpression.Numer(5)
+        let four = ArithmeticExpression.Numer(4)
+        let sum = ArithmeticExpression.Addtion(five, four)
+        let two = ArithmeticExpression.Numer(2)
+        let product = ArithmeticExpression.Multiplication(sum, two)
+        //计算
+        func evaluate(expression: ArithmeticExpression) -> Int {
+            switch expression {
+                case let ArithmeticExpression.Numer(value):
+                    return value
+                case let ArithmeticExpression.Addtion(left, right):
+                    return evaluate(left)+evaluate(right)
+                case let ArithmeticExpression.Multiplication(left, right):
+                    return evaluate(right) * evaluate(left)
+            }
+        }
+        ```
+    - enum 也可以包括方法：    
+        ```swift
+        enum Shape{
+            case Square(side: Double)
+            case Rectangle(width: Double, height: Double)
+            case Circle(centerx: Double, centery: Double, radius: Double)
+            case Point
+            
+            func area() -> Double {
+                switch self {
+                case let .Square(side):
+                    return side*side
+                case let .Rectangle(width, height):
+                    return width*height
+                case let .Circle(_,_,r):
+                    return M_PI * r * r
+                case .Point:
+                    return 0
+                    
+                }
+            }
+        } 
+        ```
 13.
