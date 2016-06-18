@@ -417,3 +417,25 @@ if 1{
         }
     }
     ```
+    - 扩展嵌套类型    
+    ```swift
+    extension String{
+        enum Biological {
+            case Plants, Animals, Microbes, Unknown
+        }
+        
+        var biological: Biological{
+            switch self.lowercaseString {
+            case "rose", "lily", "orchid", "azalea", "apple":
+                return .Plants
+            case "horse", "ox", "sheep", "deer", "cat", "dog", "bear", "rabbit":
+                return .Animals
+            case "bacteria", "fungus", "viruses":
+                return .Microbes
+            default:
+                return .Unknown
+            }
+        }
+    }
+    ```
+
