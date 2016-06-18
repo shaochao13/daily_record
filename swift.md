@@ -407,13 +407,13 @@ if 1{
         ```
     - 扩展下标脚本
         ```swift
-extension Int{
-    subscript(index:Int) -> Int{
-        var decimal = 1
-        for _ in 1...index{
-            decimal *= 10
+        extension Int{
+            subscript(index:Int) -> Int{
+                var decimal = 1
+                for _ in 1...index{
+                    decimal *= 10
+                }
+                return (self/decimal) % 10
+            }
         }
-        return (self/decimal) % 10
-    }
-}
         ```
