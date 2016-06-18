@@ -405,7 +405,7 @@ if 1{
             }
         }
         ```
-    - 扩展下标脚本    
+    - 扩展下标脚本      
         ```swift
         extension Int{
             subscript(index:Int) -> Int{
