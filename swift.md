@@ -390,21 +390,21 @@ if 1{
 
 17. 扩展extension
     - 扩展属性(扩展只能添加新的计算属性，不能添加存储属性，也不能向已有的属性添加属性观察器。)     
-        ```swift
-        extension Double{
-            var cm: Double {
-                return self / 100.0
-            }
-            
-            var km: Double{
-                return self * 1000.0
-            }
-            
-            var m:Double{
-                return self
-            }
+    ```swift
+    extension Double{
+        var cm: Double {
+            return self / 100.0
         }
-        ```
+        
+        var km: Double{
+            return self * 1000.0
+        }
+        
+        var m:Double{
+            return self
+        }
+    }
+    ```
     - 扩展下标脚本      
     ```swift
     extension Int{
