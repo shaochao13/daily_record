@@ -389,7 +389,7 @@ if 1{
     延迟属性也可以看作是闭包的一种使用。
 
 17. 扩展extension
-    1. 扩展属性(扩展只能添加新的计算属性，不能添加存储属性，也不能向已有的属性添加属性观察器。)
+    - 扩展属性(扩展只能添加新的计算属性，不能添加存储属性，也不能向已有的属性添加属性观察器。)
         ```swift
         extension Double{
             var cm: Double {
@@ -404,4 +404,16 @@ if 1{
                 return self
             }
         }
+        ```
+    - 扩展下标脚本
+        ```swift
+extension Int{
+    subscript(index:Int) -> Int{
+        var decimal = 1
+        for _ in 1...index{
+            decimal *= 10
+        }
+        return (self/decimal) % 10
+    }
+}
         ```
