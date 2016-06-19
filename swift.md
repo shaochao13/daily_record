@@ -443,4 +443,7 @@ if 1{
     - 引用计数仅仅作用于类实例上。结构和枚举是值类型，而非引用类型，所以 不能被引用存储和传递。       
     - 解决循环引用：第一：使用弱引用week，第二,使用无宿主引用unowned.
 
-       
+19. 多线程
+    - NSThread
+    - Cocoa NSOperation(NSOperation和NSOperationQueue)
+    - GCD (Grand Central Dispatch)       
