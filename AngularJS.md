@@ -986,3 +986,14 @@ $scope.x2 = angular.isNumber($scope.x1);
 });
 </script>
 ```
+
+# AngularJS 包含
+```html
+<body>
+<div class="container">
+  <div ng-include="'myUsers_List.htm'"></div>
+  <div ng-include="'myUsers_Form.htm'"></div>
+</div>
+</body>
+```
+
