@@ -369,3 +369,67 @@ app.controller('myCtrl', function($scope, $rootScope) {
 </script>
 ```
 
+# AngularJS 控制器
+- AngularJS 控制器 控制 AngularJS 应用程序的数据。
+- AngularJS 控制器是常规的 JavaScript 对象。
+- AngularJS 应用程序被控制器控制。
+- ****ng-controller**** 指令定义了应用程序控制器。
+- 控制器是 JavaScript 对象，由标准的 JavaScript 对象的构造函数 创建。    
+
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+名: <input type="text" ng-model="firstName"><br>
+姓: <input type="text" ng-model="lastName"><br>
+<br>
+姓名: {{firstName + " " + lastName}}
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstName = "John";
+    $scope.lastName = "Doe";
+});
+</script>
+```
+控制器也可以有方法（变量和函数）：
+```html
+<div ng-app="myApp" ng-controller="personCtrl">
+名: <input type="text" ng-model="firstName"><br>
+姓: <input type="text" ng-model="lastName"><br>
+<br>
+姓名: {{fullName()}}
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('personCtrl', function($scope) {
+    $scope.firstName = "John";
+    $scope.lastName = "Doe";
+    $scope.fullName = function() {
+        return $scope.firstName + " " + $scope.lastName;
+    }
+});
+</script>
+```
+外部文件中的控制器
+```html
+<div ng-app="myApp" ng-controller="namesCtrl">
+<ul>
+  <li ng-repeat="x in names">
+    {{ x.name + ', ' + x.country }}
+  </li>
+</ul>
+</div>
+<script src="namesController.js"></script>
+```
+```javascript
+//外部js文件：namesController.js
+angular.module('myApp', []).controller('namesCtrl', function($scope) {
+    $scope.names = [
+        {name:'Jani',country:'Norway'},
+        {name:'Hege',country:'Sweden'},
+        {name:'Kai',country:'Denmark'}
+    ];
+});
+```
+
+
