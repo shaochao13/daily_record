@@ -927,7 +927,7 @@ app.controller('validateCtrl', function($scope) {
 
 # AngularJS 全局 API
 全局 API 函数使用 angular 对象进行访问。
-- angular.lowercase()       
+- angular.lowercase()转换字符串为小写       
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
 <p>{{ x1 }}</p>
@@ -942,7 +942,7 @@ $scope.x2 = angular.lowercase($scope.x1);
 </script>
 ```
 
-- angular.uppercase()   
+- angular.uppercase()  转换字符串为大写 
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
 <p>{{ x1 }}</p>
@@ -956,7 +956,8 @@ $scope.x2 = angular.uppercase($scope.x1);
 });
 </script>
 ```
-- angular.isString()    
+
+- angular.isString() 判断给定的对象是否为字符串，如果是返回 true      
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
 <p>{{ x1 }}</p>
@@ -970,7 +971,8 @@ $scope.x2 = angular.isString($scope.x1);
 });
 </script>
 ```
-- angular.isNumber()        
+
+- angular.isNumber() 判断给定的对象是否为数字，如果是返回 true       
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
 <p>{{ x1 }}</p>
