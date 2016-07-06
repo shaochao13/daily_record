@@ -798,7 +798,7 @@ ng-repeat 指令可以完美的显示表格。
 <script>
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope, $http) {
-    $http.get("http://www.runoob.com/try/angularjs/data/Customers_JSON.php")
+    $http.get("服务器URL，返回JSON数据")
     .success(function (response) {$scope.names = response.records;});
 });
 </script>
