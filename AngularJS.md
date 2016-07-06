@@ -256,3 +256,63 @@ app.directive("runoobDirective", function() {
     > A 只限属性使用      
     > C 只限类名使用      
     > M 只限注释使用      
+
+# AngularJS ng-model 指令
+***ng-model*** 指令用于绑定应用程序数据到 HTML 控制器(input, select, textarea)的值。   
+1. ng-model 指令可以将输入域的值与 AngularJS 创建的变量绑定。
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+    名字: <input ng-model="name">
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.name = "John Doe";
+});
+</script>
+```
+2. 双向绑定, 双向绑定，在修改输入域的值时， AngularJS 属性的值也将修改：
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+    名字: <input ng-model="name">
+    <h1>你输入了: {{name}}</h1>
+</div>
+```
+3. 验证用户输入
+```html
+<form ng-app="" name="myForm">
+    Email:
+    <input type="email" name="myAddress" ng-model="text">
+    <span ng-show="myForm.myAddress.$error.email">不是一个合法的邮箱地址</span>
+    <!-- 提示信息会在 ng-show 属性返回 true 的情况下显示 -->
+</form>
+```
+4. 应用状态
+```html
+<form ng-app="" name="myForm" ng-init="myText = 'test@runoob.com'">
+Email:
+<input type="email" name="myAddress" ng-model="myText" required>
+<p>编辑邮箱地址，查看状态的改变。</p>
+<h1>状态</h1>
+<p>Valid: {{myForm.myAddress.$valid}} (如果输入的值是合法的则为 true)。</p>
+<p>Dirty: {{myForm.myAddress.$dirty}} (如果值改变则为 true)。</p>
+<p>Touched: {{myForm.myAddress.$touched}} (如果通过触屏点击则为 true)。</p>
+</form>
+```
+5. CSS 类 , ng-model 指令基于它们的状态为 HTML 元素提供了 CSS 类：
+```html
+<style>
+input.ng-invalid {
+    background-color: lightblue;
+}
+</style>
+<body>
+<form ng-app="" name="myForm">
+    输入你的名字:
+    <input name="myAddress" ng-model="text" required>
+</form>
+```
+
+
+
+
