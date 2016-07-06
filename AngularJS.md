@@ -999,3 +999,125 @@ $scope.x2 = angular.isNumber($scope.x1);
 </body>
 ```
 
+# AngularJS 路由
+```html
+<html>
+    <head>
+    	<meta charset="utf-8">
+        <title>AngularJS 路由实例 - 菜鸟教程</title>
+    </head>
+    <body ng-app='routingDemoApp'>
+     
+        <h2>AngularJS 路由应用</h2>
+        <ul>
+            <li><a href="#/">首页</a></li>
+            <li><a href="#/computers">电脑</a></li>
+            <li><a href="#/printers">打印机</a></li>
+            <li><a href="#/blabla">其他</a></li>
+        </ul>
+         
+        <div ng-view></div>
+        <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+        <script src="http://apps.bdimg.com/libs/angular-route/1.3.13/angular-route.js"></script>
+        <script>
+            angular.module('routingDemoApp',['ngRoute'])
+            .config(['$routeProvider', function($routeProvider){
+                $routeProvider
+                .when('/',{template:'这是首页页面'})
+                .when('/computers',{template:'这是电脑分类页面'})
+                .when('/printers',{template:'这是打印机页面'})
+                .otherwise({redirectTo:'/'});
+            }]);
+        </script>
+     
+     
+    </body>
+</html>
+```
+#### 路由设置对象      
+AngularJS 路由也可以通过不同的模板来实现。
+$routeProvider.when 函数的第一个参数是 URL 或者 URL 正则规则，第二个参数为路由配置对象。
+路由配置对象语法规则如下：
+```javascript
+$routeProvider.when(url, {
+    template: string,
+    templateUrl: string,
+    controller: string, function 或 array,
+    controllerAs: string,
+    redirectTo: string, function,
+    resolve: object<key, function>
+});
+```
+*参数说明*：     
+- template:   
+    如果我们只需要在 ng-view 中插入简单的 HTML 内容，则使用该参数：      
+    `.when('/computers',{template:'这是电脑分类页面'})`     
+- templateUrl:      
+    如果我们只需要在 ng-view 中插入 HTML 模板文件，则使用该参数：  
+    `
+    $routeProvider.when('/computers', {
+    templateUrl: 'views/computers.html',
+    });
+    `   
+    以上代码会从服务端获取 views/computers.html 文件内容插入到 ng-view 中。
+
+- controller:   
+    function、string或数组类型，在当前模板上执行的controller函数，生成新的scope。
+- controllerAs:     
+    string类型，为controller指定别名。
+- redirectTo:       
+    重定向的地址。
+- resolve:      
+    指定当前controller所依赖的其他模块。
+
+```html
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="http://apps.bdimg.com/libs/angular-route/1.3.13/angular-route.js"></script>
+
+<script type="text/javascript">
+angular.module('ngRouteExample', ['ngRoute'])
+.controller('HomeController', function ($scope) { $scope.$route = $route;})
+.controller('AboutController', function ($scope) { $scope.$route = $route;})
+.config(function ($routeProvider) {
+    $routeProvider.
+    when('/home', {
+        templateUrl: 'embedded.home.html',
+        controller: 'HomeController'
+    }).
+    when('/about', {
+        templateUrl: 'embedded.about.html',
+        controller: 'AboutController'
+    }).
+    otherwise({
+        redirectTo: '/home'
+    });
+});
+</script>
+
+  
+</head>
+
+<body ng-app="ngRouteExample" class="ng-scope">
+  <script type="text/ng-template" id="embedded.home.html">
+      <h1> Home </h1>
+  </script>
+
+  <script type="text/ng-template" id="embedded.about.html">
+      <h1> About </h1>
+  </script>
+
+  <div> 
+    <div id="navigation">  
+      <a href="#/home">Home</a>
+      <a href="#/about">About</a>
+    </div>
+      
+    <div ng-view="">
+    </div>
+  </div>
+</body>
+</html>
+```
