@@ -526,6 +526,23 @@ app.controller('myCtrl', function($scope, $http) {
 });
 </script>
 ```
+```html
+<div ng-app="myApp" ng-controller="customersCtrl"> 
+<ul>
+  <li ng-repeat="x in names">
+    {{ x.Name + ', ' + x.Country }}
+  </li>
+</ul>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+  $http.get("服务器地址，返回数据为JSON格式")
+  .success(function (response) {$scope.names = response.records;});
+});
+</script>
+```
 
 #### $timeout 服务
 AngularJS $timeout 服务对应了 JS window.setTimeout 函数。
@@ -629,5 +646,142 @@ app.controller('myCtrl', function($scope) {
 });
 </script>
 ```
+
+# AngularJS Select(选择框)
+使用 ng-options 创建选择框     
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<select ng-model="selectedName" ng-options="x for x in names">
+</select>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.names = ["Google", "Runoob", "Taobao"];
+});
+</script>
+```
+也可以使用ng-repeat 指令来创建下拉列表：
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<select>
+<option ng-repeat="x in names">{{x}}</option>
+</select>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.names = ["Google", "Runoob", "Taobao"];
+});
+</script>
+```
+ng-repeat 指令是通过数组来循环 HTML 代码来创建下拉列表，但 ng-options 指令更适合创建下拉列表，它有以下优势：
+使用 ng-options 的选项的一个对象， ng-repeat 是一个字符串。
+```html
+<!-- 该实例演示了使用 ng-repeat 指令来创建下拉列表，选中的值是一个字符串 -->
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>选择网站:</p>
+<select ng-model="selectedSite">
+<option ng-repeat="x in sites" value="{{x.url}}">{{x.site}}</option>
+</select>
+<h1>你选择的是: {{selectedSite}}</h1>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+   $scope.sites = [
+	    {site : "Google", url : "http://www.google.com"},
+	    {site : "Runoob", url : "http://www.runoob.com"},
+	    {site : "Taobao", url : "http://www.taobao.com"}
+	];
+});
+</script>
+```
+```html
+<!-- 使用 ng-options 指令，选择的值是一个对象： -->
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>选择网站:</p>
+<select ng-model="selectedSite" ng-options="x.site for x in sites">
+</select>
+<h1>你选择的是: {{selectedSite.site}}</h1>
+<p>网址为: {{selectedSite.url}}</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+   $scope.sites = [
+	    {site : "Google", url : "http://www.google.com"},
+	    {site : "Runoob", url : "http://www.runoob.com"},
+	    {site : "Taobao", url : "http://www.taobao.com"}
+	];
+});
+</script>
+```
+```html
+<!-- 使用对象作为数据源, x 为键(key), y 为值(value): -->
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>选择的网站是:</p>
+<select ng-model="selectedSite" ng-options="x for (x, y) in sites">
+</select>
+<h1>你选择的值是: {{selectedSite}}</h1>
+</div>
+<p>该实例演示了使用对象作为创建下拉列表。</p>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.sites = {
+	    site01 : "Google",
+	    site02 : "Runoob",
+	    site03 : "Taobao"
+	};
+});
+</script>
+```
+```html
+<!--value 在 key-value 对中也可以是个对象 -->
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>选择一辆车:</p>
+<select ng-model="selectedCar" ng-options="x for (x, y) in cars">
+</select>
+<h1>你选择的是: {{selectedCar.brand}}</h1>
+<h2>模型: {{selectedCar.model}}</h2>
+<h3>颜色: {{selectedCar.color}}</h3>
+<p>注意选中的值是一个对象。</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.cars = {
+        car01 : {brand : "Ford", model : "Mustang", color : "red"},
+        car02 : {brand : "Fiat", model : "500", color : "white"},
+        car03 : {brand : "Volvo", model : "XC90", color : "black"}
+    }
+});
+</script>
+```
+```html
+<!-- 在下拉菜单也可以不使用 key-value 对中的 key , 直接使用对象的属性： -->
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>选择一辆车:</p>
+<select ng-model="selectedCar" ng-options="y.brand for (x, y) in cars"></select>
+<p>你选择的是: {{selectedCar.brand}}</p>
+<p>型号为: {{selectedCar.model}}</p>
+<p>颜色为: {{selectedCar.color}}</p>
+<p>下拉列表中的选项也可以是对象的属性。</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.cars = {
+        car01 : {brand : "Ford", model : "Mustang", color : "red"},
+        car02 : {brand : "Fiat", model : "500", color : "white"},
+        car03 : {brand : "Volvo", model : "XC90", color : "black"}
+    }
+});
+</script>
+```
+
 
 
