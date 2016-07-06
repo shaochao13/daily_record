@@ -432,4 +432,53 @@ angular.module('myApp', []).controller('namesCtrl', function($scope) {
 });
 ```
 
+# AngularJS 过滤器
+过滤器可以使用一个管道字符（|）添加到表达式和指令中。
+- 表达式中添加过滤器     
+过滤器可以通过一个管道字符（|）和一个过滤器添加到表达式中。
+```html
+<!-- uppercase 过滤器将字符串格式化为大写 -->
+<div ng-app="myApp" ng-controller="personCtrl">
+<p>姓名为 {{ lastName | uppercase }}</p>
+</div>
+```
+```html
+<!-- lowercase 过滤器将字符串格式化为小写：-->
+<div ng-app="myApp" ng-controller="personCtrl">
+<p>姓名为 {{ lastName | lowercase }}</p>
+</div>
+```
+```html
+<!-- currency 过滤器将数字格式化为货币格式：-->
+<div ng-app="myApp" ng-controller="costCtrl">
+<input type="number" ng-model="quantity">
+<input type="number" ng-model="price">
+<p>总价 = {{ (quantity * price) | currency }}</p>
+</div>
+```
+- 向指令添加过滤器      
+过滤器可以通过一个管道字符（|）和一个过滤器添加到指令中。
+```html
+<!-- orderBy 过滤器根据表达式排列数组： -->
+<div ng-app="myApp" ng-controller="namesCtrl">
+<ul>
+  <li ng-repeat="x in names | orderBy:'country'">
+    {{ x.name + ', ' + x.country }}
+  </li>
+</ul>
+<div>
+```
+- 过滤输入      
+输入过滤器可以通过一个管道字符（|）和一个过滤器添加到指令中，该过滤器后跟一个冒号和一个模型名称。
+```html
+<!-- filter 过滤器从数组中选择一个子集：-->
+<div ng-app="myApp" ng-controller="namesCtrl">
+<p><input type="text" ng-model="test"></p>
+<ul>
+  <li ng-repeat="x in names | filter:test | orderBy:'country'">
+    {{ (x.name | uppercase) + ', ' + x.country }}
+  </li>
+</ul>
+</div>
+```
 
