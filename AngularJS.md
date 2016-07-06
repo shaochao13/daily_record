@@ -835,4 +835,39 @@ app.controller('customersCtrl', function($scope, $http) {
 ```
 
 
+#### ng-disabled 指令
+ng-disabled 指令直接绑定应用程序数据到 HTML 的 disabled 属性。
+```html
+<!-- ng-disabled 指令绑定应用程序数据 "mySwitch" 到 HTML 的 disabled 属性。
+ng-model 指令绑定 "mySwitch" 到 HTML input checkbox 元素的内容（value）。
+如果 mySwitch 为true, 按钮将不可用 -->
+<div ng-app="" ng-init="mySwitch=true">
+<p>
+<button ng-disabled="mySwitch">点我!</button>
+</p>
+<p>
+<input type="checkbox" ng-model="mySwitch"/>按钮
+</p>
+<p>
+{{ mySwitch }}
+</p>
+</div> 
+```
+
+#### ng-show 指令
+ng-show 指令隐藏或显示一个 HTML 元素。
+```html
+<div ng-app="">
+<p ng-show="true">我是可见的。</p>
+<p ng-show="false">我是不可见的。</p>
+</div>
+```
+```html
+<!-- 可以使用表达式来计算布尔值（ true 或 false）-->
+<div ng-app="" ng-init="hour=13">
+<p ng-show="hour > 12">我是可见的。</p>
+</div>
+```
+
+
 
