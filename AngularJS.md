@@ -924,3 +924,63 @@ app.controller('validateCtrl', function($scope) {
 });
 </script>
 ```
+
+# AngularJS 全局 API
+全局 API 函数使用 angular 对象进行访问。
+- angular.lowercase()       
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>{{ x1 }}</p>
+<p>{{ x2 }}</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+$scope.x1 = "JOHN";
+$scope.x2 = angular.lowercase($scope.x1);
+});
+</script>
+```
+
+- angular.uppercase()   
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>{{ x1 }}</p>
+<p>{{ x2 }}</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+$scope.x1 = "John";
+$scope.x2 = angular.uppercase($scope.x1);
+});
+</script>
+```
+- angular.isString()    
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>{{ x1 }}</p>
+<p>{{ x2 }}</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+$scope.x1 = "JOHN";
+$scope.x2 = angular.isString($scope.x1);
+});
+</script>
+```
+- angular.isNumber()        
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>{{ x1 }}</p>
+<p>{{ x2 }}</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+$scope.x1 = "JOHN";
+$scope.x2 = angular.isNumber($scope.x1);
+});
+</script>
+```
