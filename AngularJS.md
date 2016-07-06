@@ -869,5 +869,13 @@ ng-show 指令隐藏或显示一个 HTML 元素。
 </div>
 ```
 
+#### ng-click 指令
+```html
+<!-- ng-click 指令定义了 AngularJS 点击事件。 -->
+<div ng-app="" ng-controller="myCtrl">
+<button ng-click="count = count + 1">点我！</button>
+<p>{{ count }}</p>
+</div>
+```
 
 
