@@ -482,13 +482,13 @@ angular.module('myApp', []).controller('namesCtrl', function($scope) {
 </div>
 ```
 
-||*过滤器*              ||*描述*                      ||  
+|*过滤器*              |*描述*                      |  
 |--------------------------:|:-------------------------|
-||currency           ||格式化数字为货币格式。       ||    
-||filter             ||从数组项中选择一个子集。      ||     
-||lowercase          ||格式化字符串为小写。         ||   
-||orderBy            ||根据某个表达式排列数组。      ||  
-||uppercase          ||格式化字符串为大写。         ||
+|currency           |   格式化数字为货币格式。       |    
+|filter             |   从数组项中选择一个子集。      |     
+|lowercase          |   格式化字符串为小写。         |   
+|orderBy            |   根据某个表达式排列数组。      | 
+|uppercase          |   格式化字符串为大写。         |
 
 
 # AngularJS 服务(Service)
@@ -629,3 +629,5 @@ app.controller('myCtrl', function($scope) {
 });
 </script>
 ```
+
+
