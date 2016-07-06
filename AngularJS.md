@@ -988,6 +988,8 @@ $scope.x2 = angular.isNumber($scope.x1);
 ```
 
 # AngularJS 包含
+使用 AngularJS, 你可以使用 ***ng-include*** 指令来包含 HTML 内容:
+
 ```html
 <body>
 <div class="container">
