@@ -4,7 +4,7 @@
 3. AngularJS 将在表达式书写的位置"输出"数据。
 4. AngularJS 表达式 很像 JavaScript 表达式：它们可以包含文字、运算符和变量。
 
-## AngularJS 数字     
+#### AngularJS 数字     
 ```html
 <div ng-app="" ng-init="quantity=1;cost=5">
 <p>总价： {{ quantity * cost }}</p>
@@ -17,7 +17,7 @@
 </div> 
 ```
 
-## AngularJS 字符串
+#### AngularJS 字符串
 ```html
 <div ng-app="" ng-init="firstName='John';lastName='Doe'">
 <p>姓名： {{ firstName + " " + lastName }}</p>
@@ -30,7 +30,7 @@
 </div>
 ```
 
-## AngularJS 对象
+#### AngularJS 对象
 ```html
 <div ng-app="" ng-init="person={firstName:'John',lastName:'Doe'}">
 
@@ -46,7 +46,7 @@
 
 </div>
 ```
-## AngularJS 数组
+#### AngularJS 数组
 ```html
 <div ng-app="" ng-init="points=[1,15,19,2,40]">
 
@@ -86,7 +86,7 @@
 </div>
 ```
 一个网页可以包含多个运行在不同元素中的 AngularJS 应用程序。     
-## 数据绑定
+#### 数据绑定
     AngularJS 中的数据绑定，同步了 AngularJS 表达式与 AngularJS 数据。   
     {{ firstName }} 是通过 ng-model="firstName" 进行同步。
 ```html
@@ -100,7 +100,7 @@
 </div>
 ```
 
-## 重复 HTML 元素 
+#### 重复 HTML 元素 
 ***ng-repeat*** 指令对于集合中（数组中）的每个项会 克隆一次 HTML 元素。     
 ***ng-repeat*** 指令会重复一个 HTML 元素：
 ```html
@@ -128,11 +128,11 @@
 </ul>
 </div>
 ```
-## ng-app 指令
+#### ng-app 指令
 1. ng-app 指令定义了 AngularJS 应用程序的 根元素。   
 2. ng-app 指令在网页加载完毕时会自动引导（自动初始化）应用程序。 
 
-## ng-model 指令
+#### ng-model 指令
 ng-model 指令 绑定 HTML 元素 到应用程序数据。
 ng-model 指令也可以： 
 > 为应用程序数据提供类型验证（number、email、required）。     
@@ -140,7 +140,7 @@ ng-model 指令也可以：
 > 为 HTML 元素提供 CSS 类。    
 > 绑定 HTML 元素到 HTML 表单。      
 
-## 创建自定义的指令
+#### 创建自定义的指令
 使用 .directive 函数来添加自定义的指令。  
 要调用自定义指令，HTML 元素上需要添加自定义指令名。        
 
@@ -248,7 +248,7 @@ app.directive("runoobDirective", function() {
 </body>
 </html>
 ```
-## 限制使用
+#### 限制使用
     通过添加 ***restrict*** 属性,来设置指令只能通过特定的方式来调用:  
     restrict 默认值为 EA, 即可以通过元素名和属性名来调用指令。    
     ***restrict*** 值可以是以下几种:
@@ -349,7 +349,7 @@ app.controller('myCtrl', function($scope) {
 });
 </script>
 ```
-## 根作用域
+#### 根作用域
 所有的应用都有一个 ***$rootScope***，它可以作用在 ng-app 指令包含的所有 HTML 元素中。    
 $rootScope 可作用于整个应用中。是各个 controller 中 scope 的桥梁。用 rootscope 定义的值，可以在各个 controller 中使用。      
 
