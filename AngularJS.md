@@ -482,10 +482,150 @@ angular.module('myApp', []).controller('namesCtrl', function($scope) {
 </div>
 ```
 
-|过滤器              |描述                      |  
-|------------------:|:-------------------------|
-|currency           |格式化数字为货币格式。       |    
-|filter             |从数组项中选择一个子集。      |     
-|lowercase          |格式化字符串为小写。         |   
-|orderBy            |根据某个表达式排列数组。      |  
-|uppercase          |格式化字符串为大写。         | 
+||*过滤器*              ||*描述*                      ||  
+|--------------------------:|:-------------------------|
+||currency           ||格式化数字为货币格式。       ||    
+||filter             ||从数组项中选择一个子集。      ||     
+||lowercase          ||格式化字符串为小写。         ||   
+||orderBy            ||根据某个表达式排列数组。      ||  
+||uppercase          ||格式化字符串为大写。         ||
+
+
+# AngularJS 服务(Service)
+在 AngularJS 中，服务是一个函数或对象，可在你的 AngularJS 应用中使用。AngularJS 内建了30 多个服务。      
+AngularJS 会一直监控应用，处理事件变化， AngularJS 使用 $location 服务比使用 window.location 对象更好。    
+```html
+<!-- 注意 $location 服务是作为一个参数传递到 controller 中。如果要使用它，需要在 controller 中定义。-->
+<div ng-app="myApp" ng-controller="myCtrl">
+<p> 当前页面的url:</p>
+<h3>{{myUrl}}</h3>
+</div>
+<p>该实例使用了内建的 $location 服务获取当前页面的 URL。</p>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $location) {
+    $scope.myUrl = $location.absUrl();
+});
+</script>
+```
+
+#### $http 服务
+$http 是 AngularJS 应用中最常用的服务。 服务向服务器发送请求，应用响应服务器传送过来的数据。
+```html
+<div ng-app="myApp" ng-controller="myCtrl"> 
+<p>欢迎信息:</p>
+<h1>{{myWelcome}}</h1>
+</div>
+<p> $http 服务向服务器请求信息，返回的值放入变量 "myWelcome" 中。</p>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http.get("welcome.htm").then(function (response) {
+      $scope.myWelcome = response.data;
+  });
+});
+</script>
+```
+
+#### $timeout 服务
+AngularJS $timeout 服务对应了 JS window.setTimeout 函数。
+```html
+<div ng-app="myApp" ng-controller="myCtrl"> 
+<p>两秒后显示信息:</p>
+<h1>{{myHeader}}</h1>
+</div>
+<p>$timeout 访问在规定的毫秒数后执行指定函数。</p>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $timeout) {
+  $scope.myHeader = "Hello World!";
+  $timeout(function () {
+      $scope.myHeader = "How are you today?";
+  }, 2000);
+});
+</script>
+```
+
+#### $interval 服务
+AngularJS $interval 服务对应了 JS window.setInterval 函数。
+```html
+<div ng-app="myApp" ng-controller="myCtrl"> 
+<p>现在时间是:</p>
+<h1>{{theTime}}</h1>
+</div>
+<p>$interval 访问在指定的周期(以毫秒计)来调用函数或计算表达式。</p>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $interval) {
+  $scope.theTime = new Date().toLocaleTimeString();
+  $interval(function () {
+      $scope.theTime = new Date().toLocaleTimeString();
+  }, 1000);
+});
+</script>
+```
+
+#### 创建自定义服务
+```html
+<!-- 使用自定义的的服务 hexafy 将一个数字转换为16进制数: -->
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>255 的16进制是:</p>
+<h1>{{hex}}</h1>
+</div>
+<p>自定义服务，用于转换16进制数：</p>
+<script>
+var app = angular.module('myApp', []);
+app.service('hexafy', function() {
+	this.myFunc = function (x) {
+        return x.toString(16);
+    }
+});
+app.controller('myCtrl', function($scope, hexafy) {
+  $scope.hex = hexafy.myFunc(255);
+});
+</script>
+```
+```html
+<div ng-app="myApp">
+<!-- 在过滤器中使用服务:-->
+<h1>{{255 | myFormat}}</h1>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.service('hexafy', function() {
+	this.myFunc = function (x) {
+        return x.toString(16);
+    }
+});
+app.filter('myFormat',['hexafy', function(hexafy) {
+    return function(x) {
+        return hexafy.myFunc(x);
+    };
+}]);
+</script>
+```
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>在获取数组 [255, 251, 200] 值时使用过滤器:</p>
+<ul>
+  <li ng-repeat="x in counts">{{x | myFormat}}</li>
+</ul>
+<p>过滤器使用服务将10进制转换为16进制。</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.service('hexafy', function() {
+	this.myFunc = function (x) {
+        return x.toString(16);
+    }
+});
+app.filter('myFormat',['hexafy', function(hexafy) {
+    return function(x) {
+        return hexafy.myFunc(x);
+    };
+}]);
+app.controller('myCtrl', function($scope) {
+    $scope.counts = [255, 251, 200];
+});
+</script>
+```
