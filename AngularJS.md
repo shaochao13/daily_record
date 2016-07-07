@@ -5,6 +5,21 @@
 3. 指令系统
 4. 双向数据绑定
 
+# 路由
+- $routeProvider指令  
+$routeProvider 中主要是两个方***when*** 和 ***otherwise*** 。
+```html
+$routeProvider.when('/hello',{
+    templateUrl: 'templates/hello.html',
+    controller: 'HelloCtrl'
+})when('/list',{
+    templateUrl: 'templates/list.html',
+    controller: 'ListCtrl'
+}).otherwise({
+    redirectTo: '/hello'
+});
+```
+
 # AngularJS 表达式
 1. AngularJS 表达式写在双大括号内：{{ expression }}。
 2. AngularJS 表达式把数据绑定到 HTML，这与 ng-bind 指令有异曲同工之妙。
