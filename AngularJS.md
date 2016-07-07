@@ -1,7 +1,9 @@
 # 四大核心特性
 1. MVC
 2. 模块化
-![](./images/angular_module.png)    
+![](./images/angular_module.png)  
+------
+![](./images/官方推荐的模块切分方式.jpg)  
 3. 指令系统
 4. 双向数据绑定
 
