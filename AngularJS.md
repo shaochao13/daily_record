@@ -2,7 +2,7 @@
 
 # 四大核心特性
 1. MVC
-2. 模块化
+2. 模块化 *以模块为中心*
 ![](./images/angular_module.png)  
 ------
 ![](./images/官方推荐的模块切分方式.jpg)  
