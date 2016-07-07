@@ -1,9 +1,7 @@
 # 四大核心特性
 1. MVC
 2. 模块化
-<div align = center>
-![](./images/angular_module.png)
-</div>
+![](./images/angular_module.png)    
 3. 指令系统
 4. 双向数据绑定
 
@@ -490,7 +488,6 @@ angular.module('myApp', []).controller('namesCtrl', function($scope) {
 </ul>
 </div>
 ```
-<div align = center>
 
 |*过滤器*              |*描述*                      |  
 |--------------------------:|:-------------------------|
@@ -500,7 +497,6 @@ angular.module('myApp', []).controller('namesCtrl', function($scope) {
 |orderBy            |   根据某个表达式排列数组。      | 
 |uppercase          |   格式化字符串为大写。         |
 
-</div>
 
 # AngularJS 服务(Service)
 在 AngularJS 中，服务是一个函数或对象，可在你的 AngularJS 应用中使用。AngularJS 内建了30 多个服务。      
