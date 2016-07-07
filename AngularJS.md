@@ -1,3 +1,10 @@
+# 四大核心特性
+1. MVC
+2. 模块化
+![](./images/angular_module.png)
+3. 指令系统
+4. 双向数据绑定
+
 # AngularJS 表达式
 1. AngularJS 表达式写在双大括号内：{{ expression }}。
 2. AngularJS 表达式把数据绑定到 HTML，这与 ng-bind 指令有异曲同工之妙。
