@@ -1,3 +1,5 @@
+[Angular API reference](http://docs.ngnice.com/api)
+
 # 四大核心特性
 1. MVC
 2. 模块化
