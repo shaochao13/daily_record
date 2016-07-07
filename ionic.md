@@ -10,3 +10,9 @@
     ```
     sudo npm install -g cordova ionic
     ```
+
+# 四大核心特性
+1. MVC
+2. 模块化
+3. 指令系统
+4. 双向数据绑定
