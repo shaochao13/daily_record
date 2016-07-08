@@ -294,7 +294,7 @@
     </ion-tab>
     ```
     ion-tab的属性如下：       
-
+    
 |属性                    |	类型        | 	描述               |
 |----------------------:|---------------|------------------------|
 |title	                |   string	    |   The title of the tab.|
@@ -308,5 +308,24 @@
 |on-deselect(optional)  |	expression  |	Called when this tab is deselected.|
 |ng-click(optional)|	expression      |	By default, the tab will be selected on click. If ngClick is set, it will not. You can explicitly switch tabs using $ionicTabsDelegate.select().|
 ||||
+    
+    5. ***$ionicTabsDelegate***
+        是ion-tabs的一个api参数，通过这个可以选择切换不同的tab,可以通过$getByHandle 方法获取不同的tab的实例       
+        ```html
+        <body ng-controller="MyCtrl">
+        <ion-tabs>
 
-    5. $ionicTabsDelegate
+            <ion-tab title="Tab 1">
+            Hello tab 1!
+            <button ng-click="selectTabWithIndex(1)">Select tab 2!</button>
+            </ion-tab>
+            <ion-tab title="Tab 2">Hello tab 2!</ion-tab>
+
+        </ion-tabs>
+        </body>
+        function MyCtrl($scope, $ionicTabsDelegate) {
+        $scope.selectTabWithIndex = function(index) {
+            $ionicTabsDelegate.select(index);
+        }
+        }
+        ```
