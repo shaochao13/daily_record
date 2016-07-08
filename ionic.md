@@ -197,3 +197,5 @@
 
     4. string grade     
     What grade the current platform is.
+
+[ionic图标](http://ionicons.com/)
