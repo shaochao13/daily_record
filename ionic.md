@@ -1,3 +1,5 @@
+[ionic图标](http://ionicons.com/)
+
 # 安装
 1. 需要先安装node.js环境,从官网下载最新的安装包进行安装，不要使用brew进行安装。
 2. 如果没有安装Andriod \ IOS 模拟器，需要先进行安装。     
@@ -43,6 +45,8 @@
         ```javascript
         angular.module('myApp', ['ngCordova'])
         ```
+
+[ionic图标](http://ionicons.com/)
 
 # ionic工具类API和配置
 - ***$ionicConfigProvider***
@@ -121,7 +125,7 @@
         > left: Left align the primary navBar buttons in the navBar   
         right: Right align the primary navBar buttons in the navBar.
 
-- ionic.Platform平台相关接口
+- ***ionic.Platform平台相关接口***
     ```javascript
     angular.module('PlatformApp', ['ionic'])
     .controller('PlatformCtrl', function($scope) {
@@ -184,7 +188,7 @@
     13. fullScreen([showFullScreen/boolean], [showStatusBar/boolean])   
     Sets whether the app is fullscreen or not (in Cordova).
 
-- ionic.Platform属性
+- ***ionic.Platform属性***
 
     1. boolean isReady  
     Whether the device is ready.
@@ -199,3 +203,35 @@
     What grade the current platform is.
 
 [ionic图标](http://ionicons.com/)
+
+# [CSS组件](http://www.ionic.wang/css_doc-index.html)
+- Header \ Footer
+- Button
+- List
+- card卡片
+- 表单
+- Toggle选择
+- checkbox
+- radio
+- range范围选择
+- select下拉选框
+- tabs组件
+- grid系统    
+    ---*ionic的网格系统采用的是 [CSS Flexible Box Layout Module标准](https://www.w3.org/TR/css-flexbox-1/)，所有支持ionic的设备都支持flexbox。可以用row样式指定行，用col样式指定列。*
+    1. 列宽  
+    2. 偏移量
+<div align="center">
+
+|指定列宽class 名称  |   偏移量class 名称          |    所占比例    |
+|:-----------------|--------------------------:|:--------------|
+|.col-10           |.col-offset-10             |10%            |
+|.col-20           |.col-offset-20             |20%            |
+|.col-25	       |.col-offset-25             |25%            |
+|.col-33	       |.col-offset-33             |33.3333%       |
+|.col-50	       |.col-offset-50             |50%            |
+|.col-67	       |.col-offset-67             |66.6666%       |
+|.col-75	       |.col-offset-75             |75%            |
+|.col-80	       |.col-offset-80             |80%            |
+|.col-90	       |.col-offset-90             |90%            | 
+|                  |                           |               |
+</div>
