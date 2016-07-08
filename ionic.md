@@ -314,18 +314,106 @@
     ```html
     <body ng-controller="MyCtrl">
     <ion-tabs>
-
         <ion-tab title="Tab 1">
         Hello tab 1!
         <button ng-click="selectTabWithIndex(1)">Select tab 2!</button>
         </ion-tab>
         <ion-tab title="Tab 2">Hello tab 2!</ion-tab>
-
     </ion-tabs>
     </body>
+    ```
+    ```javascript
     function MyCtrl($scope, $ionicTabsDelegate) {
-    $scope.selectTabWithIndex = function(index) {
-        $ionicTabsDelegate.select(index);
-    }
+        $scope.selectTabWithIndex = function(index) {
+            $ionicTabsDelegate.select(index);
+        }
     }
     ```
+- ***ion-side-menus***        
+    是一个带有边栏菜单的容器，可以通过点击按钮或者滑动屏幕来展开菜单。在js中可以通过 ***$ionicSideMenuDelegate*** 来获取该组件对应的实例。为了自动关闭已打开的menu，可以通过在ion-side-menu-content中的按钮或link添加menu-close样式。
+    ```html
+    <ion-side-menus>
+    <!-- Center content -->
+    <ion-side-menu-content ng-controller="ContentController">
+    </ion-side-menu-content>
+
+    <!-- Left menu -->
+    <ion-side-menu side="left">
+    </ion-side-menu>
+
+    <!-- Right menu -->
+    <ion-side-menu side="right">
+    </ion-side-menu>
+    </ion-side-menus>
+    ```
+    ```javascript
+    function ContentController($scope, $ionicSideMenuDelegate) {
+        $scope.toggleLeft = function() {
+            $ionicSideMenuDelegate.toggleLeft();
+        };
+    }
+    ```     
+
+    1. ***ion-side-menu-content*** 展示主要内容的容器。可以通过滑动屏幕来展开menu     
+    ```html
+    <ion-side-menu-content
+        edge-drag-threshold="true"
+        drag-content="true">
+    </ion-side-menu-content>
+    ```
+
+    2. ***ion-side-menu*** 存放侧边栏的容器     
+    ```html
+    <!--
+        side	                string	    Which side the side menu is currently on. Allowed values: ‘left’ or ‘right’.
+        is-enabled(optional)	boolean	    Whether this side menu is enabled.
+        width(optional)	        number      How many pixels wide the side menu should be. Defaults to 275.
+    -->
+    <ion-side-menu
+    side="left" 
+    width="myWidthValue + 20"
+    is-enabled="shouldLeftSideMenuBeEnabled()">
+    </ion-side-menu>
+    ```
+
+    3. ***menu-toggle*** 用于切换显示侧边栏菜单    
+    ```html
+    <ion-view>
+    <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    ...
+    </ion-view>
+    ```     
+
+    4. ***menu-close*** 关闭当前打开的menu   
+    下面的例子是在一个menu栏里面的一项菜单，点击可以关闭menu    
+    ```html
+    <a menu-close href="#/home" class="item">Home</a>
+    ```
+
+    5. ***$ionicSideMenuDelegate***   用于指定控制 ionSideMenus 的实例,其有很多的方法，可以查看API   
+    ```html
+    <body ng-controller="MainCtrl">
+    <ion-side-menus>
+        <ion-side-menu-content>
+        Content!
+        <button ng-click="toggleLeftSideMenu()">
+            Toggle Left Side Menu
+        </button>
+        </ion-side-menu-content>
+        <ion-side-menu side="left">
+        Left Menu!
+        <ion-side-menu>
+    </ion-side-menus>
+    </body>
+    ```
+    ```javascript
+    function MainCtrl($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeftSideMenu = function() {
+        $ionicSideMenuDelegate.toggleLeft();
+    };
+    }
+    ```
+
+
