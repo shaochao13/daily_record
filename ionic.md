@@ -216,10 +216,23 @@
 - range范围选择
 - select下拉选框
 - tabs组件
+- color定制   
+    ---*可以修改ionic.css，由于使用的sass，可以修改_variables.scss文件来扩展或修改配色。*
+- padding   
+    ***padding***:  Adds padding around every side.    
+    ***padding-vertical***: Adds padding to the top and bottom.   
+    ***padding-horizontal***: Adds padding to the left and right.     
+    ***padding-top***: Adds padding to the top.       
+    ***padding-right***: Adds padding to the right.       
+    ***padding-bottom***: Adds padding to the bottom.     
+    ***padding-left***:  Adds padding to the left. 
+- 动画样式    
 - grid系统    
     ---*ionic的网格系统采用的是 [CSS Flexible Box Layout Module标准](https://www.w3.org/TR/css-flexbox-1/)，所有支持ionic的设备都支持flexbox。可以用row样式指定行，用col样式指定列。*
     1. 列宽  
     2. 偏移量
+    3. 响应式grid
+
 <div align="center">
 
 |指定列宽class 名称  |   偏移量class 名称          |    所占比例    |
@@ -234,4 +247,14 @@
 |.col-80	       |.col-offset-80             |80%            |
 |.col-90	       |.col-offset-90             |90%            | 
 |                  |                           |               |
+
+|Responsive Class   |	 Break when roughly         |
+|------------------:|:------------------------------|
+|.responsive-sm		|Smaller than landscape phone   |
+|.responsive-md		|Smaller than portrait tablet   |
+|.responsive-lg		|Smaller than landscape tablet  |
+|                   |                               |
+
 </div>
+ 
+ 
