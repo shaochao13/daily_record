@@ -121,3 +121,79 @@
         > left: Left align the primary navBar buttons in the navBar   
         right: Right align the primary navBar buttons in the navBar.
 
+- ionic.Platform平台相关接口
+    ```javascript
+    angular.module('PlatformApp', ['ionic'])
+    .controller('PlatformCtrl', function($scope) {
+
+    ionic.Platform.ready(function(){
+        // will execute when device is ready, or immediately if the device is already ready.
+    });
+
+    var deviceInformation = ionic.Platform.device();
+
+    var isWebView = ionic.Platform.isWebView();
+    var isIPad = ionic.Platform.isIPad();
+    var isIOS = ionic.Platform.isIOS();
+    var isAndroid = ionic.Platform.isAndroid();
+    var isWindowsPhone = ionic.Platform.isWindowsPhone();
+
+    var currentPlatform = ionic.Platform.platform();
+    var currentPlatformVersion = ionic.Platform.version();
+
+    ionic.Platform.exitApp(); // stops the app
+    });
+    ```
+
+    1. ready(callback)  
+    设备准备就绪后触发回调函数, 如果设备本来已经就绪会立即触发回调函数。该方法可以在任何地方运行，不用包装在方法中。当APP中有WebView (Cordova), 设备就绪时就会调用回调。如果app是在web browser中, 会在window.load之后调用回调函数。 需要注意Cordova features (Camera, FileSystem, etc) 在web浏览器中都不会起作用。
+
+    2. setGrade(grade)  
+    Set the grade of the device: ‘a’, ‘b’, or ‘c’. ‘a’ is the best (most css features enabled), ‘c’ is the worst. By default, sets the grade depending on the current device.
+
+    3. device() 
+    Return the current device (given by cordova).returns: object The device object.
+
+    4. isWebView()  
+    Returns: boolean Check if we are running within a WebView (such as Cordova).
+
+    5. isIPad()     
+    Returns: boolean Whether we are running on iPad.
+
+    6. isIOS()  
+    Returns: boolean Whether we are running on iOS.
+
+    7. isAndroid()  
+    Returns: boolean Whether we are running on Android.
+
+    8. isWindowsPhone()     
+    Returns: boolean Whether we are running on Windows Phone.
+
+    9. platform()   
+    Returns: string The name of the current platform.
+
+    10. version()   
+    Returns: number The version of the current device platform.
+
+    11. exitApp()   
+    Exit the app.
+
+    12. showStatusBar(shouldShow/boolean)   
+    Shows or hides the device status bar (in Cordova). Requires cordova plugin add org.apache.cordova.statusbar
+
+    13. fullScreen([showFullScreen/boolean], [showStatusBar/boolean])   
+    Sets whether the app is fullscreen or not (in Cordova).
+
+- ionic.Platform属性
+
+    1. boolean isReady  
+    Whether the device is ready.
+
+    2. boolean isFullScreen     
+    Whether the device is fullscreen.
+
+    3. Array(string) platforms      
+    An array of all platforms found.
+
+    4. string grade     
+    What grade the current platform is.
