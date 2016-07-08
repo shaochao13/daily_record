@@ -255,3 +255,29 @@
 |                   |                               |
  
  
+# javascript UI库
+- Tabs  
+    1. 通过tab栏切换不同的page，注意：不要将ion-tabs放在ion-content里面，会导致一个css错误。   
+    2. android和ios在默认样式上有一些不同的地方，官方文档中都有说明，tab位置，***$ionicConfigProvider***.tabs.position(value) 。     
+    3. Android 默认是顶部(top)，Ios是底部 (bottom) 。
+    ```javascript
+    var myApp = angular.module('reallyCoolApp', ['ionic']);
+    myApp.config(function($ionicConfigProvider) {
+    $ionicConfigProvider.views.maxCache(5);
+    // note that you can also chain configs
+    $ionicConfigProvider.tabs.position("bottom");
+    });
+    ```
+    ```html
+    <ion-tabs class="tabs-positive tabs-icon-only">
+        <ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline">
+            <!-- Tab 1 content -->
+        </ion-tab>
+        <ion-tab title="About" icon-on="ion-ios7-clock" icon-off="ion-ios7-clock-outline">
+            <!-- Tab 2 content -->
+        </ion-tab>
+        <ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline">
+            <!-- Tab 3 content -->
+        </ion-tab>
+    </ion-tabs>
+    ```
