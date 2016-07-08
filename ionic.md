@@ -232,9 +232,7 @@
     1. 列宽  
     2. 偏移量
     3. 响应式grid
-
-<div align="center">
-
+ 
 |指定列宽class 名称  |   偏移量class 名称          |    所占比例    |
 |:-----------------|--------------------------:|:--------------|
 |.col-10           |.col-offset-10             |10%            |
@@ -248,13 +246,12 @@
 |.col-90	       |.col-offset-90             |90%            | 
 |                  |                           |               |
 
+
 |Responsive Class   |	 Break when roughly         |
 |------------------:|:------------------------------|
 |.responsive-sm		|Smaller than landscape phone   |
 |.responsive-md		|Smaller than portrait tablet   |
 |.responsive-lg		|Smaller than landscape tablet  |
 |                   |                               |
-
-</div>
  
  
