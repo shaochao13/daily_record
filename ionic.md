@@ -310,7 +310,8 @@
 ||||        
     
 5. ***$ionicTabsDelegate***     
-    是ion-tabs的一个api参数，通过这个可以选择切换不同的tab,可以通过$getByHandle 方法获取不同的tab的实例       
+    是ion-tabs的一个api参数，通过这个可以选择切换不同的tab,可以通过$getByHandle 方法获取不同的tab的实例  
+             
     ```html
     <body ng-controller="MyCtrl">
     <ion-tabs>
