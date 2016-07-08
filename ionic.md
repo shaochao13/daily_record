@@ -281,3 +281,32 @@
         </ion-tab>
     </ion-tabs>
     ```
+    4. ion-tab      
+    作为ion-tabs的tab项，用于切换选择tab的内容，只有当tab被选中时，其对应的内容content才会存在。每个ion tab都有自己的查看历史。   
+    ```html
+    <!--用法-->
+    <ion-tab
+        title="Tab!"
+        icon="my-icon"
+        href="#/tab/tab-link"
+        on-select="onTabSelected()"
+        on-deselect="onTabDeselected()">
+    </ion-tab>
+    ```
+    ion-tab的属性如下：       
+
+|属性                    |	类型        | 	描述               |
+|----------------------:|---------------|------------------------|
+|title	                |   string	    |   The title of the tab.|
+|href(optional)         |	string      |	The link that this tab will navigate to when tapped.|
+|icon(optional)         |	string      |	The icon of the tab. If given, this will become the default for icon-on and icon-off.|
+|icon-on(optional)      |	string      |	The icon of the tab while it is selected.|
+|icon-off(optional)     |	string      |	The icon of the tab while it is not selected.|
+|badge(optional)        |	expression  |	The badge to put on this tab (usually a number).|
+|badge-style(optional)	|expression	    |   The style of badge to put on this tab (eg tabs-positive).|
+|on-select(optional)    |expression     |	Called when this tab is selected.|
+|on-deselect(optional)  |	expression  |	Called when this tab is deselected.|
+|ng-click(optional)|	expression      |	By default, the tab will be selected on click. If ngClick is set, it will not. You can explicitly switch tabs using $ionicTabsDelegate.select().|
+||||
+
+    5. $ionicTabsDelegate
