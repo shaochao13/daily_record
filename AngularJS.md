@@ -305,6 +305,7 @@ template:"<div>Hello Angular <div ng-transclude></div></div>"
 ```
 
 #### 在指令中使用 ***link*** 可以给指令中的元素绑定事件和属性
+在link中定义的方法主要用来处理指令内部的一些逻辑。
 ```html
 <!--
 定义了两个controller，在每个中使用了自定义的标签hello，
@@ -341,6 +342,86 @@ myModule.directive("hello",function(){
             element.bind('mouseenter', function(event){
                 scope.$apply(attrs.howtoload);
             });
+        }
+    }
+});
+```
+
+#### 指令Directive中的controller方法
+如果需要把指令中的一些方法暴露出来给外面使用，就可以使用指令内部指供的controller。
+
+```html
+<body ng-app="MyModule">
+	<div class="row">
+		<div class="col-md-3">
+			<superman strength>动感超人---力量</superman>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<superman strength speed>动感超人2---力量+敏捷</superman>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<superman strength speed light>动感超人3---力量+敏捷+发光</superman>
+		</div>
+	</div>
+</body>
+```
+
+```javascript
+var myModule = angular.module("MyModule", []);
+myModule.directive("superman", function() {
+    return {
+        scope: {}, //定义指令的局部scope，即指令自己的scope
+        restrict: 'AE',
+        controller: function($scope) {
+            $scope.abilities = [];
+            //addStrength暴露给外面使用
+            this.addStrength = function() {
+                $scope.abilities.push("strength");
+            };
+             //addSpeed 暴露给外面使用
+            this.addSpeed = function() {
+                $scope.abilities.push("speed");
+            };
+             //addLight 暴露给外面使用
+            this.addLight = function() {
+                $scope.abilities.push("light");
+            };
+        },
+        link: function(scope, element, attrs) {
+            element.addClass('btn btn-primary');
+            element.bind("mouseenter", function() {
+                console.log(scope.abilities);
+            });
+        }
+    }
+});
+myModule.directive("strength", function() {
+    return {
+        require: '^superman',//依赖superman指令
+        //link，接收四个参数：
+        //scope,element,attrs,supermanCtrl
+        link: function(scope, element, attrs, supermanCtrl) {
+            supermanCtrl.addStrength();
+        }
+    }
+});
+myModule.directive("speed", function() {
+    return {
+        require: '^superman',
+        link: function(scope, element, attrs, supermanCtrl) {
+            supermanCtrl.addSpeed();
+        }
+    }
+});
+myModule.directive("light", function() {
+    return {
+        require: '^superman',
+        link: function(scope, element, attrs, supermanCtrl) {
+            supermanCtrl.addLight();
         }
     }
 });
