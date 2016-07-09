@@ -283,9 +283,74 @@ app.directive("runoobDirective", function() {
     > C 只限类名使用      
     > M 只限注释使用      
 
-# AngularJS ng-model 指令
+可以通过transclude=true来做到嵌套：
+```html
+var myModule = angular.model("myApp"[]);
+myModule.directive("hello",function(){
+    return {
+        restrict: "AE",
+        transclude: true,
+        template:"<div>Hello Angular <div ng-transclude></div></div>"
+    }
+});
+<!--
+使用如下两句，就可以对“hello”中的嵌套html进行显示了。
+transclude: true,
+template:"<div>Hello Angular <div ng-transclude></div></div>"
+如下使用方式：
+<hello>
+<div>这是一个嵌套子句</div>
+</hello>
+ -->
+```
+
+#### 在指令中使用 ***link*** 可以给指令中的元素绑定事件和属性
+```html
+<!--
+定义了两个controller，在每个中使用了自定义的标签hello，
+通过howtoload来实现不同的事件执行。
+-->
+<body ng-app="myApp">
+<div ng-controller="ctl1">
+    <hello howtoload="loadData()"></hello>
+</div>
+<div ng-controller="ctl2">
+    <hello howtoload="loadData2()"></hello>
+</div>
+</body>
+```
+
+```javascript
+var myModule = angular.model("myApp"[]);
+myModule.controller("ctl1",["$scope",function($scope){
+    $scope.loadData = function(){
+        console.log("ctl1 load data.");
+    }
+}]);
+myModule.controller("ctl2",["$scope",function($scope){
+    $scope.loadData2 = function(){
+        console.log("ctl2 load data.");
+    }
+}]);
+myModule.directive("hello",function(){
+    return {
+        restrict: "AE",
+        transclude: true,
+        template:"<div>Hello Angular <div ng-transclude></div></div>",
+        link:function(scope, element, attrs) {
+            element.bind('mouseenter', function(event){
+                scope.$apply(attrs.howtoload);
+            });
+        }
+    }
+});
+```
+
+# ***ng-model*** 指令
+
 ***ng-model*** 指令用于绑定应用程序数据到 HTML 控制器(input, select, textarea)的值。   
 1. ng-model 指令可以将输入域的值与 AngularJS 创建的变量绑定。
+
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
     名字: <input ng-model="name">
@@ -297,14 +362,18 @@ app.controller('myCtrl', function($scope) {
 });
 </script>
 ```
+
 2. 双向绑定, 双向绑定，在修改输入域的值时， AngularJS 属性的值也将修改：
+
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
     名字: <input ng-model="name">
     <h1>你输入了: {{name}}</h1>
 </div>
 ```
+
 3. 验证用户输入
+
 ```html
 <form ng-app="" name="myForm">
     Email:
@@ -313,7 +382,9 @@ app.controller('myCtrl', function($scope) {
     <!-- 提示信息会在 ng-show 属性返回 true 的情况下显示 -->
 </form>
 ```
+
 4. 应用状态
+
 ```html
 <form ng-app="" name="myForm" ng-init="myText = 'test@runoob.com'">
 Email:
@@ -325,7 +396,9 @@ Email:
 <p>Touched: {{myForm.myAddress.$touched}} (如果通过触屏点击则为 true)。</p>
 </form>
 ```
+
 5. CSS 类 , ng-model 指令基于它们的状态为 HTML 元素提供了 CSS 类：
+
 ```html
 <style>
 input.ng-invalid {
@@ -340,29 +413,29 @@ input.ng-invalid {
 ```
 
 # AngularJS Scope(作用域)
+
 ***scope*** 是模型。scope 是一个 JavaScript 对象，带有属性和方法，这些属性和方法可以在视图和控制器中使用。
 - Scope(作用域) 是应用在 HTML (视图) 和 JavaScript (控制器)之间的纽带。
 - Scope 是一个对象，有可用的方法和属性。
 - Scope 可应用在视图和控制器上。        
 
 当你在 AngularJS 创建控制器时，你可以将 $scope 对象当作一个参数传递:
+
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
-
 <h1>{{carname}}</h1>
-
 </div>
 <!-- 当在控制器中添加 $scope 对象时，视图 (HTML) 可以获取了这些属性。
 视图中，你不需要添加 $scope 前缀, 只需要添加属性名即可，如： {{carname}}。
 -->
 <script>
 var app = angular.module('myApp', []);
-
 app.controller('myCtrl', function($scope) {
     $scope.carname = "Volvo";
 });
 </script>
 ```
+
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
 <input ng-model="name">
@@ -375,138 +448,159 @@ app.controller('myCtrl', function($scope) {
 });
 </script>
 ```
+
 #### 根作用域
-所有的应用都有一个 ***$rootScope***，它可以作用在 ng-app 指令包含的所有 HTML 元素中。    
+
+所有的应用都有一个 ***$rootScope***，它可以作用在 ng-app 指令包含的所有 HTML 元素中。
 $rootScope 可作用于整个应用中。是各个 controller 中 scope 的桥梁。用 rootscope 定义的值，可以在各个 controller 中使用。      
 
 ```html
 <div ng-app="myApp" ng-controller="myCtrl">
-<h1>{{lastname}} 家族成员:</h1>
-<ul>
-    <li ng-repeat="x in names">{{x}} {{lastname}}</li>
-</ul>
-</div>
-<script>
+    <h1>{{lastname}} 家族成员:</h1>
+    <ul>
+        <li ng-repeat="x in names">{{x}} {{lastname}}</li>
+    </ul>
+</div> 
+```
+
+```javascript
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $rootScope) {
     $scope.names = ["Emil", "Tobias", "Linus"];
     $rootScope.lastname = "Refsnes";
-});
-</script>
+});     
 ```
 
 # AngularJS 控制器
+
 - AngularJS 控制器 控制 AngularJS 应用程序的数据。
 - AngularJS 控制器是常规的 JavaScript 对象。
 - AngularJS 应用程序被控制器控制。
 - ****ng-controller**** 指令定义了应用程序控制器。
 - 控制器是 JavaScript 对象，由标准的 JavaScript 对象的构造函数 创建。    
 
-```html
-<div ng-app="myApp" ng-controller="myCtrl">
-名: <input type="text" ng-model="firstName"><br>
-姓: <input type="text" ng-model="lastName"><br>
-<br>
-姓名: {{firstName + " " + lastName}}
-</div>
-<script>
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
-    $scope.firstName = "John";
-    $scope.lastName = "Doe";
-});
-</script>
-```
-控制器也可以有方法（变量和函数）：
-```html
-<div ng-app="myApp" ng-controller="personCtrl">
-名: <input type="text" ng-model="firstName"><br>
-姓: <input type="text" ng-model="lastName"><br>
-<br>
-姓名: {{fullName()}}
-</div>
-<script>
-var app = angular.module('myApp', []);
-app.controller('personCtrl', function($scope) {
-    $scope.firstName = "John";
-    $scope.lastName = "Doe";
-    $scope.fullName = function() {
-        return $scope.firstName + " " + $scope.lastName;
-    }
-});
-</script>
-```
-外部文件中的控制器
-```html
-<div ng-app="myApp" ng-controller="namesCtrl">
-<ul>
-  <li ng-repeat="x in names">
-    {{ x.name + ', ' + x.country }}
-  </li>
-</ul>
-</div>
-<script src="namesController.js"></script>
-```
-```javascript
-//外部js文件：namesController.js
-angular.module('myApp', []).controller('namesCtrl', function($scope) {
-    $scope.names = [
-        {name:'Jani',country:'Norway'},
-        {name:'Hege',country:'Sweden'},
-        {name:'Kai',country:'Denmark'}
-    ];
-});
-```
+    ```html
+    <div ng-app="myApp" ng-controller="myCtrl">
+    名: <input type="text" ng-model="firstName"><br>
+    姓: <input type="text" ng-model="lastName"><br>
+    <br>
+    姓名: {{firstName + " " + lastName}}
+    </div>
+    ```
+
+    ```javascript 
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+        $scope.firstName = "John";
+        $scope.lastName = "Doe";
+    }); 
+    ```
+
+    控制器也可以有方法（变量和函数）：
+
+    ```html
+    <div ng-app="myApp" ng-controller="personCtrl">
+    名: <input type="text" ng-model="firstName"><br>
+    姓: <input type="text" ng-model="lastName"><br>
+    <br>
+    姓名: {{fullName()}}
+    </div>
+    <script>
+    ```
+
+    ```javascript
+    var app = angular.module('myApp', []);
+    app.controller('personCtrl', function($scope) {
+        $scope.firstName = "John";
+        $scope.lastName = "Doe";
+        $scope.fullName = function() {
+            return $scope.firstName + " " + $scope.lastName;
+        }
+    });
+    </script>
+    ```
+
+    外部文件中的控制器
+
+    ```html
+    <div ng-app="myApp" ng-controller="namesCtrl">
+    <ul>
+    <li ng-repeat="x in names">
+        {{ x.name + ', ' + x.country }}
+    </li>
+    </ul>
+    </div>
+    <script src="namesController.js"></script>
+    ```
+
+    ```javascript
+    //外部js文件：namesController.js
+    angular.module('myApp', []).controller('namesCtrl', function($scope) {
+        $scope.names = [
+            {name:'Jani',country:'Norway'},
+            {name:'Hege',country:'Sweden'},
+            {name:'Kai',country:'Denmark'}
+        ];
+    });
+    ```
 
 # AngularJS 过滤器
-过滤器可以使用一个管道字符（|）添加到表达式和指令中。
+
+- 过滤器可以使用一个管道字符（|）添加到表达式和指令中。     
 - 表达式中添加过滤器     
-过滤器可以通过一个管道字符（|）和一个过滤器添加到表达式中。
-```html
-<!-- uppercase 过滤器将字符串格式化为大写 -->
-<div ng-app="myApp" ng-controller="personCtrl">
-<p>姓名为 {{ lastName | uppercase }}</p>
-</div>
-```
-```html
-<!-- lowercase 过滤器将字符串格式化为小写：-->
-<div ng-app="myApp" ng-controller="personCtrl">
-<p>姓名为 {{ lastName | lowercase }}</p>
-</div>
-```
-```html
-<!-- currency 过滤器将数字格式化为货币格式：-->
-<div ng-app="myApp" ng-controller="costCtrl">
-<input type="number" ng-model="quantity">
-<input type="number" ng-model="price">
-<p>总价 = {{ (quantity * price) | currency }}</p>
-</div>
-```
+- 过滤器可以通过一个管道字符（|）和一个过滤器添加到表达式中。
+
+    ```html
+    <!-- uppercase 过滤器将字符串格式化为大写 -->
+    <div ng-app="myApp" ng-controller="personCtrl">
+    <p>姓名为 {{ lastName | uppercase }}</p>
+    </div>
+    ```
+
+    ```html
+    <!-- lowercase 过滤器将字符串格式化为小写：-->
+    <div ng-app="myApp" ng-controller="personCtrl">
+    <p>姓名为 {{ lastName | lowercase }}</p>
+    </div>
+    ```
+
+    ```html
+    <!-- currency 过滤器将数字格式化为货币格式：-->
+    <div ng-app="myApp" ng-controller="costCtrl">
+    <input type="number" ng-model="quantity">
+    <input type="number" ng-model="price">
+    <p>总价 = {{ (quantity * price) | currency }}</p>
+    </div>
+    ```
+
 - 向指令添加过滤器      
 过滤器可以通过一个管道字符（|）和一个过滤器添加到指令中。
-```html
-<!-- orderBy 过滤器根据表达式排列数组： -->
-<div ng-app="myApp" ng-controller="namesCtrl">
-<ul>
-  <li ng-repeat="x in names | orderBy:'country'">
-    {{ x.name + ', ' + x.country }}
-  </li>
-</ul>
-<div>
-```
+
+    ```html
+    <!-- orderBy 过滤器根据表达式排列数组： -->
+    <div ng-app="myApp" ng-controller="namesCtrl">
+    <ul>
+    <li ng-repeat="x in names | orderBy:'country'">
+        {{ x.name + ', ' + x.country }}
+    </li>
+    </ul>
+    <div>
+    ```
+
 - 过滤输入      
 输入过滤器可以通过一个管道字符（|）和一个过滤器添加到指令中，该过滤器后跟一个冒号和一个模型名称。
-```html
-<!-- filter 过滤器从数组中选择一个子集：-->
-<div ng-app="myApp" ng-controller="namesCtrl">
-<p><input type="text" ng-model="test"></p>
-<ul>
-  <li ng-repeat="x in names | filter:test | orderBy:'country'">
-    {{ (x.name | uppercase) + ', ' + x.country }}
-  </li>
-</ul>
-</div>
-```
+
+    ```html
+    <!-- filter 过滤器从数组中选择一个子集：-->
+    <div ng-app="myApp" ng-controller="namesCtrl">
+    <p><input type="text" ng-model="test"></p>
+    <ul>
+    <li ng-repeat="x in names | filter:test | orderBy:'country'">
+        {{ (x.name | uppercase) + ', ' + x.country }}
+    </li>
+    </ul>
+    </div>
+    ```
 
 |*过滤器*              |*描述*                      |  
 |--------------------------:|:-------------------------|
