@@ -24,6 +24,12 @@ $routeProvider.when('/hello',{
 });
 ```
 
+* ***VS code*** 添加对angular的智能提示*：
+```
+sudo npm install -g tsd
+tsd query -r -o -a install angular express
+```
+
 # AngularJS 表达式
 1. AngularJS 表达式写在双大括号内：{{ expression }}。
 2. AngularJS 表达式把数据绑定到 HTML，这与 ng-bind 指令有异曲同工之妙。
