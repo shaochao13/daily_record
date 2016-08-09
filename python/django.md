@@ -1,17 +1,17 @@
 # 命令
 1. 新建一个django project:  
-> ```python
+ ```python
     django-admin.py startproject project-name 
     django-admin startproject project-name #windows环境下
-    ```
-2. 新建app:   
-> ```python
+```
+2. 新建app:       
+ ```python
     python manage.py startapp app-name
-    ```
+```
 或 
 ```python
      django-admin.py startapp app-name
-     ```     
+```     
 3. 同步数据库:   
 > 
 ```
@@ -23,24 +23,24 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 4. 清空数据库:   
-> ```python
+```python
 #此命令会询问是 yes 还是 no, 选择 yes 会把数据全部清空掉，只留下空表。
 python manage.py flush
 ```
 5. 创建超级管理员
-> ```python
+ ```python
 #按照提示输入用户名和对应的密码就好了邮箱可以留空，用户名和密码必填
 python manage.py createsuperuser
 #修改 用户密码可以用：
 python manage.py changepassword username
 ```
 6. 导出数据 导入数据
-> ```python
+```python
 python manage.py dumpdate appname > appname.json
 python manage.py loaddata appname.json
 ```
 7. 数据库命令行
-> ```python
+```python
 #Django 会自动进入在settings.py中设置的数据库，如果是 MySQL 或 postgreSQL 会要求输入数据库用户密码。在这个终端可以执行数据库的SQL语句。
 python manage.py dbshell
 ```
@@ -69,8 +69,8 @@ forloop.parentloop      |   用在嵌套的 for 循环中，获取上一层 for 
 </ul>
 ```
                         
-- 逻辑操作
-***==, !=, >=, <=, >, < ***这些比较都可以在模板中使用，比如：  
+- 逻辑操作      
+*** ==, !=, >=, <=, >, < *** 这些比较都可以在模板中使用，比如：  
 ```python
 {% if var >= 90 %}
 成绩优秀，自强学堂你没少去吧！学得不错
