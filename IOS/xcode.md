@@ -16,10 +16,10 @@ iOS9引入了新特性App Transport Security (ATS)，新特性要求App内访问
 2. 在NSAppTransportSecurity下添加NSAllowsArbitraryLoads类型Boolean,值设为YES
 
 # Facebook SocketRocket 使用注意事项：
-1. 报如下错：
+1. 报如下错：    
     ```
     Undefined symbols for architecture arm64:
     "_OBJC_CLASS_$_FBSession", referenced from: someFile
     ld: symbol(s) not found for architecture arm64
-    ```
+    ```     
     解决方法："Build Settings" --> "Other Linker Flags" 中，添加"$(inherited)"。
