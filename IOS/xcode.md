@@ -23,3 +23,10 @@ iOS9引入了新特性App Transport Security (ATS)，新特性要求App内访问
     ld: symbol(s) not found for architecture arm64
     ```     
     解决方法："Build Settings" --> "Other Linker Flags" 中，添加"$(inherited)"。
+
+
+# 查看本地DYSM文件位置
+```
+cd /Users/***/Library/Developer/Xcode/Archives
+```
+
