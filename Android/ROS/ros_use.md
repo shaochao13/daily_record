@@ -53,7 +53,23 @@ $ catkin_make
 #To add the workspace to your ROS environment you need to source the generated setup file: 
 $ . ~/catkin_ws/devel/setup.bash
 ```
-
+4. Building Packages
+Before continuing remember to source your environment setup file if you have not already.   
+```
+$ source /opt/ros/%YOUR_ROS_DISTRO%/setup.bash
+$ source /opt/ros/kinetic/setup.bash             (For Kinetic for instance)
+```
+使用***catkin_make***
+```
+# In a catkin workspace
+$ catkin_make
+$ catkin_make install  # (optionally)
+```
+```
+# In a catkin workspace
+$ catkin_make --source my_src
+$ catkin_make install --source my_src  # (optionally)
+```
 ----
 
 ### 查看一个package 的依赖包: 
@@ -96,3 +112,4 @@ $ rospack depends beginner_tutorials
 
 
 
+next: http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes
