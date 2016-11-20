@@ -1,5 +1,5 @@
 # Create a ROS Workspace
-## 1. create a catkin workspace: 
+## + create a catkin workspace: 
 ```
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
@@ -15,7 +15,58 @@ $ echo $ROS_PACKAGE_PATH
 /home/albert/catkin_ws/src:/opt/ros/kinetic/share
 ```
 
-## 2. ROS Filesystem
+## + Creating a ROS Package
+Packages in a catkin Workspace       
+***catkin_create_pkg*** 命令 requires that you give it a package_name and optionally a list of dependencies on which that package depends:     
+```
+# This is an example, do not try to run this
+# catkin_create_pkg <package_name> [depend1] [depend2] [depend3]
+```
+eg: create a new package called 'beginner_tutorials' which depends on std_msgs, roscpp, and rospy:
+```
+$ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+```
+
+----
+## **步骤：**
+1. Create a ROS Workspace:
+```
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/src
+$ catkin_init_workspace
+
+$ cd ~/catkin_ws/
+$ catkin_make
+
+$ source devel/setup.bash
+
+$ echo $ROS_PACKAGE_PATH
+```
+2. Creating a ROS Package
+```
+$ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+```
+3. Building a catkin workspace and sourcing the setup file
+```
+$ cd ~/catkin_ws
+$ catkin_make
+#To add the workspace to your ROS environment you need to source the generated setup file: 
+$ . ~/catkin_ws/devel/setup.bash
+```
+
+----
+
+### 查看一个package 的依赖包: 
+```
+#查看直接引用 的
+$ rospack depends1 beginner_tutorials 
+
+#查看包括直接和间接的所有引用：
+$ rospack depends beginner_tutorials
+```
+
+
+## + ROS Filesystem
 **Packages:** Packages are the software organization unit of ROS code. Each package can contain libraries, executables, scripts, or other artifacts.
 
 **Manifests (package.xml):** A manifest is a description of a package. It serves to define dependencies between packages and to capture meta information about the package like version, maintainer, license, etc...
