@@ -110,6 +110,43 @@ $ rospack depends beginner_tutorials
     $ rosls roscpp_tutorials
     ```
 
+# ROS Nodes
++ ***roscore*** 命令：roscore is the first thing you should run when using ROS。当要使用ros时，第一个需要执行的命令，类似于启动一个服务。
+    ```
+    $ roscore
+    ```  
+    注意：If roscore does not initialize and sends a message about lack of permissions, probably the ~/.ros folder is owned by root, change recursively the ownership of that folder with: 
+    ```
+    $ sudo chown -R <your_username> ~/.ros
+    ```
++ ***rosnode***     
+    1. **rosnode list** 用来查看正在运行哪些node
+        ```
+        $ rosnode list
+        ```
+    2. **rosnode info** 用来查看一个node的信息
+        ```
+        $ rosnode info /rosout
+        ```
+    3. **rosnode ping**用来测试是否能连接某个node。
+        ```
+        $ rosnode ping my_turtle
+        ```
++ ***rosrun*** 命令用于运行一个node without having to know the package path)。   
+    命令格式：
+    ```
+    $ rosrun [package_name] [node_name]
+    ```
+    例如： 
+    ```
+    $ rosrun turtlesim turtlesim_node
+    ```
+    也可以给要运行的node取一个自己的别名，如：
+    ```
+    #即把“turtlesim_node”取别名为“my_turtle”
+    $ rosrun turtlesim turtlesim_node __name:=my_turtle
+    ```
+
 
 
 next: http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes
