@@ -1,3 +1,4 @@
+
 # Create a ROS Workspace
 ## + create a catkin workspace: 
 ```
@@ -83,35 +84,37 @@ $ rospack depends beginner_tutorials
 
 
 ## + ROS Filesystem
+Commands: [rospack](#rospack)    [roscd](#roscd)  [roscd log](#roscdlog)    [rosls](#rosls)     
 **Packages:** Packages are the software organization unit of ROS code. Each package can contain libraries, executables, scripts, or other artifacts.
 
 **Manifests (package.xml):** A manifest is a description of a package. It serves to define dependencies between packages and to capture meta information about the package like version, maintainer, license, etc...
 
 **Commands**:
 
-- ***rospack*** allows you to get information about packages. In this tutorial, we are only going to cover the find option, which returns the path to package.  
+- ***<span id="rospack">rospack</span>*** allows you to get information about packages. In this tutorial, we are only going to cover the find option, which returns the path to package.  
     eg:
      ```
     rospack find [package_name]
     $ rospack find roscpp
     ```
-- ***roscd*** is part of the rosbash suite. It allows you to change directory (cd) directly to a package or a stack.        
+- ***<span id="roscd">roscd<span/>*** is part of the rosbash suite. It allows you to change directory (cd) directly to a package or a stack.        
     ```
     $ roscd [locationname[/subdir]]
     $ roscd roscpp
     ```
-- ***roscd log*** will take you to the folder where ROS stores log files. Note that if you have not run any ROS programs yet, this will yield an error saying that it does not yet exist.
+- ***<span id="roscdlog">roscd log</span>*** will take you to the folder where ROS stores log files. Note that if you have not run any ROS programs yet, this will yield an error saying that it does not yet exist.
     ```
     $ roscd log
     ```      
-- ***rosls*** is part of the rosbash suite. It allows you to ls directly in a package by name rather than by absolute path.     
+- ***<span id="rosls">rosls</span>*** is part of the rosbash suite. It allows you to ls directly in a package by name rather than by absolute path.     
     ```
     $ rosls [locationname[/subdir]]
     $ rosls roscpp_tutorials
     ```
 
 # ROS Nodes
-+ ***roscore*** 命令：roscore is the first thing you should run when using ROS。当要使用ros时，第一个需要执行的命令，类似于启动一个服务。
+ Commands: [roscore](#roscore)     [rosnode](#rosnode)        [rosrun](#rosrun)
++ ***<span id="roscore">roscore</span>*** 命令：roscore is the first thing you should run when using ROS。当要使用ros时，第一个需要执行的命令，类似于启动一个服务。
     ```
     $ roscore
     ```  
@@ -119,7 +122,7 @@ $ rospack depends beginner_tutorials
     ```
     $ sudo chown -R <your_username> ~/.ros
     ```
-+ ***rosnode***     
++ ***<span id="rosnode">rosnode</span>***     
     1. **rosnode list** 用来查看正在运行哪些node
         ```
         $ rosnode list
@@ -132,7 +135,7 @@ $ rospack depends beginner_tutorials
         ```
         $ rosnode ping my_turtle
         ```
-+ ***rosrun*** 命令用于运行一个node without having to know the package path)。   
++ ***<span id="rosrun">rosrun</span>*** 命令用于运行一个node without having to know the package path)。   
     命令格式：
     ```
     $ rosrun [package_name] [node_name]
@@ -146,7 +149,6 @@ $ rospack depends beginner_tutorials
     #即把“turtlesim_node”取别名为“my_turtle”
     $ rosrun turtlesim turtlesim_node __name:=my_turtle
     ```
-
-
+ 
 
 next: http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes
