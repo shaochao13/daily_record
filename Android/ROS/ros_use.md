@@ -118,7 +118,9 @@ Commands: [rospack](#rospack)    [roscd](#roscd)  [roscd log](#roscdlog)    [ros
     ```
     $ roscore
     ```  
-    注意：If roscore does not initialize and sends a message about lack of permissions, probably the ~/.ros folder is owned by root, change recursively the ownership of that folder with: 
+    注意：    
+    ~~Only one roscore needs to be running~~     
+    If roscore does not initialize and sends a message about lack of permissions, probably the ~/.ros folder is owned by root, change recursively the ownership of that folder with: 
     ```
     $ sudo chown -R <your_username> ~/.ros
     ```
@@ -151,4 +153,4 @@ Commands: [rospack](#rospack)    [roscd](#roscd)  [roscd log](#roscdlog)    [ros
     ```
  
 
-next: http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes
+next: http://wiki.ros.org/ROS/Tutorials/UnderstandingTopics
