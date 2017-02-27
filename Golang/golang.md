@@ -64,3 +64,5 @@
     unicode.IsDigit(ch) //判断是否为数字
     unicode.IsSpace(ch) //判断是否为空白符号
     ```
+9. [字符串操作](https://github.com/Unknwon/the-way-to-go_ZH_CN/blob/master/eBook/04.7.md)    
+    主要用到 ***strings*** 和 ***strconv*** 两个包。
