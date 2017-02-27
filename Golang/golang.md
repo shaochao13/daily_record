@@ -66,3 +66,19 @@
     ```
 9. [字符串操作](https://github.com/Unknwon/the-way-to-go_ZH_CN/blob/master/eBook/04.7.md)    
     主要用到 ***strings*** 和 ***strconv*** 两个包。
+10. 时间和日期(time包)    
+    time 包提供了一个数据类型time.Time （作为值使用）以及显示和测量时间和日期的功能函数。  
+    time.Now()可以获取当前时间。 
+    Duration 类型表示两个连续时刻所相差的***纳秒数***，类型为int64。      
+    ```golang
+    week = 60 * 60 * 24 * 7 * 1e9 // 获取一周的时间，能获取纳秒数级的
+     ```
+     Location 类型映射某个时区的时间:  
+     ```golang
+     t := time.Now().Location()
+     ```
+     UTC 表示通用协调世界时间:    
+     ```golang
+     t := time.Now().UTC()
+     ```
+
