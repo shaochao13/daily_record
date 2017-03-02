@@ -75,10 +75,12 @@
      ```
      Location 类型映射某个时区的时间:  
      ```golang
-     t := time.Now().Location()
+     t := time.Location()
      ```
      UTC 表示通用协调世界时间:    
      ```golang
      t := time.Now().UTC()
      ```
+11. 在 Go 里面函数重载是不被允许的。  
+    在函数调用时，像切片（slice）、字典（map）、接口（interface）、通道（channel）这样的引用类型都是默认使用引用传递（即使没有显式的指出指针）。
 
