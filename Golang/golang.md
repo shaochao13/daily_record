@@ -127,7 +127,7 @@
         这样在外界只能通过 `right := matrix.NewMatrix(...)` 来实例化matrix。  
         而不能通过`wrong := new(matrix.matrix)` ，编译失败。   
     4. struct中的 ***标签*** ,它是一个附属字段的字符串，可以是文档或其他的重要标记，标签的内容不可以在一般的编程中使用，只有包 ***reflect*** 能获取它。
-    
+
         ```golang
         import (
             "fmt"
@@ -202,3 +202,45 @@
     two1 is: *main.TwoInts
     two1 is: &main.TwoInts{a:12, b:10}
     ```
+16. 类型判断： ***type-switch***       (type-switch 不允许有 fallthrough)       
+    
+    ```golang
+    func classifier(items ...interface{}) {
+        for i, x := range items {
+            switch x.(type) { //也可以使用 switch t := areaIntf.(type)  变量 t 得到了 areaIntf 的值和类型
+            case bool:
+                fmt.Printf("Param #%d is a bool \n", i)
+            case float64:
+                fmt.Printf("Param #%d is a float64 \n", i)
+            case int, int64:
+                fmt.Printf("Param #%d is a int \n", i)
+            case nil:
+                fmt.Printf("Param #%d is a nil\n", i)
+            case complex64, complex128:
+                fmt.Printf("Param #%d is a complex\n", i)
+            case string:
+                fmt.Printf("Param #%d is a string\n", i)
+            default:
+                fmt.Printf("Param #%d is unknown\n", i)
+            }
+        }
+    }
+    ``` 
+
+17. 测试一个值是否实现了某个接口： 
+
+    ```golang
+    type Stringer interface {
+        String() string
+    }
+
+    if sv, ok := v.(Stringer); ok {
+        fmt.Printf("v implements String(): %s\n", sv.String()) // note: sv, not v
+    }
+    ```
+
+18. ***接口方法集的调用规则***：     
+    + 类型 *T 的可调用方法集包含接受者为 *T 或 T 的所有方法集
+    + 类型 T 的可调用方法集包含接受者为 T 的所有方法
+    + 类型 T 的可调用方法集不包含接受者为 *T 的方法
+
