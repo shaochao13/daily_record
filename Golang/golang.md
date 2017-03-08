@@ -83,6 +83,114 @@
      ```
 11. 在 Go 里面函数重载是不被允许的。  
     在函数调用时，像切片（slice）、字典（map）、接口（interface）、通道（channel）这样的引用类型都是默认使用引用传递（即使没有显式的指出指针）。
-12. make 与 new      
+12. make() 与 new() 区别      
     + ***new(T)*** 为每个新的类型T分配一片内存，初始化为 0 并且返回类型为*T的内存地址：这种方法 返回一个指向类型为 T，值为 0 的地址的指针，它适用于值类型如数组和结构体（参见第 10 章）；它相当于 &T{}。        
-    + ***make(T)*** 返回一个类型为 T 的初始值，它只适用于3种内建的引用类型：***切片、map 和 channel *** 。
+    + ***make(T)*** 返回一个类型为 T 的初始值，它只适用于3种内建的引用类型：***切片slice、字典map 和 channel*** 。
+13. 可以通过unsafe 包下的Sizeof 方法得到一个变量或者对象占用了多少***内存***.
+    ```
+    size := unsafe.Sizeof(T{})
+    ```
+14. struct 结构体  
+    1. 如果File是一个结构体类型，那么 表达式`new(File)` 和 `&File{}` 是等价的。
+    2. 常常通过工厂方法来返回一个指向结构体实体的指针： 
+        ```golang
+        type File struct{
+            fd int 
+            name string
+        }
+
+        func NewFile(fd int, name string) *File{
+            if fd < 0 {
+                return nil
+            }
+            return &File(fd, name)
+        }
+        ```
+    3. 强制使用工厂方法： 可以把struct体定义成小写的，再定义一个工厂方法对外公开。    
+        ```golang
+        type matrix struct{
+            ...
+        }
+
+        func NewMatrix(params) *matrix{
+            m := new(matrix)  // or m := &matrix{}
+            return m
+        }
+        ```
+        这样在外界只能通过 `right := matrix.NewMatrix(...)` 来实例化matrix。  
+        而不能通过`wrong := new(matrix.matrix)` ，编译失败。   
+    4. struct中的 ***标签*** ,它是一个附属字段的字符串，可以是文档或其他的重要标记，标签的内容不可以在一般的编程中使用，只有包 ***reflect*** 能获取它。
+        ```golang
+        import (
+            "fmt"
+            "reflect"
+        )
+
+        type TagType struct { // tags
+            field1 bool   "An important answer"
+            field2 string "The name of the thing"
+            field3 int    "How much there are"
+        }
+
+        func main() {
+            tt := TagType{true, "Barak Obama", 1}
+            for i := 0; i < 3; i++ {
+                refTag(tt, i)
+            }
+        }
+
+        func refTag(tt TagType, ix int) {
+            ttType := reflect.TypeOf(tt)
+            ixField := ttType.Field(ix)
+            fmt.Printf("%v\n", ixField.Tag)
+        }
+        ``` 
+        输出： 
+        ```
+        An important answer
+        The name of the thing
+        How much there are
+        ```
+
+15. String()    
+    > 不要在String() 方法里调用涉及String()方法的方法。         
+   
+     ```golang
+     //比如下面的例子，它导致了一个无限迭代（递归）调用（TT.String() 调用 fmt.Sprintf，而 fmt.Sprintf 又会反过来调用 TT.String()...），很快就会导致内存溢出
+     type TT float64
+
+     func (t TT) String() string {
+         return fmt.Sprintf("%v", t)
+     }
+     t. String()
+     ```
+    > 格式化描述符 ***%T*** 会给出类型的完全规格，**%#v** 会给出实例的完整输出，包括它的字段（在程序自动生成 Go 代码时也很有用） 
+
+    ```golang
+    import (
+    "fmt"
+    "strconv"
+    )
+
+    type TwoInts struct {
+        a int
+        b int
+    }
+
+    func main() {
+        two1 := new(TwoInts)
+        two1.a = 12
+        two1.b = 10 
+        fmt.Printf("two1 is: %T\n", two1)
+        fmt.Printf("two1 is: %#v\n", two1)
+    }
+
+    func (tn *TwoInts) String() string {
+        return "(" + strconv.Itoa(tn.a) + "/" + strconv.Itoa(tn.b) + ")"
+    }
+    ```     
+    输出:     
+    ```
+    two1 is: *main.TwoInts
+    two1 is: &main.TwoInts{a:12, b:10}
+    ```
