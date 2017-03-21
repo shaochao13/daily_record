@@ -178,3 +178,22 @@ discard 方法移除单个元素 (但是当元素在集合中不存在的时候�
 
 pop方法弹出元素   (pop 方法删除并返回集合中任意一个元素，如果集合中没有元素会报错)
 
+#### 不可变集合(frozen set)
+
+不可变集合的一个主要应用是用来作为字典的键，例如用一个字典来记录两个城市之间的距离。  
+
+```python
+flight_distance = {}
+city_pair = frozenset(['Los Angeles', 'New York'])
+flight_distance[city_pair] = 2498
+flight_distance[frozenset(['Austin', 'Los Angeles'])] = 1233
+flight_distance[frozenset(['Austin', 'New York'])] = 1515
+```
+
+不可变集合也是不分顺序的，所以如下两种取到同一值：
+```python
+flight_distance[frozenset(['New York','Austin'])]
+flight_distance[frozenset(['Austin','New York'])]
+```
+
+
