@@ -197,3 +197,59 @@ flight_distance[frozenset(['Austin','New York'])]
 ```
 
 
+------
+
+1. while 和 for 循环后跟else语句：
+    + 要和break一起连用。
+    + 当循环正常结束时，循环条件不满足，else被执行。
+    + 当循环被break结束时，循环条件仍然满足，else不执行。
+
+    ```python
+    # 不执行else
+    values = [7, 6, 4, 7, 19, 2, 1]
+    for x in values:
+        if x <= 10:
+            print 'Found:', x
+            break
+    else:
+        print 'All values greater than 10'
+    ```
+
+    ```python
+    # 执行else
+    values = [11, 12, 13, 100]
+    for x in values:
+        if x <= 10:
+            print 'Found:', x
+            break
+    else:
+        print 'All values greater than 10'
+    ```
+
+2. map 方法
+
+    其用法为：
+    `map(aFun, aSeq)`
+
+    将函数 aFun 应用到序列 aSeq 上的每一个元素上，返回一个列表，不管这个序列原来是什么类型。
+
+    ```python
+    def sqr(x): 
+        return x ** 2
+
+    a = [2,3,4]
+    print map(sqr, a)
+    ```
+    输出： `[4, 9, 16]`
+
+    根据函数参数的多少，map 可以接受多组序列，将其对应的元素作为参数传入函数:
+
+    ```python
+    def add(x, y): 
+        return x + y
+
+    a = (2,3,4)
+    b = [10,5,3]
+    print map(add,a,b)
+    ```
+    输出：`[12, 8, 7]`
