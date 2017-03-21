@@ -253,3 +253,18 @@ flight_distance[frozenset(['Austin','New York'])]
     print map(add,a,b)
     ```
     输出：`[12, 8, 7]`
+
+3. __name__ 属性  
+    只有当文件被当作脚本执行的时候， __name__的值才会是 `__main__`
+    ```python
+    # ex2.py
+    def test():
+        w = [0,1,2,3]
+        assert(sum(w) == 6)
+        print 'test passed.'
+        
+    if __name__ == '__main__':
+        test()
+    # 当执行python ex2.py 时,会执行test()
+    # 当着模块导入时import ex2时，不会执行test()
+    ```
