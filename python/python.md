@@ -254,8 +254,8 @@ flight_distance[frozenset(['Austin','New York'])]
     ```
     输出：`[12, 8, 7]`
 
-3. __name__ 属性  
-    只有当文件被当作脚本执行的时候， __name__的值才会是 `__main__`
+3. `__name__` 属性  
+    只有当文件被当作脚本执行的时候， `__name__`的值才会是 `__main__`
     ```python
     # ex2.py
     def test():
