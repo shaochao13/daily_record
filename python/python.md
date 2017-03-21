@@ -80,6 +80,44 @@ decryption_suite = AES.new('This is a key123', AES.MODE_CBC, 'This is an IV456')
 plain_text = decryption_suite.decrypt(cipher_text)
 ```
 
+## 虚拟环境:    
+virtualenv          
+
+`pip install virtualenv`    
+
+1. 为一个工程创建一个虚拟环境    
+```
+$ cd my_project_folder          
+$ virtualenv venv
+```
+
+virtualenv venv 将会在当前的目录中创建一个文件夹，包含了Python可执行文件，以及 pip 库的一份拷贝，这样就能安装其他包了。虚拟环境的名字（此例中是 venv ）可以是任意的；若省略名字将会把文件均放在当前目录.   
+
+可以选择使用一个Python解释器:  
+```
+$ virtualenv -p /usr/bin/python2.7 venv
+```
+2. 要开始使用虚拟环境，其需要被激活 
+```
+$ source venv/bin/activate
+```
+3. 如果你在虚拟环境中暂时完成了工作，则可以停用它  
+```
+$ deactivate
+```
+
+运行带 --no-site-packages 选项的 virtualenv 将不会包括全局安装的包。这可用于保持包列表干净，以防以后需要访问它。
+
+```
+$ pip freeze > requirements.txt
+//这将会创建一个 requirements.txt 文件，其中包含了当前环境中所有包及各自的版本的简单列表。
+
+$ pip install -r requirements.txt
+//这能帮助确保安装、部署和开发者之间的一致性。
+```
+
+
+
 1. import的原理机制  
     import modu 语句将 寻找合适的文件，即调用目录下的 modu.py 文件（如果该文件存在）。如果没有 找到这份文件，Python解释器递归地在 “PYTHONPATH” 环境变量中查找该文件，如果仍没 有找到，将抛出ImportError异常。    
 
