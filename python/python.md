@@ -2,12 +2,12 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 ## 科学应用:     
 
-    NumPy   
-    SciPy   
-    Matplotlib  
-    Pandas  
-    Numba 加速Python科学计算  
-    Anaconda(工具)
+[NumPy](./numpy.md)    
+SciPy   
+Matplotlib  
+Pandas  
+Numba 加速Python科学计算  
+Anaconda(工具)
 
 ## 图像处理:    
 
