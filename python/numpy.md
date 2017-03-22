@@ -1,1 +1,1 @@
-aaaa
+1. `linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)` 

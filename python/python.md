@@ -3,7 +3,7 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 ## 科学应用:     
 [NumPy](./numpy.md)    
 SciPy   
-Matplotlib  
+[Matplotlib](./matplotlib.md)  
 Pandas  
 Numba 加速Python科学计算  
 Anaconda(工具) 
