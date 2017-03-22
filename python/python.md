@@ -1,13 +1,13 @@
 requests, lxml, SQLAlchemy, kivy, Ansible       
 
 ## 科学应用:     
-
 [NumPy](./numpy.md)    
 SciPy   
 Matplotlib  
 Pandas  
 Numba 加速Python科学计算  
-Anaconda(工具)
+Anaconda(工具) 
+
 
 ## 图像处理:    
 
@@ -156,7 +156,7 @@ int('11111111', 2)   //255
 
     两个集合的交，返回包含两个集合共有元素的集合。可以用方法 a.intersection(b) 或者操作 a & b 实现。
 
-差(difference): 
+差(difference):  $E=mc^2$
     
     a 和 b 的差集，返回只在 a 不在 b 的元素组成的集合,可以用方法 a.difference(b) 或者操作 a - b 实现。
 
@@ -168,7 +168,7 @@ int('11111111', 2)   //255
 
     要判断 b 是不是 a 的子集，可以用 b.issubset(a) 方法，或者更简单的用操作 b <= a 
 
-add 方法向集合添加单个元素
+add 方法向集合添加单个元素     
 
 update 方法向集合添加多个元素
 
