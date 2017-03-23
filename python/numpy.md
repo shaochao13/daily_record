@@ -32,7 +32,9 @@ a = array([1, 2, 3, 4])
 对象|	object	|数组中可以使用任意值
 Records	|void	|
 时间	|datetime64, timedelta64| 
-||
+|--|--|--|
+
+
 
 
 
