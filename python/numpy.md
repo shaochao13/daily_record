@@ -1,7 +1,179 @@
 
 `注`:笔记来自于网络整理
 
-1. `linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)` 
+## 生成数组的函数
+
+1. `arange`     
+
+    产生一个在区间 [start, stop) 之间，以 step 为间隔的数组，如果只输入一个参数，则默认从 0 开始
+    ```python
+    arange(start, stop=None, step=1, dtype=None)
+    ```
+    `由于存在精度问题，使用浮点数可能出现问题`: 
+    ```python
+    np.arange(1.5, 2.1, 0.3)
+    #out: array([ 1.5,  1.8,  2.1])  stop 的值 2.1 出现在了数组中
+    ```
+
+2. `linspace`   
+
+    产生 N 个等距分布在 [start, stop]间的元素组成的数组，包括 start, stop
+    ```python
+    linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)
+    ``` 
+
+3. `logspace`   
+    产生 N 个对数等距分布的数组，默认以10为底
+    ```python
+    logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)
+    ```
+
+4. `meshgrid`   
+
+    两个坐标轴上的点在平面上画格
+
+    + X,Y=meshgrid(x,y) 
+    + X,Y=meshgrid(x)与[X,Y]=meshgrid(x,x)是等同的 
+    + X,Y,Z=meshgrid(x,y,z)生成三维数组，可用来计算三变量的函数和绘制三维立体图 
+
+    ```python
+    x_ticks = np.linspace(-1, 1, 5)
+    y_ticks = np.linspace(-1, 1, 5)
+    x, y = np.meshgrid(x_ticks, y_ticks)
+    x   #out: array([[-1. , -0.5,  0. ,  0.5,  1. ],
+                   # [-1. , -0.5,  0. ,  0.5,  1. ],
+                   # [-1. , -0.5,  0. ,  0.5,  1. ],
+                   # [-1. , -0.5,  0. ,  0.5,  1. ],
+                   # [-1. , -0.5,  0. ,  0.5,  1. ]])
+    y   #out: array([[-1. , -1. , -1. , -1. , -1. ],
+                   # [-0.5, -0.5, -0.5, -0.5, -0.5],
+                   # [ 0. ,  0. ,  0. ,  0. ,  0. ],
+                   # [ 0.5,  0.5,  0.5,  0.5,  0.5],
+                   # [ 1. ,  1. ,  1. ,  1. ,  1. ]])
+
+    #x, y 中有很多冗余的元素，这里提供了一个 sparse 的选项  
+    x, y = np.meshgrid(x_ticks, y_ticks, sparse=True)
+    x #out: array([[-1. , -0.5,  0. ,  0.5,  1. ]])
+    y #out: array([[-1. ],
+               #    [-0.5],
+               #    [ 0. ],
+               #    [ 0.5],
+               #    [ 1. ]])
+    ```
+
+    meshgrid 可以设置轴排列的先后顺序:  
+    + 默认为 indexing='xy' 即笛卡尔坐标，对于2维数组，返回行向量 x 和列向量 y
+    + 或者使用 indexing='ij' 即矩阵坐标，对于2维数组，返回列向量 x 和行向量 y 
+
+5. `orgid` & `mgrid`
+
+    + ogrid 相当于 meshgrid(indexing='ij', sparse=True)
+    + mgrid 相当于 meshgrid(indexing='ij', sparse=False)
+
+    ```python
+    x, y = np.ogrid[-1:1:.5, -1:1:.5]
+    x # out: array([[-1. ],
+                  # [-0.5],
+                  # [ 0. ],
+                  # [ 0.5]])
+    y # out: array([[-1. , -0.5,  0. ,  0.5]])
+    ```
+
+    为了包含 end 的值:    
+
+    ```python
+    x, y = np.ogrid[-1:1:5j, -1:1:5j]
+    ```
+    ` 输出： (array([[-1. ],
+        [-0.5],
+        [ 0. ],
+        [ 0.5],
+        [ 1. ]]), array([[-1. , -0.5,  0. ,  0.5,  1. ]]))`
+
+6. `identity`
+
+    产生一个 n 乘 n 的单位矩阵
+
+    ```python
+    identity(n, dtype=None)
+    ```
+
+    ```python
+    np.identity(3)
+   # 输出：array([[ 1.,  0.,  0.],
+                # [ 0.,  1.,  0.],
+                # [ 0.,  0.,  1.]])
+    ``` 
+
+7. `r_` , `c_` 
+
+    r_ / c_ 来产生行向量或者列向量
+
+    ```python
+    np.r_[0:1:.1]
+    # out: array([ 0. ,  0.1,  0.2,  0.3,  0.4,  0.5,  0.6,  0.7,  0.8,  0.9])
+
+    #复数步长制定数组长度
+    np.r_[0:1:5j]   
+    #out: array([ 0.  ,  0.25,  0.5 ,  0.75,  1.  ])
+
+    #列向量
+    np.c_[1:3:5j] 
+    #out: array([[ 1. ],
+       #[ 1.5],
+      # [ 2. ],
+       # [ 2.5],
+      # [ 3. ]])
+    ```
+
+### 矩阵
+
+使用`mat` 方法将2维数组转化为矩阵
+```python
+import numpy as np
+a = np.array([[1,2,4],
+              [2,5,3], 
+              [7,8,9]])
+A = np.mat(a)
+
+#也可以使用 Matlab 的语法传入一个字符串来生成矩阵
+A = np.mat('1,2,4;2,5,3;7,8,9')
+
+#利用分块创造新的矩阵
+a = np.array([[ 1, 2],
+              [ 3, 4]])
+b = np.array([[10,20], 
+              [30,40]])
+
+np.bmat('a,b;b,a')
+#out:matrix([[ 1,  2, 10, 20],
+        #   [ 3,  4, 30, 40],
+        #    [10, 20,  1,  2],
+        #    [30, 40,  3,  4]])
+```
+
+### 向量化函数   `vectorize`
+例如：
+```python
+def sinc(x):    # 这个函数不能作用于数组
+    if x == 0.0:
+        return 1.0
+    else:
+        w = np.pi * x
+        return np.sin(w) / w
+
+#使用 numpy 的 vectorize 将函数 sinc 向量化，产生一个新的函数
+vsinc = np.vectorize(sinc)
+vsinc(x) #其作用是为 x 中的每一个值调用 sinc 函数
+
+
+x = np.linspace(-5,5,101)
+plt.plot(x, vsinc(x))
+```
+
+
+
+
 
 ## Numpy数组
 
