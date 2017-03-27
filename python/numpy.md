@@ -1,4 +1,6 @@
 
+`注`:笔记来自于网络整理
+
 1. `linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)` 
 
 ## Numpy数组
