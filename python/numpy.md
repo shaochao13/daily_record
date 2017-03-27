@@ -224,6 +224,123 @@ a * 2
     data[low_idx:high_idx] #利用插入位置，将数组中所有在这两个值之间的值提取出来
     ```
 
+13. 修改数组的形状 `shape`  && `reshape()`
+    + `shape` 会修改原数组的形状
+    + `reshape()`不会修改原来数组的值。
+    + `shape` 和 `reshape` 方法不能改变数组中元素的总数，否则会报错
+    ```python
+    a = arange(6)  # array([0, 1, 2, 3, 4, 5])
+    a.shape = 2,3  
+    a       # out:array([[0, 1, 2],[3, 4, 5]])
+    ```
+
+    ```python
+    a.reshape(3,2)
+    # out:array([[0, 1],[2, 3],[4, 5]])
+    ```
+
+14. 增加数组维数 `newaxis`
+    ```python
+    a = arange(3)
+    shape(3)  # out: (3,)
+    y = a[newaxis, :]
+    shape(y)  # out: (1,3)
+    ```
+
+15. 去除多余的轴 `squeeze()` 
+
+    `squeeze` 返回一个将所有长度为1的维度去除的新数组。   
+    ```python
+    a = arange(6)
+    a.shape = (2,1,3)
+    b = a.squeeze()
+    b.shape # out:(2,3)
+    ```
+
+16. 数组转置 `transpose()`
+    + 转置只是交换了轴的位置
+    + 对于复数数组，转置并不返回复共轭，只是单纯的交换轴的位置
+    + 转置返回的是对原数组的另一种view，所以改变转置会改变原来数组的值
+    ```python
+    a = array([[[0, 1, 2]],[[3, 4, 5]]])
+    b = a.transpose() # out: array([[[0, 3]],[[1, 4]],[[2, 5]]])
+    # 缩写：b = a.T
+    b[0,1] = 30 
+    a #out: array([[ 0,  1,  2],[30,  4,  5]])
+    ```
+
+17. 数组连接 `concatenate((a0,a1,...,aN), axis=0)`
+    + 这些数组要用 () 包括到一个元组中去
+    + 这些数组其他轴的长度必须是一样的。
+    + 默认沿着第一维进行连接
+    ```python
+    x = array([
+        [0,1,2],
+        [10,11,12]
+    ])
+    y = array([
+            [50,51,52],
+            [60,61,62]
+        ])
+
+    z = concatenate((x,y))
+    # out: array([[ 0,  1,  2],
+          #  [10, 11, 12],
+          #  [50, 51, 52],
+          #  [60, 61, 62]])
+    z.shape #out: (4,3)
+
+    z = concatenate((x,y), axis=1)
+    # out:  array([[ 0,  1,  2, 50, 51, 52],
+            #    [10, 11, 12, 60, 61, 62]])
+    z.shape # out:  (2,6)
+
+    z = array((x,y)) 
+    z.shape # out: (2,2,3)
+    ```
+
+    Numpy提供了分别对应这三种情况的函数:   
+    - `vstack`
+    ```python
+    vstack((x,y)).shape #out: (4,3)
+    ```
+
+    - `hstack`
+    ```python
+    hstack((x,y)).shape # out:(2,6)
+    ```
+
+    - `dstack`
+    ```python
+    dstack((x,y)).shape # out: (2,2,3)
+    ```
+
+18. 多维数组转化为1维数组 `flatten()` & `flat` & `ravel()`
+
+    `flatten`返回的是数组的复制，因此，改变 b 并不会影响 a 的值
+    ```python
+    a = array([[0,1],
+           [2,3]]) 
+    b = a.flatten() # out:array([0, 1, 2, 3])
+    ```
+    也可以使用数组自带的 `flat` 属性    
+    ```python
+    a.flat 
+    ```
+    a.flat 相当于返回了所有元组组成的一个迭代器   
+    ```python
+    b = a.flat
+    b[0]=10
+    ```
+    `修改 b 的值会影响 a`      
+
+    ```python
+    a = array([[0,1],
+           [2,3]])
+    b = a.ravel() # 修改 b 会改变 a 
+
+    ```
+
 
 ---
 
