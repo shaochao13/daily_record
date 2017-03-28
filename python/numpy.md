@@ -617,6 +617,86 @@ a.all(axis=None)	|所有都不为0，返回真，逻辑与
     a.cumprod(axis=None)    #out: array([  4,   4,  12,  24,  24, 120])
     ```
 
+21. `reduce()`
+
+    `op.reduce(a)` 将op沿着某个轴应用，使得数组 a 的维数降低一维。
+
+    ```python
+    a = np.array([1,2,3,4])
+    np.add.reduce(a)    #out: 10
+    ```
+
+    多维数组默认只按照第一维进行运算    
+    ```python
+    a = np.array([[1,2,3],[4,5,6]])
+    np.add.reduce(a)
+    #out: array([5,7,9])
+    ```
+
+    指定维度：   
+    ```python
+    np.add.reduce(a, axis=1)
+    #out: array([6, 15])
+    ```
+
+    ```python
+    a = np.array(['ab', 'cd', 'ef'], np.object)
+    #out: 'abcdef'
+    ```
+
+22. `accumulate` 
+
+    `op.accumulate(a)`
+
+    accumulate 可以看成保存 reduce 每一步的结果所形成的数组
+
+    ```python
+    a = np.array([1,2,3,4])
+    np.add.accumulate(a)    
+    #out: array([ 1,  3,  6, 10])
+
+    a = np.array(['ab', 'cd', 'ef'], np.object)
+    np.add.accumulate(a) 
+    #out: array(['ab', 'abcd', 'abcdef'], dtype=object)
+    ```
+
+23. `reduceat`  
+
+    `op.reduceat(a, indices)`
+
+    reduceat 方法将操作符运用到指定的下标上，返回一个与 indices 大小相同的数组
+
+    ```python
+    a = np.array([0, 10, 20, 30, 40, 50])
+    indices = np.array([1,4])
+    np.add.reduceat(a, indices)
+    #out: array([60, 90])
+    #indices 为 [1, 4]，所以 60 表示从下标1（包括）加到下标4（不包括）的结果，90 表示从下标4（包括）加到结尾的结果
+    ```
+
+24. `outer` 
+
+    `op.outer(a, b)`
+
+    对于 a 中每个元素，将 op 运用到它和 b 的每一个元素上所得到的结果
+
+    ```python
+    a = np.array([0,1])
+    b = np.array([1,2,3])
+    np.add.outer(a, b)
+    #out: array([[1, 2, 3],
+                #[2, 3, 4]])
+
+    np.add.outer(b, a)#注意有顺序的区别
+    #out:array([[1, 2],
+                #[2, 3],
+                #[3, 4]])
+    ```
+
+
+
+
+
 ### 对角线
     
 ```python
