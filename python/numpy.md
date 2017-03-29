@@ -233,6 +233,18 @@ np.choose(choice, (a, 10, 15))
 ```
 
 
+### 加载数据
+1. **loadtxt**
+2. **genfromtxt**
+
+### 内存映射    
+
+    使用内存映射文件处理存储于磁盘上的文件时，将不必再对文件执行I/O操作，使得内存映射文件在处理大数据量的文件时能起到相当重要的作用
+
++ memmap
++ frombuffer
++ ndarray constructor
+
 ## Numpy数组
 
 ```python
