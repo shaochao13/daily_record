@@ -19,8 +19,10 @@ stats	|统计分布和函数
 weave	|C/C++ 积分
 
 
-$$
-J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2
-$$
+$$bin(v)$$
 
-$h(x) = \theta_0 + \theta_1 x$
+$${\left \| \hat{v} \right \|_{1}}$$
+
+
+$$2\times (H(dot_{ij},n_j-dot_{ij},n_j-dot_{ij},|U|-n_i-n_j+dot_{ij})-
+H(n_j,|U|-n_j)-H(n_i,|U|-n_i))$$
