@@ -18,5 +18,4 @@ special	|特殊方程
 stats	|统计分布和函数
 weave	|C/C++ 积分
 
-
-interp1d
+$C_p$ ($\frac{kJ}{kg K}$)
