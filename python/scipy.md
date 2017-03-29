@@ -18,4 +18,9 @@ special	|特殊方程
 stats	|统计分布和函数
 weave	|C/C++ 积分
 
- 
+
+$$
+J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2
+$$
+
+$h(x) = \theta_0 + \theta_1 x$
