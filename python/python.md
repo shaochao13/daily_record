@@ -14,6 +14,8 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [re 模块](./re.md)
 
+[datetime 模块](./datetime.md)
+
 ## 科学应用:     
    
 Numba 加速Python科学计算  
