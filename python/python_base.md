@@ -148,3 +148,8 @@ flight_distance[frozenset(['Austin','New York'])]
     # 当执行python ex2.py 时,会执行test()
     # 当着模块导入时import ex2时，不会执行test()
     ```
+
+### 高阶函数
+
+1. `map(f, sq)` 函数将 f 作用到 sq 的每个元素上去，并返回结果组成的列表
+
