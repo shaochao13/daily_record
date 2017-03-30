@@ -18,6 +18,8 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [sqlite3 模块](./sqlite3.md)
 
+`sqlalchemy`
+
 ## 科学应用:     
    
 Numba 加速Python科学计算  
