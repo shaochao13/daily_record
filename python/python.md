@@ -2,6 +2,10 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 使用国内镜像安装package:         
 `pip3 install scipy -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com` 豆瓣    
 `pip3 install scipy -i https://pypi.tuna.tsinghua.edu.cn/simple` 清华
+
+## 有用模块
+[os模块](./os.md)
+
 ## 科学应用:     
    
 Numba 加速Python科学计算  

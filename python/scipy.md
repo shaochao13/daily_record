@@ -17,12 +17,3 @@ spatial	|空间数据结构和算法
 special	|特殊方程
 stats	|统计分布和函数
 weave	|C/C++ 积分
-
-
-$$bin(v)$$
-
-$${\left \| \hat{v} \right \|_{1}}$$
-
-
-$$2\times (H(dot_{ij},n_j-dot_{ij},n_j-dot_{ij},|U|-n_i-n_j+dot_{ij})-
-H(n_j,|U|-n_j)-H(n_i,|U|-n_i))$$
