@@ -4,6 +4,7 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 `pip3 install scipy -i https://pypi.tuna.tsinghua.edu.cn/simple` 清华
 
 ## 有用模块
+[sys模块](./sys.md)
 [os模块](./os.md)
 
 ## 科学应用:     
