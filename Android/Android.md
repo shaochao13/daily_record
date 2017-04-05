@@ -4,6 +4,25 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 # Broadcast Receiver
 # Content Provider
 
+# 《第一行代码》学习笔记
+
+1. build.gradle文件说明：    
+
+    + `apply plugin: 'com.android.application'` -- 表示这是一个应用程序模块。
+    + `apply plugin: 'com.android.library` -- 表示这是一个库模块。
+    ```
+    buildTypes {
+        release {
+            minifyEnabled false  # 表示是否要进行代码混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    ```
+    + Android Studio 项目一共有3种依赖方式：本地依赖、库依赖和远程依赖。
+
+
+
+
 # 布局
 ## LinearLayout  
 LinearLayout是***ViewGroup***的一个子类，用于放置水平或者垂直方向的子视图部件，放置方向由属性***android:orientation***设定。LinearLayout里的子布局按照XML里定义的顺序显示在屏幕上。     
