@@ -1,4 +1,8 @@
 Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。View是通用的UI窗体小组件，比如按钮(Button) 或文本框(text field)，而ViewGroup是不可见的，是用于定义子View布局方式的容器，比如网格部件(grid)和垂直列表部件(list)。    
+# Activity
+# Service
+# Broadcast Receiver
+# Content Provider
 
 # 布局
 ## LinearLayout  
