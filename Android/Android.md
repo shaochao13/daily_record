@@ -1,5 +1,6 @@
 Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。View是通用的UI窗体小组件，比如按钮(Button) 或文本框(text field)，而ViewGroup是不可见的，是用于定义子View布局方式的容器，比如网格部件(grid)和垂直列表部件(list)。    
 # Activity
+1. 给主活动指定的label不仅会成为标题栏中的内容，还会成为启动器(Launcher)中应用程序显示的名称。
 # Service
 # Broadcast Receiver
 # Content Provider
@@ -19,6 +20,30 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
     }
     ```
     + Android Studio 项目一共有3种依赖方式：本地依赖、库依赖和远程依赖。
+
+## Intent 
+1. 显式 Intent
+
+    例如：
+    ```java
+    Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
+    startActivity(intent);
+    ```
+
+2. 隐式 Intent
+
+    指定一系列的action 和 category 等信息，然后交由系统去分析这个Intent， 并找出合适的活动去启动。
+
+    例如：  只有当Intent中的设置与`intent-filter`标签中的设置一致时，`ThirdActivity`才能够响应Intent。
+    ```xml
+    <activity android:name=".ThirdActivity" android:label="Third Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="http"/>
+            </intent-filter>
+        </activity>
+    ```
 
 
 
