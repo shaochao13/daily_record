@@ -1,6 +1,44 @@
 Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。View是通用的UI窗体小组件，比如按钮(Button) 或文本框(text field)，而ViewGroup是不可见的，是用于定义子View布局方式的容器，比如网格部件(grid)和垂直列表部件(list)。    
 # Activity
 1. 给主活动指定的label不仅会成为标题栏中的内容，还会成为启动器(Launcher)中应用程序显示的名称。
+2. Activity 状态： 运行状态，暂停状态，停止状态，销毁状态.
+3. **`Activity 生命周期`**：   
+
+    - `onCreate()` 在第一次创建的时候被调用。 在此方法中应完成Activity的初始化操作，比如加载布局、绑定事件等等。
+    - `onStart()` 在Activity 由不可见变为可见的时候调用。
+    - `onResume()` 在Activity 准备好和用户进行交互的时候调用。此时Activity一定位于返回栈的栈顶，处于运行状态。
+    - `onPause()` 在系统准备去启动或者恢复另一个Activity时调用。 `通常在这个方法中将一些消耗CPU的资源释放，以及保存一些关键数据`，但这个方法中的执行速度一定要快，不然会影响到新的栈顶Activity的使用。
+    - `onStop()` 在Activity完全不可见的时候调用。它与`onPause()`的主要区别在于，如果新的Activity是一个对话框时，`onPause()`方法会得到执行，而`onStop()`并不会执行。
+    - `onDestroy()` 在Activity被销毁之前调用，之后Activity的状态将变为销毁状态。
+    - `onRestart()` 在Activity由停止状态变为运行状态之前调用，即Activity被重新启动。
+
+    > 完整生存期：`onCreate()` ---> `onDestroy()` 之间所经历的，就是完整生存期。     
+    > 可见生存期：`onStart()` ---> `onStop()` 之间所经历的，就是可见生存期。     
+    > 前台生存期：`onResume()` ---> `onPause()` 之间所经历的，就是前台生存期。   
+    
+
+
+```flow
+st=>start: Start
+i=>inputoutput: 输入年份n
+cond1=>condition: n能否被4整除？
+cond2=>condition: n能否被100整除？
+cond3=>condition: n能否被400整除？
+o1=>inputoutput: 输出非闰年
+o2=>inputoutput: 输出非闰年
+o3=>inputoutput: 输出闰年
+o4=>inputoutput: 输出闰年
+e=>end
+st->i->cond1
+cond1(no)->o1->e
+cond1(yes)->cond2
+cond2(no)->o3->e
+cond2(yes)->cond3
+cond3(yes)->o2->e
+cond3(no)->o4->e
+```
+
+
 # Service
 # Broadcast Receiver
 # Content Provider
