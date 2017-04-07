@@ -1,5 +1,8 @@
-Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。View是通用的UI窗体小组件，比如按钮(Button) 或文本框(text field)，而ViewGroup是不可见的，是用于定义子View布局方式的容器，比如网格部件(grid)和垂直列表部件(list)。    
-# Activity
+Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。View是通用的UI窗体小组件，比如按钮(Button) 或文本框(text field)，而ViewGroup是不可见的，是用于定义子View布局方式的容器，比如网格部件(grid)和垂直列表部件(list)。 
+
+
+# 《第一行代码》学习笔记   
+## Activity
 1. 给主活动指定的label不仅会成为标题栏中的内容，还会成为启动器(Launcher)中应用程序显示的名称。
 2. Activity 状态： 运行状态，暂停状态，停止状态，销毁状态.
 3. **`Activity 生命周期`**：   
@@ -15,17 +18,40 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
     > 完整生存期：`onCreate()` ---> `onDestroy()` 之间所经历的，就是完整生存期。     
     > 可见生存期：`onStart()` ---> `onStop()` 之间所经历的，就是可见生存期。     
     > 前台生存期：`onResume()` ---> `onPause()` 之间所经历的，就是前台生存期。   
+
+4. Activity 启动模式
+    - `standard`
+    - `singleTop` -- 当启动Activity时，如果发现返回栈的栈顶已经是该Activity，则会直接使用它，而不会再创建新的Activity实例。
+    - `singleTask` -- 每次启动该活动时系统首先会在返回栈中检查是否存在该Activity的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的Activity实例。
+    - `singleInstance` -- 会启动一个新的返回栈来管理这个Activity。
     
  
+**Methods**
+
+- `public boolean onCreateOptionsMenu(Menu menu)`   用于生成 menu
+
+- `public boolean onOptionsItemSelected(MenuItem item)` 用于处理menu中的点击事件
+
+- `protected void onActivityResult(int requestCode, int resultCode, Intent data)` 用于处理接受从其他Activity返回时带的数据
+
+- `startActivityForResult` 用加载新的Activity，并能接受返回的数据
+
+- `startActivity` 加载新的Activity
+
+- `public void onBackPressed()` -- 当按手机的“返回”键时执行
+
+- `finish()` -- 用于“杀”死当前Activity
+
+- `protected void onSaveInstanceState(Bundle outState)` 在Activity被回收之前一定会被调用。
+
+- `android.os.Process.killProcess(android.os.Process.myPid())` -- 用于杀掉当前进程，以保证程序完全退出， 此方法只能用于杀掉当前程序的进程，而`不能使用这个方法去杀掉其他程序`。
+
+## Service
+## Broadcast Receiver
+## Content Provider
 
 
-# Service
-# Broadcast Receiver
-# Content Provider
-
-# 《第一行代码》学习笔记
-
-1. build.gradle文件说明：    
+## build.gradle文件说明：    
 
     + `apply plugin: 'com.android.application'` -- 表示这是一个应用程序模块。
     + `apply plugin: 'com.android.library` -- 表示这是一个库模块。
