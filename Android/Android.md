@@ -207,3 +207,12 @@ public class FruitAdapter extends ArrayAdapter<Fruit> {
     }
 }
 ```
+
+3. *RecyclerView* [用法](./recyclerview.md)    
+RecyclerView 属于新增的控件。需要手动添加设置:  
+在app/build.gradle文件中，进行如下设置：    
+    ```gradle
+    dependencies{
+        compile 'com.android.support:recyclerview-v7:25.2.0' #数字可能会有所不同。
+    }
+    ``` 
