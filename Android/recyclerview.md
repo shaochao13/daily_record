@@ -1,4 +1,9 @@
+- LinearLayoutManager 用于实现线性布局
+- GridLayoutManager 用于实现风格布局
+- StaggeredGridLayoutManager 用于实现瀑布流布局。
+
 1. 实现与ListView相同的效果：（`ListView只能实现纵向滚动的效果`）
+
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
@@ -20,9 +25,15 @@
 
 </LinearLayout>
 ```
+
 ```java
 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 LinearLayoutManager layoutManager = new LinearLayoutManager(this);//LayoutManager用于指定RecycylerView的布局方式，LinearLayoutManager是线性布局的意思，可以实现和ListView类似的效果
+
+// LinearLayoutManager 用于实现线性布局
+// GridLayoutManager 用于实现风格布局
+// StaggeredGridLayoutManager 用于实现瀑布流布局。
+
 recyclerView.setLayoutManager(layoutManager);
 FruitAdapter adapter = new FruitAdapter(fruitList);
 recyclerView.setAdapter(adapter);
@@ -68,11 +79,11 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
     }
 
 }
-
 ```
 
 
-2. 实现横向滚动的效果:   
+2. 实现横向滚动的效果:  
+ 
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -147,3 +158,39 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
 }
 
 ```
+
+3. 实现瀑布流的效果: 
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    >
+
+    <ImageView
+        android:id="@+id/fruit_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/fruit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        />
+
+</LinearLayout>
+```
+
+```java
+RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+recyclerView.setLayoutManager(layoutManager);
+FruitAdapter adapter = new FruitAdapter(fruitList);
+recyclerView.setAdapter(adapter);
+```
+ 
