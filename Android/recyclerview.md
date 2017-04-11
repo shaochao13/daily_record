@@ -194,3 +194,139 @@ FruitAdapter adapter = new FruitAdapter(fruitList);
 recyclerView.setAdapter(adapter);
 ```
  
+
+往RecyclerView里动态添加数据项：
+
+
+ ```java
+ //Activity
+ public class MainActivity extends AppCompatActivity {
+
+    private List<Msg> msgList = new ArrayList<>();
+    private EditText inputText;
+    private Button send;
+    private RecyclerView msgRecyclerView;
+    private MsgAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initMsgs();
+
+        inputText = (EditText) findViewById(R.id.input_text);
+        send = (Button) findViewById(R.id.send);
+        msgRecyclerView = (RecyclerView) findViewById(R.id.msg_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        msgRecyclerView.setLayoutManager(layoutManager);
+        adapter = new MsgAdapter(msgList);
+        msgRecyclerView.setAdapter(adapter);
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = inputText.getText().toString();
+                if (!"".equals(content)){
+                    Msg msg = new Msg(content, Msg.TYPE_SEND);
+                    msgList.add(msg);
+                    //当有新消息时，刷新RecyclerView中的显示
+                    adapter.notifyItemInserted(msgList.size() - 1);
+                    //将RecyclerView定位到最后一行
+                    msgRecyclerView.scrollToPosition(msgList.size() - 1);
+
+                    inputText.setText("");
+                }
+            }
+        });
+    }
+
+
+    private void initMsgs(){
+        Msg msg1 = new Msg("Hello guy.", Msg.TYPE_RECEIVED);
+        msgList.add(msg1);
+
+        Msg msg2 = new Msg("Hello. Who is that?",Msg.TYPE_SEND);
+        msgList.add(msg2);
+
+        Msg msg3 = new Msg("This is Tom. Nice talking to you.", Msg.TYPE_RECEIVED);
+        msgList.add(msg3);
+    }
+}
+
+
+//适配器：
+public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
+
+    private List<Msg> mMsgList;
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout leftLayout;
+        LinearLayout rightLayout;
+        TextView leftMsg;
+        TextView rightMsg;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            leftLayout = (LinearLayout) itemView.findViewById(R.id.left_layout);
+            rightLayout = (LinearLayout) itemView.findViewById(R.id.right_layout);
+            leftMsg = (TextView) itemView.findViewById(R.id.left_msg);
+            rightMsg = (TextView) itemView.findViewById(R.id.right_msg);
+        }
+    }
+
+    public MsgAdapter(List<Msg> mMsgList) {
+        this.mMsgList = mMsgList;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_item, parent, false);
+
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Msg msg = mMsgList.get(position);
+        if (msg.getType() == Msg.TYPE_RECEIVED){
+            holder.leftLayout.setVisibility(View.VISIBLE);
+            holder.rightLayout.setVisibility(View.GONE);
+            holder.leftMsg.setText(msg.getContent());
+        }else{
+            holder.leftLayout.setVisibility(View.GONE);
+            holder.rightLayout.setVisibility(View.VISIBLE);
+            holder.rightMsg.setText(msg.getContent());
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mMsgList.size();
+    }
+}
+
+
+//model
+public class Msg {
+    public static final int TYPE_RECEIVED = 0;
+    public static final int TYPE_SEND = 1;
+    private String content;
+    private int type;
+
+    public Msg(String content, int type) {
+        this.content = content;
+        this.type = type;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public int getType() {
+        return type;
+    }
+}
+
+```
