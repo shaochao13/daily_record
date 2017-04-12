@@ -95,7 +95,7 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
     - onDestroyView() - 当与 Fragment 的视图被移除的时候调用。
     - onDetach() - 当 Fragment 与 Activity 解除关联的时候调用。
 
-        ![生命周期](../images/fragment.png) 
+        ![生命周期](./images/fragment.png) 
 
 
 
