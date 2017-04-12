@@ -3,6 +3,7 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 # 《第一行代码》学习笔记   
 ## Activity
+
 1. 给主活动指定的label不仅会成为标题栏中的内容，还会成为启动器(Launcher)中应用程序显示的名称。
 2. Activity 状态： 运行状态，暂停状态，停止状态，销毁状态.
 3. **`Activity 生命周期`**：   
@@ -26,7 +27,7 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
     - `singleInstance` -- 会启动一个新的返回栈来管理这个Activity。
     
  
-**Methods**
+*Methods*
 
 - `public boolean onCreateOptionsMenu(Menu menu)`   用于生成 menu
 
@@ -45,6 +46,59 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 - `protected void onSaveInstanceState(Bundle outState)` 在Activity被回收之前一定会被调用。
 
 - `android.os.Process.killProcess(android.os.Process.myPid())` -- 用于杀掉当前进程，以保证程序完全退出， 此方法只能用于杀掉当前程序的进程，而`不能使用这个方法去杀掉其他程序`。
+
+### *Fragment*(碎片)   
+
+- 动态添加Fragment（碎片）步骤：
+
+    > 1. 创建待添加的Fragment实例。
+    > 2. 获取FragmentManager,在Activity中可以直接调用 getSupportFragmentManager() 方法得到。
+    > 3. 开启一个事务， 通过调用 beginTransaction()方法。
+    > 4. 向容器内添加或者替换 Fragment 碎片，一般使用replace()方法实现，需要传入容器的id和待添加的 Fragment 实例。
+    > 5. 提交事务， 调用 commit() 方法。
+
+    ```java
+    //实例方法
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.right_layout, fragment);
+        //如果需要在Fragment中模拟返回栈，则加上如下一行代码即可。
+        //transaction.addToBackStack(null);
+        transaction.commit();
+    }
+    ```
+
+- Activity 与 Fragment 通信
+
+1. 在Activity 获取Fragment: 
+
+    调用FragmentManager 的findFragmentById()方法，可以在Activity中获取Fragment实例。
+
+    ```java
+    RightFragment rightFragment = (RightFragment) getFragmentManager().findFragmentById(R.id.right_fragment);
+    ```
+
+2. 在 Fragment 中获取 Activity: 
+
+    在Fragment中通过调用 getActivity() 来得到与当前Fragment相关联的Activity实例。
+    
+    ```java
+    MainActivity activity =(MainActivity) getActivity();
+    ```
+
+3. Fragment 生命周期    
+
+    - onAttach() - 当 Fragment 和 Activity 建立关系的时候调用。
+    - onCreateView() - 为碎片创建视图（加载布局）时调用。
+    - onActivityCreated() - 确保与 Fragment 相关联的 Activity 一定已经创建完毕的时候调用 。
+    - onDestroyView() - 当与 Fragment 的视图被移除的时候调用。
+    - onDetach() - 当 Fragment 与 Activity 解除关联的时候调用。
+
+        ![生命周期](../images/fragment.png) 
+
+
+
 
 ## Service
 ## Broadcast Receiver
