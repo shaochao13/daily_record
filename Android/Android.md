@@ -137,6 +137,14 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 ## Service
 ## Broadcast Receiver
+1. 广播类型：
+    - 标准广播(Normal broadcasts)
+    - 有序广播(Ordered broadcasts)
+
+2. 注册广播的方式：
+    - 动态注册（代码中注册）
+    - 静态注册（AndroidManifest.xml中注册）
+
 ## Content Provider
 
 
