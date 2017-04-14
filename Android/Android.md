@@ -197,6 +197,8 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 ## Content Provider
 
+## [文件存储 详情>>](./持久化.md)
+
 
 ## build.gradle文件说明：    
 
