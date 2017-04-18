@@ -11,3 +11,11 @@
 4. `git add 文件名或文件夹名` 把想要添加到git仓库中
 
 5. `git commit -m "....."` 真正地把文件添加到git仓库中去。
+
+6. `git reset`  取消添加
+
+7. `git status`  查看哪些文件修改
+
+8. `git diff 文件名`  查看一个文件具体的改动
+
+9. `git log`  查看提交记录   
