@@ -67,3 +67,28 @@
 13. 删除分支: 
     
         git branch -D  version1.0  ---- 作用会将version1.0版本号的分支从git中删除掉。
+
+14. 将本地修改 同步到远程版本库上：
+
+        git push origin master
+    `origin` 指定的是远程版本库的git地址，`master`指定的是同步到哪一个分支上。
+
+15. 将远程版本库上的修改同步到本地：
+
+    第一种：使用 `fetch` 命令：
+
+        git fetch origin master
+
+    此时同步下来的修改并不会合并到任何分支上，而是会存放到一个`origin/master` 分支上，此时可以使用 
+
+        git diff origin/master
+
+    查看远程版本库上到底修改了什么。之后再使用`merge` 命令将`origin/master`分支上的修改合并到主分支上即可。
+
+        git merge orgin/master
+
+    第二种：使用 `pull` 命令：
+
+        git pull origin master 
+
+    将远程版本库上获取最新的修改合并到本地库中。
