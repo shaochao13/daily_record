@@ -232,9 +232,7 @@ dependencies{
 
 
 # 工具及代码
-+ [用于进行调试用的日志工具类 LogUtil 代码>>](./LogUtil.md)
-
-
++ [用于进行调试用的日志工具类 LogUtil 代码>>](./tools_codes/LogUtil.md)
 #
 
 1. 隐藏系统自带的标题栏   
