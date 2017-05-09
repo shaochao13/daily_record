@@ -15,6 +15,8 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 2. [播放多媒体文件 代码详例>>](./播放多媒体文件.md) 
 
+3. [用于进行调试用的日志工具类 LogUtil 代码>>](./tools_codes/LogUtil.md)
+
 危险权限列表:
 ![生命周期](./images/危险权限列表.png) 
 
@@ -80,8 +82,6 @@ android {
 # 使用***ProGuard***混淆代码。
 
 
-# 工具及代码
-+ [用于进行调试用的日志工具类 LogUtil 代码>>](./tools_codes/LogUtil.md)
 #
 
 1. 隐藏系统自带的标题栏   
