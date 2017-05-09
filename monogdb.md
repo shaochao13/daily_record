@@ -224,3 +224,12 @@ db.media.update({ "ISBN":"978-1-4302-5821-6" },{ $push: {Author: { $each: [ "Gri
 ```
 db.media.update({ "ISBN":"978-1-4302-5821-6" },{ $push: { Author: { $each: [ "Griffin, Peter", "Griffin, Brian" ] ,$slice: -2 } } })
 ```
+
+
+
+#####
+
+To have launchd start mongodb now and restart at login:
+  brew services start mongodb
+Or, if you don't want/need a background service you can just run:
+  mongod --config /usr/local/etc/mongod.conf
