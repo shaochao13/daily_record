@@ -19,6 +19,18 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 3. [用于进行调试用的日志工具类 LogUtil 代码>>](./tools_codes/LogUtil.md)
 
+4. 打电话功能：   
+    ```java
+    button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:10086"));
+                startActivity(intent);
+            }
+        });
+    ```
+
 危险权限列表:
 ![生命周期](./images/危险权限列表.png) 
 
