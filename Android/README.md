@@ -23,17 +23,30 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 ## build.gradle文件说明：    
 
-    + `apply plugin: 'com.android.application'` -- 表示这是一个应用程序模块。
-    + `apply plugin: 'com.android.library` -- 表示这是一个库模块。
-    ```
++ `apply plugin: 'com.android.application'` -- 表示这是一个应用程序模块。
++ `apply plugin: 'com.android.library` -- 表示这是一个库模块。
+
+```gradle
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "android.coolweather_test.com.coolweatherdemo"  # 用于指定项目的包名
+        minSdkVersion 15 #用于指定项目最低兼容的android系统版本,“15”表示最低兼容到android4.0系统。
+        targetSdkVersion 25  
+        versionCode 1  # 用于指定项目的版本号
+        versionName "1.0" # 用于指定项目的版本名
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
     buildTypes {
         release {
-            minifyEnabled false  # 表示是否要进行代码混淆
+            minifyEnabled false # 表示是否要进行代码混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    ```
-    + Android Studio 项目一共有3种依赖方式：本地依赖、库依赖和远程依赖。
+} 
+```
++ Android Studio 项目一共有3种依赖方式：本地依赖、库依赖和远程依赖。
 
 ## Intent 
 1. 显式 Intent
@@ -62,61 +75,7 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 
 
-# 布局
-## *LinearLayout*  
-LinearLayout是***ViewGroup***的一个子类，用于放置水平或者垂直方向的子视图部件，放置方向由属性***android:orientation***设定。LinearLayout里的子布局按照XML里定义的顺序显示在屏幕上。     
-
-- android:hint  
-当文本框为空的时候,会默认显示这个字符串    
-- android:layout_weight     
-***权重***的值指的是每个部件所占剩余空间的大小，该值与同级部件所占空间大小有关。就类似于饮料的成分配方：“两份伏特加酒，一份咖啡利口酒”，即该酒中伏特加酒占三分之二。例如，我们设置一个View的权重是2，另一个View的权重是1，那么总数就是3，这时第一个View占据2/3的空间，第二个占据1/3的空间。如果你再加入第三个View，权重设为1，那么第一个View(权重为2的)会占据1/2的空间，剩余的另外两个View各占1/4。(请注意，使用权重的前提一般是给View的宽或者高的大小设置为0dp，然后系统根据上面的权重规则来计算View应该占据的空间。但是很多情况下，如果给View设置了match_parent的属性，那么上面计算权重时则不是通常的正比，而是反比，也就是权重值大的反而占据空间小)。      
-对于所有的View默认的权重是0，如果只设置了一个View的权重大于0，则该View将占据除去别的View本身占据的空间的所有剩余空间。    
-**为了提升布局的效率，在设置权重的时候，应该把EditText的宽度设为0dp。**    
-
-- **`android:layout_gravity`** & **`android:gravity`**  
-
-    + android:layout_gravity -- 用于指定控件在布局中的对齐方式。    
-        `当LinearLayout 的排列方向是horizontal时，只有垂直方向上的对齐方式才会生效；当LinearLayout的排列方向是vertical时，只有水平方向上的对齐方式才会生效。`
-    + android:gravity -- 用于指定文字在控件中的对齐方式。
-
-## *RelativeLayout*   
-
-android:layout_alignParentLeft  
-android:layout_alignParentTop   
-android:layout_alignParentRight     
-android:layout_alignParentBottom    
-`android:layout_centerInparent`   
-android:layout_above   
-android:layout_below    
-android:layout_toLeftOf     
-android:layout_toRightOf    
-`android:layout_alignLeft`        
-*android:layout_alignRight*       
-*android:layout_alignTop*     
-*android:layout_alignBottom*     
-
-## *FrameLayout* 帧布局
-
-## 百分比布局 *PercentFrameLayout* & *PercentRelativeLayout* 
-百分比布局属于新增布局，在保证所有Android系统版本都兼容百分比布局，需要做如下设置：
-
-在app/build.gradle文件中，添加如下设置：
-```gradle
-dependencies{
-    compile 'com.android.support.percent:24.2.1'  #具体的数字可能需要根据情况进行修改
-}
-```
-
-`xmlns:app="http://schemas.android.com/apk/res-auto`
-
-使用如下两个属性对控件大小进行控制
-- `app:layout_widthPercent`
-- `app:layout_heightPercent`
-
-借用`android:layout_gravity`对控件的位置进行控制
-
-
-
+# [布局 >>](.\布局.md)
 
 # 使用***ProGuard***混淆代码。
 
