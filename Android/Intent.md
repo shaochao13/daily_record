@@ -20,3 +20,73 @@
             </intent-filter>
         </activity>
     ```
+
+3. 返回数据给上一个Activity  
+
+```java
+//第一个Activity
+public class MainActivity extends AppCompatActivity {
+
+    private Button button1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        button1 = (Button) findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivityForResult(intent, 1); //startActivityForResult
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if (resultCode == RESULT_OK){
+                    String returnData = data.getStringExtra("data_return");
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+//第二个Activity
+public class SecondActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+
+        Button button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnFirstActivity();
+            }
+        });
+    }
+
+    //当按下Back键时，会执行onBackPressed()方法
+    @Override
+    public void onBackPressed() {
+        returnFirstActivity();
+    }
+
+    private void returnFirstActivity(){
+        Intent intent = new Intent();
+        intent.putExtra("data_return", "Hello");
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+}
+```
