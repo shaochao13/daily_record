@@ -5,6 +5,8 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 1. [Activity >>](./Activity.md)
 
     [Fragment(碎片) >>](./Fragment.md)   
+
+    [Intent >>](.\Intent.md) 
 2. Service
 3. [Broadcast Receiver >>](.\Broadcast_Receiver.md)
 4. [Content Provider >>](.\Content_Provider.md)
@@ -49,34 +51,7 @@ android {
 } 
 ```
 + Android Studio 项目一共有3种依赖方式：本地依赖、库依赖和远程依赖。
-
-## Intent 
-1. 显式 Intent
-
-    例如：
-    ```java
-    Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
-    startActivity(intent);
-    ```
-
-2. 隐式 Intent
-
-    指定一系列的action 和 category 等信息，然后交由系统去分析这个Intent， 并找出合适的活动去启动。
-
-    例如：  只有当Intent中的设置与`intent-filter`标签中的设置一致时，`ThirdActivity`才能够响应Intent。
-    ```xml
-    <activity android:name=".ThirdActivity" android:label="Third Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="http"/>
-            </intent-filter>
-        </activity>
-    ```
-
-
-
-
+ 
 # [布局 >>](.\布局.md)
 
 # 使用***ProGuard***混淆代码。
