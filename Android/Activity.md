@@ -20,6 +20,7 @@
     - `singleTask` -- 每次启动该活动时系统首先会在返回栈中检查是否存在该Activity的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的Activity实例。
     - `singleInstance` -- 会启动一个新的返回栈来管理这个Activity。
     
+5. Android 使用**任务(Task)** 管理 Activity 。 一个Task 就是一组存放在栈里的活动Activity的集合。这个栈也被称作**返回栈(Back Stack)** 。
  
 *Methods*
 
