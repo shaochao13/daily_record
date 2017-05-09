@@ -6,10 +6,10 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
     [Fragment(碎片) >>](./Fragment.md)   
 
-    [Intent >>](.\Intent.md) 
+    [Intent >>](./Intent.md) 
 2. Service
-3. [Broadcast Receiver >>](.\Broadcast_Receiver.md)
-4. [Content Provider >>](.\Content_Provider.md)
+3. [Broadcast Receiver >>](./Broadcast_Receiver.md)
+4. [Content Provider >>](./Content_Provider.md)
 
 # 代码实例：
 
