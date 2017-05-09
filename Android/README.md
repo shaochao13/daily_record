@@ -1,129 +1,19 @@
 Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。View是通用的UI窗体小组件，比如按钮(Button) 或文本框(text field)，而ViewGroup是不可见的，是用于定义子View布局方式的容器，比如网格部件(grid)和垂直列表部件(list)。 
 
+# 四大组件：
 
-# 《第一行代码》学习笔记   
-## [Activity >>](./Activity.md)
-## [Fragment(碎片) >>](./Fragment.md)   
+1. [Activity >>](./Activity.md)
 
-## Service
-## Broadcast Receiver
-1. 广播类型：
-    - 标准广播(Normal broadcasts)
-    - 有序广播(Ordered broadcasts)
+    [Fragment(碎片) >>](./Fragment.md)   
+2. Service
+3. [Broadcast Receiver >>](.\Broadcast_Receiver.md)
+4. [Content Provider >>](.\Content_Provider.md)
 
-2. 注册广播的方式：
-    - 动态注册（代码中注册）
-    - 静态注册（AndroidManifest.xml中注册）
+# 代码实例：
 
-3. 本地广播
-    - 不能通过静态注册的方式进行。
-    - 只会在本程序内能发送和接收，安全性高。
-    - 使用 `LocalBroadcastManager` 对广播进行管理。
+1. [调用摄像头和相册 代码详例>>](./调用摄像头和相册.md)
 
-    ```java
-    public class MainActivity extends AppCompatActivity {
-
-        IntentFilter intentFilter;
-        LocalReceiver localReceiver;
-        LocalBroadcastManager localBroadcastManager ;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-
-            Button button =(Button) findViewById(R.id.button);
-
-            localBroadcastManager = LocalBroadcastManager.getInstance(this);
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent("com.example.mybroadcastreceiver.LOCAL_BROADCAST");
-                    localBroadcastManager.sendBroadcast(intent);
-                }
-            });
-
-            intentFilter = new IntentFilter();
-            intentFilter.addAction("com.example.mybroadcastreceiver.LOCAL_BROADCAST");
-            localReceiver = new LocalReceiver();
-            localBroadcastManager.registerReceiver(localReceiver, intentFilter);
-        }
-
-        @Override
-        protected void onDestroy() {
-            super.onDestroy();
-            localBroadcastManager.unregisterReceiver(localReceiver);
-        }
-
-        class LocalReceiver extends BroadcastReceiver{
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Toast.makeText(context,"received local broadcast", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    ```
-
-## Content Provider
-
-主要用于在不同的应用程序之间实现数据共享的功能。
-
-1. 在程序运行时申请权限
-    例如 打电话权限：   
-    ```java
-    public class MainActivity extends AppCompatActivity {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-
-            Button makeCall = (Button) findViewById(R.id.make_call);
-            makeCall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)
-                            != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE},1);
-                    }else
-                    {
-                        call();
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            switch (requestCode){
-                case 1:
-                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                        call();
-                    }else{
-                        Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void call(){
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:10086"));
-            try {
-                startActivity(intent);
-            }catch (SecurityException e){
-                e.printStackTrace();
-            }
-        }
-    }
-    ```
-
-2. [调用摄像头和相册 代码详例>>](./调用摄像头和相册.md)
-
-3. [播放多媒体文件 代码详例>>](./播放多媒体文件.md) 
+2. [播放多媒体文件 代码详例>>](./播放多媒体文件.md) 
 
 危险权限列表:
 ![生命周期](./images/危险权限列表.png) 
