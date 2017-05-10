@@ -33,6 +33,8 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 5. [返回数据给上一个Activity](./Intent.md#startActivityForResult)
 
+6. [AlertDialog 使用>>](./tools_codes/toolcodes.md#alertdialog_code)
+
 危险权限列表:
 ![生命周期](./images/危险权限列表.png) 
 
