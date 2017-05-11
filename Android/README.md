@@ -13,13 +13,13 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 # 代码实例：
 
-1. [调用摄像头和相册 代码详例>>](./调用摄像头和相册.md)
++ [调用摄像头和相册 代码详例>>](./调用摄像头和相册.md)
 
-2. [播放多媒体文件 代码详例>>](./播放多媒体文件.md) 
++ [播放多媒体文件 代码详例>>](./播放多媒体文件.md) 
 
-3. [用于进行调试用的日志工具类 LogUtil 代码>>](./tools_codes/LogUtil.md)
++ [用于进行调试用的日志工具类 LogUtil 代码>>](./tools_codes/LogUtil.md)
 
-4. 打电话功能：   
++ 打电话功能：   
     ```java
     button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,11 +31,13 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
         });
     ```
 
-5. [返回数据给上一个Activity](./Intent.md#startActivityForResult)
++ [返回数据给上一个Activity](./Intent.md#startActivityForResult)
 
-6. [AlertDialog 使用>>](./tools_codes/toolcodes.md#alertdialog_code)
++ [AlertDialog 使用>>](./tools_codes/toolcodes.md#alertdialog_code)
 
-7. [ProgressDialog 使用>>](./tools_codes/toolcodes.md#progressdialog_code)
++ [ProgressDialog 使用>>](./tools_codes/toolcodes.md#progressdialog_code)
+
++ [隐藏掉系统自带的标题栏 `ActionBar` >>](./tools_codes/toolcodes.md#hide_actionbar_code)
 
 危险权限列表:
 ![生命周期](./images/危险权限列表.png) 

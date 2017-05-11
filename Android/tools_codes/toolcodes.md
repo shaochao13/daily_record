@@ -35,3 +35,16 @@ button2.setOnClickListener(new View.OnClickListener() {
             }
         });
 ```
+
+3. <div id="hide_actionbar_code">隐藏掉系统自带的标题栏</div>
+```java
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null){
+        actionBar.hide();
+    }
+}
+```
