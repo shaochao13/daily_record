@@ -43,6 +43,8 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 + [`RecyclerView` 用法实例>>](./recyclerview.md) 
 
++ [动态添加 `Fragment`（碎片） >> ](./Fragment.md#fragment_dongtai_code)
+
 危险权限列表:
 ![生命周期](./images/危险权限列表.png) 
 

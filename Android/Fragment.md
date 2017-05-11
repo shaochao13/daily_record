@@ -1,4 +1,4 @@
-- 动态添加Fragment（碎片）步骤：
+- <div id="fragment_dongtai_code">动态添加Fragment（碎片）步骤</div>：
 
     > 1. 创建待添加的Fragment实例。
     > 2. 获取FragmentManager,在Activity中可以直接调用 getSupportFragmentManager() 方法得到。
@@ -6,17 +6,17 @@
     > 4. 向容器内添加或者替换 Fragment 碎片，一般使用replace()方法实现，需要传入容器的id和待添加的 Fragment 实例。
     > 5. 提交事务， 调用 commit() 方法。
 
-    ```java
-    //实例方法
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.right_layout, fragment);
-        //如果需要在Fragment中模拟返回栈，则加上如下一行代码即可。
-        //transaction.addToBackStack(null);
-        transaction.commit();
-    }
-    ```
+```java
+//实例方法
+private void replaceFragment(Fragment fragment){
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.replace(R.id.right_layout, fragment);
+    //如果需要在Fragment中模拟返回栈，则加上如下一行代码即可。
+    //transaction.addToBackStack(null);
+    transaction.commit();
+}
+```
 
 - Activity 与 Fragment 通信
 
