@@ -20,3 +20,18 @@ dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
 dialog.show();
 ```
+
+2. <div id="progressdialog_code">ProgressDialog 使用代码</div>
+```java
+button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setTitle("This is ProgressDialog");
+                progressDialog.setMessage("Loading...");
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+
+            }
+        });
+```
