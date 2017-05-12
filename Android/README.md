@@ -45,6 +45,8 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 + [动态添加 `Fragment`（碎片） >> ](./Fragment.md#fragment_dongtai_code)
 
++ [读取手机联系人 >>](./tools_codes/toolcodes.md#read_contacts_code)
+
 危险权限列表:
 ![生命周期](./images/危险权限列表.png) 
 
@@ -64,3 +66,7 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 4. draw9patch  9-patch  点9图片文件  
 
     在图片的四个边框绘制一个个的小黑点， 在上边框 和左边框 绘制的部分表示当图片需要拉伸时就拉伸黑点标记的区域， 在下边框 和 右边框 绘制的部分表示内容会被放置的区域。
+
+
+# Tools
++ [LitePal 操作SQLite](https://github.com/LitePalFramework/LitePal.git)

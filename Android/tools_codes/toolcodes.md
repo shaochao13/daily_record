@@ -94,3 +94,62 @@ public class FruitAdapter extends ArrayAdapter<Fruit> {
     }
 }
 ```
+
+5. <div id="read_contacts_code">读取手机联系人</div>
+```java
+public class SecondActivity extends AppCompatActivity {
+
+    ArrayAdapter<String> adapter;
+    List<String> contactsList = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        ListView contactsView = (ListView) findViewById(R.id.basic);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contactsList);
+        contactsView.setAdapter(adapter);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+        }else{
+            readContacts();
+        }
+    }
+
+    private void readContacts(){
+        Cursor cursor = null;
+        cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+        if (cursor != null){
+            while (cursor.moveToNext()){
+                String displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                contactsList.add(displayName + "\n" + number);
+            }
+
+            adapter.notifyDataSetChanged();
+
+            cursor.close();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    readContacts();
+                }else{
+                    Toast.makeText(this,"You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+```
+
+```xml
+<uses-permission android:name="android.permission.READ_CONTACTS" />
+```
