@@ -13,9 +13,9 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 # 代码实例：
 
-+ [调用摄像头和相册 代码详例>>](./调用摄像头和相册.md)
++ [调用摄像头和相册 代码详例>>](./tools_codes/调用摄像头和相册.md)
 
-+ [播放多媒体文件 代码详例>>](./播放多媒体文件.md) 
++ [播放多媒体文件 代码详例>>](./tools_codes/播放多媒体文件.md) 
 
 + [用于进行调试用的日志工具类 LogUtil 代码>>](./tools_codes/LogUtil.md)
 
@@ -70,3 +70,4 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 
 # Tools
 + [LitePal 操作SQLite](https://github.com/LitePalFramework/LitePal.git)
++ [GSON 操作Json](https://github.com/google/gson)
