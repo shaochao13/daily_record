@@ -71,3 +71,4 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 # Tools
 + [LitePal 操作SQLite](https://github.com/LitePalFramework/LitePal.git)
 + [GSON 操作Json](https://github.com/google/gson)
++ [CircleImageView 实现图片圆形化](https://github.com/hdodenhof/CircleImageView)
