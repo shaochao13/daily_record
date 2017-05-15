@@ -11,6 +11,19 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 3. [Broadcast Receiver >>](./Broadcast_Receiver.md)
 4. [Content Provider >>](./Content_Provider.md)
 
+# Material Design
++ Toolbar
++ DrawerLayout
++ NavigationView
++ FloatingActionButton
++ Snackbar
++ CoordinatorLayout
++ CardView
++ AppBarLayout
++ SwipeRefreshLayout
++ CollapsingToolbarLayout
++ NestedScrollView
+
 # 代码实例：
 
 + [调用摄像头和相册 代码详例>>](./tools_codes/调用摄像头和相册.md)
@@ -72,3 +85,4 @@ Android 的图形用户界面是由多个View 和 ViewGroup 构建出来的。Vi
 + [LitePal 操作SQLite](https://github.com/LitePalFramework/LitePal.git)
 + [GSON 操作Json](https://github.com/google/gson)
 + [CircleImageView 实现图片圆形化](https://github.com/hdodenhof/CircleImageView)
++ [Glide 图片加载库](https://github.com/bumptech/glide)
