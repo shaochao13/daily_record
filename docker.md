@@ -139,3 +139,42 @@
 `仓库名`经常以`两段路径`形式出现：如`jwilder/nginx-proxy`,前者往往意味着Docker Registry 多用户环境下的用户名，后者则往往是对应的软件名。
 
 
+## Docker 容器
+
+### 启动容器
++ 基于镜像新建一个容器并启动
+
+    `docker run`
++ 将在终止状态(stopped)的容器重新启动
+
+    `docker start`
+
++ 后台(background) 运行  
+
+    让Docker在后台运行而不是直接把执行命令的结果输出在当前宿主机下。
+
+    通过添加`-d` 参数实现。
+
+### 终止容器
+    
+    docker stop
+
+### 进入容器
+
+    docker attach 或者使用 nsenter 工具
+
+### 导出和导入容器
+
++ 导出：
+    
+    `docker export`
+
+    例如： `docker export 容器ID > XXX.tar`
+
++ 导入：
+    
+    `docker import` ,导入的为容器快照，快照文件将丢弃所有的历史记录和元数据信息，即仅保存容器当时的快照状态。
+    
+    `docker load` ,导入镜像存储文件，存储文件将保存完整记录，何种也要大。
+
+    例如：`cat xxx.tar | docker import - test/ubuntu:v1.0`
