@@ -178,3 +178,60 @@
     `docker load` ,导入镜像存储文件，存储文件将保存完整记录，何种也要大。
 
     例如：`cat xxx.tar | docker import - test/ubuntu:v1.0`
+
+### 删除容器
+
+    docker rm   ,默认不会删除正在运行中的容器。
+    如果要删除一个运行中的容器，可以添加 -f 参数。
+
+### 清理所有处于终止状态的容器
+
+    docker rm $(docker ps -a -q)
+
+
+## Repository (仓库)
+
+
+
+## Docker 数据管理
+### 在容器中管理数据主要有两种方式：
++ 数据卷(Data volumes)
++ 数据卷容器(Data volume containers) *专门用来提供数据卷供其它容器挂载的。*
+
+    例如,创建一个名为dbdata的数据卷容器：
+    ```
+    docker run -d -v /dbdata --name dbdata training/postgres echo Data-only container for postgres
+    ``` 
+    在其他容器中使用 `--volumes-from` 来挂载`dbdata`容器中的数据卷：
+    ```
+    docker run -d --volumes-from dbdata --name db1 training/postgress
+    docker run -d --volumes-from dbdata --name db2 training/postgress
+    ```
+    也可以从其他已挂载了数据卷的容器来`级联挂载`数据卷：
+    ```
+    docker run -d --name db3 --volumes-from db1 training/postgress
+    ```
+
+### 备份数据卷
+
+首先使用`--volumes-from` 标记来创建一个加载dbdata容器卷的容器，并从主机挂载当前目录到容器的/backup目录。例如：
+```
+docker run --volumes-from dbdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+```
+容器启动后，使用了`tar`命令来将dbdata卷备份为容器中的`/backup/backup.tar`文件，也就是主机当前目录下的名为backup.tar的文件。
+
+### 恢复数据卷
+
+首先创建一个带有空数据卷的容器dbdata2:
+```
+docker run -v /dbdata --name dbdata2 ubuntu /bin/bash
+```
+然后再创建另外一个容器，挂载 *dbdata2* 容器郑中的数据卷，并使用 `untar` 解压备份文件到挂载的容器卷中。
+```
+docker run --volumes-from dbdata2 -v $(pwd):/backup busybox tar xvf /backup/backup.tar
+```
+
+为了查看/验证恢复的数据，可以再启动一个容器挂载同样的容器卷来查看：
+```
+docker run --volumes-from dbdata2 busybox /bin/ls /dbdata
+```
