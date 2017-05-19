@@ -141,6 +141,8 @@
 
 ## Docker 容器
 
+使用`docker inspect` 可以查看容器的信息
+
 ### 启动容器
 + 基于镜像新建一个容器并启动
 
@@ -154,6 +156,12 @@
     让Docker在后台运行而不是直接把执行命令的结果输出在当前宿主机下。
 
     通过添加`-d` 参数实现。
+
++ 自定义容器的名称
+
+    ```
+    docker run -d -P --name web training/webapp python app.py
+    ```
 
 ### 终止容器
     
@@ -189,11 +197,13 @@
     docker rm $(docker ps -a -q)
 
 
+
 ## Repository (仓库)
 
 
 
 ## Docker 数据管理
+
 ### 在容器中管理数据主要有两种方式：
 + 数据卷(Data volumes)
 + 数据卷容器(Data volume containers) *专门用来提供数据卷供其它容器挂载的。*
@@ -234,4 +244,68 @@ docker run --volumes-from dbdata2 -v $(pwd):/backup busybox tar xvf /backup/back
 为了查看/验证恢复的数据，可以再启动一个容器挂载同样的容器卷来查看：
 ```
 docker run --volumes-from dbdata2 busybox /bin/ls /dbdata
+```
+
+## 外部访问容器
+
+通过 `-P` 或者 `-p` 参数来指定端口映射。
+
++ 使用 `-P`（大写）
+
+    当使用 `-P` 标记时，Docker 会随机映射一个 `49000~49900` 的端口到内部容器开放的网络端口上。
+
+    例如：
+    ```
+    docker run -d -P training/webapp python app.py
+    ```
+    可以使用 `docker ps -l` 查看相关的端口信息。
+
+    可以使用 `docker logs` 命令查看应用的信息。
+    ```
+    docker logs -f + '容器ID或者容器名称'
+    ```
+
++ 使用`-p` (小写的)
+
+    `-p` (小写的)则可以指定要映射的端口。在一个指定端口上只可以绑定一个容器。
+    支持的格式有：
+
+    + `ip:hostPort:containerPort`   映射到指定地址的指定端口
+    ```
+    docker run -d -p 5000:5000 training/webapp python app.py
+    ```
+
+    + `ip::containerPort` 映射到指定地址的任意端口上
+    ```
+    docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
+    ```
+
+    + `hostPort:containerPort`  映射所有接口地址
+    ```
+    docker run -d -p 127.0.0.1::5000 training/webapp python app.py
+    ```
+
+    `-p`可以多次使用来绑定多个端口:
+    ```
+    docker run -d -p 5000:5000 -p 3000:80 training/webapp python app.py
+    ```
+
++ 查看映射端口配置
+
+	使用`docker port` 来查看当前映射的端口配置：
+    ```
+    docker port + '容器ID或者容器name' 
+    ```
+
+### 容器互联
+
+使用 `--link` 参数可以让容器之间安全的进行交互。
+
+`--link` 参数的格式为： `--link name:alias` ,其中 *name* 表示要链接的容器的名称，*alias* 表示这个连接的别名。
+
+例如：
+```
+docker run -d --name db training/postgres
+
+docker run -d -P --name web db:db training/webapp python app.py
 ```
