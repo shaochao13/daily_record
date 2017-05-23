@@ -2,4 +2,6 @@
 ![](./images/math_1.png)  
 ![](./images/math_2.png)  
 
+2. 函数和、差、积、商的微分法则
+![](./images/math_3.png)
 
