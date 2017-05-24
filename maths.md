@@ -5,3 +5,6 @@
 2. 函数和、差、积、商的微分法则
 ![](./images/math_3.png)
 
+3. 基本积分表
+![](./images/math_4.png)
+![](./images/math_5.png)
