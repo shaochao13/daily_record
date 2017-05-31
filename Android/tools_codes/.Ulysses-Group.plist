@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>LogUtil.md</string>
+		</array>
+		<array>
+			<string>toolcodes.md</string>
+		</array>
+		<array>
+			<string>播放多媒体文件.md</string>
+		</array>
+		<array>
+			<string>调用摄像头和相册.md</string>
+		</array>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>childOrder</key>
+	<array>
+		<string>images</string>
+		<string>tools_codes</string>
+	</array>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>Activity.md</string>
+		</array>
+		<array>
+			<string>AndroidStudio.md</string>
+		</array>
+		<array>
+			<string>Broadcast_Receiver.md</string>
+		</array>
+		<array>
+			<string>build.gradle.md</string>
+		</array>
+		<array>
+			<string>Content_Provider.md</string>
+		</array>
+		<array>
+			<string>CustomTextView.md</string>
+		</array>
+		<array>
+			<string>Fragment.md</string>
+		</array>
+		<array>
+			<string>Intent.md</string>
+		</array>
+		<array>
+			<string>README.md</string>
+		</array>
+		<array>
+			<string>recyclerview.md</string>
+		</array>
+		<array>
+			<string>websocket支持.md</string>
+		</array>
+		<array>
+			<string>zlib_inflate.md</string>
+		</array>
+		<array>
+			<string>布局.md</string>
+		</array>
+		<array>
+			<string>持久化.md</string>
+		</array>
+	</array>
+</dict>
+</plist>

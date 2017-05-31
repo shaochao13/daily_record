@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>collections模块使用.md</string>
+		</array>
+		<array>
+			<string>csv.md</string>
+		</array>
+		<array>
+			<string>datetime.md</string>
+		</array>
+		<array>
+			<string>django.md</string>
+		</array>
+		<array>
+			<string>matplotlib.md</string>
+		</array>
+		<array>
+			<string>numpy.md</string>
+		</array>
+		<array>
+			<string>os.md</string>
+		</array>
+		<array>
+			<string>python.md</string>
+		</array>
+		<array>
+			<string>python_base.md</string>
+		</array>
+		<array>
+			<string>re.md</string>
+		</array>
+		<array>
+			<string>scipy.md</string>
+		</array>
+		<array>
+			<string>sqlite3.md</string>
+		</array>
+		<array>
+			<string>sys.md</string>
+		</array>
+		<array>
+			<string>文件及目录相关操作.md</string>
+		</array>
+		<array>
+			<string>查找最大或最小的N个元素.md</string>
+		</array>
+		<array>
+			<string>获取可迭代对象中的不定长数量的元素.md</string>
+		</array>
+		<array>
+			<string>通过某个关键字排序一个字典列表.md</string>
+		</array>
+	</array>
+</dict>
+</plist>
