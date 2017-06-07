@@ -37,9 +37,9 @@ show character set;
 ```sql
 show variables like 'character_set%';
 
--- 返回结果中：
+-- 返回结果中：
 charater_set_client --> 表示服务器默认的客户端传来的数据字符集
-charater_set_connection --> 表示连接层字符集
+charater_set_connection --> 表示连接层字符集
 charater_set_database --> 表示当前数据库的字符集
 charater_set_results --> 表示服务器默认的对外处理的字符集
 ```
