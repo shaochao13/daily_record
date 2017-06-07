@@ -43,3 +43,15 @@ charater_set_connection --> 表示连接层字符集
 charater_set_database --> 表示当前数据库的字符集
 charater_set_results --> 表示服务器默认的对外处理的字符集
 ```
+
+
+# 
+## 列显示宽度进行零填充(`zerofill`)
+在于当数据不够显示宽度的时候，会自动让数据变成对应的显示宽度，通常需要搭配一个前导0来增加宽度，其不改变数据值的大小，即用 `zerofill` 进行零填充，`并且零填充会导致数值自动变成无符号`。
+```sql
+create table my_int(int_1 int zerofill)charset utf8;
+
+insert into my_int values(6);
+
+select * from my_int; --返回的int_1的值为'0000000006'
+```
