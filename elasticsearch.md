@@ -112,7 +112,9 @@ GET /_search?size=5&from=10
 `分析` 包含下面的过程：
 
     首先，将一块文本分成适合于倒排索引的独立的 词条    
-    之后，将这些词条统一化为标准格式以提高它们的“可搜索性”，或者 recall
+    之后，将这些词条统一化为标准格式以提高它们的“可搜索性”，或者 recall。
+
+    默认下，只有 string 会被分析。
 
 分析器执行上面的工作。 分析器 实际上是将三个功能封装到了一个包里：
 
@@ -131,15 +133,15 @@ GET /_search?size=5&from=10
 
 ## 内置分析器
 
-+ 标准分析器
++ 标准分析器 (`standard`)
 
     标准分析器是Elasticsearch默认使用的分析器。它是分析各种语言文本最常用的选择。它根据 Unicode 联盟 定义的 单词边界 划分文本。删除绝大部分标点。最后，将词条小写。 
 
-+ 简单分析器 
++ 简单分析器 (`simple`)
 
     简单分析器在任何不是字母的地方分隔文本，将词条小写。 
 
-+ 空格分析器
++ 空格分析器（`whitespace`）
 
     空格分析器在空格的地方划分文本。 
 
@@ -147,7 +149,68 @@ GET /_search?size=5&from=10
 
     特定语言分析器可用于 很多语言。它们可以考虑指定语言的特点。例如， 英语 分析器附带了一组英语无用词（常用单词，例如 and 或者 the ，它们对相关性没有多少影响），它们会被删除。 由于理解英语语法的规则，这个分词器可以提取英语单词的 词干 。
 
+## 测试分析器如何分析文档
 
+使用 `_analyze` 来测试分析器是如何对文档进行分析的：
+
+```
+GET /_analyze
+{
+  "analyzer":"stanadard",
+  "text": "Text to analyze test"
+}
+```
+
+# 映射(_mapping)
+
+## 查看映射
+
+例如，查看 索引 `gb` 中的 类型 `tweet` 的映射：
+
+```
+GET /gb/_mapping/tweet
+```
+
+## 自定义 域映射
+
+### `Field datatypes`
+Each field has a data type which can be:
+
++ a simple type like [text](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/text.html), [keyword](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/keyword.html), [date](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/date.html), [long](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/number.html), [double](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/number.html), [boolean](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/boolean.html) or [ip](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/ip.html).
++ a type which supports the hierarchical nature of JSON such as [object](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/object.html) or [nested](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/nested.html).
++ or a specialised type like [geo_point](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/geo-point.html),[geo_shape](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/geo-shape.html) , or [completion](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/search-suggesters-completion.html).
+
+例如：
+```bash
+PUT my_index 
+{
+  "mappings": {
+    "user": { 
+      "_all":       { "enabled": false  }, 
+      "properties": { 
+        "title":    { "type": "text" ,"analyzer": "english" },  
+        # type 为 "text" 类型时，可以指定 analyzer
+        "name":     { "type": "text"  }, 
+        "age":      { "type": "integer" }  
+      }
+    },
+    "blogpost": { 
+      "_all":       { "enabled": false  }, 
+      "properties": { 
+        "title":    { "type": "text"  }, 
+        "body":     { "type": "text"  }, 
+        "user_id":  {
+          "type":   "keyword" 
+        },
+        "created":  {
+          "type":   "date", 
+          "format": "strict_date_optional_time||epoch_millis"
+        }
+      }
+    }
+  }
+}
+```
 
 #
 
