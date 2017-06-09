@@ -108,7 +108,7 @@ GET /_search?size=5&from=5
 GET /_search?size=5&from=10
 ```
 
-# 分析与分析器
+# 分析与分析器(_analyze)
 `分析` 包含下面的过程：
 
     首先，将一块文本分成适合于倒排索引的独立的 词条    
