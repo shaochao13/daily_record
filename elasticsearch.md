@@ -27,7 +27,7 @@ _index 、 _type 和 _id 的组合可以唯一标识一个文档
 
 #
 
-1. 存储数据到elasticsearch的行为叫做 `索引`
+1. 存储数据到elasticsearch的行为叫做 `索引`
 
 ***索引（名词）：*** 
 
@@ -201,7 +201,7 @@ POST /website/blog/
 }
 ```
 
-+ 自己提供`_id`: (使用 `PUT`)
++ 自己提供 `_id`: (使用 `PUT`)
 ```bash
 PUT /website/blog/123/_create
 {
