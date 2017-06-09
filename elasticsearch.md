@@ -97,14 +97,20 @@ shard = hash(routing) % number_of_primary_shards
   所有的文档 API（ get 、 index 、 delete 、 bulk 、 update 以及 mget ）都接受一个叫做 routing 的路由参数 ，通过这个参数我们可以自定义文档到分片的映射。一个自定义的路由参数可以用来确保所有相关的文档——例如所有属于同一个用户的文档——都被存储到同一个分片中
 
 ## 操作
-1. 只返回 `_source` 字段的数据
+
++ 查询所有文档
+```
+GET /website/blog/_search
+```
+
++ 只返回 `_source` 字段的数据
 
 例如：
 ```
 GET /website/blog/123/_source
 ```
 
-2. 只返回 `_source` 字段，并只返回它中的部分字段的数据
++ 只返回 `_source` 字段，并只返回它中的部分字段的数据
 
 例如：
 ```bash
@@ -114,7 +120,7 @@ GET /website/blog/123/_source?_source_include=title,text
 GET /website/blog/123/_source?_source_exclude=title,text
 ```
 
-3. 更新整个文档
++ 更新整个文档
 
 例如：
 ```bash
@@ -126,7 +132,7 @@ PUT /website/blog/123
 }
 ```
 
-4. 创建文档
++ 创建文档
 
     `如果具有相同的 _index 、 _type 和 _id 的文档已经存在，Elasticsearch 将会返回 409 Conflict 响应码`
 
