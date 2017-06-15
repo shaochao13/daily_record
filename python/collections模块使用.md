@@ -1,4 +1,4 @@
-# namedtuple
+# `collections.namedtuple`
 ### collections.nametuple是一个工厂函数，主要用来产生可以使用名称来访问元素的数据对象，通常用来增强代码的可读性， 在访问一些tuple类型的数据时尤其好用。  
 用 `namedtuple` 构建的类的实例所消耗的内存跟元组是一样的。
 ``` python
@@ -47,13 +47,21 @@ OrderedDict([('name', 'Sohu'),
              ('founder', '张朝阳')])
 ```
 
-# deque 
+# `双向队列` *collections.deque*
 ### deque其实是 double-ended queue 的缩写，翻译过来就是双端队列，它最大的好处就是实现了从队列 头部快速增加和取出对象: .popleft(), .appendleft()    
+
+双向队列从中间删除元素的操作会慢一些，因为它只对在头尾的操作进行了优化。
+
+`append` && `popleft` 都是原子操作
+ 
 ``` python
 # -*- coding: utf-8 -*-
 """
 下面这个是一个有趣的例子，主要使用了deque的rotate方法来实现了一个无限循环
 的加载动画
+
+deque.rotate 接受一个参数n，当n > 0 时，队列的最右边的n个元素会被移动到队列的左边,
+    当 n < 0 时，最左边的 n 个元素会被移动到右边。
 """
 import sys
 import time
@@ -67,6 +75,15 @@ while True:
 # Result:
 # 一个无尽循环的跑马灯
 ------------->-------
+```
+
+```python
+# 通过指定队列的大小，可以实现队列用来存放“最近用到的几个元素”功能
+from collections import deque
+dq = deque(range(10), maxlen=10)
+dq.appendleft(-1)
+dq.extend([11, 22, 33])
+dq.extendleft([10, 20, 30, 40])
 ```
 
 # Counter

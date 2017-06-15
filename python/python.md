@@ -20,6 +20,15 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [pickle ]
 
+[queue ]
+
+[multiprocessing ]
+
+[heapq ]
+
+[asyncio ]
+
+
 [array 模块](./array.md) 数组模块，用于操作数值型的集合非常棒
 
 [sqlite3 模块](./sqlite3.md)
