@@ -16,6 +16,12 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [datetime 模块](./datetime.md)
 
+[bisect 模块](./bisect.md)  用于对已排序好的列表进行查询或者插入数值非常棒(采用二分法进行)
+
+[pickle ]
+
+[array 模块](./array.md) 数组模块，用于操作数值型的集合非常棒
+
 [sqlite3 模块](./sqlite3.md)
 
 `sqlalchemy`
