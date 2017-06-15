@@ -1,5 +1,6 @@
 # namedtuple
-### namedtuple主要用来产生可以使用名称来访问元素的数据对象，通常用来增强代码的可读性， 在访问一些tuple类型的数据时尤其好用。
+### collections.nametuple是一个工厂函数，主要用来产生可以使用名称来访问元素的数据对象，通常用来增强代码的可读性， 在访问一些tuple类型的数据时尤其好用。  
+用 `namedtuple` 构建的类的实例所消耗的内存跟元组是一样的。
 ``` python
 # -*- coding: utf-8 -*-
 """
@@ -20,6 +21,30 @@ for website in websites:
 Website(name='Sohu', url='http://www.google.com/', founder=u'\u5f20\u671d\u9633')
 Website(name='Sina', url='http://www.sina.com.cn/', founder=u'\u738b\u5fd7\u4e1c')
 Website(name='163', url='http://www.163.com/', founder=u'\u4e01\u78ca')
+```
+
++ `_fields` 属性是一个包含这个类所有字段名称的元组。
+```python
+Website._fields
+#Result:('name', 'url', 'founder')
+```
+
++ `_make()` 通过接受一个可迭代对象来生成这个类的一个实例
+```python
+a = ('Sohu', 'http://www.google.com/', u'张朝阳')
+w1 = Website._make(a)
+#out Website(name='Sohu', url='http://www.google.com/', founder='张朝阳')
+
+# 跟 Website(*a)是一样的
+```
+
++ `_asdict()` 把具名元组以collections.OrderdDict形式返回
+```python
+w1._asdict()
+# Out:
+OrderedDict([('name', 'Sohu'),
+             ('url', 'http://www.google.com/'),
+             ('founder', '张朝阳')])
 ```
 
 # deque 
