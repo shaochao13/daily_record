@@ -64,7 +64,7 @@ Scikits 以 Scipy 为基础，提供如 scikits-learn 机器学习和scikits-ima
 
 [inspect]
 
-[abc 用于处理抽象类]
+[abc 用于处理抽象类](./abc.md)
 
 ## 图像处理:    
 
