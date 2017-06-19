@@ -29,6 +29,7 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 [asyncio ]
 
 [Flask](./Flask.md)
+[消息分发组件 blinker](http://pythonhosted.org/blinker/)
 
 [array 模块](./array.md) 数组模块，用于操作数值型的集合非常棒
 
