@@ -64,6 +64,8 @@ Scikits 以 Scipy 为基础，提供如 scikits-learn 机器学习和scikits-ima
 
 [inspect]
 
+[abc 用于处理抽象类]
+
 ## 图像处理:    
 
 + PIL(Python Imaging Library)使用**Pillow**分支;  `pip install Pillow`
