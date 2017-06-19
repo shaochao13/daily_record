@@ -37,6 +37,11 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 `sqlalchemy`
 
+### 与函数式编程相关模块：
+[functools]
+
+[operator]
+
 ## 科学应用:     
    
 Numba 加速Python科学计算  

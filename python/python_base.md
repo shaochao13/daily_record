@@ -153,3 +153,7 @@ flight_distance[frozenset(['Austin','New York'])]
 
 1. `map(f, sq)` 函数将 f 作用到 sq 的每个元素上去，并返回结果组成的列表
 
+# 
++ 任何python对象都可以表现得像函数，只需实现`__call__`方法。
++ 判断对象能否调用，最安全的方法是使用内置的`callable()`函数。
+#
