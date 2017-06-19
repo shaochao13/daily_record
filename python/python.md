@@ -28,6 +28,7 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [asyncio ]
 
+[Flask](./Flask.md)
 
 [array 模块](./array.md) 数组模块，用于操作数值型的集合非常棒
 
@@ -52,6 +53,10 @@ StatsModels 是一个统计库，着重于统计模型。
 
 Scikits 以 Scipy 为基础，提供如 scikits-learn 机器学习和scikits-image 图像处理等高级用法。
 
+## 其他模块
+[Charder 统一字符编码侦测包](https://pypi.python.org/pypi/chardet)
+
+[inspect]
 
 ## 图像处理:    
 
