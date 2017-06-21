@@ -38,3 +38,23 @@ def format_price(dic):
     return u'{0:.2f}{1}'.format(dic['amount'], dic['currency'])
 
 ```
+
+## 使用过滤器进行登录权限验证
+```python
+from functools import wraps
+from flask import g, request, redirect, url_for
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user is None: #此处可以替换成其他的方式进行验证
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+## 使用
+@app.route('/secret_page')
+@login_required
+def secret_page():
+    pass
+```
