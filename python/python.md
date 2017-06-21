@@ -18,6 +18,8 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [bisect 模块](./bisect.md)  用于对已排序好的列表进行查询或者插入数值非常棒(采用二分法进行)
 
+[functools](./functools.md)
+
 [pickle ]
 
 [queue ]
