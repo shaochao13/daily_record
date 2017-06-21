@@ -158,46 +158,4 @@ flight_distance[frozenset(['Austin','New York'])]
 + 判断对象能否调用，最安全的方法是使用内置的`callable()`函数。
 #
 
-# 装饰器
-```python
-@decorate
-def target():
-    print('running target()')
 
-#与下面的写是一样的
-def target():
-    print('running target()')
-target = decorate(target)
-```
-+ 装饰器能把被装饰的函数替换成其他函数。
-```python
-def deco(func):
-    def inner():
-        print('running inner()')
-    return inner
-
-@deco
-def target():
-    print('running target()')
-
-#此时执行target()，不会执行target()中的代码，而变成执行deco中的inner()函数。
-```
-+ 装饰器在加载模块时立即执行。
-
-+ nonlocal 
-
-    python3中引入，它的作用是把变量标记为自由变量
-    ```python
-    def make_average():
-        count = 0
-        total = 0
-
-        def average(new_value):
-            #如果不这么做，则在average中使用count,total时会报错，因为count,total是不可变对象
-            nonlocal count, total 
-            count += 1
-            total += new_value
-            return total / count
-        
-        return average
-    ```
