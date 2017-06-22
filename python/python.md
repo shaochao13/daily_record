@@ -41,6 +41,12 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 `sqlalchemy`
 
+[`celery` 分布式任务队列](http://docs.jinkan.org/docs/celery/)
+
+[tornado](http://www.tornadoweb.cn/documentation)
+
+[arrow](https://github.com/crsmithdev/arrow) *更好的 Python 日期时间操作类库*
+
 ### 与函数式编程相关模块：
 [functools]
 
