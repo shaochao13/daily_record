@@ -3,6 +3,12 @@
 [flask-socketio](https://github.com/miguelgrinberg/Flask-SocketIO) *Socket.IO integration for Flask applications*
 
 [flask-admin](https://github.com/flask-admin/flask-admin) *Simple and extensible administrative interface framework for Flask*
+
+[Flask-Bcrypt](http://flask-bcrypt.readthedocs.io/en/latest/) *Flask-Bcrypt is a Flask extension that provides bcrypt hashing utilities for your application.*
+
+[Flask-Login](https://github.com/maxcountryman/flask-login) *Flask user session management*
+
+[Flask-Cache](http://pythonhosted.org/Flask-Cache/) *Cache extension for Flask*
 #
 ## 注册过滤器
 在Jinja2中注册自己的过滤器：       
