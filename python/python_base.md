@@ -171,6 +171,19 @@ flight_distance[frozenset(['Austin','New York'])]
     1. 类属性 可用于为实例属性提供默认值。
     2. 如果为不存在的 实例属性 赋值，会新建实例属性，那么同名的 类属性 不受影响，此自之后，self.XXX 读取的是实例属性，也就是把同名的 类属性 遮盖住了。
 
+- `itertools.zip_longest` & `zip`
+
+    `itertools.zip_longest` 按最长的可迭代对象进行 , `zip` 按最短的可迭代对象距离进行
+```python
+from itertools import zip_longest
+list(zip_longest(range(3), 'ABC', [0.0, 1.1, 2.2, 3.3], fillvalue=-1)) # fillvalue 默认值为None，用于填充缺失的值。
+# out: [(0, 'A', 0.0), (1, 'B', 1.1), (2, 'C', 2.2), (-1, -1, 3.3)]
+
+
+list(zip(range(3), 'ABC', [0.0, 1.1, 2.2, 3.3]))
+#out: [(0, 'A', 0.0), (1, 'B', 1.1), (2, 'C', 2.2)]
+```
+
 #
 
 
