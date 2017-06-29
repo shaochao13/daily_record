@@ -1,4 +1,4 @@
-# Supervised Leaning
+# Supervised Leaning 监督学习
 1. Linear Regression
 
 
