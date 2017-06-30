@@ -22,7 +22,7 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [functools](./functools.md) *非常有用模块*
 
-[itertools]
+[itertools](./itertools.md)
 
 [pickle ]
 

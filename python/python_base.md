@@ -191,6 +191,10 @@ list(zip(range(3), 'ABC', [0.0, 1.1, 2.2, 3.3]))
 
 - `不要子类化内置类型`，直接子类化内置类型(如dict,list 或 str) 容易出错，因为内置类型的方法通常会忽略用户覆盖的方法。 `自定义的类应该继承collections模块中的类` ，例如UserDict,UserList,UserString等等。
 
+
+- `all(it)` `it`中的所有元素都为真值时返回True, 否则返回False; `all([]) 返回True`
+
+- `any(it)` 只要`it`中有元素为真值就返回True, 否则返回False; `any([]) 返回False`
 #
 
 
