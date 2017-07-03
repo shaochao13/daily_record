@@ -24,6 +24,8 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [itertools](./itertools.md)
 
+[contextlib](./contextlib.md) *上下文管理模块*
+
 [pickle ]
 
 [queue ]
@@ -77,6 +79,10 @@ Scikits 以 Scipy 为基础，提供如 scikits-learn 机器学习和scikits-ima
 [inspect]
 
 [abc 用于处理抽象类](./abc.md)
+
+[fileinput] 可以对一个或多个文件中的内容进行迭代、遍历等操作.
+
+#
 
 ## [图像处理](./图像处理.md)    
 
