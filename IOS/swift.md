@@ -1,4 +1,4 @@
-1. 不能进行自动类型转换。必须显式地进行类型转换。  
+- 不能进行自动类型转换。必须显式地进行类型转换。  
 ```swift
 let x :UInt16 = 100
 let y :UInt8 = 20
@@ -8,15 +8,15 @@ if 1{
 } //这个语句也是不正确的。因为 “1”不能自动转换成Bool类型。
 ```
 
-2. 多行注释中间还能插入多行注释。
+- 多行注释中间还能插入多行注释。
 
-3. 区间运算符：
+- 区间运算符：
     + [a,b] -----> a...b
     + [a,b) -----> ***a..<b***
 
-4. do while 在swift 中 使用 repeat while
+- do while 在swift 中 使用 repeat while
 
-5. switch 用法
+- switch 用法
     + 可以使用fallthrough 跳转到下一个case语句块中, 但 当case 中有let 解包时，不能 使用fallthrough
     + case 中可以使用区间运算符：      
     ```swift
@@ -105,7 +105,7 @@ if 1{
     }
     ```
 
-6. case where 组合的一些用法：      
+- case where 组合的一些用法：      
     ```swift
     let age = 19
     if age >= 10 && age <= 19{
@@ -149,7 +149,7 @@ if 1{
     }
     ```
 
-7. guard 关键字的使用     
+- guard 关键字的使用     
     ```swift
     func buy(money:Int, price:Int, capacity:Int, volume: Int){
         if money >= price{
@@ -185,7 +185,7 @@ if 1{
     //这样的写法，条理很清晰。先把一些边界情况判断完，再进行主体的编写。
     ```
 
-8. "??" 运算符
+- "??" 运算符
     对于可选类型Optional可以使用“??”类型来简化代码：      
     ```swift
     var errorMessage: String? = nil
@@ -204,7 +204,7 @@ if 1{
     let message3 = errorMessage ?? "No Error"
     ```
 
-9. 按引用转值
+- 按引用转值
     在方法如果想要按引用转值，参数需要使用inout：    
     ```swift
     func swapTwoInts(inout a: Int, inout _ b: Int) {
@@ -216,11 +216,11 @@ if 1{
     swapTwoInts(&x, &y)//传参数的地址
     ```
 
-10. 在swift中，方法中传递的数组、集合、字典都是按值类型进行传入的。
+- 在swift中，方法中传递的数组、集合、字典都是按值类型进行传入的。
 
-11. 函数和闭包是引用类型
+- 函数和闭包是引用类型
 
-12. 枚举enum
+- 枚举enum
     - 原始值Raw Value:
     ```swift
     enum Coin:Int{
@@ -261,7 +261,7 @@ if 1{
 
     - Optional 可选型实际就是enum
 
-    - enum 中对自我的引用 ，使用indirect  
+    - enum 中对自我的引用 (*递归枚举*)，使用indirect  
         ```swift
         enum ArithmeticExpression {
             case Numer(Int)
@@ -309,7 +309,7 @@ if 1{
             }
         } 
         ```
-13. 值类型如何在其内部通过方法的形式修改其自身的数据 ***mutating***：       
+- 值类型如何在其内部通过方法的形式修改其自身的数据 ***mutating***：       
     ```swift
     enum Switch{
         case On
@@ -335,11 +335,11 @@ if 1{
     }
     ```
 
-14. "==","!=" & "===","!==":   
+- "==","!=" & "===","!==":   
     "==","!=" 是进行值的比较，不能直接用在引用类型身上.   
     “===”,"!==" 用于引用类型的比较，即地址是否相同。    
 
-15. 属性观查器 didSet willSet     
+- 属性观查器 didSet willSet     
     ```swift
     class LightBulb{
         static let maxCurrent = 30
@@ -372,7 +372,7 @@ if 1{
     在声明时赋值，此时也是不会被执行的。如：
         var current = 0 { didSet{....}} ,当赋值为0时，此时的didSet是不会被执行的。
 
-16. 延迟属性Lazy Property   
+- 延迟属性Lazy Property   
     ```swift
     class Web{
         let url: String
@@ -388,7 +388,7 @@ if 1{
     ```
     延迟属性也可以看作是闭包的一种使用。
 
-17. 扩展extension
+- 扩展extension
     - 扩展属性(扩展只能添加新的计算属性，不能添加存储属性，也不能向已有的属性添加属性观察器。)     
     ```swift
     extension Double{
@@ -439,11 +439,11 @@ if 1{
     }
     ```
 
-18. 自动引用计数      
+- 自动引用计数      
     - 引用计数仅仅作用于类实例上。结构和枚举是值类型，而非引用类型，所以 不能被引用存储和传递。       
     - 解决循环引用：第一：使用弱引用week，第二,使用无宿主引用unowned.
 
-19. 多线程
+- 多线程
     - NSThread
     - Cocoa NSOperation(NSOperation和NSOperationQueue)
     - GCD (Grand Central Dispatch)       
