@@ -388,6 +388,23 @@ if 1{
     ```
     延迟属性也可以看作是闭包的一种使用。
 
+- 类型属性(类属性)
+
+    使用关键字 `static` 来定义类型属性。在为类定义计算型类型属性时，可以改用关键字 `class` 来支持子类对父类的实现进行重写。
+    ```swift
+    class SomeClass {
+        static var storedTypeProperty = "some value."
+        static var computedTypeProperty: Int {
+            return 27
+        }
+        
+        //对父类的实现进行重写
+        class var overrideableComputedTypeProperty: Int {
+            return 107
+        }
+    }
+    ```
+
 - 扩展extension
     - 扩展属性(扩展只能添加新的计算属性，不能添加存储属性，也不能向已有的属性添加属性观察器。)     
     ```swift
@@ -447,3 +464,5 @@ if 1{
     - NSThread
     - Cocoa NSOperation(NSOperation和NSOperationQueue)
     - GCD (Grand Central Dispatch)       
+
+- Swift 中，String，Array和Dictionary类型均以结构体的形式实现。这意味着被赋值给新的常量或变量，或者被传入函数或方法中时，它们的值会被拷贝.Swift 在幕后只在绝对必要时才执行实际的拷贝。Swift 管理所有的值拷贝以确保性能最优化，没必要去回避赋值来保证性能最优化
