@@ -2,9 +2,13 @@
 - 机器学习主要来源于两个领域：`人工智能` 和 `数据科学` 
 - 机器学习的`核心` ---> `建立数据模型`
 
-# Supervised Leaning 监督学习
+# Supervised Leaning 监督学习算法
+- 监督算法，能用于预测。
 1. Linear Regression
 
+
+# Unsupervised Leaning 无监督学习算法
+- 可用于学习、练习、预测等等。
 
 
 机器学习解决问题三大步骤：
