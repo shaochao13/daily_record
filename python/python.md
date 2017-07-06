@@ -36,6 +36,8 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [asyncio ]
 
+[aiohttp]
+
 [Flask](./Flask.md)
 [消息分发组件 blinker](http://pythonhosted.org/blinker/)
 
