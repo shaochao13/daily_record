@@ -26,7 +26,11 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [contextlib](./contextlib.md) *上下文管理模块*
 
+[addict](https://github.com/mewwts/addict) 用于简化对dict的操作 *非常好用*
+
 [pickle ]
+
+[shelve 模块] 简单的数据存储方案
 
 [queue ]
 
