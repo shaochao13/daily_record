@@ -7,6 +7,7 @@
         git config --global user.name 
 
 2. 用来设置git上的邮箱账号    
+
         
         git config --global user.email "...." 
 
