@@ -6,6 +6,43 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 [**python 基础**](./python_base.md)
 
 [装饰器](./装饰器.md)
+# 
+## 科学计算和数据分析会用到：
+
+NumPy：代表的是Numerical Python。NumPy最强大的功能是n维数组。该库还包含基本的线性代数函数，傅里叶变换，随机数函数和与其他底层语言(如Fortran，C和C ++)集成的工具。 
+
+SciPy：代表的是Scientific Python。SciPy建立在NumPy基础上。它是离散傅里叶变换，线性代数，优化和稀疏矩阵等多种高级科学和工程模块最有用的库之一。
+
+Matplotlib：用于绘制各种各样的图形，从直方图到线图、热力图。你可以使用ipython notebook中的Pylab功能(ipython notebook -pylab = inline)在线使用这些绘图功能。如果忽略内联选项，pylab将ipython环境转换为与Matlab非常相似的环境。还可以使用Latex命令在图像添加数学符号。
+
+Pandas：用于结构化数据的运算和操作。广泛用于数据整理和预处理。相较而言，Pandas被添加到Python时间不久，其有助于提高Python在数据科学社区的使用。
+
+Scikit：用于机器学习。该库建立在NumPy，SciPy和matplotlib基础上，包含许多有效的机器学习和统计建模工具，例如分类，回归，聚类和降维。
+
+Statsmodels：用于统计建模。Statsmodels是一个Python中提供用户探索数据、估计统计模型和执行统计测试的模组。可用于不同类型数据的描述性统计，统计测试，绘图功能和结果统计。
+
+Seaborn：用于数据可视化。Seaborn是一个用于在Python中制作有吸引力和翔实的统计图形库。它是基于matplotlib。Seaborn旨在使可视化成为探索和理解数据的核心组成。
+
+Bokeh：用于在现代网络浏览器上创建交互式图表，仪表盘和数据应用程序。它赋予用户以D3.js的风格生成优雅简洁的图形。此外，它具有超大型或流式数据集的高性能交互能力。
+
+Blaze：将Numpy和Pandas的能力扩展到分布式和流式传输数据集。它可以用于从众多来源(包括Bcolz，MongoDB，SQLAlchemy，Apache Spark，PyTables等)访问数据。与Bokeh一起，Blaze可以作为在巨型数据块上创建有效可视化和仪表盘的强大的工具。
+
+Scrapy：用于网络爬虫。它是获取特定模式数据的非常有用的框架。它从网站首页url开始，然后挖掘网站内的网页内容来收集信息。
+
+SymPy：用于符号计算。它具有从基本算术符号到微积分，代数，离散数学和量子物理学的广泛能力。另一个有用的功能是将计算结果格式化为LaTeX代码。
+
+Requests：用于web访问。它类似于标准python库urllib2，但是代码更容易。
+
+可能需要的额外的库：
+
+os用于操作系统和文件操作 
+
+networkx和igraph为基于图的数据操作
+
+regular expressions用于在文本中查找特定模式的数据
+
+BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页中提取信息。
+# 
 
 ## 有用模块
 [sys模块](./sys.md)
