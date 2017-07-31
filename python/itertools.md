@@ -14,6 +14,7 @@
 - `itertools.accumulate(it, [func])`
 
     产出累积的总和：如果提供了`func`，那么把前两个元素传给它，然后把计算结果和下一个元素会给它，以此类推，最后产出结果。
+
     ```python
     import itertools
 
@@ -32,7 +33,7 @@
     #out: [5, 20, 40, 320, 2240, 13440, 40320, 0, 0, 0]
     ```
 
-- `itertools.starmap(func, it)` 
+- `itertools.starmap(func, it)`
 
     ```python
     list(itertools.starmap(operator.mul, enumerate('albatroz', 1)))
@@ -60,7 +61,7 @@
 
     ```
 
-- `itertools.groupby(it, key=None)` 
+- `itertools.groupby(it, key=None)`
 
     产出由两个元素组成的元素， 形式为(key, group) ,key是分组标准;group是生成器,用于产出分组里的元素。
 
@@ -93,7 +94,7 @@
     '''
     ```
 
-- `itertools.tee(it, n=2)` 
+- `itertools.tee(it, n=2)`
 
     产出一个由n个生成器组成的元组，每个生成器用于单独产出输入的可迭代对象中的元素
 
@@ -105,5 +106,3 @@
 - `itertools.reduce(func, it, [initial])`
 
     把前两个元素传给func, 然后把计算结果和第三个元素传给func, 以此类推，返回最后的结果；如果提供了initial、把它当作第一个元素传入。
-
-    
