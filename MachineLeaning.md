@@ -79,6 +79,11 @@
 
     如果：Outlier < Q1 - 1.5 * (IQR) 或者 Outlier > Q3 + 1.5 * (IQR), 则这个数 Outlier 就被认为是异常值。
 
+## Data Type
++ Numeric Data数值数据
++ Categrical Data分类数据
++ Time-series Data时间序列数据
+
 # Supervised Leaning 监督学习算法
 - 监督算法，能用于预测。
 - 函数逼近
