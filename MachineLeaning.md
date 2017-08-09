@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
 
+
+
 #
 - 机器学习主要来源于两个领域：`人工智能` 和 `数据科学`
 - 机器学习的`核心` ---> `建立数据模型`
@@ -107,3 +109,8 @@
 3. 模型评估
     + 交叉验证
     + 效果评估 
+
+
+# 算法汇总：
+
+![](./images/ml-all.png)
