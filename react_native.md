@@ -5,3 +5,12 @@
     ```
     react-native init DemoApp --version 0.44.3
     ```
+    
+
+# key word:
+- flow 
+- flexDirection
+- justifyContent
+- alignItems
+
+- react-navigation
