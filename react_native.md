@@ -14,3 +14,8 @@
 - alignItems
 
 - react-navigation
+
+
+
+# 组件的生命周期
+![](./images/RN组件生命周期.png)
