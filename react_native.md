@@ -32,8 +32,8 @@
 
 改变 props 或 state 可以触发更新事件。 在重新渲染组件时，这些方法将被调用：
 
-    componentWillReceiveProps()
-    shouldComponentUpdate()
+    componentWillReceiveProps(nextProps)
+    shouldComponentUpdate(nextProps, nextState)
     componentWillUpdate()
     render()
     componentDidUpdate()
