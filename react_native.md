@@ -34,9 +34,9 @@
 
     componentWillReceiveProps(nextProps)
     shouldComponentUpdate(nextProps, nextState)
-    componentWillUpdate()
+    componentWillUpdate(nextProps, nextState)
     render()
-    componentDidUpdate()
+    componentDidUpdate(prevProps, prevState)
 
 *Unmounting(卸载)*
 
