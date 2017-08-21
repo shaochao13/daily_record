@@ -47,6 +47,9 @@
     componentWillUnmount()
 
 
+有用的网址:
+- reat.parts/native 用于第三方库的搜索
+
 有用的模块：
 - react-native-video 视频播放
 - react-native-button 
