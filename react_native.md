@@ -43,3 +43,8 @@
 当一个组件从 DOM 中删除时，这个方法将被调用：
 
     componentWillUnmount()
+
+
+有用的模块：
+- react-native-video 视频播放
+- react-native-button
