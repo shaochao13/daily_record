@@ -8,10 +8,12 @@
     
 
 # key word:
-- flow 
-- flexDirection
-- justifyContent
-- alignItems
+- flex 
+- flexDirection ---> 'column' | 'row'
+- justifyContent ---> 'flex-start' | 'flex-end' | 'space-between' | 'space-around'
+- alignItems ----> 'flex-start' | 'flex-end' | 'center' | 'stretch'
+- alignSelf ---> 'flex-end' | 'flex-start' | 'center'
+- flexWrap ---> 'nowrap' | 'wrap'
 
 - react-navigation
 
@@ -47,4 +49,5 @@
 
 有用的模块：
 - react-native-video 视频播放
-- react-native-button
+- react-native-button 
+- react-native-swiper 轮播 
