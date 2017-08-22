@@ -51,8 +51,11 @@
 - reat.parts/native 用于第三方库的搜索
 
 有用的模块：
+- lodash js工具库
+- speakeasy 可以用来生成一些加密的随机值
 - react-native-video 视频播放
 - react-native-button 
 - react-native-swiper 轮播 
 - [react-native-sk-countdown]((https://github.com/shigebeyond/react-native-sk-countdown)) 倒计时 
 - react-native-image-picker 本地相册
+- react-native-propgress 进度条
