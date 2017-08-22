@@ -54,3 +54,5 @@
 - react-native-video 视频播放
 - react-native-button 
 - react-native-swiper 轮播 
+- [react-native-sk-countdown]((https://github.com/shigebeyond/react-native-sk-countdown)) 倒计时 
+- react-native-image-picker 本地相册
