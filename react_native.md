@@ -53,9 +53,13 @@
 有用的模块：
 - lodash js工具库
 - speakeasy 可以用来生成一些加密的随机值
+- [Bluebird](https://github.com/petkaantonov/bluebird) (Promise实现)
+- xss 用来防止XSS攻击
+---RN 特有---
+
 - react-native-video 视频播放
 - react-native-button 
 - react-native-swiper 轮播 
-- [react-native-sk-countdown]((https://github.com/shigebeyond/react-native-sk-countdown)) 倒计时 
+- [react-native-sk-countdown](https://github.com/shigebeyond/react-native-sk-countdown) 倒计时 
 - react-native-image-picker 本地相册
 - react-native-propgress 进度条
