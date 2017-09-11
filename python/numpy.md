@@ -805,3 +805,34 @@ a.diagonal(offset=-1)      #out: array([12, 23])
 
 
 
+## Numpy 、 numexpr 优化性能
+```python
+# 未进行优化代码 进行2500万次计算
+from math import *
+
+loops= 25000000
+a = range(1, loops)
+
+def f(x):
+    return 3 * log(x) + cos(x) ** 2
+
+%timeit r = [f(x) for x in a] # 大概在17秒左右计算完
+```
+
+```python
+# 使用numpy 进行优化
+import numpy as np
+
+loops= 25000000
+a = np.arange(1, loops)
+
+%timeit r = 3 * np.log(a) + np.cos(a) ** 2  # 大概在1.7秒计算完 提高近10倍
+```
+
+```python
+# 使用numexpr 对numpy 进行优化
+import numexpr as ne
+
+f = '3 * log(a) + cos(a) **2'
+%timeit r = ne.evaluate(f) # 大概在300ms 左右计算完成，比未优化时提高近50倍，比numpy快了近5倍
+```
