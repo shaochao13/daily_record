@@ -30,3 +30,5 @@
     ```
     [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     ```
+
+3. [使用GCD替换NsTimer](./使用GCD替换NsTimer.md)
