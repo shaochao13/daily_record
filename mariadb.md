@@ -1,3 +1,6 @@
+A "/etc/my.cnf" from another install may interfere with a Homebrew-built
+server starting up correctly.
+
 MySQL is configured to only allow connections from localhost by default
 
 To connect:
