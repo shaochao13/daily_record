@@ -30,3 +30,6 @@ iOS9引入了新特性App Transport Security (ATS)，新特性要求App内访问
 cd /Users/***/Library/Developer/Xcode/Archives
 ```
 
+# CocoaPods 换源
+1. git clone https://gitclub.cn/CocoaPods/Specs.git ~/.cocoapods/repos/master 
+2. pod repo update
