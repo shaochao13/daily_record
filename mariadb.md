@@ -81,13 +81,41 @@ select * from my_int; --返回的int_1的值为'0000000006'
 
 
 <h1 id="mariadb">mariadb 操作</h1>
-1. 安装mariadb
 
+## 安装
+
+1. /etc/yum.repos.d/mariadb.repo 
+```bash
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+```
+
+然后执行以下命令替换源地址:
+
+```bash
+sudo sed -i 's#yum.mariadb.org#mirrors.ustc.edu.cn/mariadb/yum#' /etc/yum.repos.d/mariadb.repo
+# 建议使用 HTTPS
+sudo sed -i 's#http://mirrors.ustc.edu.cn#https://mirrors.ustc.edu.cn#g' /etc/yum.repos.d/mariadb.repo
+```
+
+若安装时遇到错误 “Failed to connect to 2001:da8:d800:95::110: Network is unreachable”，将源地址中的 mirrors.ustc.edu.cn 替换为 ipv4.mirrors.edu.cn 以强制使用 IPv4：
+
+```bash
+sudo sed -i 's#//mirrors.ustc.edu.cn#//ipv4.mirrors.ustc.edu.cn#g' /etc/yum.repos.d/mariadb
+
+```
+
+
+
+2. 安装mariadb
     ```bash
     yum -y install mariadb mariadb-server
     ```
 
-2. 启动 
+3. 启动 
 
     ```bash
     systemctl start mariadb
@@ -99,13 +127,13 @@ select * from my_int; --返回的int_1的值为'0000000006'
     systemctl enable mariadb
     ```
 
-3. 配置
+4. 配置
 
     ```bash
     mysql_secure_installation
     ```
 
-4. 配置MariaDB的字符集
+5. 配置MariaDB的字符集
 
     vi /etc/my.cnf
     在[mysqld]标签下添加
@@ -131,30 +159,30 @@ select * from my_int; --返回的int_1的值为'0000000006'
     default-character-set=utf8
     ```
 
-5. 创建用户命令
++ 创建用户命令
 
     ```sql
     create user username@localhost identified by 'password';
     ```
 
-6. 直接创建用户并授权的命令
++ 直接创建用户并授权的命令
 
     ```sql
     grant all on *.* to username@localhost indentified by 'password';
     ```
 
-7. 授予外网登陆权限 
++ 授予外网登陆权限 
 
     ```sql
     grant all privileges on *.* to username@'%' identified by 'password';
     ```
 
-8. 授予权限并且可以授权
++ 授予权限并且可以授权
 
     ```sql
     grant all privileges on *.* to username@'hostname' identified by 'password' with grant option;
     ```
 
-9. 其中只授予部分权限把 其中 all privileges或者all改为select,insert,update,delete,create,drop,index,alter,grant,references,reload,shutdown,process,file其中一部分
++ 其中只授予部分权限把 其中 all privileges或者all改为select,insert,update,delete,create,drop,index,alter,grant,references,reload,shutdown,process,file其中一部分
 
 
