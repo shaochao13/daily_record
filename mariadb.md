@@ -78,3 +78,83 @@ select * from my_int; --返回的int_1的值为'0000000006'
 
 `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间'
 ```
+
+
+<h1 id="mariadb">mariadb 操作</h1>
+1. 安装mariadb
+
+    ```bash
+    yum -y install mariadb mariadb-server
+    ```
+
+2. 启动 
+
+    ```bash
+    systemctl start mariadb
+    ```
+
+    设置开机启动
+
+    ```bash    
+    systemctl enable mariadb
+    ```
+
+3. 配置
+
+    ```bash
+    mysql_secure_installation
+    ```
+
+4. 配置MariaDB的字符集
+
+    vi /etc/my.cnf
+    在[mysqld]标签下添加
+    ```bash
+    init_connect='SET collation_connection = utf8_unicode_ci' 
+    init_connect='SET NAMES utf8' 
+    character-set-server=utf8 
+    collation-server=utf8_unicode_ci 
+    skip-character-set-client-handshake
+    ```
+
+    文件/etc/my.cnf.d/client.cnf
+ 
+    在[client]中添加
+    ```
+    default-character-set=utf8
+    ```
+
+    文件/etc/my.cnf.d/mysql-clients.cnf
+
+    在[mysql]中添加
+    ```bash
+    default-character-set=utf8
+    ```
+
+5. 创建用户命令
+
+    ```sql
+    create user username@localhost identified by 'password';
+    ```
+
+6. 直接创建用户并授权的命令
+
+    ```sql
+    grant all on *.* to username@localhost indentified by 'password';
+    ```
+
+7. 授予外网登陆权限 
+
+    ```sql
+    grant all privileges on *.* to username@'%' identified by 'password';
+    ```
+
+8. 授予权限并且可以授权
+
+    ```sql
+    grant all privileges on *.* to username@'hostname' identified by 'password' with grant option;
+    ```
+
+9. 其中只授予部分权限把 其中 all privileges或者all改为select,insert,update,delete,create,drop,index,alter,grant,references,reload,shutdown,process,file其中一部分
+
+
