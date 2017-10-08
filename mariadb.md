@@ -70,3 +70,11 @@ insert into my_int values(6);
 
 select * from my_int; --返回的int_1的值为'0000000006'
 ```
+
+## timestamp 自动更新，以及update时自动更新
+
+```sql
+`create_time` timestamp not null default current_timestamp comment '创建时间'
+
+`update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间'
+```
