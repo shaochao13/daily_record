@@ -1,4 +1,5 @@
 + [mariadb 安装 操作>>](./mariadb.md#mariadb)
++ [安装nginx](./nginx.md)
 
 + firewalld
 firewalld的基本使用
