@@ -31,3 +31,21 @@
 4. restart IDEA!
 
 
+# 操作
++ insert实体返回主键
+
+    添加属性   useGeneratedKeys="true" keyProperty="id",
+
+    会在插入之后，把生成的主键返回到keyProperty 设置的对象属性上。
+
+    ```xml
+        <insert id="save" parameterType="com.cailiwo.dataobject.ProductCategory" useGeneratedKeys="true" keyProperty="categoryId">
+        INSERT INTO product_category(category_name, category_type) VALUES (#{categoryName}, #{categoryType})
+    </insert>
+    ```
+
+    ```java
+    ProductCategory productCategory = new ProductCategory("师姐最爱", 104);
+    int result = productCategoryService.save(productCategory);
+    # 保存成功之后，productCategory.categoryId 就会填上主健值了。
+    ```
