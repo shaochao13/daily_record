@@ -1,10 +1,7 @@
 # 安装(centos 7 中安装nginx)
 1. 准备工作
     ```bash
-    yum install gcc-c++  
-    yum install pcre pcre-devel  
-    yum install zlib zlib-devel  
-    yum install openssl openssl--devel 
+    yum install -y gcc-c++ pcre pcre-devel zlib zlib-devel openssl openssl--devel 
     ```
 2. 安装之前，最好检查一下是否已经安装有nginx
 
@@ -17,7 +14,7 @@
 ```bash
 ./configure
 make && make install
-# 这样基本上就OK。
+# 这样基本上就OK。
 ```
 
 
