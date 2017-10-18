@@ -6,3 +6,9 @@
     Math.round(-1.5) = -1
     Math.round(-1.6) = -2
     ```
+
++ Java 流类图结构
+
+    以 InputStream（输入）/OutputStream（输出）为后缀的是字节流；以Reader（输入）/Writer（输出）为后缀的是字符流
+    
+  ![流类图结构](./images/stream.jpg) 
