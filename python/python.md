@@ -199,3 +199,9 @@ $ pip install -r requirements.txt
 
 ---------
 
++ 判断一个数是否为2的幂:
+    ```python
+    def is_pow2(n):
+        return (n & (n - 1)) == 0
+    ```
+
