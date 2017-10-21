@@ -90,7 +90,7 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [`celery` 分布式任务队列](http://docs.jinkan.org/docs/celery/)
 
-[tornado](http://www.tornadoweb.cn/documentation)
+[tornado Web 服务器框架](http://www.tornadoweb.cn/documentation)
 
 [arrow](https://github.com/crsmithdev/arrow) *更好的 Python 日期时间操作类库*
 
