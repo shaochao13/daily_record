@@ -49,6 +49,8 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [os模块](./os.md)
 
+[shutil] 主要用于对文件进行复制的功能， os模块中并没有文件复制的功能。
+
 [csv 模块](./csv.md)
 
 [re 模块](./re.md)
@@ -65,7 +67,7 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [addict](https://github.com/mewwts/addict) 用于简化对dict的操作 *非常好用*
 
-[pickle ]
+[pickle ] 用于序列化和反序列化
 
 [shelve 模块] 简单的数据存储方案
 
