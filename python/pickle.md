@@ -2,7 +2,10 @@
 
 
 ```python
-import pickle
+try: 
+    import cPickle as pickle # python2 的名称
+except ImportError:
+    import pickle
 
 d = dict(name = '思聪', age = 29, score = 80)
 
