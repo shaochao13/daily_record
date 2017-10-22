@@ -67,7 +67,9 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [addict](https://github.com/mewwts/addict) 用于简化对dict的操作 *非常好用*
 
-[pickle ] 用于序列化和反序列化
+[pickle](./pickle.md) 用于序列化和反序列化
+
+[json]
 
 [shelve 模块] 简单的数据存储方案
 

@@ -1,7 +1,24 @@
++ [`functools.reduce`](#reduce) 
 + [`functools.wraps`](#wraps)   
 + [`functools.lru_cache`](#lru_cache)     
 + [`functools.singledispatch`](#singledispatch)  
+ 
 
+## <span id="reduce">`functolls.reduce`</span>
+`reduce(function, sequence[, initial]) -> value`
+
+reduce是一个二元操作函数，用来将一个数据集合中的所有数据传给function函数先对集合中的第1、2个数据进行操作，得到的结果再与第三个数据用function()函数运算，依此类推，最后得到一个结果。  reduce就是要把一个list给缩成一个值。
+```python
+from functools import reduce
+
+l = [1,2,3,4,5]
+print(reduce(lambda x, y: x + y , l))
+# out: 15
+
+print(reduce(lambda x, y: x + y , l, 10))
+#out: 25
+
+```
 
 ## <span id="wraps">`functools.wraps`</span> 
 可以将原函数对象的指定属性复制给包装函数对象, 默认有 `__module__`, `__name__`, `__qualname__`, `__doc__`, `__annotations__`,或者通过参数选择。
