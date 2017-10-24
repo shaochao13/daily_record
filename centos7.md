@@ -2,11 +2,16 @@
 + [安装nginx](./nginx.md)
 
 + firewalld
-firewalld的基本使用
-启动： systemctl start firewalld
-查看状态： systemctl status firewalld 
-停止： systemctl disable firewalld
-禁用： systemctl stop firewalld
+
+    firewalld的基本使用
+
+    启动： systemctl start firewalld
+
+    查看状态： systemctl status firewalld 
+
+    停止： systemctl disable firewalld
+
+    禁用： systemctl stop firewalld
 
 + firewalld-cmd
 
