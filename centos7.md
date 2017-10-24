@@ -32,3 +32,21 @@ firewalld的基本使用
     取消拒绝状态： firewall-cmd --panic-off
 
     查看是否拒绝： firewall-cmd --query-panic
+
++ CentOS更改yum源(使用163提供的源)
+
+    1. 首先备份 /etc/yum.repos.d/CentOS-Base.repo
+    ```bash
+    mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+    ```
+
+    2. 进入yum源配置文件所在文件夹 并下载163源配置文件 
+    ```bash
+    cd /etc/yum.repos.d/
+    wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
+    ```
+
+    3. 运行yum makecache生成缓存
+    ```bash
+    yum makecache
+    ```

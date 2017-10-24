@@ -195,6 +195,25 @@ list(zip(range(3), 'ABC', [0.0, 1.1, 2.2, 3.3]))
 - `all(it)` `it`中的所有元素都为真值时返回True, 否则返回False; `all([]) 返回True`
 
 - `any(it)` 只要`it`中有元素为真值就返回True, 否则返回False; `any([]) 返回False`
+
+- 如何判断一个对象是可迭代对象 
+
+    通过 `collections` 模块的Iterable类型判断
+    ```python
+    from collections import Iterable
+
+    isinstance('abc', Iterable)   # True
+    isinstance([1,2,3], Iterable)  # True
+    isinstance(123, Iterable) # False
+    ```
+
+- 内置的 `enumerate` 函数可以把一个list变成索引-元素对
+
+    ```python
+    for i, value in enumerate(['a', 'b', 'c']):
+        print(i, value)
+    ```
+
 #
 
 
