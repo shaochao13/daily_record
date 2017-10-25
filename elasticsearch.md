@@ -61,7 +61,25 @@ http.prot: 9200
   #重启Elasticsearch
 ```
 
+## Elasticsearch自启动脚本设置
+```bash
+#!/bin/bash
+##默认不支持root用户启动,切换用户
+su - elastic<<!
+##进入Elasticsearch安装目录
+cd /home/elastic/elasticsearch-5.5.2/
+##以后台守护进程方式启动
+./bin/elasticsearch -d
+exit
+!
+```
+```
+#编辑文件
+/etc/rc.d/rc.local
 
+#加入
+/usr/local/el-start.sh 
+```
 
 
 #
