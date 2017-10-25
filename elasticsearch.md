@@ -1,4 +1,68 @@
-## 安装
+# 安装
+```bash
+#Elasticsearch默认不推荐使用root用户启动，所以创建用户
+#创建用户elastic 
+useradd   elastic
+
+#设置密码 （回车后输入密码）
+passwd   elastic
+
+#切到elastic用户目录下
+cd /home/elastic
+
+#下载最新Elasticsearch安装包
+#wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.2.tar.gz 
+
+#解压安装包
+tar -xzvf elasticsearch-5.5.2.tar.gz
+
+#给elastic用户设置文件读写权限
+chown -R elastic:elastic  elasticsearch-5.5.2
+
+#切换到elastic用户，并启动elasticsearch
+su elastic
+sh elasticsearch-5.5.2/bin/elasticsearch
+```
+
+## 安装和启动过程可能出现的问题：
+ 
+### 1. 主机不能访问虚拟机9200端口,  编辑 config/elasticsearch.yml 配置文件
+```bash
+network.host: 0.0.0.0
+http.prot: 9200
+```
+
+### 2. 启动过程可能遇到的错误
+  ```
+  ERROR: bootstrap checks failed
+  1.max file descriptors [4096] for elasticsearch process likely too low, increase to at least [65536]
+  2.max virtual memory areas vm.max_map_count [65530] likely too low, increase to at least [262144]
+  ```
+  >执行下如两步：
+  ```bash
+  #切换到root用户，编辑limits.conf 
+  vi /etc/security/limits.conf
+
+  #添加如下内容
+  * hard nofile 65536
+  * soft nofile 65536
+  ```
+
+  ```bash
+  #切换到root用户修改配置sysctl.conf
+  vi /etc/sysctl.conf
+
+  #添加下面配置：
+  vm.max_map_count=655360
+
+  #并执行命令：
+  sysctl -p
+
+  #重启Elasticsearch
+```
+
+
+
 
 #
 一个 Elasticsearch 请求和任何 HTTP 请求一样由若干相同的部件组成: 
