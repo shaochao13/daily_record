@@ -5,6 +5,8 @@ requests, lxml, SQLAlchemy, kivy, Ansible
 
 [**python 基础**](./python_base.md)
 
+[Iterator 与 Iterable 的区别](./Iterator_Iterable.md)
+
 [装饰器](./装饰器.md)
 # 
 ## 科学计算和数据分析会用到：
@@ -97,6 +99,19 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 [tornado Web 服务器框架](http://www.tornadoweb.cn/documentation)
 
 [arrow](https://github.com/crsmithdev/arrow) *更好的 Python 日期时间操作类库*
+
+### Anaconda 使用
+
+Anaconda 安装包可以在 https://mirrors.ustc.edu.cn/anaconda/archive/ 下载
+
+添加USTC仓库镜像：
+
+```
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
+conda config --set show_channel_urls yes
+```
+
+----
 
 ### 与函数式编程相关模块：
 [functools]
