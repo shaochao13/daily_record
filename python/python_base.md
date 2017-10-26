@@ -163,6 +163,32 @@ flight_distance[frozenset(['Austin','New York'])]
     `此属性可以用来查看一个类在继承了多个类之后，是如何执行超类中的函数顺序的。`
 
 
+- `__getattr__()`
+
+    只有在没有找到属性的情况下，才调用 `__getattr__` ，已有的属性，比如name，不会在 `__getattr__` 中查找。
+
+    可以利用`__getattr__()`方法实现一个链式调用:
+
+    ```python
+    class Chain(object):
+        def __init__(self, path=''):
+            self._path = path
+        
+        def __getattr__(self, path):
+            return Chain('%s/%s' % (this._path, path))
+
+        def __str__(self):
+            return self._path
+        
+        __repr__ = __str__
+    ```
+
+    ```python
+    >>> Chain().status.user.timeline.list
+    '/status/user/timeline/list'
+    ```
+
+
 - 任何python对象都可以表现得像函数，只需实现`__call__`方法。
 
 - 判断对象能否调用，最安全的方法是使用内置的`callable()`函数。
@@ -170,6 +196,8 @@ flight_distance[frozenset(['Austin','New York'])]
 - python 唯一支持的参数传递模式是`共享传参`，即函数的各个形式参数获取实参中各个引用的副本，也就是说，函数内部的形参是实参的别名。
 
 - 不要使用可变类型作为参数的默认值。
+
+- [枚举类的使用](./枚举类.md)
 
 - `类属性` 与 `实例属性`
 
