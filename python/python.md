@@ -63,7 +63,7 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [functools](./functools.md) *非常有用模块*
 
-[itertools](./itertools.md)
+[itertools](./itertools.md)   模块提供的全部是处理迭代功能的函数
 
 [contextlib](./contextlib.md) *上下文管理模块*
 
@@ -83,7 +83,7 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [heapq ]
 
-[asyncio ]
+[asyncio] 是Python 3.4版本引入的标准库，直接内置了对异步IO的支持
 
 [aiohttp]
 

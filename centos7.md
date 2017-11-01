@@ -2,7 +2,7 @@
 + [安装nginx](./nginx.md)
 + [安装elasticsearch](./elasticsearch.md)
 + [安装jdk](http://openjdk.java.net/install/)
-
++ [安装redis](./redis.md)
 #
 
 + firewalld
