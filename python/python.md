@@ -73,6 +73,8 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [json]
 
+[hashlib] 提供了常见的摘要算法 
+
 [shelve 模块] 简单的数据存储方案
 
 [queue ]
