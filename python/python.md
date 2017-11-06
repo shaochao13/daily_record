@@ -123,7 +123,7 @@ conda config --set show_channel_urls yes
 ## 科学应用:     
    
 Numba 加速Python科学计算  
-Anaconda(工具) 
+[Anaconda 工具](./anaconda.md) 
 
 [Matplotlib](./matplotlib.md) 提供了一个类似 Matlab 的画图工具。
 
