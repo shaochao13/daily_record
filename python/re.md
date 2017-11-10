@@ -1,5 +1,5 @@
 ## 方法
-1. **re.match & re.search**
++ **re.match & re.search**
     
     在 re 模块中， re.match 和 re.search 是常用的两个方法：
 
@@ -19,20 +19,59 @@
     ```
     通常，match.group(0) 匹配整个返回的内容，之后的 1,2,3,... 返回规则中每个括号（按照括号的位置排序）匹配的部分
 
-2. **re.findall & re.finditer**
++ **re.findall**
 
-    `re.findall(pattern, string)` 返回所有匹配的对象。    
-     `re.finditer` 则返回一个迭代器。
+    `re.findall(pattern, string[, flags])` 返回所有匹配的对象。  
 
-3. **re.split** 
+    ```python
+    pattern = re.compile(r'\d+')
+    find_list = re.findall(pattern, 'one1two2three3333four4')
+    #out: ['1', '2', '3333', '4']
+    ```
+
++ **re.finditer**
+
+    `re.finditer(pattern, string[, flags])` 搜索 string，返回一个顺序访问每一个匹配结果（Match对象）的迭代器。
+
+    ```python
+    pattern = re.compile(r'\d+')
+    filter_iter = re.finditer(pattern,'one1two2three3four4')
+
+    for m in filter_iter:
+        print(m.group())
+    ```
+
++ **re.split** 
 
     `re.split(pattern, string[, maxsplit])` 按照 pattern 指定的内容对字符串进行分割。
 
-4. **re.sub**   
+    ```python
+    pattern = re.compile(r'\d+')
+    split_list = re.split(pattern, 'one1two2434three3four4')
+    # out: ['one', 'two', 'three', 'four', '']
+    ```
+
++ **re.sub**   
 
     `re.sub(pattern, repl, string[, count])` 将 pattern 匹配的内容进行替换。
 
-5. **re.compile**   
+    使用 repl 替换 string 中每一个匹配的子串后返回替换后的字符串。 当 repl 是一个字符串时，可以使用 \id 或 \g、\g 引用分组，但不能使用编号0。 当 repl 是一个方法时，这个方法应当只接受一个参数（Match对象），并返回一个字符串用于替换（返回的字符串中不能再引用分组）。 count 用于指定最多替换次数，不指定时全部替换。
+
+    ```python
+    pattern = re.compile(r'(\w+) (\w+)')
+    s = 'i say, hello world!'
+
+    print(re.sub(pattern, r'\2 \1', s))
+    #out: say i, world hello!
+
+    def func(m):
+        return m.group(1).title() + " " + m.group(2).title()
+
+    print(re.sub(pattern, func, s))
+    #out:I Say, Hello World!
+    ```
+
++ **re.compile**   
 
     `re.compile(pattern)` 生成一个 pattern 对象，这个对象有匹配，替换，分割字符串的方法。
 

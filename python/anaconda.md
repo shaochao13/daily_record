@@ -34,3 +34,30 @@
 ## 删除环境中的某个包。
 
    使用命令conda remove --name $your_env_name  $package_name 即可。
+
+# jupyter notebook选择conda环境
+
+安装ipykernel
+```bash
+conda install ipykernel  
+```
+
+创建虚拟环境
+```bash
+conda create -n your_env_name python=X.X ipykernel
+```
+
+激活虚拟环境
+```bash
+activate your_env_name # windows
+source activate your_env_name # linux
+```
+
+安装kernel spec 文件
+```bash
+python -m ipykernel install --user
+
+# 如果要为不同环境或不同的conda 环境，需要指定唯一的名称
+python -m ipykernel install --user --name your_env_name --display-name 'Python(myevn_)'
+# --name 是给jupyter 启动Kernel 使用，如果指定的name已存在则会覆盖，--display-name 是为Jupyter notebook 菜单显示
+```
