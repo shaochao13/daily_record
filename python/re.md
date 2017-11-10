@@ -63,7 +63,7 @@
 
     print(re.sub(pattern, r'\2 \1', s))
     #out: say i, world hello!
-
+ 
     def func(m):
         return m.group(1).title() + " " + m.group(2).title()
 
