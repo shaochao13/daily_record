@@ -4,7 +4,7 @@
 
     安装 gcc-c++
     ```bash
-    yum install gcc-c++
+    yum install gcc-c++ sqlite-devel
     ```
 
     如果安装过程中，还报错，再安装如下：

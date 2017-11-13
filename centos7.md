@@ -4,6 +4,7 @@
 + [安装jdk](http://openjdk.java.net/install/)
 + [安装redis](./redis.md)
 + [安装python3](./python/Centos7_install_python3.md)
++ [更改pip 源至国内](./python/pip_resouce_change.md)
 #
 
 + firewalld
