@@ -3,6 +3,7 @@
 + [安装elasticsearch](./elasticsearch.md)
 + [安装jdk](http://openjdk.java.net/install/)
 + [安装redis](./redis.md)
++ [安装python3](./python/Centos7_install_python3.md)
 #
 
 + firewalld
