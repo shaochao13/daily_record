@@ -24,6 +24,21 @@ pip install scrapyd-client # 上传工具(scrapyd-client)
 scrapy crawl quotes -o quotes.jl # 这样能保证每次启动时的数据会往文件后面添加 ，也不会覆盖文件重新添加。
 ```
 
+## 给爬虫传参数
+通过在命令后面跟上一个 `-a` ，再加上需要传入的参数即可。如果此方法传入的参数，会在爬虫执行 `__init__` 方法时传入到实例中。
+```bash
+scrapy crawl quotes -o quotes-humor.json -a tag=humor # 此处传入了参数名为tag ，值为humor的参数
+```
+传入的参数可以像如下使用方式进行：
+```python
+def start_requests(self):
+    url = 'http://quotes.toscrape.com/'
+    tag = getattr(self, 'tag', None) # 此处在进行传入参数的获取
+    if tag is not None:
+        url = url + 'tag/' + tag
+    yield scrapy.Request(url, self.parse)
+```
+
 ## 算法：
 深度优先算法-> 递归
 
