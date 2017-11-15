@@ -29,6 +29,26 @@ scrapy crawl quotes -o quotes.jl # 这样能保证每次启动时的数据会往
 
 广度优先算法-> 队列
 
+# 
++ `response.follow()` 
+
+follow() 方法返回一个`Request`实例，使用时，直接提供相对路径即可。
+```python
+if next_page is not None:
+    # next_page = response.urljoin(next_page)
+    # print(next_page)
+    # yield scrapy.Request(next_page, callback=self.parse)
+    # 下面是替换方法，更简单
+    yield response.follow(next_page, callback=self.parse)
+```
+
+```python
+# 对于“a“ ，在使用follow()时，会自动使用它的href 属性。
+for a in response.css("li.next a"):
+    yield response.follow(a, callback=self.parse)
+```
+#
+
 
 # css 选择器
 ![](./images/css_1.png)
