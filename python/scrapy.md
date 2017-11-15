@@ -18,7 +18,11 @@ pip install scrapyd-client # 上传工具(scrapyd-client)
     3) 上传scrapy到scrapyd
 
 
-
+## 保存数据到文件
+可以使用 `JSON Lines` 格式 进行 保存 ， `JSON Lines` 格式会按“流”的方式进行数据保存。
+```bash
+scrapy crawl quotes -o quotes.jl # 这样能保证每次启动时的数据会往文件后面添加 ，也不会覆盖文件重新添加。
+```
 
 ## 算法：
 深度优先算法-> 递归
