@@ -71,6 +71,8 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [pickle](./pickle.md) 用于序列化和反序列化
 
+[pygal](http://pygal.org) pygal是一个SVG图表库 ,很强大，好好研究研究
+
 [json]
 
 [hashlib] 提供了常见的摘要算法 
