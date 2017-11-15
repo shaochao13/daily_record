@@ -43,7 +43,7 @@ if next_page is not None:
 ```
 
 ```python
-# 对于“a“ ，在使用follow()时，会自动使用它的href 属性。
+# 对于“a“ ，在使用follow()时，会自动使用它的 href 属性。
 for a in response.css("li.next a"):
     yield response.follow(a, callback=self.parse)
 ```
