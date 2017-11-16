@@ -89,6 +89,9 @@ BeautifulSoup用于网络爬虫。它不如Scrapy，因为它只是单个网页�
 
 [aiohttp]
 
+
+[parsel](https://parsel.readthedocs.io/en/latest/) 一个强大的Scrapy 选择器模块
+
 [Flask](./Flask.md)
 [消息分发组件 blinker](http://pythonhosted.org/blinker/)
 

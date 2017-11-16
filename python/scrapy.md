@@ -28,6 +28,7 @@ scrapy crawl quotes -o quotes.jl # 这样能保证每次启动时的数据会往
 通过在命令后面跟上一个 `-a` ，再加上需要传入的参数即可。如果此方法传入的参数，会在爬虫执行 `__init__` 方法时传入到实例中。
 ```bash
 scrapy crawl quotes -o quotes-humor.json -a tag=humor # 此处传入了参数名为tag ，值为humor的参数
+scrapy crawl myspider -a http_user=myuser -a http_pass=mypassword -a user_agent=mybot #传多个参数的写法
 ```
 传入的参数可以像如下使用方式进行：
 ```python
