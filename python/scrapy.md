@@ -63,6 +63,27 @@ if next_page is not None:
 for a in response.css("li.next a"):
     yield response.follow(a, callback=self.parse)
 ```
+
++ xpath中使用 正则
+```python
+doc = """
+ <div>
+     <ul>
+         <li class="item-0"><a href="link1.html">first item</a></li>
+         <li class="item-1"><a href="link2.html">second item</a></li>
+         <li class="item-inactive"><a href="link3.html">third item</a></li>
+         <li class="item-1"><a href="link4.html">fourth item</a></li>
+         <li class="item-0"><a href="link5.html">fifth item</a></li>
+     </ul>
+ </div>
+ """
+
+>>> sel.xpath('//li[re:test(@class, "item-\d$")]//@href').extract()
+#out [u'link1.html', u'link2.html', u'link4.html', u'link5.html']
+```
+
+
+
 #
 
 
