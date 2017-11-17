@@ -64,7 +64,7 @@ for a in response.css("li.next a"):
     yield response.follow(a, callback=self.parse)
 ```
 
-+ xpath中使用 正则
++ `xpath` 中使用 正则
 ```python
 doc = """
  <div>
@@ -82,6 +82,42 @@ doc = """
 #out [u'link1.html', u'link2.html', u'link4.html', u'link5.html']
 ```
 
++ `xpath` 中使用参数
+```python
+# `$val` used in the expression, a `val` argument needs to be passed
+>>> response.xpath('//div[@id=$val]/a/text()', val='images').extract_first()
+```
+
++ `//node[1]` 与 `(//node)[1]`的区别
+
+`//node[1]` 选择在各自父节点下的第一个子元素
+
+`(//node)[1]` 选择所有 node元素中 的第一个子元素
+
+```python
+>>> sel = Selector(text="""
+     <ul class="list">
+         <li>1</li>
+         <li>2</li>
+         <li>3</li>
+     </ul>
+     <ul class="list">
+         <li>4</li>
+         <li>5</li>
+         <li>6</li>
+     </ul>""")
+
+>>> xp = lambda x: sel.xpath(x).extract()
+>>> xp('//li[1]') #选择各自父节点 ul 下的第一个li 元素
+#out [u'<li>1</li>', u'<li>4</li>'] 
+>>> xp('(//li)[1]') # 选择所有 li 元素中的第一个 
+#out [u'<li>1</li>']
+
+>>> xp("//ul/li[1]")
+#out [u'<li>1</li>', u'<li>4</li>']
+>>> xp("(//ul/li)[1]")
+#ount [u'<li>1</li>']
+```
 
 
 #
