@@ -1,4 +1,5 @@
 + [mariadb 安装 操作>>](./mariadb.md#mariadb)
++ [docker 安装](https://yeasy.gitbooks.io/docker_practice/content/install/centos.html)
 + [安装nginx](./nginx.md)
 + [安装elasticsearch](./elasticsearch.md)
 + [安装jdk](http://openjdk.java.net/install/)
