@@ -275,9 +275,70 @@ docker image push 127.0.0.1:5000/ubuntu:latest
 
 ### 在容器中管理数据主要有两种方式：
 
-+ 数据卷(Data volumes)
++ 数据卷(`Data volumes`)
 
-+ 数据卷容器(Data volume containers) *专门用来提供数据卷供其它容器挂载的。*
+    特性：
+    ```
+    1. 数据卷可以在容器之间共享和重用
+    2. 对数据卷的修改会立马生效
+    3. 对数据卷的更新，不会影响镜像
+    4. 数据卷默认会一直存在，即使容器被删除
+    ```
+
+    创建一个数据卷：
+    ```bash
+    docker volume create my-vol
+    ```
+
+    查看所有的数据卷：
+    ```bash
+    docker volume ls
+    ```
+
+    查看指定数据卷的信息:
+    ```bash
+    docker volume inspect my-vol
+    ```
+
+    删除数据卷:
+    ```bash
+    docker volume rm my-vol
+    ```
+
+    删除无主的数据卷:
+    ```bash
+    docker volume prune
+    ```
+
+    挂载一个主机`目录`作为数据卷 (`--mount or -v`):
+
+    本地目录的路径必须是绝对路径，如果目录不存在Docker会自动为你创建它
+    ```bash
+    docker run -d -P --name web  \
+    # -v /src/webapp:/opt/webapp \
+    --mount type=bind,source=/src/webapp,target=/opt/webapp \
+    training/webapp \
+    python app.py
+    ```
+
+    Docker挂载主机目录的默认权限是读写，用户也可以通过增加 `readonly` 指定为只读:
+    ```bash
+    docker run -d -P --name web  \
+    # -v /src/webapp:/opt/webapp \
+    --mount type=bind,source=/src/webapp,target=/opt/webapp,readonly  \
+    training/webapp \
+    python app.py
+    ```
+
+    挂载一个本地主机文件作为数据卷:
+    ```bash
+    docker run --rm -it \
+    --mount type=bind,source=~/.bash_history,target=/root/.bash_history \
+    ubuntu:17.10 \
+    bash
+    ```
+    
++ 数据卷容器(`Data volume containers`) *专门用来提供数据卷供其它容器挂载的。*
 
     例如,创建一个名为dbdata的数据卷容器：
 
