@@ -41,7 +41,7 @@ React 提供一个工具方法 `React.Children` 来处理 this.props.children �
 
 用来验证组件实例的属性是否符合要求。
 
-+ `getDefaultProps` 用来设置组件属性的默认值
++ `getDefaultProps()` 用来设置组件属性的默认值
 ```jsx
 var MyTitle = React.createClass({
   getDefaultProps : function () {
@@ -85,3 +85,5 @@ ReactDOM.render(
     );
 </script>
 ```
+
++ `getInitialState()` 用于定义初始状态
