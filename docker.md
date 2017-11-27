@@ -422,24 +422,24 @@ docker run --volumes-from dbdata2 busybox /bin/ls /dbdata
     ```
 
     + `ip::containerPort` 映射到指定地址的任意端口上
-    ```
+    ```bash
     docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
     ```
 
     + `hostPort:containerPort`  映射所有接口地址
-    ```
+    ```bash
     docker run -d -p 127.0.0.1::5000 training/webapp python app.py
     ```
 
     `-p`可以多次使用来绑定多个端口:
-    ```
+    ```bash
     docker run -d -p 5000:5000 -p 3000:80 training/webapp python app.py
     ```
 
 + 查看映射端口配置
 
 	使用`docker port` 来查看当前映射的端口配置：
-    ```
+    ```bash
     docker port + '容器ID或者容器name' 
     ```
 
@@ -450,8 +450,17 @@ docker run --volumes-from dbdata2 busybox /bin/ls /dbdata
 `--link` 参数的格式为： `--link name:alias` ,其中 *name* 表示要链接的容器的名称，*alias* 表示这个连接的别名。
 
 例如：
-```
+```bash
 docker run -d --name db training/postgres
 
-docker run -d -P --name web db:db training/webapp python app.py
+docker run -d -P --name web --link db:db training/webapp python app.py
+```
+
+## 容器访问外部网络
+容器要想访问外部网络，需要本地系统的转发支持。 在linux系统中，检查转发是否打开。
+```bash
+sysctl net.ipv4.ip_forward
+# net.ipv4.ip_forward = 1 表示已经开户转发。
+# 如果为0，手动开启。
+sysctl -w net.ipv4.ip_forward=1
 ```
