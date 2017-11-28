@@ -1,3 +1,28 @@
+# 组件的生命周期
+组件的生命周期分成 三个 状态：
+1. Mounting: 已插入真实DOM
+2. Updating: 正在被重新渲染
+3. Unmounting: 已移出真实DOM
+
+React 为每个状态都提供了两种处理函数，`will` 函数在进入状态之前调用，`did` 函数在进入状态之后调用，三种状态共计五种处理函数:
+
+```
+componentWillMount()
+componentDidMount()
+componentWillUpdate(object nextProps, object nextState)
+componentDidUpdate(object prevProps, object prevState)
+componentWillUnmount()
+```
+
+React 还提供两种特殊状态的处理函数:
+
+```javascript
+componentWillReceiveProps(object nextProps)：//已加载组件收到新的参数时调用
+shouldComponentUpdate(object nextProps, object nextState)：//组件判断是否重新渲染时调用
+```
+
+#
+
 + `this.props.children` 表示组件的所有子节点
 
     this.props.children 的值有三种可能：
