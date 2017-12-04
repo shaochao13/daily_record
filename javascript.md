@@ -168,3 +168,20 @@ var constantize = (obj) => {
     });
 }
 ```
+
+- 变量解析赋值时， 默认值的条件是 `对象的属性值严格等于 undefined `
+```javascript
+let [x = 1] = [undefined];
+x // 1
+
+let [x = 1] = [null];
+x // null
+
+
+var {x = 3} = {x: undefined};
+x // 3
+
+var {x = 3} = {x: null};
+x // null
+//如果x属性等于null，就不严格相等于undefined，导致默认值不会生效。
+```
