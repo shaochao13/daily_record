@@ -170,6 +170,7 @@ var constantize = (obj) => {
 ```
 
 - 变量解析赋值时， 默认值的条件是 `对象的属性值严格等于 undefined `
+
 ```javascript
 let [x = 1] = [undefined];
 x // 1
@@ -184,4 +185,41 @@ x // 3
 var {x = 3} = {x: null};
 x // null
 //如果x属性等于null，就不严格相等于undefined，导致默认值不会生效。
+```
+
+- 测试 一个字符由两个字节还是由四个字节组成
+```javascript
+function is32Bit(c) {
+    //返回true,表示为由四个字节组成的字符
+  return c.codePointAt(0) > 0xFFFF;
+}
+
+is32Bit("𠮷") // true
+is32Bit("a") // false
+```
+
+
+- 正确返回字符串长度
+
+```javascript
+function codePointLength(text) {
+  var result = text.match(/[\s\S]/gu);
+  return result ? result.length : 0;
+}
+```
+
+- `Number.EPSILON` 用来设置“能够接受的误差范围”
+
+    `Number.EPSILON` 的实质是一个可以接受的最小误差范围
+
+```javascript
+function withinErrorMargin (left, right) {
+  return Math.abs(left - right) < Number.EPSILON * Math.pow(2, 2);
+}
+
+0.1 + 0.2 === 0.3 // false
+withinErrorMargin(0.1 + 0.2, 0.3) // true
+
+1.1 + 1.3 === 2.4 // false
+withinErrorMargin(1.1 + 1.3, 2.4) // true
 ```
