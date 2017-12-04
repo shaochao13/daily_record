@@ -89,6 +89,7 @@ ReactDOM.render(
 + `ref` 属性 用于获取真实的DOM节点
 
 ```jsx
+//第一种方式：这种方式不建议使用了！！！！
 <script type="text/babel">
     var MyComponent = React.createClass({
     handleClick: function () {
@@ -107,6 +108,34 @@ ReactDOM.render(
     ReactDOM.render(
     <MyComponent />,
     document.getElementById("example")
+    );
+</script>
+
+//第二种方式:
+<script type="text/babel">
+    class CustomTextInput extends React.Component {
+        constructor(props){
+            super(props)
+            this.focus = this.focus.bind(this)
+        }
+
+        focus(){
+            this.textInput.focus();
+        }
+
+        render(){
+            return (
+            <div>
+                <input type="text" ref={input => this.textInput = input} />
+                <input type="button" value="Focus the text input" onClick={this.focus} />
+            </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <CustomTextInput  />,
+        document.getElementById("example")
     );
 </script>
 ```
@@ -136,4 +165,18 @@ ReactDOM.render(
   <Mailbox unreadMessages={messages} />,
   document.getElementById('root')
 );
+```
+
++ 扩展属性
+如果你已经有了个 props 对象，并且想在 JSX 中传递它，你可以使用 ... 作为扩展操作符来传递整个属性对象。下面两个组件是等效的：
+
+```jsx
+function App1() {
+  return <Greeting firstName="Ben" lastName="Hector" />;
+}
+
+function App2() {
+  const props = {firstName: 'Ben', lastName: 'Hector'};
+  return <Greeting {...props} />;
+}
 ```

@@ -156,7 +156,7 @@ albert(sayHi.length);   //0
 
 # 
 
-1. 对 对象彻底冻结
+- 对 对象彻底冻结
 
 ```javascript
 var constantize = (obj) => {
