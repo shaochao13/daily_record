@@ -1,5 +1,6 @@
 ## 1. 环境变量
 >
++ 使用“godoc -http=:8080 ”命令可以在本地建一个与官网一样的“网站”，用于docment的查看等。
 + $GOROOT 表示 Go 在你的电脑上的安装位置，它的值一般都是 $HOME/go，当然，你也可以安装在别的地方。
 + $GOARCH 表示目标机器的处理器架构，它的值可以是 386、amd64 或 arm。
 + $GOOS 表示目标机器的操作系统，它的值可以是 darwin、freebsd、linux 或 windows。
@@ -11,12 +12,38 @@
         为了区分本地机器和目标机器，你可以使用 $GOHOSTOS 和 $GOHOSTARCH 设置目标机器的参数，这两个变量只有在进行交叉编译的时候才会用到，如果你不进行显示设置，他们的值会和本地机器（$GOOS 和 $GOARCH）一样。       
 
 
-1. Go语言不存在隐式类型转换，因此所有的转换都必须显式说明。
-2. 常量使用关键字const定义，存储在常量中的数据类型只可以是布尔型、数字型（整数型、浮点型和复数）和字符串型。常量的值必须是能够在编译时就能确定的。
-3. 值类型：int、float、bool、string、array数组、struct结构。 引用类型：指针、slices、maps、channel。
-4. 局部变量使用“:=”进行初始化声明。全局变量不能使用":="。 局部变量不允许只声明而不使用，而全局变量是允许声明但不使用的。
-5. ****Go语言中没有float类型****。float32 精确到小数点后 7 位，float64 精确到小数点后 15 位。
-6. 位左移 "<<":
++ GO中不存在隐式类型转换，所有类型转换必须显式声明，并且转换只能在相互兼容的类型之间进行。
++ 常量使用关键字const定义，存储在常量中的数据类型只可以是布尔型、数字型（整数型、浮点型和复数）和字符串型。常量的值必须是能够在编译时就能确定的。
++ 值类型：int、float、bool、string、array数组、struct结构。 引用类型：指针、slices、maps、channel。
++ 局部变量使用“:=”进行初始化声明。全局变量不能使用":="。 局部变量不允许只声明而不使用，而全局变量是允许声明但不使用的。
++ ****Go语言中没有float类型****。float32 精确到小数点后 7 位，float64 精确到小数点后 15 位。
++ Go程序是通过package来组织的，只有package名称为main的包可以包含main函数，一个可执行程序有且只有一个main 包.
++ 在定义常量组时，如果不提供寝值，则表示将使用上行的表达式
+    ```golang
+    const (
+        a = "abc"
+        b
+        c
+    )
+    //此时 b , c 都等于 "abc"
+    ```
++ iota 关键字
+
+    <font color=red>iota 是常量的计数器，从0开始，组中每定义1个常量 自动递增1，每遇到一个const关键字，iota就会重置为0。</font>
+    ```golang
+    const (
+        a = 'A'
+        b = iota
+        c = 'B'
+        d = iota
+    )
+    //此时，b = 1,而并不是0，d = 3 而不是2，因为const中每定义一个常量，就会自动递增 1.
+    const(
+        e = iota //此时e = 0，因为在一个新的const中
+    )
+    ```
+
++ 位左移 "<<":
 
     ```golang
     1 << 10 // 等于 1 KB
@@ -39,7 +66,7 @@
         YB
     )
     ```
-7. 随机数 (rand包)  
++ 随机数 (rand包)  
     函数 rand.Float32 和 rand.Float64 返回介于 [0.0, 1.0) 之间的伪随机数，其中包括 0.0 但不包括 1.0。   
     函数 rand.Intn 返回介于 [0, n) 之间的伪随机数。   
     可以使用 Seed(value) 函数来提供伪随机数的生成种子，一般情况下都会使用当前时间的纳秒级数字。
@@ -60,7 +87,7 @@
         fmt.Printf("%2.2f / ", 100*rand.Float32())
     }
     ```
-8. 字符类型     
++ 字符类型     
     包 unicode 包含了一些针对测试字符的非常有用的函数（其中 ch 代表字符）:  
 
     ```golang
@@ -68,9 +95,9 @@
     unicode.IsDigit(ch) //判断是否为数字
     unicode.IsSpace(ch) //判断是否为空白符号
     ```
-9. [字符串操作](https://github.com/Unknwon/the-way-to-go_ZH_CN/blob/master/eBook/04.7.md)    
++ [字符串操作](https://github.com/Unknwon/the-way-to-go_ZH_CN/blob/master/eBook/04.7.md)    
     主要用到 ***strings*** 和 ***strconv*** 两个包。
-10. 时间和日期(time包)    
++ 时间和日期(time包)    
     time 包提供了一个数据类型time.Time （作为值使用）以及显示和测量时间和日期的功能函数。  
     time.Now()可以获取当前时间。 
     Duration 类型表示两个连续时刻所相差的***纳秒数***，类型为int64。   
@@ -86,16 +113,16 @@
      ```golang
      t := time.Now().UTC()
      ```
-11. 在 Go 里面函数重载是不被允许的。  
++ 在 Go 里面函数重载是不被允许的。  
     在函数调用时，像切片（slice）、字典（map）、接口（interface）、通道（channel）这样的引用类型都是默认使用引用传递（即使没有显式的指出指针）。
-12. make() 与 new() 区别      
++ make() 与 new() 区别      
     + ***new(T)*** 为每个新的类型T分配一片内存，初始化为 0 并且返回类型为*T的内存地址：这种方法 返回一个指向类型为 T，值为 0 的地址的指针，它适用于值类型如数组和结构体（参见第 10 章）；它相当于 &T{}。        
     + ***make(T)*** 返回一个类型为 T 的初始值，它只适用于3种内建的引用类型：***切片slice、字典map 和 channel*** 。
-13. 可以通过unsafe 包下的Sizeof 方法得到一个变量或者对象占用了多少***内存***.
++ 可以通过unsafe 包下的Sizeof 方法得到一个变量或者对象占用了多少***内存***.
     ```
     size := unsafe.Sizeof(T{})
     ```
-14. struct 结构体  
++ struct 结构体  
     1. 如果File是一个结构体类型，那么 表达式`new(File)` 和 `&File{}` 是等价的。
     2. 常常通过工厂方法来返回一个指向结构体实体的指针： 
 
@@ -160,7 +187,7 @@
         How much there are
         ```
 
-15. String()    
++ String()    
     > 不要在String() 方法里调用涉及String()方法的方法。         
    
      ```golang
@@ -202,7 +229,7 @@
     two1 is: *main.TwoInts
     two1 is: &main.TwoInts{a:12, b:10}
     ```
-16. 类型判断： ***type-switch***       (type-switch 不允许有 fallthrough)       
++ 类型判断： ***type-switch***       (type-switch 不允许有 fallthrough)       
     
     ```golang
     func classifier(items ...interface{}) {
@@ -227,7 +254,7 @@
     }
     ``` 
 
-17. 测试一个值是否实现了某个接口： 
++ 测试一个值是否实现了某个接口： 
 
     ```golang
     type Stringer interface {
@@ -239,7 +266,7 @@
     }
     ```
 
-18. ***接口方法集的调用规则***：     
++ ***接口方法集的调用规则***：     
     + 类型 *T 的可调用方法集包含接受者为 *T 或 T 的所有方法集
     + 类型 T 的可调用方法集包含接受者为 T 的所有方法
     + 类型 T 的可调用方法集不包含接受者为 *T 的方法    
