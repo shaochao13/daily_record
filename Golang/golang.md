@@ -65,6 +65,19 @@
         ZB
         YB
     )
+
+    // 或者
+    const(
+        B float64 = 1 << (iota * 10)
+        KB
+        MB
+        GB
+        TB
+        PB
+        EB
+        ZB
+        YB
+    )
     ```
 + 随机数 (rand包)  
     函数 rand.Float32 和 rand.Float64 返回介于 [0.0, 1.0) 之间的伪随机数，其中包括 0.0 但不包括 1.0。   
