@@ -1,0 +1,235 @@
+digraph Flutter{ 
+
+    rankdir=TB;
+    size="8,5";
+    concentrate=true;
+    node [color = yellow, style=filled] 
+
+    Widgets [color=orange,style=filled,shape=polygon, sides=5,width=1, height=2,fontsize=26]
+
+    subgraph first {
+        node [color=green, style=filled]
+        Basic [label="基础组件"]
+        Material [label="Material Components"]
+        Text1 [label="Text"] 
+        Assets [label="Assets、图片、Icons"]
+        Motion [label="动画和Motion"]
+        Interaction [label="交互模型"]
+        Style [label="样式"]
+        Draw [label="绘制和效果"]
+        Scroll [label="滚动"]
+        Auxiliary [label="辅助功能"]
+        Widgets -> {
+            rank=same;
+            Basic,Material,Layout,Cupertino,Text1, Input,Assets,
+            Motion,Interaction,Style,Draw,Async,Scroll,Auxiliary
+        }; 
+    }
+     
+    subgraph basic {  
+        Text2 [label="Text"] 
+
+        Basic -> {
+            rank=same;
+            Container,Row, Column,Image,Text2,Icon,
+            RaisedButton,Scaffold,Appbar,FlutterLogo,Placeholder
+        };
+    }
+
+    subgraph material {
+        node [color=orange, style=filled]
+        navigation [label="App结构和导航"]
+        button [label="按钮"]
+        input_selected [label="输入框和选择框"]
+        albert [label="对话框、Alert、Panel"]
+        info_show [label="信息展示"]
+        layout_container [label="布局"] 
+
+        Material -> { 
+            rank=same;
+            navigation, button, input_selected, 
+            albert, info_show, layout_container
+        };
+    }
+
+    subgraph navigation { 
+        navigation -> {
+            rank=same;
+            Scaffold, Appbar,BottomNavigationBar,TabBar,
+            TabBarView,MaterialApp,WidgetsApp,Drawer
+        };
+    }
+ 
+    subgraph button {
+        button -> {
+            rank=same;
+            RaisedButton, FloatingActionButton, FlatButton, IconButton, 
+            PopupMenuButton, ButtonBar
+        };
+    }
+
+    subgraph input_selected { 
+        datetime [label = "Date & Time Pickers"]
+        input_selected -> {
+            rank=same;
+            TextField, Checkbox,Radio, Switch, Slider, datetime
+        };
+    }
+
+    subgraph albert{
+        albert -> {
+            rank=same;
+            SimpleDialog, AlertDialog, BottomSheet, ExpansionPanel, SnackBar
+        };
+    }
+ 
+    subgraph info_show{
+        info_show -> {
+            rank = same;
+            Image, Icon, Chip, Tooltip, DataTable, Card, LinearProgressIndicator
+        };
+    }
+
+    subgraph layout_container{
+        layout_container -> {
+            rank = same;
+            ListTile, Stepper, Divider
+        };
+    }
+
+    subgraph layout{
+        node [color=orange, style=filled]
+        layout1 [label = "拥有单个子元素的布局widget"]
+        layout2 [label = "拥有多个子元素的布局widget"]
+        layout_helper [label = "Layout helpers"]
+        
+        Layout -> {
+            rank = same;
+            layout1, layout2, layout_helper
+        };
+    }
+   
+    subgraph layout1{
+        constraint=false;
+        layout1 -> {
+            // rank=same;
+            Container, Padding, Center, Align, FittedBox, AspectRatio, 
+            ConstrainedBox, Baseline, FractionallySizedBox, IntrinsicHeight,
+            IntrinsicWidth, LimitedBox, Offstage, OverflowBox, SizedBox, 
+            SizedOverflowBox, Fransform, CustomSingleChildLayout
+        };
+        rankdir=TB;
+    }
+
+    subgraph layout2{
+        layout2 -> {
+            rank=same;
+            Row, Column,Stack, IndexedStack, Flow, Table, 
+            Wrap, ListBody, ListView, CustomMultiChildLayout
+        };
+    }
+ 
+    subgraph layout_helper{
+        layout_helper -> LayoutBuilder;
+    }
+
+    subgraph cupertino {
+        Cupertino -> {
+            rank=same;
+            CupertinoActivityIndicator, CupertinoAlertDialog,CupertinoButton,
+            CupertinoDialog,CupertinoDialogAction,CupertinoSlider, 
+            CupertinoSwitch, CupertinoPageTransition, 
+            CupertinoFullscreenDialogTransition,CupertinoNavigationBar,
+            CupertinoTabBar, CupertinoPageScaffold, CupertinoTabScaffold, 
+            CupertinoTabView
+        };
+    }
+
+    subgraph text1 {
+        Text1 -> {
+            rank=same;
+            Text2, RichText, DefaultTextStyle
+        };
+    } 
+
+    subgraph assets {
+        Assets -> {
+            rank=same;
+            Image, Icon, RawImage, AssetBundle
+        };
+    }
+
+    subgraph input {
+        Input -> {
+            rank=same;
+            Form, FormField, RawKeyboardListener
+        };
+    }
+     
+    subgraph motin {
+        Motion -> {
+            rank=same;
+            AnimatedContainer, AnimatedCrossFade, Hero, AnimatedBuilder,
+            DecoratedBoxTransition, FadeTransition, PositionedTransition, 
+            RotationTransition, ScaleTransition, SizeTransition, 
+            SlideTransition, AnimatedDefaultTextStyle, AnimatedListState, 
+            AnimatedModalBarrier, AnimatedOpacity, AnimatedPhysicalModel,
+            AnimatedPositioned, AnimatedSize, AnimatedWidget,AnimatedWidgetBaseState
+        }; 
+    }
+      
+
+    subgraph interaction {
+        Interaction -> {
+            rank = same;
+            LongPressDraggable, GestureDetector, DragTarget, 
+            Dismissible, IgnorePointer, AbsorbPointer, Navigator, Scrollable
+        }; 
+    }
+ 
+    subgraph style{
+        Style -> {
+            rank=same;
+            Padding, 
+            Theme, MediaQuery
+        };
+    }
+ 
+    subgraph draw {
+        Draw -> {
+            rank=same;
+            Opacity, Transform, DecoratedBox, FractionalTranslation,
+            RotatedBox, ClipOval, ClipPath, ClipRect, 
+            CustomPaint, BackdropFilter
+         };
+    }
+
+    subgraph async {
+        Async -> {
+            rank=same;
+            FutureBuilder, StreamBuilder
+        };
+    }
+
+    subgraph scroll{
+        Scroll -> {
+            rank=same;
+            ListView, Scrollable,
+            NestedScrollView, GridView, SingleChildScrollView,  
+            Scrollbar, CustomScrollView, 
+            NotificationListener, ScrollConfiguration, RefreshIndicator
+        };
+    }
+    
+    subgraph auxiliary {
+        Auxiliary -> {
+            rank=same;
+            Semantics, MergeSemantics
+        };
+    }
+
+    {
+        rank = same; Transform Radio Hero MergeSemantics CupertinoTabBar Form StreamBuilder;
+    }
+    
+}
