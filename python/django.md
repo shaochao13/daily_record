@@ -17,11 +17,19 @@
 ```
 python manage.py syncdb
 ```   
-***Django 1.7.1 及以上的版本使用以下命令***：  
+**Django 1.7.1 及以上的版本使用以下命令**：  
 ```python
-python manage.py makemigrations
+python manage.py makemigrations polls
+#通过运行 makemigrations 命令，Django 会检测你对模型文件的修改，并且把修改的部分储存为一次 "迁移".迁移是 Django 对于模型定义（也就是 数据库结构）的变化的储存形式.
 python manage.py migrate
+#migrate 命令只会为在 INSTALLED_APPS 里声明了的应用进行数据库迁移。自动执行数据库迁移并同步管理你的数据库结构的命令
 ```
+```python
+python manage.py sqlmigrate polls 0001
+# 查看迁移命令会执行哪些 SQL 语句
+```
+ 
+
 4. 清空数据库:   
 ```python
 #此命令会询问是 yes 还是 no, 选择 yes 会把数据全部清空掉，只留下空表。
