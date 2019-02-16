@@ -21,6 +21,7 @@ python manage.py syncdb
 ```python
 python manage.py makemigrations polls
 #通过运行 makemigrations 命令，Django 会检测你对模型文件的修改，并且把修改的部分储存为一次 "迁移".迁移是 Django 对于模型定义（也就是 数据库结构）的变化的储存形式.
+# 为模型的改变生成迁移文件
 python manage.py migrate
 #migrate 命令只会为在 INSTALLED_APPS 里声明了的应用进行数据库迁移。自动执行数据库迁移并同步管理你的数据库结构的命令
 ```
