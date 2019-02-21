@@ -211,6 +211,8 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
 </div>
 ```
 
+---
+
 ## Bootstrap4 表格
 
 - 条纹表格 `.table-striped`
@@ -265,67 +267,179 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
 |.table-secondary|	灰色: 表示内容不怎么重要|
 |.table-light	|浅灰色，可以是表格行的背景|
 |.table-dark|	深灰色，可以是表格行的背景|
+|||
 
 ```html
 <table class="table">
     <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Default</td>
-        <td>Defaultson</td>
-        <td>def@somemail.com</td>
-      </tr>      
       <tr class="table-primary">
-        <td>Primary</td>
-        <td>Joe</td>
-        <td>joe@example.com</td>
+      ...
       </tr>
       <tr class="table-success">
-        <td>Success</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
       </tr>
       <tr class="table-danger">
-        <td>Danger</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
       </tr>
       <tr class="table-info">
-        <td>Info</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
       </tr>
       <tr class="table-warning">
-        <td>Warning</td>
-        <td>Refs</td>
-        <td>bo@example.com</td>
       </tr>
       <tr class="table-active">
-        <td>Active</td>
-        <td>Activeson</td>
-        <td>act@example.com</td>
       </tr>
       <tr class="table-secondary">
-        <td>Secondary</td>
-        <td>Secondson</td>
-        <td>sec@example.com</td>
       </tr>
       <tr class="table-light">
-        <td>Light</td>
-        <td>Angie</td>
-        <td>angie@example.com</td>
       </tr>
       <tr class="table-dark text-dark">
-        <td>Dark</td>
-        <td>Bo</td>
-        <td>bo@example.com</td>
       </tr>
     </tbody>
 </table>
 ```
+
+- 较小的表格 `.table-sm`
+
+`.table-sm` 类用于通过减少内边距来设置较小的表格
+```html
+<table class="table table-bordered table-sm">
+...
+</table>
+```
+- 表头颜色
+
+`.thead-dark` 类用于给表头添加黑色背景， `.thead-light` 类用于给表头添加灰色背景
+```html
+<table class="table">
+  <thead class="thead-dark">
+  </thead>
+</table>
+
+<table class="table">
+  <thead class="thead-light">
+  </thead>
+</table>
+```
+
+- 响应式表格
+
+`.table-responsive` 类用于创建响应式表格：在屏幕宽度小于 992px 时会创建水平滚动条，如果可视区域宽度大于 `992px` 则显示不同效果（没有滚动条）
+```html
+<div class="table-responsive">
+  <table class="table">
+  ...
+  </table>
+</div>
+```
+
+|类名|屏幕宽度|
+|-:|:-|
+.table-responsive-sm |	< 576px
+.table-responsive-md |	< 768px
+.table-responsive-lg |	< 992px
+.table-responsive-xl |	< 1200px
+|||
+
+---
+
+## Bootstrap4 图像形状
+
+- 圆角图片
+
+`.rounded` 类可以让图片显示圆角效果
+```html
+<img src="cinqueterre.jpg" class="rounded" alt="Cinque Terre">
+```
+
+- 椭圆图片
+
+`.rounded-circle` 类可以设置椭圆形图片
+```html
+<img src="cinqueterre.jpg" class="rounded-circle" alt="Cinque Terre">
+```
+
+- 缩略图
+
+`.img-thumbnail` 类用于设置图片缩略图(图片有边框)
+```html
+<img src="cinqueterre.jpg" class="img-thumbnail" alt="Cinque Terre">
+```
+
+- 图片对齐方式
+
+使用 `.float-right` 类来设置图片右对齐，使用 `.float-left` 类设置图片左对齐:
+```html
+<img src="paris.jpg" class="float-left"> 
+<img src="cinqueterre.jpg" class="float-right">
+```
+
+- 响应式图片
+
+通过在 `<img>` 标签中添加 `.img-fluid` 类来设置响应式图片.
+`.img-fluid` 类设置了 `max-width: 100%; 、 height: auto;` 
+```html
+<img class="img-fluid" src="img_chania.jpg" alt="Chania">
+```
+
+---
+
+## Bootstrap4 Jumbotron (超大屏幕)
+
+通过在 `<div>` 元素 中添加 `.jumbotron` 类来创建 jumbotron
+```html
+<div class="jumbotron">
+  <h1>菜鸟教程</h1> 
+  <p>学的不仅是技术，更是梦想！！！</p> 
+</div>
+```
+
+- 全屏幕的 Jumbotron
+
+创建一个没有圆角的全屏幕，可以在 `.jumbotron-fluid` 类里头的 `div` 添加 `.container 或 .container-fluid` 类来实现
+```html
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+      <h1>菜鸟教程</h1> 
+      <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+```
+
+---
+
+## Bootstrap4 信息提示框
+
+提示框可以使用 `.alert` 类, 后面加上 `.alert-success, .alert-info, .alert-warning, .alert-danger, .alert-primary, .alert-secondary, .alert-light 或 .alert-dark` 类来实现
+```html
+<div class="alert alert-success">
+  <strong>成功!</strong> 指定操作成功提示信息。
+</div>
+```
+
+- 提示框添加链接
+
+提示框中在链接的标签上添加 `alert-link` 类来设置匹配提示框颜色的链接
+```html
+<div class="alert alert-success">
+  <strong>成功!</strong> 你应该认真阅读 <a href="#" class="alert-link">这条信息</a>。
+</div>
+```
+
+- 关闭提示框
+
+在提示框中的 div 中添加 `.alert-dismissible` 类，然后在关闭按钮的链接上添加 `class="close"` 和 `data-dismiss="alert"` 类来设置提示框的关闭操作。
+```html
+<div class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>成功!</strong> 指定操作成功提示信息。
+</div>
+```
+
+- 提示框动画
+
+`.fade` 和 `.show` 类用于设置提示框在关闭时的淡出和淡入效果
+```html
+<div class="alert alert-danger alert-dismissible fade show">
+```
+
+
+
