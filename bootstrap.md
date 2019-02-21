@@ -18,6 +18,8 @@
 
 [Bootstrap4 按钮](#10)
 
+[Bootstrap4 按钮组](#11)
+
 
 ## <span id="1">重要的全局样式和设置</span>
 
@@ -528,4 +530,85 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
 <button type="button" class="btn btn-primary active">点击后的按钮</button>
 <button type="button" class="btn btn-primary" disabled>禁止点击的按钮</button>
 <a href="#" class="btn btn-primary disabled">禁止点击的链接</a>
+```
+
+## <span id="11">Bootstrap4 按钮组</span>
+
+可以在 `<div>` 元素上添加 `.btn-group` 类来创建按钮组
+
+```html
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
+```
+
+可以使用 `.btn-group-lg|sm` 类来设置按钮组的大小
+```html
+<div class="btn-group btn-group-lg">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
+```
+
+- 垂直按钮组
+
+使用 `.btn-group-vertical` 类来创建垂直的按钮组
+```html
+<div class="btn-group-vertical">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
+```
+
+- 内嵌按钮组及下拉菜单
+```html
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+       Sony
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Tablet</a>
+      <a class="dropdown-item" href="#">Smartphone</a>
+    </div>
+  </div>
+</div>
+```
+
+- 拆分按钮下拉菜单
+
+```html
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Sony</button>
+  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+    <span class="caret"></span>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Tablet</a>
+    <a class="dropdown-item" href="#">Smartphone</a>
+  </div>
+</div>
+```
+
+- 垂直按钮组及下拉菜单
+```html
+<div class="btn-group-vertical">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+       Sony
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Tablet</a>
+      <a class="dropdown-item" href="#">Smartphone</a>
+    </div>
+  </div>
+</div>
 ```
