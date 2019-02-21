@@ -1,4 +1,23 @@
-# 重要的全局样式和设置
+[重要的全局样式和设置](#1)
+
+[容器类](#2)
+
+[Bootstrap4 网格系统](#3)
+
+[Bootstrap4 文字排版](#4)
+
+[Bootstrap4 颜色](#5)
+
+[Bootstrap4 表格](#6)
+
+[Bootstrap4 图像形状](#7)
+
+[Bootstrap4 Jumbotron (超大屏幕)](#8)
+
+[Bootstrap4 信息提示框](#9)
+
+
+## <span id="1">重要的全局样式和设置</span>
 
 - Bootstrap 要求设置 HTML5 doctype
 
@@ -31,7 +50,8 @@
 
 ---
 
-## 容器类
+## <span id="2">容器类</span>
+
 Bootstrap 4 需要一个容器元素来包裹网站的内容。
 
 可以使用以下两个容器类：
@@ -43,7 +63,8 @@ Bootstrap 4 需要一个容器元素来包裹网站的内容。
 
 ---
 
-## Bootstrap4 网格系统
+## <span id="3">Bootstrap4 网格系统</span>
+
 Bootstrap 提供了一套响应式、移动设备优先的流式网格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多 <span style="color:red;">12</span> 列。    
 Bootstrap 4 的网格系统是响应式的，列会根据屏幕大小自动重新排列。
 
@@ -68,6 +89,7 @@ Bootstrap 4 网格系统有以下 5 个类:
 - Bootstrap 3 和 Bootstrap 4 最大的区别在于 Bootstrap 4 现在使用 flexbox（弹性盒子） 而不是浮动。 Flexbox 的一大优势是，没有指定宽度的网格列将自动设置为等宽与等高列 。
 
 ### 偏移列
+
 偏移列通过 offset-`*`-`*` 类来设置。第一个星号( * )可以是 sm、md、lg、xl，表示屏幕设备类型，第二个星号( * )可以是 1 到 11 的数字。
 
 为了在大屏幕显示器上使用偏移，请使用 `.offset-md-*` 类。
@@ -77,8 +99,9 @@ Bootstrap 4 网格系统有以下 5 个类:
 
 ---
 
-## Bootstrap4 文字排版
-Bootstrap 4 默认的 font-size 为 `16px`, line-height 为 `1.5`。
+## <span id="4">Bootstrap4 文字排版</span>
+
+Bootstrap 4 默认的 `font-size` 为 `16px`, `line-height` 为 `1.5`。
 
 默认的 font-family 为 "Helvetica Neue", Helvetica, Arial, sans-serif。
 
@@ -158,7 +181,7 @@ Bootstrap 4 定义 HTML <abbr> 元素的样式为显示在文本`底部`的一�
 
 ---
 
-## Bootstrap4 颜色
+## <span id="5">Bootstrap4 颜色</span>
 
 Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-primary, .text-success, .text-info, .text-warning, .text-danger, .text-secondary, .text-white, .text-dark and .text-light`
 ```html
@@ -213,7 +236,7 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
 
 ---
 
-## Bootstrap4 表格
+## <span id="6">Bootstrap4 表格</span>
 
 - 条纹表格 `.table-striped`
 
@@ -341,7 +364,7 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
 
 ---
 
-## Bootstrap4 图像形状
+## <span id="7">Bootstrap4 图像形状</span>
 
 - 圆角图片
 
@@ -382,7 +405,7 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
 
 ---
 
-## Bootstrap4 Jumbotron (超大屏幕)
+## <span id="8">Bootstrap4 Jumbotron (超大屏幕)</span>
 
 通过在 `<div>` 元素 中添加 `.jumbotron` 类来创建 jumbotron
 ```html
@@ -406,7 +429,7 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
 
 ---
 
-## Bootstrap4 信息提示框
+## <span id="9">Bootstrap4 信息提示框</span>
 
 提示框可以使用 `.alert` 类, 后面加上 `.alert-success, .alert-info, .alert-warning, .alert-danger, .alert-primary, .alert-secondary, .alert-light 或 .alert-dark` 类来实现
 ```html
