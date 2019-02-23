@@ -2,28 +2,29 @@
 
 [容器类](#2)
 
-[Bootstrap4 网格系统](#3)
+[网格系统](#3)
 
-[Bootstrap4 文字排版](./text_typesetting)
+[文字排版](./text_typesetting)
 
-[Bootstrap4 颜色](./color.md)
+[颜色](./color.md)
 
-[Bootstrap4 表格](./table.md)
+[表格](./table.md)
 
-[Bootstrap4 图像形状](./img.md)
+[图像形状](./img.md)
 
-[Bootstrap4 Jumbotron (超大屏幕)](./jumbotron.md)
+[Jumbotron (超大屏幕)](./jumbotron.md)
 
-[Bootstrap4 信息提示框](./alert.md)
+[信息提示框](./alert.md)
 
-[Bootstrap4 按钮](./botton.md)
+[按钮](./botton.md)
 
-[Bootstrap4 徽章(Badges)](./badge.md)
+[徽章(Badges)](./badge.md)
 
-[Bootstrap4 进度条](./progress.md)
+[进度条](./progress.md)
 
-[Bootstrap4 分页](./pagination.md)
+[分页](./pagination.md)
 
+[列表组](./list_group.md)
 
 ## <span id="1">重要的全局样式和设置</span>
 
