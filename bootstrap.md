@@ -20,6 +20,10 @@
 
 [Bootstrap4 按钮组](#11)
 
+[Bootstrap4 徽章(Badges)](#12)
+
+[Bootstrap4 进度条](#13)
+
 
 ## <span id="1">重要的全局样式和设置</span>
 
@@ -609,6 +613,119 @@ Bootstrap 4 提供了一些有代表意义的颜色类：`.text-muted, .text-pri
       <a class="dropdown-item" href="#">Tablet</a>
       <a class="dropdown-item" href="#">Smartphone</a>
     </div>
+  </div>
+</div>
+```
+
+## <span id="12">Bootstrap4 徽章（Badges）</span>
+
+徽章（Badges）主要用于突出显示新的或未读的项。如需使用徽章，只需要将 `.badge` 类加上带有指定意义的颜色类 (如 `.badge-secondary`) 添加到 `<span>` 元素上即可。 徽章可以根据父元素的大小的变化而变化。
+```html
+<span class="badge badge-primary">主要</span>
+<span class="badge badge-secondary">次要</span>
+<span class="badge badge-success">成功</span>
+<span class="badge badge-danger">危险</span>
+<span class="badge badge-warning">警告</span>
+<span class="badge badge-info">信息</span>
+<span class="badge badge-light">浅色</span>
+<span class="badge badge-dark">深色</span>
+```
+
+- 药丸形状徽章
+
+使用 `.badge-pill` 类来设置药丸形状徽章
+```html
+<span class="badge badge-pill badge-default">默认</span>
+<span class="badge badge-pill badge-primary">主要</span>
+<span class="badge badge-pill badge-success">成功</span>
+<span class="badge badge-pill badge-info">信息</span>
+<span class="badge badge-pill badge-warning">警告</span>
+<span class="badge badge-pill badge-danger">危险</span>
+```
+
+- 徽章插入到元素内
+
+```html
+<button type="button" class="btn btn-primary">
+  Messages <span class="badge badge-light">4</span>
+</button>
+```
+
+
+## <span id="13">Bootstrap4 进度条</span>
+
+创建一个基本的进度条的步骤:
+
+- 添加一个带有 `.progress` 类的 `<div>`
+- 在上面的 `<div>` 内，添加一个带有 `.progress-bar` 的空的 `<div>`
+- 添加一个带有百分比表示的宽度的 style 属性，例如 `style="width:70%"` 表示进度条在 `70%` 的位置
+```html
+<div class="progress">
+  <div class="progress-bar" style="width:70%"></div>
+</div>
+```
+
+### 进度条高度
+进度条高度默认为 `16px`。我们可以使用 CSS 的 height 属性来修改.
+```html
+<div class="progress" style="height:20px;">
+  <div class="progress-bar" style="width:40%;"></div>
+</div>
+```
+
+### 进度条标签
+可以在进度条内添加文本，如进度的百分比：
+```html
+<div class="progress">
+  <div class="progress-bar" style="width:70%">70%</div>
+</div>
+```
+
+### 不同颜色的进度条
+
+默认情况下进度条为蓝色，Bootstrap4 还提供了以下颜色的进度条：
+```html
+<div class="progress">
+  <div class="progress-bar bg-success" style="width:40%"></div>
+</div>
+<div class="progress">
+  <div class="progress-bar bg-info" style="width:50%"></div>
+</div>
+<div class="progress">
+  <div class="progress-bar bg-warning" style="width:60%"></div>
+</div>
+<div class="progress">
+  <div class="progress-bar bg-danger" style="width:70%"></div>
+</div>
+```
+
+### 条纹的进度条
+
+使用 `.progress-bar-striped` 类来设置条纹进度条：
+```html
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" style="width:40%"></div>
+</div>
+```
+
+### 动画进度条
+
+使用 `.progress-bar-animated` 类可以为进度条添加动画：
+```html
+<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 40%"></div>
+```
+
+### 混合色彩进度条
+```html
+<div class="progress">
+  <div class="progress-bar bg-success" style="width:40%">
+    Free Space
+  </div>
+  <div class="progress-bar bg-warning" style="width:10%">
+    Warning
+  </div>
+  <div class="progress-bar bg-danger" style="width:20%">
+    Danger
   </div>
 </div>
 ```
