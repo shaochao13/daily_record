@@ -26,6 +26,8 @@
 
 [列表组](./list_group.md)
 
+[卡片](./card.md)
+
 ## <span id="1">重要的全局样式和设置</span>
 
 - Bootstrap 要求设置 HTML5 doctype
