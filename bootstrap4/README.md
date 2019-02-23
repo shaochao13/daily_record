@@ -30,6 +30,8 @@
 
 [下拉列表](./dropdown.md)
 
+[折叠](./collapse.md)
+
 ## <span id="1">重要的全局样式和设置</span>
 
 - Bootstrap 要求设置 HTML5 doctype
