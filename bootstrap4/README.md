@@ -36,6 +36,20 @@
 
 [导航栏](./navbar.md)
 
+[面包屑导航](./breadcrumb.md)
+
+[表单](./form.md)
+
+[轮播](./carousel.md)
+
+[模态框](./modal.md)
+
+[提示框](./tooltip.md)
+
+[弹出框](./popover.md)
+
+[滚动监听(Scrollspy)](./scroll.md)
+
 ## <span id="1">重要的全局样式和设置</span>
 
 - Bootstrap 要求设置 HTML5 doctype
