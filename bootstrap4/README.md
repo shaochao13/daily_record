@@ -64,9 +64,22 @@
 - 响应式 meta 标签 , 移动设备优先
 
 为了确保在所有设备上能够正确渲染并支持触控缩放，务必将设置 viewport 属性的 meta 标签添加到 <head> 中。
+
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 ```
+
+在移动设备浏览器上，通过为 viewport meta 标签添加 `user-scalable=no` 可以禁用其缩放（zooming）功能。
+
+通常情况下，`maximum-scale=1.0` 与 `user-scalable=no` 一起使用。这样禁用缩放功能后，用户只能滚动屏幕，就能让您的网站看上去更像原生应用的感觉。
+
+```html
+<meta name="viewport" content="width=device-width, 
+                                     initial-scale=1.0, 
+                                     maximum-scale=1.0, 
+                                     user-scalable=no">
+```
+
 
 - 盒模型
 
