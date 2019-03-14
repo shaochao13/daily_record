@@ -18,3 +18,11 @@ index-url = http://pypi.douban.com/simple/ # 豆瓣源
 index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
+# pipenv 使用国内源
+通过添加环境变量的方法来处理：
+```sh
+export PIPENV_PYPI_MIRROR=https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+```
+
