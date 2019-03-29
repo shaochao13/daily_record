@@ -183,6 +183,11 @@ sudo sed -i 's#//mirrors.ustc.edu.cn#//ipv4.mirrors.ustc.edu.cn#g' /etc/yum.repo
     grant all privileges on *.* to username@'hostname' identified by 'password' with grant option;
     ```
 
++ 刷新权限
+    ```sql
+    FLUSH PRIVILEGES;
+    ```
+
 + 其中只授予部分权限把 其中 all privileges或者all改为select,insert,update,delete,create,drop,index,alter,grant,references,reload,shutdown,process,file其中一部分
 
 
