@@ -89,3 +89,9 @@
     #退出虚拟环境
     deactivate
     ``` 
+
+
++ `【ModuleNotFoundError: No module named ‘_ctypes’ make: *** [install] Error 1】解决方式`
+```sh
+#yum install libffi-devel -y    《-安装这个就能解决
+```
