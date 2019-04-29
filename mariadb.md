@@ -191,3 +191,13 @@ sudo sed -i 's#//mirrors.ustc.edu.cn#//ipv4.mirrors.ustc.edu.cn#g' /etc/yum.repo
 + 其中只授予部分权限把 其中 all privileges或者all改为select,insert,update,delete,create,drop,index,alter,grant,references,reload,shutdown,process,file其中一部分
 
 
++ 根据数据库名，获取其下面所有的表信息
+```sql
+SELECT TABLE_NAME, TABLE_COMMENT FROM information_schema.`TABLES` 
+WHERE TABLE_SCHEMA ='bihuyihu_test' 
+```
+
++ 根据数据库表名，获取其下面所有的字段的信息
+```sql
+select TABLE_NAME, COLUMN_NAME, COLUMN_DEFAULT, COLUMN_TYPE, COLUMN_COMMENT from `COLUMNS` where table_schema = 'bihuyihu_test'
+```
