@@ -201,3 +201,10 @@ WHERE TABLE_SCHEMA ='bihuyihu_test'
 ```sql
 select TABLE_NAME, COLUMN_NAME, COLUMN_DEFAULT, COLUMN_TYPE, COLUMN_COMMENT from `COLUMNS` where table_schema = 'bihuyihu_test'
 ```
+
++ 判断字符串中是否有汉字
+
+当字符集为UTF-8，并且字符为中文时，length() 和 char_length() 两个方法返回的结果是不相同的。
+```sql
+SELECT col FROM table WHERE length(col)!=char_length(col)
+```
