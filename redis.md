@@ -31,3 +31,57 @@ Redis 键是二进制安全的，这意味着可以使用任何二进制序列�
 + 过期时间可以设置为秒或者毫秒精度。
 + 过期时间分辨率总是 1 毫秒。
 + 过期信息被复制和持久化到磁盘，当 Redis 停止时时间仍然在计算 (也就是说 Redis 保存了过期时间)。
+
+
+### 订阅redis键过期消息通知
++ 首先启用redis通知功能：
+
+    编辑redis.conf文件，添加或启用以下内容（过期通知）：
+    ```sh
+    notify-keyspace-events Ex
+    ```
+    或者登陆redis-cli之后，输入以下命令：
+    ```sh
+    config set notify-keyspace-events Ex
+    ```
+
+    ```java
+    import org.springframework.data.redis.connection.Message;
+    import org.springframework.data.redis.connection.MessageListener;
+    
+    public class MyRedisKeyExpiredMessageDelegate    implements MessageListener {
+    
+        
+        public void onMessage(Message message, byte[] pattern) {
+            System.out.println("channel:" + new String(message.getChannel())
+                    + ",message:" + new String(message.getBody()));
+        }
+    }
+    ```
+    ```xml
+    <bean id="messageListener"
+            class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+            <constructor-arg>
+                <bean class="com.zww.common.redis.MyRedisKeyExpiredMessageDelegate" />
+            </constructor-arg>
+        </bean>
+        <bean id="redisContainer"
+            class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+            <property name="connectionFactory" ref="connectionFactory" />
+            <property name="messageListeners">
+                <map>
+                    <entry key-ref="messageListener">
+                        <list>
+                            <!--  <bean class="org.springframework.data.redis.listener.ChannelTopic"> 
+                                <constructor-arg value="__keyevent@1__:expired" /> </bean>  -->
+                            <!-- <bean class="org.springframework.data.redis.listener.PatternTopic"> 
+                                <constructor-arg value="*" /> </bean> -->
+                            <bean class="org.springframework.data.redis.listener.PatternTopic">
+                                <constructor-arg value="__key*__:expired" />
+                            </bean>
+                        </list>
+                    </entry>
+                </map>
+            </property>
+        </bean>
+    ```
