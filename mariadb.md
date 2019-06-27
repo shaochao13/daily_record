@@ -208,3 +208,16 @@ select TABLE_NAME, COLUMN_NAME, COLUMN_DEFAULT, COLUMN_TYPE, COLUMN_COMMENT from
 ```sql
 SELECT col FROM table WHERE length(col)!=char_length(col)
 ```
+
++ 字段拆分
+
+主要用到了”mysql“库中的“help_topic”表
+```sql
+-- 把 table_demo 表中的 receive_id 拆分 
+-- receive_id : "1,2,3,4,5"
+
+SELECT 
+substring_index(substring_index(t.receive_id,',', b.help_topic_id + 1), ',', -1) receive_id
+FROM table_demo t 
+join mysql.help_topic b ON b.help_topic_id < (LENGTH(t.receive_id) - LENGTH(REPLACE(t.receive_id, ',', '')) + 1);
+```
