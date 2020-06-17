@@ -365,5 +365,13 @@
   //会把struct格式化为元信息对应的字段名："{\"id\":1,\"name\":\"ABC\",\"gender\":\"L\"}" 
   ```
 
-  
+--- 
 
+## go get 升级所有
+```golang
+go get -u all
+
+go get -u
+
+go mod update
+```
