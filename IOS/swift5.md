@@ -96,3 +96,199 @@ default:
    ```
 
    
+
+## 对象与类
+
+- 使用 `init` 来创建一个构造器。
+
+- 使用 `deinit` 创建一个析构函数。
+
+- 类的构造器执行:
+
+  1. 设置子类声明的属性值
+  2. 调用父类的构造器
+  3. 改变父类定义的属性值。其他的工作比如调用方法、getters 和 setters 也可以在这个阶段完成。
+
+- 使用 `willSet` 和 `didSet`。写入的代码会在属性值发生改变时调用，**但不包含构造器中发生值改变的情况**。
+
+- 处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加 `?`。如果 `?` 之前的值是 `nil`，`?` 后面的东西都会被忽略，并且整个表达式返回 `nil`。否则，可选值会被解包，之后的所有代码都会按照解包后的值运行。在这两种情况下，整个表达式的值也是一个可选值。
+
+  ```swift
+  let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+  let sideLength = optionalSquare?.sideLength
+  ```
+
+
+
+## 枚举和结构体
+
+- 默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值。
+
+- 使用 `rawValue` 属性来访问一个枚举成员的原始值。
+
+- 使用 `init?(rawValue:)` 初始化构造器来从原始值创建一个枚举实例。如果存在与原始值相应的枚举成员就返回该枚举成员，否则就返回 `nil`。
+
+  ```swift
+  if let convertedRank = Rank(rawValue: 3) {
+      let threeDescription = convertedRank.simpleDescription()
+  }
+  ```
+
+- 枚举的关联值是实际值，并不是原始值的另一种表达方法。
+
+  ```swift
+  enum ServerResponse {
+      case result(String, String)
+      case failure(String)
+  }
+  
+  let success = ServerResponse.result("6:00 am", "8:09 pm")
+  let failure = ServerResponse.failure("Out of cheese.")
+  
+  switch success {
+  case let .result(sunrise, sunset):
+      print("Sunrise is at \(sunrise) and sunset is at \(sunset)")
+  case let .failure(message):
+      print("Failure...  \(message)")
+  }
+  ```
+
+- 结构体是传值，类是传引用。
+
+
+
+## 协议和扩展
+
+类、枚举和结构体都可以遵循协议。
+
+```swift
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += "  Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {  // mutating 关键字用来标记一个会修改结构体的方法。SimpleClass 的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）
+        simpleDescription += " (adjusted)"
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+```
+
+使用 `extension` 来为现有的类型添加功能，比如新的方法和计算属性。
+
+```swift
+extension Int: ExampleProtocol { //给Int类型对 ExampleProtocol协议 的扩展
+    var simpleDescription: String {
+        return "The number \(self)"
+    }
+    mutating func adjust() {
+        self += 42
+    }
+}
+print(7.simpleDescription)
+
+
+extension Double {
+    var abs :String { //给Double类型添加一个abs属性的扩展
+        return "abs"
+    }
+}
+```
+
+
+
+## 错误处理
+
+使用 `throw` 来抛出一个错误和使用 `throws` 来表示一个可以抛出错误的函数。
+
+```swift
+func send(job: Int, toPrinter printerName: String) throws -> String {
+    if printerName == "Never Has Toner" {
+        throw PrinterError.noToner
+    }
+    return "Job sent"
+}
+```
+
+错误处理方式：
+
+1. 使用 `do-catch`
+
+   ```swift
+   do {
+       let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
+       print(printerResponse)
+   } catch PrinterError.onFire {
+       print("I'll just put this over here, with the rest of the fire.")
+   } catch let printerError as PrinterError {
+       print("Printer error: \(printerError).")
+   } catch {
+       print(error)
+   }
+   ```
+
+   
+
+2. 使用 `try?` 将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为 `nil`。否则，结果会是一个包含函数返回值的可选值。
+
+   ```swift
+   let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
+   let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
+   ```
+
+
+
+使用 `defer` 代码块来表示在函数返回前，函数中最后执行的代码。无论函数是否会抛出错误，这段代码都将执行。
+
+
+
+## 泛型
+
+在尖括号里写一个名字来创建一个泛型函数或者类型。创建泛型函数、方法、类、枚举和结构体。
+
+```swift
+func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
+    var result = [Item]()
+    for _ in 0..<numberOfTimes {
+        result.append(item)
+    }
+    return result
+}
+makeArray(repeating: "knock", numberOfTimes: 4)
+```
+
+
+
+在类型名后面使用 `where` 来指定对类型的一系列需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
+
+```swift
+func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+    where T.Element: Equatable, T.Element == U.Element
+{
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
+            }
+        }
+    }
+    return false
+}
+anyCommonElements([1, 2, 3], [3])
+```
+
