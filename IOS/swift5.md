@@ -294,6 +294,40 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
    print(sortedNumbers)
    ```
 
+4. 闭包是引用类型。
+
+5. 逃逸闭包。当一个闭包作为参数传到一个函数中，但是这个闭包在函数返回之后才被执行，我们称该闭包从函数中*逃逸*。当你定义接受闭包作为参数的函数时，你可以在参数名之前标注 `@escaping`，用来指明这个闭包是允许“逃逸”出这个函数的。
+
+   将一个闭包标记为 `@escaping` 意味着你必须在闭包中显式地引用 `self`。
+
+   ```swift
+   var completionHandlers: [() -> Void] = []
+   func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+       completionHandlers.append(completionHandler)
+   }
+   
+   func someFunctionWithNonescapingClosure(closure: () -> Void) {
+       closure()
+   }
+   
+   class SomeClass {
+       var x = 10
+       func doSomething() {
+           someFunctionWithEscapingClosure { self.x = 100 }
+           someFunctionWithNonescapingClosure { x = 200 }
+       }
+   }
+   
+   let instance = SomeClass()
+   instance.doSomething()
+   print(instance.x)
+   // 打印出“200”
+   
+   completionHandlers.first?()
+   print(instance.x)
+   // 打印出“100”
+   ```
+
    
 
 ## 对象与类
