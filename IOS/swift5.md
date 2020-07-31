@@ -24,7 +24,9 @@ Here are three more double quotes: """
 
 
 
-## 数组
+## 集合类型
+
+### 数组
 
 1. 初始化一个空的数组：
 
@@ -33,15 +35,79 @@ Here are three more double quotes: """
    shoppingList = [] //如果类型信息可以被推断出来，你可以用 [] 来创建空字典——比如，在给变量赋新值或者给函数传参数的时候
    ```
 
-   
+2. 创建一个带有默认值的数组
 
-## 字典
+   ```swift
+   var threeDoubles = Array(repeating: 0.0, count: 3)
+   ```
+
+
+
+### 集合
+
+一个类型为了存储在集合中，该类型必须是*可哈希化*的。
+
+遵循 `Hashable` 协议的类型需要提供一个类型为 `Int` 的可读属性 `hashValue`。因为 `Hashable` 协议遵循 `Equatable` 协议，所以遵循该协议的类型也必须提供一个“是否相等”运算符（`==`）的实现。
+
+
+
+创建和构造一个空的集合：
+
+```swift
+var letters = Set<Character>()
+```
+
+
+
+### 字典
+
+其所有键的值需要是相同的类型，所有值的类型也需要相同。
 
 1. 初始化一个空的字典：
 
    ```swift
    let emptyDictionary = [String: Float]()
    occupations = [:] //如果类型信息可以被推断出来，可以用 [:] 来创建空字典——比如，在给变量赋新值或者给函数传参数的时候
+   ```
+
+2. `updateValue(_:forKey:)` 方法在这个键不存在对应值的时候会设置新值或者在存在时更新已存在的值。和下标的方式不同，`updateValue(_:forKey:)` 这个方法返回更新值之前的*原值*。
+
+```swift
+//updateValue(_:forKey:) 方法会返回对应值类型的可选类型。
+if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
+    print("The old value for DUB was \(oldValue).")
+}
+```
+
+3. 因为有可能请求的键没有对应的值存在，字典的下标访问会返回对应值类型的可选类型。如果这个字典包含请求键所对应的值，下标会返回一个包含这个存在值的可选类型，否则将返回 `nil`：
+
+   ```swift
+   if let airportName = airports["DUB"] {
+       print("The name of the airport is \(airportName).")
+   } else {
+       print("That airport is not in the airports dictionary.")
+   }
+   // 打印“The name of the airport is Dublin Airport.”
+   ```
+
+4. 可以使用下标语法通过将某个键的对应值赋值为 `nil` 来从字典里移除一个键值对：
+
+   ```swift
+   airports["APL"] = "Apple Internation"
+   // “Apple Internation”不是真的 APL 机场，删除它
+   airports["APL"] = nil
+   // APL 现在被移除了
+   ```
+
+5. `removeValue(forKey:)` 方法也可以用来在字典中移除键值对。这个方法在键值对存在的情况下会移除该键值对并且返回被移除的值或者在没有对应值的情况下返回 `nil`：
+
+   ```swift
+   if let removedValue = airports.removeValue(forKey: "DUB") {
+       print("The removed airport's name is \(removedValue).")
+   } else {
+       print("The airports dictionary does not contain a value for DUB.")
+   }
+   // 打印“The removed airport's name is Dublin Airport.”
    ```
 
 
