@@ -330,7 +330,9 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
 
    
 
-## 对象与类
+## 类与结构体
+
+#### 类
 
 - 使用 `init` 来创建一个构造器。
 
@@ -351,9 +353,27 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
   let sideLength = optionalSquare?.sideLength
   ```
 
+#### 结构体
+
+结构体和枚举是传值，类是传引用。
+
+实际上，Swift 中所有的基本类型：整数（integer）、浮点数（floating-point number）、布尔值（boolean）、字符串（string)、数组（array）和字典（dictionary），都是值类型
 
 
-## 枚举和结构体
+
+判定两个常量或者变量是否引用同一个类实例，Swift 提供了两个恒等运算符：
+
+- ​	相同（`===`）
+
+- ​	不相同（`!==`）
+
+  注意，“相同”（用三个等号表示，`===`）与“等于”（用两个等号表示，`==`）的不同。“相同”表示两个类类型（class type）的常量或者变量引用同一个类实例。“等于”表示两个实例的值“相等”或“等价”。
+
+
+
+
+
+## 枚举
 
 - 默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值。
 
@@ -367,7 +387,7 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
   }
   ```
 
-- 枚举的关联值是实际值，并不是原始值的另一种表达方法。
+- 枚举的关联值是实际值，并不是原始值的另一种表达方法。每个枚举成员的关联值类型可以各不相同。
 
   ```swift
   enum ServerResponse {
@@ -386,7 +406,65 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
   }
   ```
 
-- 结构体是传值，类是传引用。
+- 枚举成员的遍历
+
+  令枚举遵循 `CaseIterable` 协议。Swift 会生成一个 `allCases` 属性，用于表示一个包含枚举所有成员的集合。
+
+  ```swift
+  enum Beverage: CaseIterable {
+      case coffee, tea, juice
+  }
+  let numberOfChoices = Beverage.allCases.count
+  print("\(numberOfChoices) beverages available")
+  // 打印“3 beverages available”
+  
+  for beverage in Beverage.allCases {
+      print(beverage)
+  }
+  // coffee
+  // tea
+  // juice
+  ```
+
+- 递归枚举
+
+  在枚举成员前加上 `indirect` 来表示该成员可递归。在枚举类型开头加上 `indirect` 关键字来表明它的所有成员都是可递归的。
+
+  ```swift
+  enum ArithmeticExpression {
+      case number(Int)
+      indirect case addition(ArithmeticExpression, ArithmeticExpression)
+      indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+  }
+  
+  indirect enum ArithmeticExpression {
+      case number(Int)
+      case addition(ArithmeticExpression, ArithmeticExpression)
+      case multiplication(ArithmeticExpression, ArithmeticExpression)
+  }
+  
+  // 表达式 (5 + 4) * 2
+  let five = ArithmeticExpression.number(5)
+  let four = ArithmeticExpression.number(4)
+  let sum = ArithmeticExpression.addition(five, four)
+  let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+  
+  func evaluate(_ expression: ArithmeticExpression) -> Int {
+      switch expression {
+      case let .number(value):
+          return value
+      case let .addition(left, right):
+          return evaluate(left) + evaluate(right)
+      case let .multiplication(left, right):
+          return evaluate(left) * evaluate(right)
+      }
+  }
+  
+  print(evaluate(product))
+  // 打印“18”
+  ```
+
+  
 
 
 
