@@ -1,4 +1,4 @@
-# 安装(centos 7 中安装nginx)
+## 安装(centos 7 中安装nginx)
 1. 准备工作
     ```bash
     yum install -y gcc-c++ pcre pcre-devel zlib zlib-devel openssl openssl--devel 
@@ -17,7 +17,7 @@ make && make install
 # 这样基本上就OK。
 ```
 
-# 常用命令
+## 常用命令
 
 ```bash
 # 查看版本
@@ -35,10 +35,13 @@ nginx -t
 
 *nginx 中文文档* 参考 http://www.nginx.cn/doc/index.html
 
-# location 讲解
+## location 讲解
+
 location 用于匹配客户端发送的 url ，从而定位请求资源。
 
 `匹配方式大致分成 3 类`：
+
+**匹配的优先级：精准匹配 > 优先匹配 > 一般匹配**
 
     1) location = xxx {} # 精准匹配
     2) location pattern {} # 一般匹配
@@ -75,7 +78,137 @@ location ~* \.(gif|jpg|jpeg)$ {
 当请求 http://192.168.2.25/documents/1.jpg 时，会定位到配置 E。
 
 
-# 访问控制( ngx_http_access_module 模块，已内置)
+
+`try_files` 使用：
+
+1. ``try_files`对根路径 `/` 匹配是无效的。
+
+   ```nginx
+   location / {
+     try_files $uri $uri/ =400; # 这条是无效的，因为对根路径无效。
+   }
+   
+   location /test {
+     try_files $uri $uri/ =400; # 这条是有效的，因为不是对根路径。
+   }
+   ```
+
+2. `try_files`配合`@` 使用：
+
+   ```nginx
+   location /test {
+     try_files $uri $uri/ @test; # 将请求交给 @test
+   }
+   
+   location @test {
+     return 400;
+   }
+   ```
+
+
+
+`return`的跳转功能：
+
+```nginx
+location  {
+  return 302 http://www.baidu.com; # 当返回的状态码为302时，就可以进行跳转，但后面跟的跳转URL必须是完整的URL。
+}
+```
+
+**`try_files` 与 `return` 的区别**：
+
+- `try_files` 只能使用在子路径上，`return` 既能使用在子路径上，也可以使用在根路径上。
+- `try_files` 能 与 `@` 一起配合使用。
+- `return` 能进行跳转。
+
+
+
+匹配路径后面的斜杠问题：
+
+```nginx
+location /test { # /test 这种状态下，能匹配如127.0.0.1/test 和 127.0.0.1/test/ 这两种
+  return 400;
+}
+
+location /test/ { # 这种状态下，只能匹配 127.0.0.1/test/
+  return 400;
+}
+```
+
+
+
+**`root` 与 `alias`**：
+
+```nginx
+# 1. 针对根路径，尽量使用 root 来指定文件夹路径
+location / {
+  root /etc/nginx/html;
+  index home.html; # 如果index不写，root下将自动匹配index.html文件。
+}
+
+# 2. 针对子路径，尽量使用 alias 来指定文件夹路径
+location /test {
+  alias /etc/nginx/html/test;
+  index test.html;# 在子路径下，使用alias时，如果 index 不写，将自动去匹配文件夹下的index.html。
+}
+```
+
+ 
+
+目录列表：
+
+```nginx
+# 如果想让服务器一个文件夹让服务端进行显示下载，可以通过这个进行。
+location /download {
+  alias /var/www/download;
+  autoindex on; # 开启目录自动索引功能
+  autoindex_exact_size off; # 显示文件大小。默认为 on.
+  autoindex_localtime on; # 默认为off, 显示的文件时间为GMT时间。on 表示显示的文件时间为服务器时间。
+}
+```
+
+
+
+## 日志的使用
+
+Nginx  默认提供了两个日志文件 `access.log` 和 `error.log` 。通过`access.log` 可以得到用户请求的相关信息；通过`error.log`可以得到某个web服务故障或者其性能瓶颈等信息。
+
+```nginx
+# 默认的日志文件格式
+log_format combined '$remote_addr - $remote_user [$time_local] ' '"$request" $status $body_bytes_sent ' '"$http_referer" "$http_user_agent"';
+
+
+server {
+  listen 127.0.0.1:80;
+  
+  location / {
+    proxy_pass http://127.0.0.1:8080;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+
+server {
+  listen 127.0.0.1:8080;
+  access_log /var/log/nginx/web/access.log proxy_format; # 设置Log文件地址，以及使用哪个配置项进行
+  real_ip_header X-Forwarded-For; # 获取转发过来的真实IP地址。
+  real_ip_recursive on;# 开启获取真实IP地址的服务
+  
+  location / {
+    root /etc/nginx/html;
+    index index.html;
+  }
+}
+
+#日志文件的配置放在全局的nginx.conf文件中：
+log_format proxy_format '$remote_addr - $remote_user [$time_local] ' '"$request" $status $body_bytes_sent ' '"$http_referer" "$http_user_agent" "$http_x_real_ip" "$http_x_forwarded_for"';
+```
+
+
+
+
+
+## 访问控制( ngx_http_access_module 模块，已内置)
 
 在 location 中配置了 deny 和 allow
 ```nginx
@@ -87,7 +220,7 @@ location / {
 }
 ```
 
-# 文件压缩( ngx_http_gzip_module 模块, 已内置)
+## 文件压缩( ngx_http_gzip_module 模块, 已内置)
 ```nginx
 location ~* \.(jpg|gif|png|txt|xml)$ {
     gzip on; 
@@ -110,7 +243,7 @@ gzip_types mime-type ...;  # 设置需要压缩文件的类型，如：text/plai
 gzip_vary on|off;          # 是否传输 gzip 压缩标识，默认值为 off。
 ```
 
-# 静态资源缓存(ngx_http_headers_module 模块)
+## 静态资源缓存(ngx_http_headers_module 模块)
 ```nginx
 location ~* \.(jpg|gif|png|txt|xml)$ {
     expires 24h; # 向响应头中添加 Cache-Control，设置缓存时间为 24 小时
@@ -125,7 +258,7 @@ expires 2h;  # 2 小时
 expires 30d; # 30 天
 ```
 
-# 跨域(ngx_http_headers_module 模块)
+## 跨域(ngx_http_headers_module 模块)
 ```nginx
 location ~* \.(jpg|gif|png|txt|xml)$ {
     gzip on;
@@ -143,7 +276,7 @@ location ~* \.(jpg|gif|png|txt|xml)$ {
 }
 ```
 
-# 防盗链(ngx_http_referer_module 模块)
+## 防盗链(ngx_http_referer_module 模块)
 ```nginx
 location ~* \.(jpg|gif|png|txt|xml)$ {
     # 只允许 192.168.2.25 的服务器请求资源
@@ -154,31 +287,41 @@ location ~* \.(jpg|gif|png|txt|xml)$ {
 }
 ```
 
-# 反向代理(ngx_http_proxy_module 模块)
+## 反向代理(ngx_http_proxy_module 模块)
 ```nginx
-listen       80;
-    
-location / {
-    proxy_pass http://192.168.2.25:8080; # 被代理服务器地址。
-    # proxy_set_header xx xx;          # 更改 Nginx 服务器接收的客户端请求的头信息，然后将新请求头发给后端服务器。
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    
-    proxy_connect_timeout 30; # Nginx 与后端服务器建立连接超时时间
-    proxy_send_timeout 30; # Nginx 向后端服务器发送 write 请求后，等待响应的超时时间
-    proxy_read_timeout 30; # Nginx 向后端服务器发送 read 请求后，等待响应的超时时间。
-    
-    proxy_buffering on; # 是否开启 Proxy Buffer
-    proxy_buffer_size 32k; # 缓冲区大小
-    proxy_buffers 4 128k; # 缓冲区数量和大小
-    proxy_busy_buffers_size 256k; # 设置系统很忙时可以使用的 proxy_buffers的大小，官方推荐位 proxy_buffers * 2
-    proxy_temp_file_write_size 128k;# 当后端服务器的响应过大时 Nginx 一次性写入临时文件的数据大小
-    proxy_max_temp_file_size 256k; # 每个请求能用磁盘上临时文件最大大小
+server {
+    listen	80;
+
+  location / {
+      proxy_pass http://127.0.0.1:8080; # 被代理服务器地址。
+      # proxy_set_header xx xx;          # 更改 Nginx 服务器接收的客户端请求的头信息，然后将新请求头发给后端服务器。
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;#把客户端的请求IP地址转发给被代理的服务器。
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;#把客户端的请求IP地址转发给被代理的服务器。
+
+      proxy_connect_timeout 30; # Nginx 与后端服务器建立连接超时时间
+      proxy_send_timeout 30; # Nginx 向后端服务器发送 write 请求后，等待响应的超时时间
+      proxy_read_timeout 30; # Nginx 向后端服务器发送 read 请求后，等待响应的超时时间。
+
+      proxy_buffering on; # 是否开启 Proxy Buffer
+      proxy_buffer_size 32k; # 缓冲区大小
+      proxy_buffers 4 128k; # 缓冲区数量和大小
+      proxy_busy_buffers_size 256k; # 设置系统很忙时可以使用的 proxy_buffers的大小，官方推荐位 proxy_buffers * 2
+      proxy_temp_file_write_size 128k;# 当后端服务器的响应过大时 Nginx 一次性写入临时文件的数据大小
+      proxy_max_temp_file_size 256k; # 每个请求能用磁盘上临时文件最大大小
+  }
+}
+
+server {
+  listen 127.0.0.1:8080;
+  location {
+    root /etc/nginx/html;
+    index index.html;
+  }
 }
 ```
 
-# 负载均衡(ngx_http_upstream_module 模块)
+## 负载均衡(ngx_http_upstream_module 模块)
 nginx 的 upstream目前支持 4 种方式的分配
 
     1)、轮询（默认） 每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
@@ -188,7 +331,7 @@ nginx 的 upstream目前支持 4 种方式的分配
     4)、url_hash（第三方）
 
 ```nginx
-upstream servers2.mydomain.com { 
+upstream servername { 
     server 192.168.2.3:8080 down; 
     server 192.168.2.4:8081 weight=2; 
     server 192.168.2.5:8082 backup;
@@ -203,10 +346,27 @@ upstream servers2.mydomain.com {
 }
 
 server{ 
-    listen 80; 
-    server_name www.mydomain.com; 
+    listen 192.168.2.3:8080; 
     location / { 
-        proxy_pass http://servers2.mydomain.com; 
+        proxy_pass http://servername; 
+        proxy_set_header Host $host; 
+        proxy_set_header X-Real-IP $remote_addr; 
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
+    } 
+}
+server{ 
+    listen 192.168.2.4:8081; 
+    location / { 
+        proxy_pass http://servername; 
+        proxy_set_header Host $host; 
+        proxy_set_header X-Real-IP $remote_addr; 
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
+    } 
+}
+server{ 
+    listen 192.168.2.5:8082; 
+    location / { 
+        proxy_pass http://servername; 
         proxy_set_header Host $host; 
         proxy_set_header X-Real-IP $remote_addr; 
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
@@ -214,7 +374,7 @@ server{
 }
 ```
 
-# 代理缓存(ngx_http_proxy_module 模块)
+## 代理缓存(ngx_http_proxy_module 模块)
 Proxy Cache 机制依赖于 Proxy Buffer 机制，因此，只有当 Proxy Buffer 开启时，Proxy Cache 的配置才发挥作用。
 
 ```nginx
@@ -246,7 +406,7 @@ proxy_cache_valid 200 304 12h; # 针对不同的 HTTP 响应状态设置不同�
 proxy_cache_key xxx;           # 设置 Nginx 服务器在内存中为缓存数据建立索引时使用的关键字
 ```
 
-# 配置 HTTPS(ngx_http_ssl_module 模块)
+## 配置 HTTPS(ngx_http_ssl_module 模块)
 ```nginx
 server {
     listen  443;
