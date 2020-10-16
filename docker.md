@@ -31,7 +31,7 @@
     可以命令: 
     ```bash
     docker images -f dangling=true
-    ```  
+    ```
     可以专门显示这类镜像
 
     删除此类镜像命令: 
@@ -42,7 +42,7 @@
     ```
 
 + 中间层镜像  
-    
+  
     无标签的镜像，是其他镜像所依赖的镜像。
 
 `docker images -a`  列出所有镜像，包括中间层镜像
@@ -213,7 +213,7 @@ docker image pull [选项] [Docker Registry地址]<仓库名>:<标签>
     ```
 
 ### 终止容器
-    
+
     docker stop
 
 ### 进入容器
@@ -223,13 +223,13 @@ docker image pull [选项] [Docker Registry地址]<仓库名>:<标签>
 ### 导出和导入容器
 
 + 导出：
-    
+  
     `docker export`
 
     例如： `docker export 容器ID > XXX.tar`
 
 + 导入：
-    
+  
     `docker import` ,导入的为容器快照，快照文件将丢弃所有的历史记录和元数据信息，即仅保存容器当时的快照状态。
     
     `docker load` ,导入镜像存储文件，存储文件将保存完整记录，何种也要大。
