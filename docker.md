@@ -245,9 +245,9 @@ docker image pull [选项] [Docker Registry地址]<仓库名>:<标签>
 
     docker rm $(docker ps -a -q)
 
-## Repository (仓库)
 
-### 私有仓库
+
+## 私有仓库
 
 `docker-registry` 是官方提供的工具，可以用于构建私有的镜像仓库。
 
@@ -255,21 +255,32 @@ docker image pull [选项] [Docker Registry地址]<仓库名>:<标签>
 
 ```bash
 docker run -d -p 5002:5000 -v /opt/data/registry:/var/lib/registry --name registry_local  registry
+docker run --network=host -v /opt/data/registry:/var/lib/registry --name registry_local registry
 ```
 
 使用 `docker image tag` 将一个已经下载的镜像标记到私有仓库，如 将 `ubuntu:latest` 这个镜像标记为 `127.0.0.1:5000/ubuntu:latest`（格式为`docker image tag IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]`）。
 
 ```bash
 docker image tag ubuntu:latest 127.0.0.1:5000/ubuntu:latest
+docker tag ubuntu:latest 127.0.0.1:5000/ubuntu:latest
 ```
 
 使用 `docker image push` 上传标记的镜像。
 
 ```bash
 docker image push 127.0.0.1:5000/ubuntu:latest
+docker push 127.0.0.1:5000/ubuntu:latest
 ```
 
 然后，可以使用 `http://127.0.0.1:5002/v2/_catalog` 或者使用 `curl 127.0.0.1:5002/v2/_catalog` 来查看本地私有仓库中的信息。
+
+从本地私有仓库拉取镜像资源：
+
+```shell
+docker pull 127.0.0.1:5000/ubuntu:latest
+```
+
+
 
 ## Docker 数据管理
 
@@ -313,23 +324,28 @@ docker image push 127.0.0.1:5000/ubuntu:latest
     挂载一个主机`目录`作为数据卷 (`--mount or -v`):
 
     本地目录的路径必须是绝对路径，如果目录不存在Docker会自动为你创建它
+    
+    ```shell
+    docker run -dit --name 容器名称 -v 宿主机目录:容器内目录 镜像名称 [命令]
+    ```
+    
     ```bash
     docker run -d -P --name web  \
-    # -v /src/webapp:/opt/webapp \
+# -v /src/webapp:/opt/webapp \
     --mount type=bind,source=/src/webapp,target=/opt/webapp \
     training/webapp \
     python app.py
     ```
-
+    
     Docker挂载主机目录的默认权限是读写，用户也可以通过增加 `readonly` 指定为只读:
     ```bash
     docker run -d -P --name web  \
-    # -v /src/webapp:/opt/webapp \
+# -v /src/webapp:/opt/webapp \
     --mount type=bind,source=/src/webapp,target=/opt/webapp,readonly  \
     training/webapp \
     python app.py
     ```
-
+    
     挂载一个本地主机文件作为数据卷:
     ```bash
     docker run --rm -it \
@@ -340,23 +356,42 @@ docker image push 127.0.0.1:5000/ubuntu:latest
     
 + 数据卷容器(`Data volume containers`) *专门用来提供数据卷供其它容器挂载的。*
 
+    **创建一个数据卷容器的命令格式：**
+
+    ```bash
+    docker create -v 容器数据卷目录 --name 容器名称 镜像名称 [命令]
+    ```
+
     例如,创建一个名为dbdata的数据卷容器：
 
     ```bash
+    docker create -v /dbdata --name dbdata ubuntu /bin/bash
+    
     docker run -d -v /dbdata --name dbdata training/postgres echo Data-only container for postgres
+```
+    
+**其他容器，同时挂载数据卷容器的命令格式：**
+    
+    ```bash
+    docker run --volumes-from 数据卷窗口id/name -tid --name 容器名称 镜像名称 [命令]
+    
+    
+    docker run -d --volumes-from dbdata --name myu ubuntu /bin/bash
     ```
-
+    
+    
+    
     在其他容器中使用 `--volumes-from` 来挂载`dbdata`容器中的数据卷：
-
+    
     ```bash
     docker run -d --volumes-from dbdata --name db1 training/postgress
     docker run -d --volumes-from dbdata --name db2 training/postgress
     ```
-
+    
     也可以从其他已挂载了数据卷的容器来`级联挂载`数据卷：
-
+    
     ```bash
-    docker run -d --name db3 --volumes-from db1 training/postgress
+    docker run -d --name db3 --volumes-from db1  /postgress
     ```
 
 ### 备份数据卷
