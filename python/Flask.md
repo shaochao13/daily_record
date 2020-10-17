@@ -1,15 +1,37 @@
-# 有用模块
+## 有用模块
+
+Flask-SQLalchemy :操作数据库
+
+Flask-script:插入脚本
+
+Flask-migrate:管理迁移数据库
+
+Flask-Session：Session 存储方式指定
+
+Flask-WTF：表单
+
+Flask-Mail：邮件
+
+Flask-Bable：提供国际化和本地化支持，翻译 
+
+Flask-OpenID：认证
+
+Flask-RESTful：开发REST API的工具
+
+Flask-Bootstrap：集成前端bootstrap框架
+
+Flask-Moment：本地化日期和时间 
 
 [flask-socketio](https://github.com/miguelgrinberg/Flask-SocketIO) *Socket.IO integration for Flask applications*
 
-[flask-admin](https://github.com/flask-admin/flask-admin) *Simple and extensible administrative interface framework for Flask*
+[flask-admin](https://github.com/flask-admin/flask-admin) *简单而可扩展的管理接口框架*
 
 [Flask-Bcrypt](http://flask-bcrypt.readthedocs.io/en/latest/) *Flask-Bcrypt is a Flask extension that provides bcrypt hashing utilities for your application.*
 
-[Flask-Login](https://github.com/maxcountryman/flask-login) *Flask user session management*
+[Flask-Login](https://github.com/maxcountryman/flask-login) *认证用户状态*
 
 [Flask-Cache](http://pythonhosted.org/Flask-Cache/) *Cache extension for Flask*
-#
+
 ## 注册过滤器
 在Jinja2中注册自己的过滤器：       
 ```python
