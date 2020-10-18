@@ -157,7 +157,7 @@ docker image rm # Docker 1.13+ 推荐使用
 
     格式：`WORKDIR <工作目录路径>`
 
-    如果需要改变以后各层的工作目录位置，就应该使用`WORKDIR`指令。
+    如果需要改变以后各层的工作目录位置，就应该使用`WORKDIR`指令。如果指定的目录不存在，会进行创建。
 
 12. `USER` 指定当前用户
     
@@ -172,6 +172,31 @@ docker image rm # Docker 1.13+ 推荐使用
     + `HEALTHCHECK NONE` 屏蔽掉其健康检查指令
 
 14. `ONBUILD` 当以当前镜像为基础镜像时，构建下一级镜像时才会执行。
+
+```dockerfile
+FROM django
+# RUN apt-get update && apt-get install python3-pip
+# 添加宿主的文件或目录到容器中
+# ADD ./data  /home/data
+# COPY ./data.tar /home
+# 指定环境变量
+# ENV itcast=python
+# 指定进入容器中所在目录，工作目录
+WORKDIR /home
+RUN django-admin startproject test
+WORKDIR /home/test
+# 对外开放端口
+EXPOSE 8000
+# 容器启动后执行的命令
+ENTRYPOINT python3 manage.py runsever 0.0.0.0:8000
+```
+
+```shell
+# 根据上面提供的Dockerfile文件制作容器命令：
+docker build -t container_name /Dockerfile_dir
+```
+
+
 
 
 ## Docker Registry
@@ -256,6 +281,7 @@ docker image pull [选项] [Docker Registry地址]<仓库名>:<标签>
 ```bash
 docker run -d -p 5002:5000 -v /opt/data/registry:/var/lib/registry --name registry_local  registry
 docker run --network=host -v /opt/data/registry:/var/lib/registry --name registry_local registry
+# --network=host 这样可以让容器共享宿主机的网卡
 ```
 
 使用 `docker image tag` 将一个已经下载的镜像标记到私有仓库，如 将 `ubuntu:latest` 这个镜像标记为 `127.0.0.1:5000/ubuntu:latest`（格式为`docker image tag IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]`）。
@@ -331,6 +357,7 @@ docker pull 127.0.0.1:5000/ubuntu:latest
     
     ```bash
     docker run -d -P --name web  \
+    ```
 # -v /src/webapp:/opt/webapp \
     --mount type=bind,source=/src/webapp,target=/opt/webapp \
     training/webapp \
@@ -353,7 +380,7 @@ docker pull 127.0.0.1:5000/ubuntu:latest
     ubuntu:17.10 \
     bash
     ```
-    
+
 + 数据卷容器(`Data volume containers`) *专门用来提供数据卷供其它容器挂载的。*
 
     **创建一个数据卷容器的命令格式：**
@@ -368,6 +395,7 @@ docker pull 127.0.0.1:5000/ubuntu:latest
     docker create -v /dbdata --name dbdata ubuntu /bin/bash
     
     docker run -d -v /dbdata --name dbdata training/postgres echo Data-only container for postgres
+    ```
 ```
     
 **其他容器，同时挂载数据卷容器的命令格式：**
@@ -377,10 +405,10 @@ docker pull 127.0.0.1:5000/ubuntu:latest
     
     
     docker run -d --volumes-from dbdata --name myu ubuntu /bin/bash
-    ```
-    
-    
-    
+```
+
+
+​    
     在其他容器中使用 `--volumes-from` 来挂载`dbdata`容器中的数据卷：
     
     ```bash
