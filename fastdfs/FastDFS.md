@@ -2,7 +2,7 @@ FastDFS 是用 C语言 编写的一款开源的轻量级开源的分布式文件
 
 
 
-![fastdfs](/Volumes/LaCie/gits/daily_record/fastdfs/fastdfs.png)
+![fastdfs](./fastdfs.png)
 
 
 
@@ -18,7 +18,7 @@ Python 中使用fastDFS
 
 2. 配置文件
 
-   把 [client.conf](./client.config) 文件复制到项目中去。
+   把 [client.conf](./client.conf) 文件复制到项目中去。
 
    根据自己的需求修改里面的`tracker_server` 和 `base_path` 。
 
