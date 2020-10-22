@@ -237,6 +237,20 @@ docker image pull [选项] [Docker Registry地址]<仓库名>:<标签>
     docker container run -d -P --name web training/webapp python app.py
     ```
 
+
+
+**常用可选参数说明**：
+
+- `-i` 表示以“交互模式”运行容器。
+- `-t` 表示容器启动后会进入其命令行。加入`-it` 这两个参数后，容器创建就能登录进去，即分配一个伪终端。
+- `--name` 为创建的容器命名。
+- `-v` 表示目录映射关系，格式：**宿主机目录:容器中目录**。注意：最好做目录映射，在宿主机上做修改，然后共享到容器上。
+- `-d` 会创建一个守护式容器在后台运行(这样创建容器后不会自动登录容器)
+- `-p` 表示端口映射， 格式：**宿主机端口:容器中端口**。
+- `--network=host` 表示将主机的网络环境映射到容器中，使容器的网络与主机相同。
+
+
+
 ### 终止容器
 
     docker stop
@@ -409,8 +423,8 @@ docker pull 127.0.0.1:5000/ubuntu:latest
 
 
 ​    
-    在其他容器中使用 `--volumes-from` 来挂载`dbdata`容器中的数据卷：
-    
+​    在其他容器中使用 `--volumes-from` 来挂载`dbdata`容器中的数据卷：
+​    
     ```bash
     docker run -d --volumes-from dbdata --name db1 training/postgress
     docker run -d --volumes-from dbdata --name db2 training/postgress
