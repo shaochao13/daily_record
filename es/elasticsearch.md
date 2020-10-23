@@ -1,4 +1,5 @@
-# 安装
+## 安装
+
 ```bash
 #Elasticsearch默认不推荐使用root用户启动，所以创建用户
 #创建用户elastic 
@@ -25,7 +26,7 @@ sh elasticsearch-5.5.2/bin/elasticsearch
 ```
 
 ## 安装和启动过程可能出现的问题：
- 
+
 ### 1. 主机不能访问虚拟机9200端口,  编辑 config/elasticsearch.yml 配置文件
 ```bash
 network.host: 0.0.0.0
@@ -42,6 +43,7 @@ http.prot: 9200
   ```bash
   #切换到root用户，编辑limits.conf 
   vi /etc/security/limits.conf
+  ```
 
   #添加如下内容
   * hard nofile 65536
@@ -59,7 +61,7 @@ http.prot: 9200
   sysctl -p
 
   #重启Elasticsearch
-```
+  ```
 
 ## Elasticsearch自启动脚本设置
 ```bash
@@ -193,12 +195,13 @@ GET /_search?size=5&from=5
 GET /_search?size=5&from=10
 ```
 
-# 分析与分析器(_analyze)
+## 分析与分析器(_analyze)
+
 `分析` 包含下面的过程：
 
     首先，将一块文本分成适合于倒排索引的独立的 词条    
     之后，将这些词条统一化为标准格式以提高它们的“可搜索性”，或者 recall。
-
+    
     默认下，只有 string 会被分析。
 
 分析器执行上面的工作。 分析器 实际上是将三个功能封装到了一个包里：
@@ -212,11 +215,10 @@ GET /_search?size=5&from=10
       其次，字符串被 分词器 分为单个的词条。一个简单的分词器遇到空格和标点的时候，可能会将文本拆分成词条。
   
   + Token 过滤器
-      
+    
       最后，词条按顺序通过每个 token 过滤器 。这个过程可能会改变词条（例如，小写化 Quick ），删除词条（例如， 像 a`， `and`， `the 等无用词），或者增加词条（例如，像 jump 和 leap 这种同义词）。
 
-
-## 内置分析器
+### 内置分析器
 
 + 标准分析器 (`standard`)
 
@@ -234,7 +236,7 @@ GET /_search?size=5&from=10
 
     特定语言分析器可用于 很多语言。它们可以考虑指定语言的特点。例如， 英语 分析器附带了一组英语无用词（常用单词，例如 and 或者 the ，它们对相关性没有多少影响），它们会被删除。 由于理解英语语法的规则，这个分词器可以提取英语单词的 词干 。
 
-## 测试分析器如何分析文档
+### 测试分析器如何分析文档
 
 使用 `_analyze` 来测试分析器是如何对文档进行分析的：
 
@@ -246,9 +248,9 @@ GET /_analyze
 }
 ```
 
-# 映射(_mapping)
+## 映射(_mapping)
 
-## 查看映射
+### 查看映射
 
 例如，查看 索引 `gb` 中的 类型 `tweet` 的映射：
 
@@ -256,7 +258,7 @@ GET /_analyze
 GET /gb/_mapping/tweet
 ```
 
-## 自定义 域映射
+### 自定义 域映射
 
 ### `Field datatypes`
 Each field has a data type which can be:
@@ -297,9 +299,7 @@ PUT my_index
 }
 ```
 
-#
-
-##  操作
+## 常用操作
 
 + 查询所有文档
 ```
@@ -372,3 +372,23 @@ PUT /website/blog/123?op_type=create
 ```bash
 DELETE /website/blog/123
 ```
+
+
+
+## Docker 中使用ES
+
+```bash
+# 1. pull ES 此处可以下载最新的ES ，注意，pull时，需要指定ES的版本号，要不然pull不下来。
+sudo docker pull elasticsearch:7.9.2 
+
+# 2. 启动一个容器
+sudo docker run -it --name elasticsearch-ik --network=host -e "discovery.type=single-node" elasticsearch:7.9.2 /bin/bash
+
+sudo docker run -it --name elasticsearch-ik-1 --network=host -v /home/kevin/es_config:/usr/share/elasticsearch/config -v /home/kevin/es_log:/usr/share/elasticsearch/logs -e "discovery.type=single-node"  elasticsearch:7.9.2 # 这样是为了把es的配置文件在外面进行配置。
+
+# 3. 安装中文分词器ik 下载最新的版本
+./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.9.2/elasticsearch-analysis-ik-7.9.2.zip
+
+
+```
+

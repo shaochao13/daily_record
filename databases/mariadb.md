@@ -11,9 +11,8 @@ To have launchd start mariadb now and restart at login:
 Or, if you don't want/need a background service you can just run:
   mysql.server start
 
+## “Access denied for user 'root'@'localhost' (using password:YES)” 问题解决方法
 
-
-# “Access denied for user 'root'@'localhost' (using password:YES)” 问题解决方法
 1. 打开MySQL目录下的my.ini文件，在文件的最后添加一行“skip-grant-tables”，保存并关闭文件。
 2. 重启MySQL服务。
 3. 在命令行中输入“mysql -uroot -p”(不输入密码)，回车即可进入数据库。
@@ -23,9 +22,7 @@ Or, if you don't want/need a background service you can just run:
 7. 重启MySQL服务。
 8. 在命令行中输入“mysql -uroot -prootadmin”，问题搞定！
 
-
-
-# 校对集问题
+## 校对集问题
 
 校对集，其实就是数据的比较方式。
 
@@ -38,17 +35,18 @@ Or, if you don't want/need a background service you can just run:
 
 `校对集必须在没有数据之前声明好，如果有了数据之后，再进行校对集的修改，则修改无效。`
 
-
-# 中文数据问题
+## 中文数据问题
 
 中文数据问题的本质就是字符集的问题。
 
 ### 查看服务器识别的全部字符集
+
 ```sql
 show character set;
-```   
+```
 
 ### 查看服务器默认的对外处理的字符集
+
 ```sql
 show variables like 'character_set%';
 
@@ -60,8 +58,9 @@ charater_set_results --> 表示服务器默认的对外处理的字符集
 ```
 
 
-# 
+
 ## 列显示宽度进行零填充(`zerofill`)
+
 在于当数据不够显示宽度的时候，会自动让数据变成对应的显示宽度，通常需要搭配一个前导0来增加宽度，其不改变数据值的大小，即用 `zerofill` 进行零填充，`并且零填充会导致数值自动变成无符号`。
 ```sql
 create table my_int(int_1 int zerofill)charset utf8;
@@ -146,7 +145,7 @@ sudo sed -i 's#//mirrors.ustc.edu.cn#//ipv4.mirrors.ustc.edu.cn#g' /etc/yum.repo
     ```
 
     文件/etc/my.cnf.d/client.cnf
- 
+
     在[client]中添加
     ```
     default-character-set=utf8
@@ -210,8 +209,8 @@ SELECT col FROM table WHERE length(col)!=char_length(col)
 ```
 
 ---
- 
----- 
+
+----
 + 字段拆分
 
 主要用到了”mysql“库中的“help_topic”表
@@ -225,4 +224,15 @@ FROM table_demo t
 join mysql.help_topic b ON b.help_topic_id < (LENGTH(t.receive_id) - LENGTH(REPLACE(t.receive_id, ',', '')) + 1);
 ```
 
------ 
+-----
+
+
+
+## 事务隔离级别修改
+
+```bash
+$ vim mysqld.cnf
+
+transaction-isolation=READ-COMMITTED # 使用乐观锁时，使用这个级别比较合适。
+```
+

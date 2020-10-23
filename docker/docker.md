@@ -275,6 +275,14 @@ docker image pull [选项] [Docker Registry地址]<仓库名>:<标签>
 
     例如：`cat xxx.tar | docker import - test/ubuntu:v1.0`
 
+### 将容器制成镜像资源
+
+```bash
+sudo docker commit 容器名 制成镜像的名称
+```
+
+
+
 ### 删除容器
 
     docker rm   ,默认不会删除正在运行中的容器。
@@ -425,11 +433,11 @@ docker pull 127.0.0.1:5000/ubuntu:latest
 ​    
 ​    在其他容器中使用 `--volumes-from` 来挂载`dbdata`容器中的数据卷：
 ​    
-    ```bash
-    docker run -d --volumes-from dbdata --name db1 training/postgress
-    docker run -d --volumes-from dbdata --name db2 training/postgress
-    ```
-    
+​    ```bash
+​    docker run -d --volumes-from dbdata --name db1 training/postgress
+​    docker run -d --volumes-from dbdata --name db2 training/postgress
+​    ```
+​    
     也可以从其他已挂载了数据卷的容器来`级联挂载`数据卷：
     
     ```bash
