@@ -1,13 +1,11 @@
-## 安装(centos 7)
+### 安装(centos 7)
+
 在安装 之前，最好先安装 `gcc-c++`
 ```
 yum install -y gcc-c++
 ```
 
-
------------
-
- ## 数据结构
+## 数据结构
 
 + 二进制安全 (binary-safe) 的字符串。
 + 列表：按照插入顺序排序的字符串元素 (element) 的集合 (collection)。通常是链表。
@@ -85,3 +83,26 @@ Redis 键是二进制安全的，这意味着可以使用任何二进制序列�
             </property>
         </bean>
     ```
+
+
+
+## Sentinel 哨兵
+
+通过redis提供的sentinel模式，可以在redis集群中进行自动的故障转移。
+
+当哨兵监测到master宕机，会自动将slave切换成master，然后通过**发布订阅模式**通知其他的从服务器，修改配置文件，让它们切换主机。
+
+注：
+
+1. 至少要开三个sentinel
+2. sentinel要分散运行在不同的机器上
+
+```bash
+$ redis-sentinel sentinel.conf
+```
+
+
+
+## Redis cluster 分片集群
+
+ 
