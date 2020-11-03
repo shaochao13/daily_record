@@ -20,7 +20,7 @@
     产生 N 个等距分布在 [start, stop]间的元素组成的数组，包括 start, stop
     ```python
     linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)
-    ``` 
+    ```
 
 3. `logspace`   
     产生 N 个对数等距分布的数组，默认以10为底
@@ -103,7 +103,7 @@
    # 输出：array([[ 1.,  0.,  0.],
                 # [ 0.,  1.,  0.],
                 # [ 0.,  0.,  1.]])
-    ``` 
+   ```
 
 7. `r_` , `c_` 
 
@@ -768,7 +768,7 @@ a.all(axis=None)	|所有都不为0，返回真，逻辑与
 
 
 ### 对角线
-    
+
 ```python
 a =  array([[11, 21, 31],
             [12, 22, 32],
@@ -836,3 +836,15 @@ import numexpr as ne
 f = '3 * log(a) + cos(a) **2'
 %timeit r = ne.evaluate(f) # 大概在300ms 左右计算完成，比未优化时提高近50倍，比numpy快了近5倍
 ```
+
+
+
+## pytables 安装注意事项(mac)
+
+在安装之前需要先安装：
+
+1. `brew install hdf5`
+
+2. `c-blosc` https://github.com/Blosc/c-blosc.git
+
+   
