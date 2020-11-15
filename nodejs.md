@@ -77,6 +77,194 @@ module.exports = function() {
 
    
 
+## 文件操作
+
+### 小文件拷贝
+
+```javascript
+var fs = require('fs')
+
+function copy(src, dst) {
+    fs.writeFileSync(dst, fs.readFileSync(src))
+}
+
+```
+
+### 大文件拷贝
+
+```javascript
+var fs = require('fs')
+
+function copy(src, dst){
+  fs.createReadStream(src).pipe(fs.createWriteStream(dst))
+}
+```
+
+### `Buffer`数据块
+
+`Buffer` 用来提供对二进制数据的操作。
+
+`Buffer`与字符串的一个重要区别：字符串是只读的，并字符串的任何修改得到的都是一个新字符串。`Buffer` 更像是可以做指针操作的C语言数组。可以用`[index]`方式直接修改某个位置的字节。
+
+```javascript
+var bin = new Buffer([0x68, 0x65, 0x6c, 0x6c, 0x6f])
+//字符串转换为指定编码下的二进制数据
+var bin = new Buffer('hello', 'utf-8')
+
+//将二进制数据转化为指定编码的字符串
+var str = bin.toString('utf-8')
+//修改指定index位置的字节
+bin[0] = 0x48
+```
+
+使用`.slice` 方法也不是返回一个新的Buffer,而是返回了指向原Buffer中间的某个位置的指针。因此对 `.slice`方法返回的`Buffer`的修改也会作用于原`Buffer`.
+
+```javascript
+var bin = new Buffer([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]);
+var sub = bin.slice(2);
+
+sub[0] = 0x65;
+console.log(bin); // => <Buffer 68 65 65 6c 6f>
+```
+
+如果想要拷贝一份`Buffer`，得首先创建一个新的`Buffer`，并通过`.copy`方法把原`Buffer`中的数据复制过去。
+
+```javascript
+var bin = new Buffer([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]);
+var dup = new Buffer(bin.length);
+
+bin.copy(dup);//copy
+dup[0] = 0x48;
+console.log(bin); // => <Buffer 68 65 6c 6c 6f>
+console.log(dup); // => <Buffer 48 65 65 6c 6f>
+```
+
+
+
+## `Stream` 数据流
+
+`Stream` 基于事件机制工作，所有`Stream`的实例都继承于nodejs提供的 `EventEmitter`。
+
+```javascript
+var fs = require('fs')
+
+function only_read_file_stream(src, dst) {
+    var rs = fs.createReadStream(src)
+    var ws = fs.createWriteStream(dst)
+
+    rs.on('data', function (chunk) {
+        //表示还在写中，暂停新数据中的读取，以防止缓存爆仓
+        if (ws.write(chunk) === false) {
+            rs.pause()
+        }
+    })
+    //表示数据读取完成，同时也结束数据的写入
+    rs.on('end', function () {
+        ws.end()
+    })
+
+    //表示已经写入到了dst中，可以继续读取数据
+    ws.on('drain', function () {
+        rs.resume()
+    })
+}
+//Nodejs直接提供了`.pipe`方法，可以直接实现上面方法的代码功能。
+```
+
+
+
+## File System(文件系统)
+
+Nodejs提供了 `fs` 内置模块对文件的操作。
+
+
+
+## `Path` 路径
+
+Nodejs 提供了`path` 内置模块来简化路径相关的操作。
+
+- `path.normalize` 
+
+  将传入的路径转换为标准路径，如除了解析路径中的`.`与`..`外，还能去掉多余的斜杠。
+
+  用路径作为某些数据的索引，但又允许用户随意输入路径时，就需要使用该方法保证路径的唯一性。
+
+  ```javascript
+  var cache = {};
+  
+  function store(key, value) {
+  	cache[path.normalize(key)] = value;
+  }
+  
+  store('foo/bar', 1);
+  store('foo//baz//../bar', 2);
+  // 通过path.normailze对路径进行了标准路径处理，上面两个其实是对应同一个路径
+  console.log(cache);  // => { "foo/bar": 2 }
+  ```
+
+  > 标准化之后的路径里的斜杠在Windows系统下是`\`，而在Linux系统下是`/`。如果想保证任何系统下都使用`/`作为路径分隔符的话，需要用`.replace(/\\/g, '/')`再替换一下标准路径。
+
+- `path.join` 
+
+  将传入的多个路径拼接为标准路径。并且能在不同系统下正确使用相应的路径分隔符。
+
+  ```javascript
+  path.join('foo/', 'baz/', '../bar'); // => "foo/bar"
+  
+  path.join('/foo', 'bar', 'baz/asdf', 'quux', '..');
+  // Returns: '/foo/bar/baz/asdf'
+  
+  path.join('foo', {}, 'bar');
+  // Throws 'TypeError: Path must be a string. Received {}'
+  ```
+
+- `path.extname`
+
+  获取文件的扩展名
+
+  ```javascript
+  path.extname('foo/bar.js') // ===> '.js'
+  ```
+
+- `path.basename`
+
+  获取文件名
+
+  ```javascript
+  path.basename('/foo/bar/baz/asdf/quux.html');
+  // Returns: 'quux.html'
+  
+  path.basename('/foo/bar/baz/asdf/quux.html', '.html');
+  // Returns: 'quux'
+  ```
+
+
+
+## 遍历目录
+
+```javascript
+var fs = require('fs')
+var path = require('path')
+
+//同步遍历方法
+function travel(dir, callback) {
+    fs.readdirSync(dir).forEach(function (file) {
+        var pathname = path.join(dir, file)
+        if (fs.statSync(pathname).isDirectory()) {
+            travel(pathname, callback)
+        }else{
+            callback(pathname)
+        }
+    })
+}
+
+travel('/Users/kevin/Documents/gits/daily_record', function (pathname) {
+    console.log(pathname)
+})
+```
+
+
+
 
 
 ## npm install 慢的解决方法  
