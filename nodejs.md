@@ -265,6 +265,127 @@ travel('/Users/kevin/Documents/gits/daily_record', function (pathname) {
 
 
 
+## Nodejs程序退出
+
+1. `process.exit()`
+
+2. `process.kill(process.pid, 'SIGTERM')`
+
+   `SIGKILL` 是告诉进程要立即终止的信号，理想情况下，其行为类似于 `process.exit()`。
+
+   `SIGTERM` 是告诉进程要正常终止的信号。它是从进程管理者（如 `upstart` 或 `supervisord`）等发出的信号。
+
+
+
+## 读取环境变量
+
+`process.env` 属性承载了在启动进程时设置的所有环境变量。
+
+
+
+## 库/模块
+
+- `Chalk` 可以用来为控制台输出着色。
+
+  ```javascript
+  npm install chalk
+  
+  const chalk = require('chalk')
+  console.log(chalk.yellow('Hello, World.'))
+  ```
+
+- `Progress` 创建进度条。
+
+  ```javascript
+  const ProgressBar = require('progress')
+  
+  const bar = new ProgressBar(':bar', { total: 10 })
+  const timer = setInterval(() => {
+    bar.tick()
+    if (bar.complete) {
+      clearInterval(timer)
+    }
+  }, 100)
+  ```
+
+- `readline` 逐行读取(nodejs 内置)
+
+  ```javascript
+  const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+  
+  readline.question(`你叫什么名字?`, name => {
+    console.log(`你好 ${name}!`)
+    readline.close()
+  })
+  ```
+
+  [`readline-sync`](https://www.npmjs.com/package/readline-sync) 如果需要密码，则最好不要回显密码，而是显示 `*` 符号。
+
+  最简单的方式是使用 
+
+  ```javascript
+  var readlineSync = require('readline-sync');
+   
+  // Wait for user's response.
+  var userName = readlineSync.question('May I have your name? ');
+  console.log('Hi ' + userName + '!');
+   
+  // Handle the secret text (e.g. password).
+  var favFood = readlineSync.question('What is your favorite food? ', {
+    hideEchoBack: true // The typed text on screen is hidden by `*` (default).
+  });
+  console.log('Oh, ' + userName + ' loves ' + favFood + '!');
+  ```
+
+  `Inquirer`包提供了更完整、更抽象的解决方案。
+
+  ```javascript
+  npm i inquirer
+  
+  const inquirer = require('inquirer')
+  
+  var questions = [
+    {
+      type: 'input',
+      name: 'name',
+      message: "你叫什么名字?"
+    }
+  ]
+  
+  inquirer.prompt(questions).then(answers => {
+    console.log(`你好 ${answers['name']}!`)
+  })
+  ```
+
+- `events` 模块 用于处理事件。
+
+  ```javascript
+  const EventEmitter = require('events')
+  const eventEmitter = new EventEmitter()
+  
+  // on用于添加回调函数
+  eventEmitter.on('start', () => {
+    console.log('Start....')
+  })
+  
+  //emit用于触发事件
+  eventEmitter.emit('start')
+  
+  //多个参数
+  eventEmitter.on('start', (start, end) => {
+    console.log(`从 ${start} 到 ${end}`)
+  })
+  
+  eventEmitter.emit('start', 1, 100)
+  ```
+
+- `axios` 用于请求服务器数据的库
+
+- `fs-extra` `fs`模块的直接代替者。
+
 
 
 ## npm install 慢的解决方法  
