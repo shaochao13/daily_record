@@ -1,7 +1,16 @@
+### 常用的数组创建函数 
 
-`注`:笔记来自于网络整理
+| 函数                 | 描述                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| array                | 将输入数据（列表、元组、数组或其他序列类型）转换为ndarray。  |
+| asarray              | 将输入转换为ndarray,如果输入本身就是一个ndarray就不进行复制  |
+| arange               | 类似于内置的range，只是它返回的是一个ndarray而不是列表       |
+| ones, ones_like      | 根据指定的形状和dtype创建一个全为1的ndarray。ones_like以另一个数组为参数，并根据其形状和dtype创建一个全1数组 |
+| zeros,zeros_like     | 与ones和ones_like一样，只是创建的是全0数组                   |
+| empty、empty_like    | 创建新数组，只分配内存空间，但不填充任何值                   |
+| **eye**,**identity** | 创建一个正方的N X N 单位矩阵(对角线为1， 其余为0)            |
 
-## 生成数组的函数
+
 
 1. `arange`     
 
@@ -245,7 +254,7 @@ np.choose(choice, (a, 10, 15))
 + frombuffer
 + ndarray constructor
 
-## Numpy数组
+## ndarray
 
 ```python
 a = array([1, 2, 3, 4])
@@ -265,18 +274,17 @@ a = array([1, 2, 3, 4])
 
 ## Numpy 类型
 
-基本类型|可用的Numpy类型|备注        
---|--|--
-布尔型|	bool|	占1个字节
-整型|	int8, int16, int32, int64, int128, int|	int 跟C语言中的 long 一样大
-无符号整型	|uint8, uint16, uint32, uint64, uint128, uint	|uint 跟C语言中的 unsigned long 一样大
-浮点数|	float16, float32, float64, float, longfloat |	默认为双精度 float64 ，longfloat 精度大小与系统有关
-复数|	complex64, complex128, complex, longcomplex	|默认为 complex128 ，即实部虚部都为双精度
-字符串	|string, unicode	|可以使用 dtype=S4 表示一个4字节字符串的数组
-对象|	object	|数组中可以使用任意值
-Records	|void	|
-时间	|datetime64, timedelta64| 
-|--|--|--|
+基本类型|可用的Numpy类型|类型代码 |备注        
+--|--|--|--
+布尔型|	bool|? |	占1个字节
+整型|	int8, int16, int32, int64, int128, int|i1,i2,i4,i8,i16 |	int 跟C语言中的 long 一样大
+无符号整型	|uint8, uint16, uint32, uint64, uint128, uint	|u1,u2,u4,u8,u16 |uint 跟C语言中的 unsigned long 一样大
+浮点数|	float16, float32, float64, float, longfloat |f2,f4,f8 |	默认为双精度 float64 ，longfloat 精度大小与系统有关
+复数|	complex64, complex128, complex, longcomplex	|c8,c16,c32 |默认为 complex128 ，即实部虚部都为双精度
+字符串	|string_, unicode_	|S,U |可以使用 dtype=S4 表示一个4字节字符串的数组
+对象|	object	|O |数组中可以使用任意值
+Records	|void	| |
+时间	|datetime64, timedelta64| | 
 
 任意类型的数组：    
 ```python
@@ -294,8 +302,8 @@ a * 2
     + 当类型相同的时候，asarray 并不会产生新的对象，而是使用同一个引用。`有些时候为了保证我们的输入值是数组，我们需要将其使用 asarray 转化，当它已经是数组的时候，并不会产生新的对象，这样保证了效率` 
 
     ```python
-    a = array([1.5, -3],dtype=float32)   # array([ 1.5, -3. ], dtype=float32)
-    asarray(a, dtype=float64) # 转换类型float32 --> float64
+    a = array([1.5, -3],dtype=np.float32)   # array([ 1.5, -3. ], dtype=float32)
+    asarray(a, dtype=np.float64) # 转换类型float32 --> float64
     ```
 
 2. `astype` 函数: 
@@ -303,7 +311,7 @@ a * 2
     + astype 总是返回原来数组的一份`复制`，即使转换的类型是相同的
 
     ```python 
-    a.astype(float64)
+    a.astype(np.float64)
     ```
     
 
