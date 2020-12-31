@@ -1064,6 +1064,142 @@ public class qMain {
    }
    ```
 
+3. Job类中注入业务逻辑功能
+
+   ```java
+   @Service
+   public class UserService {
+       public void addUsers(){
+           System.out.println("add Users ......");
+       }
+   }
+   ```
+
+   ```java
+   /**
+    * Job 对象类
+    */
+   public class QuartzJob implements Job {
+   
+       /**
+        * 将业务实现类注入进来
+        */
+       @Autowired
+       private UserService userService;
+   
+       @Override
+       public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+           System.out.println(new Date());
+         	//执行spring boot业务逻辑中的代码
+         	this.userService.addUsers();
+       }
+   }
+   ```
+
+   **主要是要自定义一个继承自`AdaptableJobFactory` 的类，用于手动将JobFactory添加到 spring ioc容器中，并完成 对象属性的注入，如完成 UserService 的注入。**
+
+   ```java
+   
+   /**
+    * 用来手动完成对象的注入
+    */
+   @Component("myAdaptableJobFactory")
+   public class MyAdaptableJobFactory extends AdaptableJobFactory {
+   
+       /**
+        * AutowireCapableBeanFactory 可以将一个对象手动添加到spring ioc容器中，并完成 该对象的属性注入
+        */
+       @Autowired
+       private AutowireCapableBeanFactory autowireCapableBeanFactory;
+   
+       /**
+        * 将实例类的任务对象手动添加到spring ioc容器中，并完成对象的注入
+        * @param bundle
+        * @return
+        * @throws Exception
+        */
+       @Override
+       protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
+           Object obj = super.createJobInstance(bundle);
+   
+           //将 obj 对象 添加到 spring ioc容器中，并完成obj中的属性的注入
+           this.autowireCapableBeanFactory.autowireBean(obj);
+   
+           return  obj;
+       }
+   }
+   ```
+
+   ```java
+   /**
+    * Quartz 配置类
+    */
+   @Configuration
+   public class QuartzConfig {
+   
+       /**
+        * 1. 创建JobDetail
+        * @return
+        */
+       @Bean
+       public JobDetailFactoryBean jobDetailFactoryBean(){
+           JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+   
+           //关联Job类
+           factoryBean.setJobClass(QuartzJob.class);
+   
+           return factoryBean;
+       }
+   
+       /**
+        * 2. 创建 trigger
+        * @param jobDetailFactoryBean
+        * @return
+        */
+     	@Bean
+       public CronTriggerFactoryBean cronTriggerFactoryBean(JobDetailFactoryBean jobDetailFactoryBean){
+           CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
+           //关联JobDetail
+           factoryBean.setJobDetail(jobDetailFactoryBean.getObject());
+           //设置cron
+           factoryBean.setCronExpression("0/2 * * * * ?");
+   
+           return factoryBean;
+       }
+   
+       /**
+        * 3. 创建 Scheduler对象
+        * @param cronTriggerFactoryBean
+        * @param myAdaptableJobFactory
+        * @return
+        */
+     	@Bean
+       public SchedulerFactoryBean schedulerFactoryBean(CronTriggerFactoryBean cronTriggerFactoryBean,
+                                                        MyAdaptableJobFactory myAdaptableJobFactory){
+   
+           SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
+   
+           //关联trigger
+           factoryBean.setTriggers(cronTriggerFactoryBean.getObject());
+   
+           //实例化自定义的JobFactory类
+           factoryBean.setJobFactory(myAdaptableJobFactory);
+   
+           return factoryBean;
+       }
+   }
+   ```
+
+   ```java
+   @SpringBootApplication
+   @EnableScheduling
+   public class DemoApplication {
+       public static void main(String[] args) {
+           SpringApplication.run(DemoApplication.class, args);
+       }
+   }
+   ```
+
    
 
 
