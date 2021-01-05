@@ -98,6 +98,88 @@
 
 
 
+## Springboot整合RabbitMQ
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-amqp</artifactId>
+</dependency>
+```
+
+```yaml
+spring:
+  application:
+    name: springcloud-mq
+
+  rabbitmq:
+    host: 192.168.0.152
+    port: 5672
+    username: admin
+    password: 123456
+```
+
+```java
+//1. 创建消息队列
+@Configuration
+public class QueueConfig {
+
+    /**
+     * 创建队列
+     * @return
+     */
+    @Bean
+    public Queue createQueue(){
+        return new Queue("Hello-Queue");
+    }
+}
+```
+
+```java
+/**
+ * 消息发送者
+ */
+@Component
+public class Sender {
+
+    @Autowired
+    private AmqpTemplate rabbitAmqpTemplate;
+
+    /**
+     * 发送消息的方法
+     * @param msg
+     */
+    public void send(String msg){
+
+      	//第一个参数为消息队列名称，第二个参数为消息
+        this.rabbitAmqpTemplate.convertAndSend("Hello-Queue", msg);
+    }
+
+}
+```
+
+```java
+/**
+ * 消息接收者
+ */
+@Component
+public class Receiver {
+
+    /**
+     * 接收消息的方法。采用消息队列监听机制
+     * @param msg
+     */
+    @RabbitListener(queues = "Hello-Queue")
+    public void process(String msg){
+        System.out.println(msg);
+    }
+}
+```
+
+
+
+
+
 ## Springboot 整合springmvc + mybatis
 
 ![3.1](img/1.png)
