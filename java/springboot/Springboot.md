@@ -1,3 +1,11 @@
+## SpringBoot核心注解
+
+1. `@SpringBootApplication`  -- SpringBoot的启动类。
+2. `@SpringBootConfiguration` --  通过Bean对象获取配置信息 
+3. `@Configuration` -- 通过对bean对象的操作来替代spring中的xml文件。
+4. `@EnableAutoConfiguration` -- 完成一些初始化环境的配置。
+5. `@ComponentScan` -- 完成spring的组件扫描。替代之前我们在xml文件中配置组件扫描的配置<context:component-scan pacage="...">
+
 ## Springboot 整合 servlet
 
 
@@ -228,105 +236,114 @@
 
 ## Springboot异常处理
 
-1. 自定义错误页面
+### 1. 自定义错误页面
 
-   springboot默认提供了一套处理异常的机制。一旦程序出现了异常，它会向 `/error` 的url发送请求。  springboot提供 了一个叫`BasicExceptionController` 来处理 `/error`请求。
+springboot默认提供了一套处理异常的机制。一旦程序出现了异常，它会向 `/error` 的url发送请求。  springboot提供 了一个叫`BasicExceptionController` 来处理 `/error`请求。
 
-   如果需要将所有的异常统一跳转到自定义 的错误 页面，需要在`src/main/resources/templates`目录下创建一个`error.html`的页面。名称必须为`error.html`。其实就是自定义一个错误页面来替换了springboot提供 的默认错误页面。
+如果需要将所有的异常统一跳转到自定义 的错误 页面，需要在`src/main/resources/templates`目录下创建一个`error.html`的页面。名称必须为`error.html`。其实就是自定义一个错误页面来替换了springboot提供 的默认错误页面。
 
-2. `@ExceptionHandler` 注解处理异常
+### 2. `@ExceptionHandler` 注解处理异常
 
-   ```java
-       /**
-        * 这个方法的作用：处理NullPointException异常，其他的异常不管
-        * @param exception 
-        * @return
-        */
-       @ExceptionHandler(value = {java.lang.NullPointerException.class})
-       public ModelAndView nullPointerExceptionHandler(Exception exception){
-           ModelAndView mv = new ModelAndView();
-           mv.addObject("error", exception.toString());
-           mv.setViewName("nullpoint_error");//页面名称
-           return mv;
-       }
-   ```
+```java
+    /**
+     * 这个方法的作用：处理NullPointException异常，其他的异常不管
+     * @param exception 
+     * @return
+     */
+    @ExceptionHandler(value = {java.lang.NullPointerException.class})
+    public ModelAndView nullPointerExceptionHandler(Exception exception){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("error", exception.toString());
+        mv.setViewName("nullpoint_error");//页面名称
+        return mv;
+    }
+```
 
-3. `@ExceptionHandler` + `@ControllerAdvice` 注解处理异常
+### 3. `@ExceptionHandler` + `@ControllerAdvice` 注解处理异常
 
-   ```java
-   //定义一个全局的异常处理类， 在该类上添加 @ControllerAdvice 注解
-   @ControllerAdvice
-   public class GlobaException {
-       /**
-        * 这个方法的作用：处理NullPointException异常，其他的异常不管
-        * @param exception
-        * @return
-        */
-       @ExceptionHandler(value = {java.lang.NullPointerException.class})
-       public ModelAndView nullPointerExceptionHandler(Exception exception){
-           ModelAndView mv = new ModelAndView();
-           mv.addObject("error", exception.toString());
-           mv.setViewName("nullpoint_error");
-           return mv;
-       }
-   }
-   ```
+```java
+//定义一个全局的异常处理类， 在该类上添加 @ControllerAdvice 注解
+@ControllerAdvice
+public class GlobaException {
+    /**
+     * 这个方法的作用：处理NullPointException异常，其他的异常不管
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = {java.lang.NullPointerException.class})
+    public ModelAndView nullPointerExceptionHandler(Exception exception){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("error", exception.toString());
+        mv.setViewName("nullpoint_error");
+        return mv;
+    }
+  
+  	@ResponseBody
+  	@ExceptionHandler(value=java.lang.Exception.class)
+  	public Map<String, Object> myException(Exception ex){
+      Map<String, Object> map = new HashMap<>();
+      map.put("code", 500);
+      map.put("msg", "Error");
+      return map;
+    }
+}
+```
 
-4. 配置`SimpleMappingExceptionResolver` 处理异常
+### 4. 配置`SimpleMappingExceptionResolver` 处理异常
 
-   ```java
-   /**
-    * 通过 SimpleMappingExceptionResolver 处理全局异常
-    * 但这种方式没法把Exception信息传递给页面
-    */
-   @Configuration
-   public class GlobalException {
-   
-       @Bean
-       public SimpleMappingExceptionResolver getSimpleMappingExceptionResolver(){
-           SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
-   
-           Properties properties = new Properties();
-   
-           /**
-            * 参数1： 异常类型，必须是异常类型的全名
-            * 参数2： 视图名称
-            */
-           properties.put("java.lang.ArithmeticException", "error1");
-           properties.put("java.lang.NullPointException", "error1");
-   
-           return resolver;
-       }
-   }
-   ```
+```java
+/**
+ * 通过 SimpleMappingExceptionResolver 处理全局异常
+ * 但这种方式没法把Exception信息传递给页面
+ */
+@Configuration
+public class GlobalException {
 
-5. 自定义`HandlerExceptionResolver` 处理异常
+    @Bean
+    public SimpleMappingExceptionResolver getSimpleMappingExceptionResolver(){
+        SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
 
-   ```java
-   //定义一个全局的异常处理类，并实现 HandlerExceptionResolver 接口
-   /**
-    * 通过 HandlerExceptionResolver 处理全局异常
-    */
-   @Configuration
-   public class GlobalException implements HandlerExceptionResolver {
-       
-       @Override
-       public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-           ModelAndView mv = new ModelAndView();
-           //判断不同类型的异常，跳转到不同的错误页面
-           if (ex instanceof ArithmeticException){
-               mv.setViewName("error1");
-           }
-           if (ex instanceof NullPointerException){
-               mv.setViewName("error2");
-           }
-   
-           mv.addObject("error", ex.toString());
-           return mv;
-       }
-   }
-   
-   ```
+        Properties properties = new Properties();
+
+        /**
+         * 参数1： 异常类型，必须是异常类型的全名
+         * 参数2： 视图名称
+         */
+        properties.put("java.lang.ArithmeticException", "error1");
+        properties.put("java.lang.NullPointException", "error1");
+
+        return resolver;
+    }
+}
+```
+
+### 5. 自定义`HandlerExceptionResolver` 处理异常
+
+```java
+//定义一个全局的异常处理类，并实现 HandlerExceptionResolver 接口
+/**
+ * 通过 HandlerExceptionResolver 处理全局异常
+ */
+@Configuration
+public class GlobalException implements HandlerExceptionResolver {
+    
+    @Override
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        ModelAndView mv = new ModelAndView();
+        //判断不同类型的异常，跳转到不同的错误页面
+        if (ex instanceof ArithmeticException){
+            mv.setViewName("error1");
+        }
+        if (ex instanceof NullPointerException){
+            mv.setViewName("error2");
+        }
+
+        mv.addObject("error", ex.toString());
+        return mv;
+    }
+}
+
+```
 
 
 
@@ -1066,7 +1083,9 @@ public class qMain {
 
    
 
+## 使用spring-boot-admin监控spring boot应用
 
+具体配置：https://github.com/codecentric/spring-boot-admin
 
 
 
