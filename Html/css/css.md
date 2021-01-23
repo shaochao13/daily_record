@@ -144,6 +144,22 @@ li[class^="a" i] {
 
 
 
+## 盒子模型
+
+### 1. 块级盒子 Block box
+
+- 盒子会在内联的方向上扩展并占据父容器在该方向上的所有可用空间，在绝大数情况下意味着盒子会和父容器一样宽
+- 每个盒子都会换行
+- [`width`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width) 和 [`height`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/height) 属性可以发挥作用
+- 内边距（padding）, 外边距（margin） 和 边框（border） 会将其他元素从当前盒子周围“推开”
+
+### 2. 内联盒子 Inline box
+
+- 盒子不会产生换行。
+-  [`width`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width) 和 [`height`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/height) 属性将不起作用。
+- 垂直方向的内边距、外边距以及边框会被应用但是不会把其他处于 `inline` 状态的盒子推开。
+- 水平方向的内边距、外边距以及边框会被应用且会把其他处于 `inline` 状态的盒子推开。
+
 
 
 
