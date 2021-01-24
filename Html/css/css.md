@@ -160,6 +160,31 @@ li[class^="a" i] {
 - 垂直方向的内边距、外边距以及边框会被应用但是不会把其他处于 `inline` 状态的盒子推开。
 - 水平方向的内边距、外边距以及边框会被应用且会把其他处于 `inline` 状态的盒子推开。
 
+### 3. 盒模型的各个部分
+
+​	CSS中组成一个块级盒子需要:
+
+- **Content box**: 这个区域是用来显示内容，大小可以通过设置 [`width`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width) 和 [`height`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/height).
+- **Padding box**: 包围在内容区域外部的空白区域； 大小通过 [`padding`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/padding) 相关属性设置。
+- **Border box**: 边框盒包裹内容和内边距。大小通过 [`border`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/border) 相关属性设置。
+- **Margin box**: 这是最外面的区域，是盒子和其他元素之间的空白区域。大小通过 [`margin`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/margin) 相关属性设置。
+
+### 4. 标准盒模型
+
+​	在标准模型中，如果你给盒设置 `width` 和 `height`，实际设置的是 *content box*。 padding 和 border 再加上设置的宽高一起决定整个盒子的大小。
+
+### 5. 替代(IE) 盒模型
+
+​	这个模型，所有宽度都是可见宽度，所以内容宽度是该宽度减去边框和填充部分。
+
+## 书写模式
+
+​	`writing-mode`的三个值分别是：
+
+- `horizontal-tb`: 块流向从上至下。对应的文本方向是横向的。
+- `vertical-rl`: 块流向从右向左。对应的文本方向是纵向的。
+- `vertical-lr`: 块流向从左向右。对应的文本方向是纵向的。
+
 
 
 
