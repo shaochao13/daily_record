@@ -177,6 +177,8 @@ li[class^="a" i] {
 
 ​	这个模型，所有宽度都是可见宽度，所以内容宽度是该宽度减去边框和填充部分。
 
+​	通过为其设置 `box-sizing: border-box` 来实现。 
+
 ## 书写模式
 
 ​	`writing-mode`的三个值分别是：
@@ -184,6 +186,51 @@ li[class^="a" i] {
 - `horizontal-tb`: 块流向从上至下。对应的文本方向是横向的。
 - `vertical-rl`: 块流向从右向左。对应的文本方向是纵向的。
 - `vertical-lr`: 块流向从左向右。对应的文本方向是纵向的。
+
+---
+
+`object-fit`:
+
+```css
+/*缩小了图像，维持了图像的比例，所以图像可以整齐地充满盒子，同时由于比例保持不变，图像的一部分将会被盒子裁切掉。*/
+.cover {
+  object-fit: cover;
+}
+/*图像将会缩放到足以放到盒子里面的大小。如果它和盒子的比例不同，这将会导致“开天窗”的结果。*/
+.contain {
+  object-fit: contain;
+}
+/*让图像充满盒子，但是不会维持比例。*/
+.fill {
+  object-file: fill;
+}
+```
+
+
+
+表单元素中的一些地基式设置：
+
+```css
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  box-sizing: border-box;
+  padding: 0; margin: 0;
+}
+
+textarea {
+  overflow: auto;
+} 
+```
+
+
+
+
+
+
 
 
 
