@@ -224,6 +224,8 @@ li[class^="a" i] {
 
 ---
 
+## 图表填充
+
 `object-fit`:
 
 ```css
@@ -241,7 +243,7 @@ li[class^="a" i] {
 }
 ```
 
-
+## 表单
 
 表单元素中的一些地基式设置：
 
@@ -263,7 +265,16 @@ textarea {
 
 
 
+## 表格
 
+最有用的点：
+
+- 使您的表格标记尽可能简单，并且保持灵活性，例如使用百分比，这样设计就更有响应性。
+- 使用 [`table-layout`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/table-layout)`: fixed` 创建更可控的表布局，可以通过在标题[`width`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width)中设置[`width`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width)来轻松设置列的宽度。
+- 使用 [`border-collapse`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-collapse)`: collapse` 使表元素边框合并，生成一个更整洁、更易于控制的外观。
+- 使用`thead`、`tbody`和 `tfoot` 将表格分割成逻辑块，并提供额外的应用CSS的地方，因此如果需要的话，可以更容易地将样式层叠在一起。
+- 使用斑马线来让其他行更容易阅读。
+- 使用 [`text-align`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/text-align)直线对齐文本，使内容更整洁、更易于跟随。
 
 
 
