@@ -22,7 +22,9 @@ componentWillReceiveProps(object nextProps)：//已加载组件收到新的参�
 shouldComponentUpdate(object nextProps, object nextState)：//组件判断是否重新渲染时调用
 ```
 
-#
+![react生命周期函数](/Users/kevin/Documents/gits/shaochao13/daily_record/images/react/react生命周期函数.png)
+
+## 常用函数和属性
 
 + `this.props.children` 表示组件的所有子节点
 
