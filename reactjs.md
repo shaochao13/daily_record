@@ -1,4 +1,5 @@
-# 组件的生命周期
+## 组件的生命周期
+
 组件的生命周期分成 三个 状态：
 1. Mounting: 已插入真实DOM
 2. Updating: 正在被重新渲染
@@ -180,3 +181,13 @@ function App2() {
   return <Greeting {...props} />;
 }
 ```
+
+
+
+## react-transition-group
+
+
+
+## Redux
+
+![redux-flow](/Users/kevin/Documents/gits/shaochao13/daily_record/images/react/redux-flow.png)
