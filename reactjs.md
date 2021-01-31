@@ -184,6 +184,14 @@ function App2() {
 }
 ```
 
+**react中加载带html和css的内容**：
+
+```html
+<CustomDIV dangerouslySetInnerHTML={{__html: this.props.content}}></CustomDIV>
+```
+
+
+
 
 
 ## react-transition-group
@@ -193,3 +201,16 @@ function App2() {
 ## Redux
 
 ![redux-flow](/Users/kevin/Documents/gits/shaochao13/daily_record/images/react/redux-flow.png)
+
+## redux-thunk
+
+
+
+## immutable.js 
+
+https://github.com/immutable-js/immutable-js
+
+
+
+## react-router-dom
+
