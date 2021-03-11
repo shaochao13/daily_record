@@ -214,3 +214,8 @@ https://github.com/immutable-js/immutable-js
 
 ## react-router-dom
 
+
+
+## **[react-loadable](https://github.com/jamiebuilds/react-loadable)**
+
+用来进行异步加载页面组件，有利于提高首页的访问速度
