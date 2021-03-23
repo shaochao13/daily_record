@@ -214,8 +214,28 @@ https://github.com/immutable-js/immutable-js
 
 ## react-router-dom
 
+<<<<<<< HEAD
 
 
 ## **[react-loadable](https://github.com/jamiebuilds/react-loadable)**
 
 用来进行异步加载页面组件，有利于提高首页的访问速度
+=======
+## Redux-thunk 和 Redux-Saga
+
+
+
+## React-redux
+
+## styled-components 
+
+用来管理CSS。用来处理CSS污染的问题
+
+https://github.com/styled-components/styled-components
+
+
+
+## CSS-Module
+
+同样可以处理CSS污染的问题
+>>>>>>> c73cc81027efcac3da4b8f6cce09bbf6b7d18f89
