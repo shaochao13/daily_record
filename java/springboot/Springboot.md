@@ -1,10 +1,50 @@
 ## SpringBoot核心注解
 
 1. `@SpringBootApplication`  -- SpringBoot的启动类。
+
 2. `@SpringBootConfiguration` --  通过Bean对象获取配置信息 
-3. `@Configuration` -- 通过对bean对象的操作来替代spring中的xml文件。
-4. `@EnableAutoConfiguration` -- 完成一些初始化环境的配置。
+
+3. `@Configuration` --表示为一个配置类， 通过对bean对象的操作来替代spring中的xml文件。
+
+   ```java
+   @Configuration(proxyBeanMethods = true)
+   // proxyBeanMethods为true时，表示所有获取的bean都是bean容器中的组件。为false时，表示每次获取的bean实例都是不一样的
+   public class MyConfig {
+   
+       @Bean
+       public User user1(){
+           return new User("zhangsan", 18);
+       }
+   }
+   ```
+
+   
+
+4. `@EnableAutoConfiguration` -- 自动配置功能的注解，完成一些初始化环境的配置。
+
 5. `@ComponentScan` -- 完成spring的组件扫描。替代之前我们在xml文件中配置组件扫描的配置<context:component-scan pacage="...">
+
+6. @ConfigurationProperties --- 配置绑定
+
+   ```xml
+   <!-- application.properties文件 -->
+   my.car=BYD
+   my.price=111111
+   ```
+
+   ```java
+   @Component//只有在容器中的组件，才能拥有springboot提供的配置绑定功能。
+   @ConfigurationProperties(prefix="my")
+   public class Car{
+     private String car;
+     private Integer price;
+     //省略getter,setter。。。。。。
+   }
+   ```
+
+   
+
+7. 
 
 ## Springboot 整合 servlet
 
@@ -1306,6 +1346,38 @@ public class qMain {
 具体配置：https://github.com/codecentric/spring-boot-admin
 
 
+
+
+
+## yaml  配置文件智能提示 设置
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+    <optional>true</optional>
+</dependency>
+
+ 
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+      <configuration>
+        <excludes> <!--打包的时候将智能提示依赖排除在打包之中-->
+          <exclude>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+          </exclude>
+        </excludes>
+      </configuration>
+    </plugin>
+  </plugins>
+</build> 
+```
+
+  
 
 
 
