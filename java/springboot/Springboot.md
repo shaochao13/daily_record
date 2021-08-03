@@ -69,6 +69,111 @@
 2. `ServletContext` 根目录下
 
    在 `src/main/webapp` 目录下， 目录名称为`webapp`
+   
+3. 修改静态资源目录，修改静态资源访问路径：
+
+   ```yaml
+   spring:
+     mvc:
+       static-path-pattern: /res/**  # 用来修改访问静态资源时的url
+     web:
+       resources:
+         static-locations: classpath:/abc/ # 修改静态资源的存放目录
+   ```
+
+4. 页面上的表单form进行除get、post 之外的 put\delete\patch等method请求的设置：
+
+   ```html
+   <!--表单method=post, 并且需要在表单中添加一个input,<input value="put" name="_method" hidden>  value=put,delete,patch等-->
+   <form method="post" action="/user">
+       <input value="put" name="_method" hidden>
+       <button type="submit">PUT</button>
+   </form>
+   ```
+
+
+
+## 请求处理-注解
+
+### 对矩阵参数的支持
+
+springboot默认没有开启对矩阵参数的支持。需要手动开启：
+
+```java
+//第一种开启方式：
+@Configuration(proxyBeanMethods = false)
+public class MyConfig  {
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer(){
+        return new WebMvcConfigurer() {
+            @Override
+            public void configurePathMatch(PathMatchConfigurer configurer) {
+                UrlPathHelper urlPathHelper = new UrlPathHelper();
+                urlPathHelper.setRemoveSemicolonContent(false);
+                configurer.setUrlPathHelper(urlPathHelper);
+            }
+        };
+    }
+
+}
+
+
+//第二种开启方式
+@Configuration(proxyBeanMethods = false)
+public class MyConfig implements WebMvcConfigurer {
+
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        UrlPathHelper urlPathHelper = new UrlPathHelper();
+        urlPathHelper.setRemoveSemicolonContent(false);
+        configurer.setUrlPathHelper(urlPathHelper);
+    }
+}
+```
+
+开启之后，就可以处理矩阵参数了：
+
+**矩阵参数都是跟着路径后面的**。
+
+```html
+<a href="/cars/sell;low=34;brand=byd,audi,yd">MatrixVariable请求参数</a>
+```
+
+后端接收：
+
+```java
+@GetMapping("/cars/{path}")
+public Map cars(
+  @MatrixVariable("low") Integer low,
+  @MatrixVariable("brand") List<String> brands,
+  @PathVariable("path") String path){
+  Map<String, Object> rtn = new HashMap<>();
+  rtn.put("low",low);
+  rtn.put("brand", brands);
+  rtn.put("path",path);
+
+  return rtn;
+}
+```
+
+```html
+<a href="/boss/1;age=20/2;age=21">MatrixVariable请求参数</a>
+```
+
+```java
+@GetMapping("/boss/{bossId}/{empId}")
+public Map boss(@MatrixVariable(value = "age", pathVar = "bossId") Integer bossAge,
+                @MatrixVariable(value = "age", pathVar = "empId") Integer empAge){
+  Map<String, Object> rtn = new HashMap<>();
+  rtn.put("bossAge",bossAge);
+  rtn.put("empAge", empAge); 
+
+  return rtn;
+}
+```
+
+
 
 
 
