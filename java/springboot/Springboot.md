@@ -93,6 +93,139 @@
 
 
 
+## 自定义MessageConverter
+
+```yaml
+spring:
+  mvc:
+    contentnegotiation:
+      favor-parameter: true
+```
+
+首先，自定义一个MessageConverter类:
+
+```java
+/**
+ * 自定义 MessageConverter,对Person类进行自定义转换
+ */
+public class MyPersonMessageConverter implements HttpMessageConverter<Person>  {
+
+    @Override
+    public boolean canRead(Class<?> clazz, MediaType mediaType) {
+        return false;
+    }
+
+    /**
+     * 表示支持哪些的类的写
+     * @param clazz
+     * @param mediaType
+     * @return
+     */
+    @Override
+    public boolean canWrite(Class<?> clazz, MediaType mediaType) {
+        return clazz.isAssignableFrom(Person.class);
+    }
+
+    /**
+     * 服务器要统计所有MessageConverter 都能写出哪些内容类型
+     * 把自定义的媒体类型添加进去。
+     * 如：application/x-myPerson
+     * @return
+     */
+    @Override
+    public List<MediaType> getSupportedMediaTypes() {
+        return MediaType.parseMediaTypes("application/x-myPerson");
+    }
+
+    @Override
+    public List<MediaType> getSupportedMediaTypes(Class<?> clazz) {
+        return null;
+    }
+
+    @Override
+    public Person read(Class<? extends Person> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+        return null;
+    }
+
+  	// 这个方法表示要将Person类的数据以什么形式返回出去
+    @Override
+    public void write(Person person, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+        //自定义协议数据的写出
+        String data = person.getName() + ";" + person.getAge();
+
+        //写出去
+        outputMessage.getBody().write(data.getBytes());
+    }
+}
+```
+
+第二步，将自定义的MessageConverter添加到框架中：
+
+```java
+@Configuration(proxyBeanMethods = false)
+public class MyConfig  {
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer(){
+        return new WebMvcConfigurer() {
+
+            //添加自定义的MessageConverter
+            @Override
+            public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+                converters.add(new MyPersonMessageConverter());
+            }
+						// .........
+        };
+    }
+
+}
+```
+
+第三步，这样，只要前端转入的Accept=”application/x-myPerson“ ,就会返回自定义的数据格式。
+
+
+
+如果希望不仅仅支持accept请求头来实现，还希望通过请求参数实现自定义数据格式，只需要在自定义的WebMvcConfigurer中实现自定义内容协商策略即可。
+
+```java
+@Configuration(proxyBeanMethods = false)
+public class MyConfig  {
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer(){
+        return new WebMvcConfigurer() {
+
+            //添加自定义的MessageConverter
+            @Override
+            public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+                converters.add(new MyPersonMessageConverter());
+            }
+
+          	//自定义内容协商策略
+            @Override
+            public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+                Map<String, MediaType> mediaTypes = new HashMap<>();
+                mediaTypes.put("json", MediaType.APPLICATION_JSON);
+                mediaTypes.put("xml", MediaType.APPLICATION_XML);
+                //添加自定义的
+                mediaTypes.put("myP", MediaType.parseMediaType("application/x-myPerson"));
+                //指定系统支持解析哪些参数对应的哪些媒体类型
+                ParameterContentNegotiationStrategy parameterStrategy = new ParameterContentNegotiationStrategy(mediaTypes);
+              
+              	//需要把适配请求头的策略添加进来，要不来，请求头的方式就会失效。
+                HeaderContentNegotiationStrategy headerStrategy = new HeaderContentNegotiationStrategy();
+
+                configurer.strategies(Arrays.asList(parameterStrategy, headerStrategy));
+            }
+ 
+        };
+    }
+```
+
+然后就可以通过参数的方式进行：http://xxxxxx?format=myP  参数名必须为format
+
+
+
 ## 请求处理-注解
 
 ### 对矩阵参数的支持
@@ -240,6 +373,39 @@ public Map boss(@MatrixVariable(value = "age", pathVar = "bossId") Integer bossA
 
 
 ## Springboot 整合 thymeleaf
+
+1. ```xml
+   <dependency>
+     	<groupId>org.springframework.boot</groupId>
+     	<artifactId>spring-boot-starter-thymeleaf</artifactId>
+   </dependency>
+   ```
+
+2. ```html
+   <!DOCTYPE html>
+   <html lang="en" xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <meta charset="UTF-8">
+       <title>Thymeleaf</title>
+   </head>
+   <body>
+       <h1 th:text="${msg}">哈哈</h1>
+   </body>
+   </html>
+   ```
+
+3. ```java
+   @Controller
+   public class TestController {
+   
+       @GetMapping("/s")
+       public String sucess(Model model){
+           model.addAttribute("msg", "Thyleaf");
+           //demo 表示demo.html页面.
+           return "demo";
+       }
+   }
+   ```
 
 
 
@@ -457,6 +623,149 @@ public class Receiver {
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-validation</artifactId>
 </dependency>
+```
+
+
+
+## 文件上传
+
+```yaml
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB #单个文件的上传最大大小
+      max-request-size: 100MB # 整个请求最大的上传大小
+```
+
+```java
+    /**
+     * 文件上传
+     * @param email
+     * @param username
+     * @param headerImg
+     * @param photos
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/upload")
+    public String upload(@RequestParam("email") String email,
+                         @RequestParam("username") String username,
+                         @RequestPart("headerImg") MultipartFile headerImg,
+                         @RequestPart("photos") MultipartFile[] photos) throws IOException {
+
+        if (!headerImg.isEmpty()){
+            //保存到本地，或者oss之类的云服务器
+            String originalFilename = headerImg.getOriginalFilename();
+            headerImg.transferTo(new File("本地路径" + originalFilename));
+        }
+
+        if (photos.length > 0){
+            for (MultipartFile photo: photos){
+                if (!photo.isEmpty()){
+                    String originalFilename = photo.getOriginalFilename();
+                    photo.transferTo(new File("本地路径" + originalFilename));
+                }
+            }
+        }
+
+        return "index";
+    }
+```
+
+
+
+
+
+## 拦截器 HanlderInterceptor
+
+1、自定义拦截器实现
+
+```java
+/**
+ * 登录检查的拦截器
+ * 1、配置好拦截器要拦截哪些请求
+ * 2、把这些配置放在容器中
+ */
+public class LoginInterceptor implements HandlerInterceptor {
+    /**
+     * 目标方法执行之前
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        HttpSession session = request.getSession();
+        Object loginUser = session.getAttribute("loginUser");
+        if (loginUser != null){
+            //表示已经登录，放行。
+            return true;
+        }else {
+
+            //表示未登录，跳转首页，或者登录页之类的
+//            session.setAttribute("msg", "请先登录");
+//            response.sendRedirect("/");
+
+            request.setAttribute("msg", "请先登录");
+            request.getRequestDispatcher("/").forward(request, response);
+
+            return false;
+        }
+    }
+
+    /**
+     * 目标方法执行完成以后
+     * @param request
+     * @param response
+     * @param handler
+     * @param modelAndView
+     * @throws Exception
+     */
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    /**
+     * 页面渲染后
+     * @param request
+     * @param response
+     * @param handler
+     * @param ex
+     * @throws Exception
+     */
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+    }
+}
+```
+
+2、注册自定义的拦截器到容器中
+
+```java
+/**
+ *  1、编写一个拦截器实现HanlderInterceptor接口
+ *  2、拦截器注册到容器中(实现WebMvcConfigure的addInterceptors方法
+ *  3、指定拦截规则，（如果是拦截所有，静态资源也会被拦截）
+ */
+@Configuration
+public class AdminWebConfig implements WebMvcConfigurer {
+
+    /**
+     * 添加自定义的拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/**") //所有请求都被拦截，包括静态资源
+                .excludePathPatterns("/", "/login", "/css/**", "/images/**");//表示放行哪些
+    }
+}
 ```
 
 
