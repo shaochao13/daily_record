@@ -46,15 +46,94 @@
 
 7. 
 
-## Springboot 整合 servlet
+## Springboot 整合 Servlet 、Filter 、Listener
+
+```java
+/**
+ * 1. 添加 @WebServlet 注解
+ */
+@WebServlet(urlPatterns = "/myservlet")
+public class MyServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.getWriter().write("注入原生Servlet");
+    }
+}
+
+
+// 在启动类上
+@ServletComponentScan // 2. 必须添加ServletComponentScan
+@SpringBootApplication
+public class DemoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+```
 
 
 
-## Springboot 整合 Filter
+```java
+@Slf4j
+@WebFilter(urlPatterns = {"/css/*", "/fonts/*"})
+public class MyFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        log.info("MyFilter 初始化完成");
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        log.info("MyFilter 工作");
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    @Override
+    public void destroy() {
+        log.info("MyFilter 销毁");
+    }
+}
 
 
+// 在启动类上
+@ServletComponentScan // 2. 必须添加ServletComponentScan
+@SpringBootApplication
+public class DemoApplication {
 
-## Springboot 整合 Listener
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+```
+
+```java
+@Slf4j
+@WebListener
+public class MyServletContextListener implements ServletContextListener {
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        log.info("MyServletContextListener监听到项目初始化完成");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        log.info("MyServletContextListener监听到项目销毁");
+    }
+}
+
+// 在启动类上
+@ServletComponentScan // 2. 必须添加ServletComponentScan
+@SpringBootApplication
+public class DemoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+```
 
 
 
@@ -777,6 +856,8 @@ public class AdminWebConfig implements WebMvcConfigurer {
 springboot默认提供了一套处理异常的机制。一旦程序出现了异常，它会向 `/error` 的url发送请求。  springboot提供 了一个叫`BasicExceptionController` 来处理 `/error`请求。
 
 如果需要将所有的异常统一跳转到自定义 的错误 页面，需要在`src/main/resources/templates`目录下创建一个`error.html`的页面。名称必须为`error.html`。其实就是自定义一个错误页面来替换了springboot提供 的默认错误页面。
+
+可以自定义如只处理400错误的页面，400.html。也可以定义如5xx.html，就能处理5开头的所有错误页面。
 
 ### 2. `@ExceptionHandler` 注解处理异常
 
