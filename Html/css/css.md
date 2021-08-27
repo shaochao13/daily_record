@@ -1,3 +1,56 @@
+## CSS中常用的对齐操作方式
+
+1. margin 居中对齐
+
+   主要用在div、p、h（大盒子）水平居中，直接给当前元素本身设置。
+
+   ```css
+   /*
+   第1种方式 
+   一般针对有固定宽度的盒子，如果大盒子没有设置宽度，会默认占满父元素的宽度。
+   */
+   margin: 0px auto;
+   /* 第2种方式 */
+   margin-left:auto;
+   margin-right:auto;
+   ```
+
+2. text-align 居中对齐
+
+   ```css
+   text-align: center;
+   /*
+   1. 主要针对 文本、span、a、input、img标签
+   2. 需要设置在元素的父元素上
+   */
+   ```
+
+   
+
+3. position 左右对齐
+
+   ```css
+   /* position使用绝对位置，然后设置right或者left的距离 */
+   position: absolute;
+   right: 0px;
+   
+   position: absolute;
+   left: 0px;
+   ```
+
+   
+
+4. Float 左右对齐 
+
+   ```css
+   float: right;
+   float: left;
+   ```
+
+   
+
+
+
 ## 层叠
 
 **css规则的顺序**：当应用两条同级别的规则到一个元素的时候，写在后面的就是实际使用的规则。
