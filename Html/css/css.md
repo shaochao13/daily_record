@@ -1,3 +1,7 @@
+## CSS 书写顺序
+
+<img src="/Users/kevin/Documents/gits/shaochao13/daily_record/images/css_order.png" style="zoom:40%;" />
+
 ## CSS中常用的对齐操作方式
 
 1. margin 居中对齐
@@ -339,6 +343,118 @@ textarea {
 - 使用 [`text-align`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/text-align)直线对齐文本，使内容更整洁、更易于跟随。
 
 
+
+## 清除浮动Float
+
+```html
+<div class="father clearfix">
+    <div class="son"></div>
+</div>
+```
+
+### 第1种方式：单伪元素清除法
+
+```css
+.clearfix::after{
+  content: '';
+  display: block;
+  clear: both;
+  /*补充代码： 在网页中看不到伪元素*/
+  height: 0;
+  visibility: hidden;
+}
+```
+
+### 第2种方式： 双伪元素清除法
+
+```css
+.clearfix::before,
+.clearfix::after {
+  content: '';
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+} 
+```
+
+ 使用这种方式，还可以解决margin塌陷问题（即当div的第一个子元素设置了margin-top时，div 也会跟着一起）
+
+```html
+<head>
+  <style>
+    .father{
+      width: 400px;
+      height: 400px;
+      background-color: pink;
+    }
+
+    .son{
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      margin-top: 100px;
+    }
+
+    .clearfix::before,
+    .clearfix::after {
+      content: '';
+      display: table;
+    }
+
+    .clearfix::after {
+      clear: both;
+    } 
+  </style>
+</head>  
+<body>
+  <div class="father clearfix">
+    <div class="son"></div>
+  </div>
+</body>
+```
+
+### 第3种方式， 给父元素设置overflow:hidden
+
+```css
+.father{
+      width: 400px;
+      height: 400px;
+  		overflow: hidden;
+      background-color: pink;
+    }
+```
+
+
+
+## 通过CSS 绘制三角形
+
+```html
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+			
+      border-top: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 150px solid blue;
+      border-left: 100px solid transparent;
+
+      width: 0;
+      height: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="box"></div>
+</body>
+```
 
 
 
