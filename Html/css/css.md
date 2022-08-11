@@ -1222,7 +1222,7 @@ text-align: center;
 ```
 当我们给父容器使用 Flex 布局 时，子元素的`margin: auto`不仅能让其在水平方向上居中，**垂直方向上也是居中的**。
 
-#### 方式四：### 绝对定位 + margin（需要指定子元素的宽高）
+#### 方式四：绝对定位 + margin（需要指定子元素的宽高）
 ```css
 .father{
 	position: relative;
