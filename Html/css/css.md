@@ -323,6 +323,14 @@ box-shadow:3px 3px 3px 3px #666 inset;
 
 ### border-image 边框图片
 
+### 文字换行
+#### `overflow-wrap` 通用属性。
+用来说明当一个不能被分开的字符串（单词）太长而不能填充其包裹盒时，为防止其溢出，浏览器是否允许这样的单词**中断换行**。
+#### `word-break` 指定了怎样在单词内断行
+涉及到CJK（中文/日文/韩文）的文字换行
+#### `white-space`空白处是否换行
+如果想让一段很长的文本不换行，可以直接设置`white-space: nowrap` 这一个属性即可。如果想换行，可以试试`white-space: pre-wrap`。
+
 
 -------
 ## 盒子模型
@@ -1050,13 +1058,13 @@ background: linear-gradient(left, green, yellow);
 利用border绘制三角形:
 ```css
 .triangle {
-	  width: 0;
-      height: 0;
-      border-top: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 150px solid blue;
-      border-left: 100px solid transparent;
-    }
+	width: 0;
+	height: 0;
+	border-top: 100px solid transparent;
+	border-right: 100px solid transparent;
+	border-bottom: 150px solid blue;
+	border-left: 100px solid transparent;
+}
 ```
 
 ```css
@@ -1069,8 +1077,227 @@ background: linear-gradient(left, green, yellow);
 }
 ```
 
+## 通过CSS绘制太极图
+```html
+<div class="item" data-brief="太极图">
+	<div class="border-radius"></div>
+</div>
+```
+```css
+.item {
+	width: 210px;
+	height: 210px;  
+	background-color: #fff; 
+	box-shadow: 2px 2px 5px #ccc;
+}
 
+.item::after {
+	content: attr(data-brief);
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	line-height: 210px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: #fff;
+	font-size: 18px;
+	background-color: rgba(170, 170, 170, 0);
+	z-index: -1;
+	transition: all 0.3s ease-in;
+	-webkit-transition: all 0.3s ease-in;
+	-moz-transition: all 0.3s ease-in;
+	-ms-transition: all 0.3s ease-in;
+	-o-transition: all 0.3s ease-in;
+}
 
+.item:hover::after {
+	background-color: rgba(170, 170, 170, 0.6);
+	z-index: 100;
+}
 
+.item:nth-child(21) .border-radius {
+	width: 180px;
+	height: 90px;
+	border-bottom-width: 90px;
+	border-style: solid;
+	border-bottom-color: green;
+	background-color: red;
+	border-radius: 90px;
+	-webkit-border-radius: 90px;
+	-moz-border-radius: 90px;
+	-ms-border-radius: 90px;
+	-o-border-radius: 90px;
+	position: relative;
 
+}
 
+.item  .border-radius::after,
+.item  .border-radius::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	width: 20px;
+	height: 20px;
+	border-width: 35px;
+	border-style: solid;
+	border-radius: 45px;
+	-webkit-border-radius: 45px;
+	-moz-border-radius: 45px;
+	-ms-border-radius: 45px;
+	-o-border-radius: 45px;
+}
+
+.item  .border-radius::after {
+	background-color: red;
+	border-color: green;
+}
+
+.item  .border-radius::before {
+	background-color: green;
+	border-color: red;
+	right: 0;
+}
+```
+
+## 让元素水平垂直居中
+### 1、行内元素水平垂直居中
+#### 水平居中
+给父容器设置：
+```css
+text-align: center;
+```
+#### 垂直居中
+让文字的行高等于盒子的高度
+```css
+.father {
+	height: 20px;
+	line-height: 20px;
+}
+```
+
+### 2、块级元素水平垂直居中
+#### 方式一：绝对定位 + translate（无需指定子元素的宽高）
+```css
+.father{
+	position: relative;
+	min-height: 500px;
+	background: pink;
+}
+.son {
+	position: absolute;
+	background: red;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+```
+
+#### 方式二：flex 布局
+将父容器设置为 Flex 布局，再给父容器加个属性`justify-content: center`，这样的话，子元素就能水平居中了；再给父容器加个属性 `align-items: center`，这样的话，子元素就能垂直居中了。
+```css
+.father{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: pink;
+}
+```
+不足之处在于：给父容器设置属性`justify-content: center`和`align-items: center`之后，导致父容器里的所有子元素们都垂直居中了（如果父容器里有多个子元素的话）。
+
+#### 方式三：flex 布局 + margin: auto
+先给父容器设置 `display: flex`，再给指定的子元素设置我们再熟悉不过的 `margin: auto`，即可让这个指定的子元素在**剩余空间**里，水平垂直居中。
+```css
+.father{
+	display: flex;
+	min-height: 100vh;
+	background: pink;
+}
+.son {
+	margin: auto;
+	background: red;
+}
+```
+当我们给父容器使用 Flex 布局 时，子元素的`margin: auto`不仅能让其在水平方向上居中，**垂直方向上也是居中的**。
+
+#### 方式四：### 绝对定位 + margin（需要指定子元素的宽高）
+```css
+.father{
+	position: relative;
+	min-height: 500px;
+	background: pink;
+}
+.son {
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	background: red;
+	top: 50%;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -100px;
+}
+```
+
+## 实现移动端的红包弹窗(水平垂直居中)
+```html
+<body>
+	<div class="content">默认文档流中的页面主体</div>
+		<div class="component_popup">
+			<div class="popup_mask">		
+				<div class="popup_content">	
+					<div class="content_box"></div>	
+					<div class="content_close"></div>	
+				</div>
+			</div>
+		</div>
+</body>
+```
+```css
+.component_popup {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+}
+
+.popup_mask {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.popup_content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);	
+	-o-transform: translate(-50%, -50%);
+}
+
+.content_box {
+	width: 15.45rem;
+	height: 19.32rem;	
+	background: url(http://img.smyhvae.com/20191010_1500_red-packet.png) no-repeat;	
+	background-size: 15.45rem 19.32rem;
+}
+
+.content_close {
+	width: 1.25em;	
+	height: 1.25em;	
+	background: url(http://img.smyhvae.com/20191010_1500_close.png) no-repeat;	
+	background-size: contain;	
+	margin: 0 auto;	
+	margin-top: 0.5em;
+}
+```
