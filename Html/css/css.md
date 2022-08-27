@@ -1,6 +1,6 @@
 ## CSS 书写顺序
 
-![[css_order.png]]
+<img src="../../images/css_order.png"/>
 
 ## CSS中常用的对齐操作方式
 
@@ -10,7 +10,7 @@
 
    ```css
    /*
-   第1种方式 
+   第1种方式
    一般针对有固定宽度的盒子，如果大盒子没有设置宽度，会默认占满父元素的宽度。
    */
    margin: 0px auto;
@@ -29,7 +29,7 @@
    */
    ```
 
-   
+
 
 3. position 左右对齐
 
@@ -37,21 +37,21 @@
    /* position使用绝对位置，然后设置right或者left的距离 */
    position: absolute;
    right: 0px;
-   
+
    position: absolute;
    left: 0px;
    ```
 
-   
 
-4. Float 左右对齐 
+
+4. Float 左右对齐
 
    ```css
    float: right;
    float: left;
    ```
 
-   
+
 
 
 
@@ -61,8 +61,8 @@
 
 有三个因素需要考虑，根据重要性排序如下，前面的更重要：
 
-1. **重要程度** 
-2. **优先级** 
+1. **重要程度**
+2. **优先级**
 3. **资源顺序**
 
 ## 优先级
@@ -80,14 +80,15 @@
 4. **个位**：选择器中包含**元素、伪元素选择器**则该位得一分。
 
    <u>注意：通用选择器 (`*`)，组合符 (`+`, `>`, `~`, ' ')，和否定伪类 (`:not`) 不会影响优先级。</u>
- 
-![[选择器权重计算公式.png]]
+
+<img src="../../images/选择器权重计算公式.png"/>
+
 
 **如果不能直接选中某个元素，通过继承性影响的话，那么权重是0**:
 ```css
 #hezi1 #hezi2 #hezi3 {
 	color: red;
-}  
+}
 
 div.box div.box div.box {
 	color: blue;
@@ -268,7 +269,7 @@ li[class^="a" i] {
 
 
 
-## 文本 
+## 文本
 ### text-shadow 设置文本的阴影
 >参数格式：水平位移 垂直位移 模糊程度 阴影颜色。
 
@@ -381,7 +382,31 @@ box-sizing: border-box;
 
 ​	这个模型，所有宽度都是可见宽度，所以内容宽度是该宽度减去边框和填充部分。
 
-​	通过为其设置 `box-sizing: border-box` 来实现。 
+​	通过为其设置 `box-sizing: border-box` 来实现。
+
+### margin 外边距
+外边距样式可以让该元素与其他元素产生一定的距离。
+> 左右距离是叠加，上下距离是累计最大值。    
+> margin 可以设置负值。
+
+```html
+<style>
+.box1{
+    margin-bottom: 100px;
+}
+.box2{
+    margin-top: 120px;
+}
+</style>
+<!--两个div的上下距离为120px-->
+<div class="box1"></div>
+<div class="box2"></div>
+```
+
+### padding 内外边
+> padding不能设置为负值。
+> 会将盒子的宽和高“充”大。
+
 
 
 ## Flex 布局
@@ -440,7 +465,7 @@ box-sizing: border-box;
 ```html
 <div class="box1">        <!--相对定位-->
 	<div class="box2">    <!--没有定位-->
-		<p></p>    <!--绝对定位，将以box1为参考，因为box2没有定位，box1就是最近的父辈元素-->       
+		<p></p>    <!--绝对定位，将以box1为参考，因为box2没有定位，box1就是最近的父辈元素-->
 	</div>
 </div>
 ```
@@ -448,7 +473,7 @@ box-sizing: border-box;
 ```html
 <div class="box1">        <!--相对定位-->
 	<div class="box2">    <!--相对定位-->
-		<p></p>      <!--绝对定位，将以box2为参考，因为box2是自己最近的父辈元素-->     
+		<p></p>      <!--绝对定位，将以box2为参考，因为box2是自己最近的父辈元素-->
 	</div>
 </div>
 ```
@@ -460,7 +485,7 @@ box-sizing: border-box;
 
 - （3） 绝对定位的儿子，无视参考的那个盒子的padding。
 
- 
+
 
 ### 绝对定位  `position: absolute;`
 **绝对定位的盒子脱离了标准文档流。**
@@ -869,7 +894,7 @@ textarea {
 
 textarea {
   overflow: auto;
-} 
+}
 ```
 
 
@@ -922,7 +947,7 @@ textarea {
 
 .clearfix::after {
   clear: both;
-} 
+}
 ```
 
  使用这种方式，还可以解决margin塌陷问题（即当div的第一个子元素设置了margin-top时，div 也会跟着一起）
@@ -951,9 +976,9 @@ textarea {
 
     .clearfix::after {
       clear: both;
-    } 
+    }
   </style>
-</head>  
+</head>
 <body>
   <div class="father clearfix">
     <div class="son"></div>
@@ -1086,8 +1111,8 @@ background: linear-gradient(left, green, yellow);
 ```css
 .item {
 	width: 210px;
-	height: 210px;  
-	background-color: #fff; 
+	height: 210px;
+	background-color: #fff;
 	box-shadow: 2px 2px 5px #ccc;
 }
 
@@ -1246,10 +1271,10 @@ text-align: center;
 <body>
 	<div class="content">默认文档流中的页面主体</div>
 		<div class="component_popup">
-			<div class="popup_mask">		
-				<div class="popup_content">	
-					<div class="content_box"></div>	
-					<div class="content_close"></div>	
+			<div class="popup_mask">
+				<div class="popup_content">
+					<div class="content_box"></div>
+					<div class="content_close"></div>
 				</div>
 			</div>
 		</div>
@@ -1281,23 +1306,23 @@ text-align: center;
 	transform: translate(-50%, -50%);
 	-webkit-transform: translate(-50%, -50%);
 	-moz-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);	
+	-ms-transform: translate(-50%, -50%);
 	-o-transform: translate(-50%, -50%);
 }
 
 .content_box {
 	width: 15.45rem;
-	height: 19.32rem;	
-	background: url(http://img.smyhvae.com/20191010_1500_red-packet.png) no-repeat;	
+	height: 19.32rem;
+	background: url(http://img.smyhvae.com/20191010_1500_red-packet.png) no-repeat;
 	background-size: 15.45rem 19.32rem;
 }
 
 .content_close {
-	width: 1.25em;	
-	height: 1.25em;	
-	background: url(http://img.smyhvae.com/20191010_1500_close.png) no-repeat;	
-	background-size: contain;	
-	margin: 0 auto;	
+	width: 1.25em;
+	height: 1.25em;
+	background: url(http://img.smyhvae.com/20191010_1500_close.png) no-repeat;
+	background-size: contain;
+	margin: 0 auto;
 	margin-top: 0.5em;
 }
 ```

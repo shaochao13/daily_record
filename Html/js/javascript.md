@@ -187,7 +187,7 @@ console.log(myTemplate());
 如果加号两边都是 Number 类型，此时是数字相加。否则，就是连字符（用来连接字符串）。
 
 #### NaN
-> NaN：是一个特殊的数字，表示 Not a Number，非数值。
+> `NaN`：是一个特殊的数字，表示 Not a Number，非数值。
 
 **注意**：
 > `typeof NaN`的返回结果是 `number` 。
@@ -211,15 +211,15 @@ console.log(a);
 - decimal.js：属于轻量的运算库，压缩后的文件只有 32kb。大多数项目的数学运算，使用 decimal.js 足够了。
 
 
-## Null空对象 与 Undefined未定义类型
-### Null
+## `Null` 空对象 与 `Undefined` 未定义类型
+### `Null`
 
 null 专门用来定义一个空对象。
 - `null` 虽然是一个单独的数据类型，但 `null` 相当于是一个 `object` ，只不过地址为空（空指针）而已。
 - Null 类型的值只有一个，就是 `null` 。比如 let a = null。
 - 使用 `typeof` 检查一个 `null` 值时，会返回 obj`ect 。
 
-### Undefined
+### `Undefined`
 - Undefined 类型的值只有一个，就是 undefind。比如 let a = undefined。
 - 使用 typeof 检查一个 undefined 值时，会返回 undefined。
 
@@ -277,9 +277,140 @@ function foo(name = 'Zhangsan') {}
 > 任何值和 `null` 运算，`null` 可看做 `0` 运算。
 > 任何数据类型和 `undefined` 运算都是 NaN。
 
+## `typeof` 和 数据类型转换
+
+### `typeof` 
+`typeof` 这个运算符的返回结果就是变量的类型:
+
+|typeof 的代码写法|返回结果
+|:----|:----|
+typeof 数字 |   number
+typeof 字符串   | string
+typeof 布尔型   |   boolean
+typeof 对象 |   object
+typeof 方法 |   function
+typeof null |   object
+typeof undefined    |   undefined
+typeof []   |   object
+typeof {}   |   object
+|||
+> `typeof null` 的返回值也是 object 呢？因为 null 代表的是空对象。     
+> `typeof NaN` 的返回值是 number，上一篇文章中讲过，NaN 是一个特殊的数字。     
+> `空数组`、`空对象`都是引用数据类型 Object。       
+
+### 类型转换
+
+1.调用toString()方法   
+
+语法：
+```javascript
+//该方法不会影响到原变量，它会将转换的结果返回。
+变量.toString();
+var result = 变量.toString();
+// 
+```
+`null` 和 `undefined` 这两个值*没有* `toString()` 方法，所以它们不能用 toString() ,如果调用，会报错。       
+
+Number 类型的变量，在调用 toString()时，可以在方法中传递一个整数作为参数。此时它会把数字转换为指定的进制，如果不指定则默认转换为 10 进制。
+```Javascript
+var a = 100;
+// 转换为二进制的字符串
+a = a.toString(2);  // 1100100
+```
+2.使用String()函数  
+
+语法：
+```javascript
+String(变量);
+```
+- 对于 `Number`、`Boolean`、`Object` 而言，本质上就是调用 toString()方法。
+- 但是对于 `null` 和 `undefined`，则不会调用 toString()方法。它会将 null 直接转换为 "null"。将 undefined 直接转换为 "undefined"。
+
+3.使用 `Number()` 函数
+
+(1) 字符串 ---> 数字
+- 如果字符串中是纯数字，则直接将其转换为数字。
+- 如果字符串是一个`空串`或是一个`全是空格`的字符串，则转换为`0`。
+- 如果字符串中包含了其他非数字的内容（`小数点` 按数字来算, 只能包含一个`小数点`），则转换为`NaN`。
+
+(2) 布尔 ---> 数字
+- `true`  ---> `1` 
+- `false` ---> `0`
+
+(3) null、undefind ---> 数字
+- `null` ---> `0`
+- `undefind` ---> `NaN`
+
+> 任何值做+a、-a运算时， 内部调用的是 Number() 函数。不会改变原数值。
+
+4.使用 `parseInt()` 函数
+
+`parseInt()`：将传入的数据当作字符串来处理，从左至右提取数值, 一旦遇到非数值就立即停止；停止时如何还没有提取到数值, 那么就返回`NaN`。`parseInt`是数据转换为10进制的数字！
+- 如果字符串是一个`空串`或者是一个`全是空格`的字符串，转换时会`报错`。
+- `Boolean` --> 数字，结果为： `NaN`
+- `Null` --> 数字，结果为： `NaN`
+- `Undefined` --> 数字，结果为： `NaN`
+
+`Number()` 函数和 `parseInt()` 函数的区别：
+- Number() ：千方百计地想转换为数字；如果转换不了则返回 NaN。
+- arseInt()/parseFloat() ：先将其转换为 String 然后再操作,提取出最前面的数字部分；没提取出来，那就返回 NaN。
+- 带两个参数时，表示在转换时，包含了进制转换。无论 parseInt() 里面的进制参数是多少，最终的转换结果是`十进制`。
+
+```javascript
+var a = '110';
+
+var num = parseInt(a, 16); // 【重要】将 a 当成 十六进制 来看待，转换成 十进制 的 num
+
+console.log(num);
+```
+
+```javascript
+var a = 168.23;
+console.log(parseInt(a)); //打印结果：168  （因为是先将 a 转为字符串"168.23"，然后然后再操作）
+
+var b = true;
+console.log(parseInt(b)); //打印结果：NaN （因为是先将 b 转为字符串"true"，然后然后再操作）
+
+var c = null;
+console.log(parseInt(c)); //打印结果：NaN  （因为是先将 c 转为字符串"null"，然后然后再操作）
+
+var d = undefined;
+console.log(parseInt(d)); //打印结果：NaN  （因为是先将 d 转为字符串"undefined"，然后然后再操作）
+
+console.log(parseInt('2017在公众号上写了6篇文章')); //打印结果：2017
+
+console.log(parseInt('2017.01在公众号上写了6篇文章')); //打印结果仍是：2017   （说明只会取整数）
+
+console.log(parseInt('aaa2017.01在公众号上写了6篇文章')); //打印结果：NaN （因为不是以数字开头）
+```
+
+5.`parseFloat()` 函数
+
+parseFloat() 的作用是：将字符串转换为浮点数。`parseFloat()`和 `parseInt()`的作用类似，不同的是，parseFloat()可以获得`小数部分`。
+```javascript
+var a = '123.456.789px';
+console.log(parseFloat(a)); // 打印结果：123.456
+```
+
+6.转换为 `Boolean` 类型
+
+> 其他的数据类型都可以转换为 Boolean 类型。
+
+- 数字 --> 布尔。 `0` 和 `NaN` 是 false，其余的都是 true。
+- 字符串 ---> 布尔。`空串`是false，其余的都是 true。全是空格的字符串，转换结果也是 true。字符串'0'的转换结果也是 true。
+- `null` 和 `undefined` 都会转换为 false。
+- 引用数据类型会转换为 true。注意，`空数组[]`和`空对象{}`，转换结果也是 true。
+- 使用 `!!` 可以显式转换为 Boolean 类型。eg: `!!5` 的结果是 true。
+- 使用 `Boolean()` 函数可以显式转换为 Boolean 类型。
 
 
 
+
+#
+
+
+
+#
 
 
 
