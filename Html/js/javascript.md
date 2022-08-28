@@ -1,3 +1,4 @@
+@[TOC] 目录
 ## Javascript的组成
 -  `ECMAScript`：Javascript的语法标准。
 -  `DOM`：Document Object Model(文档对象模型)，Js操作页面上的元素的API。
