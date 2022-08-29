@@ -1,4 +1,4 @@
-@[TOC] 目录
+@[TOC]
 ## Javascript的组成
 -  `ECMAScript`：Javascript的语法标准。
 -  `DOM`：Document Object Model(文档对象模型)，Js操作页面上的元素的API。
@@ -421,7 +421,7 @@ console.log(parseFloat(a)); // 打印结果：123.456
 > 浮点数值的最高精度是 `17` 位小数，但在进行算术计算时，会丢失精度，导致计算不够准确。    
 > 不要直接判断两个浮点数是否相等。
 
-### 一元运算符 typeof
+### 一元运算符 `typeof`
 > `typeof`  是典型的一元运算符
 
 ### `非布尔值`的 `与 或` 运算 【重要】
@@ -452,7 +452,7 @@ console.log(parseFloat(a)); // 打印结果：123.456
     console.log(a); // 输出：2
     ```
 
-在实际开发中，经常用来做“容错处理”：
+在实际开发中，经常用来做“容错、容灾、降级”：
 ```javascript  {.line-numbers}
 // 在实际开发中，经常用来做“容错处理”
 //获取返回结果中的result.data.imgUrl这个图片资源；如果返回结果中没有 result.data.imgUrl 这个字段，就用 http://img.smyhvae.com/20160401_01.jpg 作为兜底图片。
@@ -460,6 +460,57 @@ if (result.resultCode == 0) {
     var a = result && result.data && result.data.imgUrl || 'http://img.smyhvae.com/20160401_01.jpg';
 }
 ```
+```javascript {.line-numbers}
+const a1 = 'qianguyihao';
+// 第一个值为true，会继续执行后面的内容
+a1 && alert('看 a1 出不出来'); // 可以弹出 alert 框
+
+const a2 = undefined;
+// 第一个值为false，不会继续执行后面的内容
+a2 && alert('看 a2 出不出来'); // 不会弹出 alert 框
+```
+```javascript {.line-numbers}
+const result; // 请求接口时，后台返回的内容
+let errorMsg = ''; // 前端的文案提示
+
+if (result && result.retCode != 0) {
+	// 接口返回异常码时
+	errorMsg = result.msg || '活动太火爆，请稍后再试'; // 文案提示信息，优先用 接口返回的msg字段，其次用 '活动太火爆，请稍后再试' 这个文案兜底。
+}
+
+if (!result) {
+	// 接口挂掉时
+	errorMsg = '网络异常，请稍后再试';
+}
+```
+
+### 比较运算符
+
+- 对于非数值进行比较时，会将其转换为数字然后再比较。
+```javascript {.line-numbers}
+console.log(1 > true); //false
+console.log(1 >= true); //true
+console.log(1 > '0'); //true
+
+//console.log(10 > null); //true
+
+//任何值和NaN做任何比较都是false
+
+console.log(10 <= 'hello'); //false
+console.log(true > false); //true
+```
+- 特殊情况：如果符号两侧的值都是字符串时，不会将其转换为数字进行比较。比较两个字符串时，比较的是字符串的Unicode 编码。【`非常注意`】
+```javascript {.line-numbers}
+// 比较两个字符串时，比较的是字符串的字符编码，所以可能会得到不可预期的结果
+console.log('56' > '123'); // true
+```
+> 当比较两个`字符串型的数字`时，一定一定要`先转型`再比较大小，比如 `parseInt()`。
+- 任何值和 `NaN` 做任何比较都是 `false`。
+
+
+
+
+#
 
 
 

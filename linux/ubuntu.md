@@ -12,3 +12,8 @@ sudo vim /etc/ssh/sshd_config
 sudo systemctl restart sshd
 ```
 
+
+
+## 远程登陆linux,退出ssh，程序仍继续运行的方法
+使用 `nohup`
+> nohup 应用程序名 &
