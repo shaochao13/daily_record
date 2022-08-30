@@ -68,11 +68,13 @@ JS 中一共有8种数据类型：
 > 注意：内置对象 Function、Array、Date、RegExp、Error 等都是属于 Object 类型。也就是说，除了那七种基本数据类型之外，其他的，都称之为 Object 类型。
 >
 > BigInt 和 Symbol 是ES6中新增的类型。
+> 
+> 基本数据类型不能绑定属性和方法。
 
 JS中，所有的变量都是保存在栈内存中的。基本数据类型的值，直接保存在栈内存中。值与值之间是独立存在，修改一个变量不会影响其他的变量。
 引用数据类型中的对象是保存到堆内存中的。每创建一个新的对象，就会在堆内存中开辟出一个新的空间；而变量保存了对象的内存地址（对象的引用），保存在栈内存当中。如果两个变量保存了同一个对象的引用，当一个通过一个变量修改属性时，另一个也会受到影响。
 
-### String字符串
+### String 字符串
 字符串型可以是引号中的任意文本，其语法为：双引号 "" 或者单引号 ''。
 
 #### 获取字符串的长度
@@ -149,21 +151,157 @@ console.log(myTemplate());
 ```
 
 #### 常用方法
-1. toUpperCase()/toLowerCase() 把字符串转变为大写/小写。
-2. charAt() 返回指定位置的字符。
-3. indexOf() 返回某个指定字符串值在字符串中的首次出现的位置。
-> 语法：stringObject.indexOf(substring, startpos) 如果要检索的字符串值没有出现，则返回-1。
-4. split() 将字符串分割为字符串数组，并返回此数组。
-> 语法：stringObject.split(sparator, limit) 。如把空字符串("")用作separator,那stringObject中的每个字符之间都会被分割。
-5. substring() 提取字符串中介于两个指定下标之间的字符。
-> 语法：stringObject.substring(starPos, stopPos)
-- 返回的内容是从 start开始(包含start位置的字符)到 stop-1 处的所有字符，其长度为 stop 减start。
-- 如果参数 start 与 stop 相等，那么该方法返回的就是一个空串（即长度为 0 的字符串）。
-- 如果 start 比 stop 大，那么该方法在提取子串之前会先交换这两个参数。
+1. `toUpperCase()`/`toLowerCase()` 把字符串转变为大写/小写。
+2. `charAt()` 返回指定位置的字符。`str.charAt(index)`和`str[index]`的效果是一样的。
+   > 语法： 字符 = str.charAt(index);
+   ```javascript {.line-numbers}
+    //打印字符串一般不会用charAt()
+    const str = 'sdfefefefsdw';
+    for (var i = 0; i < str.length; i++) {
+        console.log(str.charAt(i));
+    }
+   ```
+3. `indexOf()` 返回某个指定字符串值在字符串中的首次出现的位置。
+    > 语法：stringObject.indexOf(substring, startpos) 如果要检索的字符串值没有出现，则返回-1。
+    ```javascript {.line-numbers}
+    var str = 'efafeafafaewfzfawfdfegasfdsf';
+    var index = str.indexOf('a');
+    var num = 0;
+    while (index !== -1) {
+        console.log(index);
+        num++; // 每打印一次，就计数一次
+        index = str.indexOf('a', index + 1);
+    }
 
-6. substr() 从字符串中提取从startPos位置开始的指定数目的字符串。
-> 语法：stringObject.substr(startPos,length)。
->
+    console.log('a 出现的次数是: ' + num);
+    ```
+4. `split()` 将字符串分割为字符串数组，并返回此数组。
+    > 语法：stringObject.split(sparator, limit) 。如把空字符串("")用作separator,那stringObject中的每个字符之间都会被分割。
+5. `substring()` 提取字符串中介于两个指定下标之间的字符。
+    > 语法：stringObject.substring(starPos, stopPos)
+   - 返回的内容是从 start开始(包含start位置的字符)到 stop-1 处的所有字符，其长度为 stop 减start。
+   - 如果参数 start 与 stop 相等，那么该方法返回的就是一个空串（即长度为 0 的字符串）。
+   - 如果 start 比 stop 大，那么该方法在提取子串之前会先交换这两个参数。
+6. `substr()` 从字符串中提取从startPos位置开始的指定数目的字符串。
+    > 语法：stringObject.substr(startPos,length)。
+
+    > ECMAscript 没有对 substr() 方法进行标准化，因此不建议使用它。
+7. `search()` 获取字符串中指定内容的索引（参数里一般是正则）。
+    > 语法：索引值 = str.search(想要查找的字符串或者正则表达式)
+    ```javascript {.line-numbers}
+    const name = 'aawoiejflakfei';
+
+    console.log(name.search('la')); // 打印结果：8
+    console.log(name.search(/la/i)); // 打印结果：8
+    ```
+8. `includes()` 字符串中是否包含指定的内容
+    > 语法：布尔值 = str.includes(想要查找的字符串，[position])。   `position` ：如果不指定，则默认为0；如果指定，则规定了检索的起始位置。
+    ```javascript {.line-numbers}
+    const name = 'aawoiejflakfei';
+
+    console.log(name.includes('ie')); // 打印结果：true
+    console.log(name.includes('fa')); // 打印结果：false
+
+    console.log(name.includes('wo',7)); // 打印结果：false
+    ```
+9.  `startsWith()` 字符串是否以指定的内容开头 / `endsWith()` 字符串是否以指定的内容结尾
+    > 语法：    
+    > 布尔值 = str.startsWith(想要查找的内容, [position]);   
+    > 布尔值 = str.endsWith(想要查找的内容, [position]);
+    - `startsWith()` 如果指定了`position`参数，检索的范围包括：这个指定位置开始，直到字符串的末尾。即：`[position, str.length)`
+    - `endsWith()` 如果指定了`position`参数，检索的范围包括：从第一个字符串开始，直到这个指定的位置。即：`[0, position)`。可以简单理解：endsWith() 方法里的position，表示检索的长度。
+    ```javascript {.line-numbers}
+    const name = 'abcdefg';
+    console.log(name.startsWith('a')); // 打印结果：true
+    console.log(name.startsWith('b')); // 打印结果：false
+    // 因为指定了起始位置为3，所以是在 defg 这个字符串中检索。
+    console.log(name.startsWith('d',3)); // 打印结果：true
+    console.log(name.startsWith('c',3)); // 打印结果：false
+
+    console.log(name.endsWith('g')); // 打印结果：true
+    console.log(name.endsWith('f')); // 打印结果：false
+    // 因为指定了截止位置为3，所以是在 abc 这个长度为3字符串中检索
+    console.log(name.endsWith('c', 3)); // 打印结果：true
+    console.log(name.endsWith('d', 3)); // 打印结果：false
+    ```
+10. `charCodeAt(index)` 返回字符串指定位置的字符的 Unicode 编码。
+    ```javascript {.line-numbers}
+    var str = "我就是我"
+    console.log(str.charCodeAt(1)); // 打印结果： 23601
+
+    //需求：求一个字符串占有几个字符位。
+    //思路；如果是英文，站一个字符位，如果不是英文占两个字符位。
+    //技术点：判断该字符是否在0-127之间。（在的话是英文，不在是非英文）
+    alert(getZFWlength(str));
+    alert(str.length);
+
+    //定义方法：字符位
+    function getZFWlength(string) {
+        //定义一个计数器
+        var count = 0;
+        for (var i = 0; i < string.length; i++) {
+            //对每一位字符串进行判断，如果Unicode编码在0-127，计数器+1；否则+2
+            if (string.charCodeAt(i) < 128 && string.charCodeAt(i) >= 0) {
+                count++;
+            } else {
+                count += 2;
+            }
+        }
+        return count;
+    }
+    ```
+    > `sort()`方法其实底层也是用到了 `charCodeAt()`，因为用到了 Unicode 编码。
+
+11. `字符串截取`
+    - `clice()` 
+        > 语法： 新字符串 = str.slice(start, end);  索引范围：[start, end)
+        ```javascript {.line-numbers}
+        // 参数举例说明：
+        str.clice(2, 5) // 截取时，包左不包右。
+        str.clice(2) // 表示从指定的索引位置开始，截取到最后。
+        str.clice(-3) // 表示从倒数第三个开始，截取到最后。
+        str.clice(1, -1) // 表示从第一个截取到倒数第一个。
+        str.clice(5, 2) // 表示前面的大，后面的小，返回值为空。
+        ```
+    - `substring()`
+        > 语法： 新字符串 = str.substring(start, end); 索引范围：[start, end)
+
+        `substring()`和`slice()`类似。
+        
+        > 不同之处：  
+        > `substring()`不能接受负值作为参数。如果传递了一个负值，则默认使用 0。   
+        > `substring()`还会自动调整参数的位置，如果第二个参数小于第一个，则自动交换。比如说， `substring(1, 0)`相当于截取的是第一个字符,即`substring(0,1)`。
+
+12. `String.fromCharCode()` 根据字符的 Unicode 编码获取字符
+
+    ```javascript {.line-numbers}
+    var result1 = String.fromCharCode(72);
+    var result2 = String.fromCharCode(20013);
+
+    console.log(result1); // 打印结果：H
+    console.log(result2); // 打印结果：中
+    ```
+
+13. `replace()` 
+    > 语法： 新的字符串 = str.replace(被替换的子串，新的子串);
+
+    > 注意： 默认只会替换第一个被匹配到的字符。如果要全局替换，需要使用正则。
+    ```javascript {.line-numbers}
+    var str2 = 'Today is fine day,today is fine day !';
+    console.log(str2);
+
+    console.log(str2.replace('today', 'tomorrow')); //只能替换第一个today
+    console.log(str2.replace(/today/gi, 'tomorrow')); //这里用到了正则，才能替换所有的today
+    ```
+
+
+#
+
+
+#
+
+
+
 **注意：**
 - 如果参数startPos是负数，从字符串的尾部开始算起的位置。也就是说，-1 指字符串中最后一个字符，-2 指倒数第二个字符，以此类推。
 - 如果startPos为负数且绝对值大于字符串长度，startPos为0。
@@ -507,6 +645,27 @@ console.log('56' > '123'); // true
 > 当比较两个`字符串型的数字`时，一定一定要`先转型`再比较大小，比如 `parseInt()`。
 - 任何值和 `NaN` 做任何比较都是 `false`。
 
+### `==` 与`===`的区别
+
+`==` 这个符号并不严谨，会做隐式转换，将不同的数据类型，转为相同类型进行比较（大部分情况下，都是转换为数字）。
+```javascript {.line-numbers}
+console.log('6' == 6); // 打印结果：true。这里的字符串"6"会先转换为数字6，然后再进行比较
+console.log(true == '1'); // 打印结果：true
+console.log(0 == -0); // 打印结果：true
+
+console.log(null == 0); // 打印结果：false
+```
+`undefined` 衍生自 `null`，所以这两个值做相等判断时，会返回 `true`。
+```javascript {.line-numbers}
+console.log(undefined == null); //打印结果：    true。
+console.log(undefined === null); //打印结果：   false。
+```
+`NaN` 不和任何值相等，包括他本身:
+```javascript {.line-numbers}
+console.log(NaN == NaN); //false
+console.log(NaN === NaN); //false
+```
+`===`全等符号,不会做类型转换。如果要保证`绝对等于`（完全等于），我们就要用三个等号`===`。
 
 
 
