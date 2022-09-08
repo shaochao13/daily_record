@@ -184,8 +184,13 @@ console.log(myTemplate());
    - 如果 start 比 stop 大，那么该方法在提取子串之前会先交换这两个参数。
 6. `substr()` 从字符串中提取从startPos位置开始的指定数目的字符串。
     > 语法：stringObject.substr(startPos,length)。
-
+    >
     > ECMAscript 没有对 substr() 方法进行标准化，因此不建议使用它。
+
+    **注意：**
+   - 如果参数 `startPos` 是负数，从字符串的尾部开始算起的位置。也就是说，`-1` 指字符串中最后一个字符，`-2` 指倒数第二个字符，以此类推。
+   - 如果`startPos`为负数且绝对值大于字符串长度，`startPos` 为 `0`。
+ 
 7. `search()` 获取字符串中指定内容的索引（参数里一般是正则）。
     > 语法：索引值 = str.search(想要查找的字符串或者正则表达式)
     ```javascript {.line-numbers}
@@ -253,15 +258,15 @@ console.log(myTemplate());
     > `sort()`方法其实底层也是用到了 `charCodeAt()`，因为用到了 Unicode 编码。
 
 11. `字符串截取`
-    - `clice()` 
+    - `slice()` 
         > 语法： 新字符串 = str.slice(start, end);  索引范围：[start, end)
         ```javascript {.line-numbers}
         // 参数举例说明：
-        str.clice(2, 5) // 截取时，包左不包右。
-        str.clice(2) // 表示从指定的索引位置开始，截取到最后。
-        str.clice(-3) // 表示从倒数第三个开始，截取到最后。
-        str.clice(1, -1) // 表示从第一个截取到倒数第一个。
-        str.clice(5, 2) // 表示前面的大，后面的小，返回值为空。
+        str.slice(2, 5) // 截取时，包左不包右。
+        str.slice(2) // 表示从指定的索引位置开始，截取到最后。
+        str.slice(-3) // 表示从倒数第三个开始，截取到最后。
+        str.slice(1, -1) // 表示从第一个截取到倒数第一个。
+        str.slice(5, 2) // 表示前面的大，后面的小，返回值为空。
         ```
     - `substring()`
         > 语法： 新字符串 = str.substring(start, end); 索引范围：[start, end)
@@ -284,7 +289,7 @@ console.log(myTemplate());
 
 13. `replace()` 
     > 语法： 新的字符串 = str.replace(被替换的子串，新的子串);
-
+    >
     > 注意： 默认只会替换第一个被匹配到的字符。如果要全局替换，需要使用正则。
     ```javascript {.line-numbers}
     var str2 = 'Today is fine day,today is fine day !';
@@ -294,17 +299,22 @@ console.log(myTemplate());
     console.log(str2.replace(/today/gi, 'tomorrow')); //这里用到了正则，才能替换所有的today
     ```
 
+14. `repeat()` 将字符串重复指定的次数。
+    ```javascript
+    newStr = str.repeat(重复的次数);
+    ```
 
-#
+#### Url编码与解码
+```javascript {.line-numbers}
+encodeURIComponent();   //把字符串作为 URI 组件进行编码
+decodeURIComponent();   //把字符串作为 URI 组件进行解码
+```
+``` javascript {.line-numbers}
+var url = 'http://www.baidu.com/?q=我是网页'
+var str = encodeURIComponent(url);// 打印：'http%3A%2F%2Fwww.baidu.com%2F%3Fq%3D%E6%88%91%E6%98%AF%E7%BD%91%E9%A1%B5'
+url = decodeURIComponent(str); //打印： 'http://www.baidu.com/?q=我是网页'
 
-
-#
-
-
-
-**注意：**
-- 如果参数startPos是负数，从字符串的尾部开始算起的位置。也就是说，-1 指字符串中最后一个字符，-2 指倒数第二个字符，以此类推。
-- 如果startPos为负数且绝对值大于字符串长度，startPos为0。
+```
 
 ### Boolean 布尔值类型
 > 布尔型有两个值：true 和 false。
@@ -349,16 +359,31 @@ console.log(a);
 - Math.js：属于很全面的运算库，文件很大，压缩后的文件就有 500kb。如果你的项目涉及到大型的复杂运算，可以使用 Math.js。
 - decimal.js：属于轻量的运算库，压缩后的文件只有 32kb。大多数项目的数学运算，使用 decimal.js 足够了。
 
+#### Number的常见方法
+1. `Number.isInteger()` 判断是否为整数
+    > 语法：布尔值 = Number.isInteger(数字);
+    ```javascript {.line-numbers}
+    console.log(Number.isInteger(13.2)); //false
+    console.log(Number.isInteger(13)); //true
+    ```
+2. `toFixed()` 小数点后面保留多少位
+    > 语法：字符串 = 数字.toFixed(num);     
+    > 将数字的小数点后面保留 num 位小数（四舍五入），并返回。不会改变原数字。返回结果是字符串。
+    ```javascript {.line-numbers}
+    let num = 3.1456;
+    let str = num.toFixed(3);
+    console.log(str); // 3.146
+    console.log(typeof str); //string
+    ```
 
-## `Null` 空对象 与 `Undefined` 未定义类型
-### `Null`
+### `Null` 空对象
 
 null 专门用来定义一个空对象。
 - `null` 虽然是一个单独的数据类型，但 `null` 相当于是一个 `object` ，只不过地址为空（空指针）而已。
 - Null 类型的值只有一个，就是 `null` 。比如 let a = null。
 - 使用 `typeof` 检查一个 `null` 值时，会返回 obj`ect 。
 
-### `Undefined`
+### `Undefined` 未定义类型
 - Undefined 类型的值只有一个，就是 undefind。比如 let a = undefined。
 - 使用 typeof 检查一个 undefined 值时，会返回 undefined。
 
@@ -374,7 +399,7 @@ console.log(typeof name); // 打印结果：undefined
 // 如果从未声明一个变量，就去使用它，则会报错（这个大家都知道）；
 // 如果用 typeof 检查这个变量时，会返回 undefined。
 
-onsole.log(typeof a); // undefined
+console.log(typeof a); // undefined
 console.log(a); // 打印结果：Uncaught ReferenceError: a is not defined
 ```
 - 函数无返回值时
@@ -406,7 +431,7 @@ function foo(name = 'Zhangsan') {}
 
 ```
 
-### null 和 undefind 区别
+#### null 和 undefind 区别
 - `null == undefined` 的结果为 `true`。
 - `null === undefined` 的结果为 `false`。
 - `10 + null` 结果为 10。
@@ -416,6 +441,182 @@ function foo(name = 'Zhangsan') {}
 > 任何值和 `null` 运算，`null` 可看做 `0` 运算。
 > 任何数据类型和 `undefined` 运算都是 NaN。
 
+### 内置对象
+#### `Math` 对象
+
+> `Math` 和其他的对象不同，它不是一个构造函数，不需要创建对象。
+
+一些常用方法：
+
+|方法|描述|备注|
+|:----|:----|:----|
+|Math.PI     |圆周率     |Math对象的属性|
+|Math.abs(x)  |返回绝对值  |参数中可以接收字符串类型的数字，此时会将字符串做隐式类型转换，然后再调用 Math.abs() 方法|
+|Math.random()   |生成0-1之间的随机浮点数 |取值范围是 [0，1)|
+|Math.floor()|向下取整（往小取值）    |
+|Math.ceil()|向上取整（往大取值）    |
+|Math.round()|四舍五入取整（正数四舍五入，负数五舍六入）  |
+|Math.max(x, y, z)|返回多个数中的最大值    |
+|Math.min(x, y, z)|返回多个数中的最小值    |
+|Math.pow(x,y)|乘方：返回 x 的 y 次幂  |
+|Math.sqrt()|开方：对一个数进行开方运算|
+
+```javascript {.line-numbers}
+console.log(Math.round(-0.6));// -1
+console.log(Math.abs('-2'));
+console.log(Math.abs('hello')); // NaN
+
+// 生成 [x, y) 之间的随机数
+Math.round(Math.random()*(y-x)+x);
+
+// 生成 [x, y]之间的随机整数
+/*
+* 生成两个整数之间的随机整数，并且要包含这两个整数
+*/
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+```
+
+#### `Date` 对象
+> 与 Math 对象不同，Date 对象是一个构造函数 ，需要先实例化后才能使用。
+
+1. 创建`Date`对象
+    - 如果`Date()`不传入参数，就返回当前时间对象。
+    - 如果`Date()`传入参数，就返回传入的时间对象。参数中既可以传递字符串，也可以传递数字，也可以传递时间戳。
+```javascript {.line-numbers}
+const date11 = new Date('2020/02/17 21:00:00');
+console.log(date11); // Mon Feb 17 2020 21:00:00 GMT+0800 (中国标准时间)
+
+const date12 = new Date('2020/04/19'); // 返回的就是四月
+console.log(date12); // Sun Apr 19 2020 00:00:00 GMT+0800 (中国标准时间)
+
+const date13 = new Date('2020-05-20');
+console.log(date13); // Wed May 20 2020 08:00:00 GMT+0800 (中国标准时间)
+
+const date14 = new Date('Wed Jan 27 2017 12:00:00 GMT+0800 (中国标准时间)');
+console.log(date14); // Fri Jan 27 2017 12:00:00 GMT+0800 (中国标准时间)
+
+const date21 = new Date(2020, 2, 18); // 注意，第二个参数返回的是三月，不是二月
+console.log(date21); // Wed Mar 18 2020 00:00:00 GMT+0800 (中国标准时间)
+
+const date22 = new Date(2020, 3, 18, 22, 59, 58);
+console.log(date22); // Sat Apr 18 2020 22:59:58 GMT+0800 (中国标准时间)
+
+const params = [2020, 06, 12, 16, 20, 59];
+const date23 = new Date(...params);
+console.log(date23); // Sun Jul 12 2020 16:20:59 GMT+0800 (中国标准时间)
+
+const date31 = new Date(1591950413388);
+console.log(date31); // Fri Jun 12 2020 16:26:53 GMT+0800 (中国标准时间)
+
+// 先把时间对象转换成时间戳，然后把时间戳转换成时间对象
+const timestamp = new Date().getTime();
+const date32 = new Date(timestamp);
+console.log(date32); // Fri Jun 12 2020 16:28:21 GMT+0800 (中国标准时间)
+
+```
+
+2. `Date`对象上的一些常用方法
+
+|方法名|含义|备注|
+|:----|:----|:-----|
+|get/setFullYear()      |获取/设置年份    | 用**四位**数表示
+|getMonth()         |获取月：0-11  | `0`代表1月|
+|getDate()          |获取日：1-31   | 获取的是几号|
+|getDay()           |获取星期：0-6  | `0`代表周日，1代表周一|
+|getHours()         |获取小时：0-23  |
+|getMinutes()       |获取分钟：0-59  |
+|getSeconds()       |获取秒：0-59    |
+|getMilliseconds()  |获取毫秒    |  1s = 1000ms|
+|get/setTime()      |返回/设置时间，单位`毫秒数`|计算从`1970年1月1日零时`到日期对象所指的日期的`毫秒数`
+
+ 
+```javascript {.line-numbers} 
+// 如果将目前日期对象的时间推迟1小时
+  var myDate=new Date();
+document.write("当前时间："+myDate+"<br>");
+myDate.setTime(myDate.getTime() + 60 * 60 * 1000);
+document.write("推迟一小时时间：" + myDate); 
+```
+
+3. 获取`Date`对象的时间戳
+```javascript {.line-numbers}
+// 方式一：获取 Date 对象的时间戳（最常用的写法）
+const t1 = +new Date();
+console.log(t1);  
+
+// 方式二：获取 Date 对象的时间戳（较常用的写法）
+const t2 = new Date().getTime();
+console.log(t2);  
+
+// 获取当前时间的时间戳（很常用的写法）
+// Date.now()是H5标准中新增的特性
+console.log(Date.now());
+```
+4. 将`Date`对象转换为指定格式
+```javascript {.line-numbers}
+// 为Date原型添加`format`方法
+Date.prototype.format = function(fmt) { 
+     var o = { 
+        "M+" : this.getMonth()+1,                 //月份 
+        "d+" : this.getDate(),                    //日 
+        "h+" : this.getHours(),                   //小时 
+        "m+" : this.getMinutes(),                 //分 
+        "s+" : this.getSeconds(),                 //秒 
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+        "S"  : this.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+}
+
+var time1 = new Date().format("yyyy-MM-dd hh:mm:ss");
+```
+
+5. 日期处理库：[`Day.js`](https://day.js.org/) 和 [`Moment.js`](http://momentjs.cn/)
+
+
+#### `Array` 数组对象
+> 数组对象是一个对象的集合，里边的对象可以是不同类型的。
+
+1. `concat()` 用于连接两个或多个数组，此方法返回一个新数组，不改变原来的数组。
+    > 语法：
+     arrayObject.concat(array1,array2,...,arrayN);
+
+2. `join()` 用于把数组中的所有元素通过指定的分隔符放入一个字符串。
+    > 语法：
+     arrayObject.join(分隔符);  //如果省略“分隔符”， 则使用逗号作用分隔符。
+
+3. `reverse()` 用于颠倒数组中元素的顺序。
+    > 语法：
+     arrayObject.reverse()  会改变原来的数组，而不会创建新的数组。
+
+4. `slice()` 切片函数，与python中的切片功能一样。
+    > 语法：
+     arrayObject.slice(start,end);
+
+5. `sort()` 排列。默认情况下会调用每个数组项的toString()转型方法，然后比较得到的字符串，从而确定如何排序。***即默认情况下是按字符串进行排序的***
+    > 语法：
+     arrayObject.sort(方法函数);  // “方法函数”可以没有。
+
+6. 栈方法(LIFO后进先出):
+   > push() & pop()
+
+7. 队列方法(FIFO先进先出):
+   > shift()：从数组前端取出一项
+     push()
+     unshift() 在数组前端添加任意个项并返回新数组的长度。
+
+ 
 ## `typeof` 和 数据类型转换
 
 ### `typeof` 
@@ -432,7 +633,7 @@ typeof null |   object
 typeof undefined    |   undefined
 typeof []   |   object
 typeof {}   |   object
-|||
+
 > `typeof null` 的返回值也是 object 呢？因为 null 代表的是空对象。     
 > `typeof NaN` 的返回值是 number，上一篇文章中讲过，NaN 是一个特殊的数字。     
 > `空数组`、`空对象`都是引用数据类型 Object。       
@@ -669,77 +870,14 @@ console.log(NaN === NaN); //false
 
 
 
-#
 
 
 
 
-#
-
-
-
-#
 
 
 
 
-#
-
-
-
-## Date对象
-1. *get/setFullYear()* 返回/设置年份，用**四位**数表示。
-2. *getDay()* 返回星期，返回的是*0-6*的数字，**0**表示星期天。
-3. *get/setTime()* 返回/设置时间，单位**毫秒数**，计算从*1970年1月1日零时*到日期对象所指的日期的毫秒数。
-> 例如：如果将目前日期对象的时间推迟1小时：
-```javascript
-<script type="text/javascript">
-  var mydate=new Date();
-  document.write("当前时间："+mydate+"<br>");
-  mydate.setTime(mydate.getTime() + 60 * 60 * 1000);
-  document.write("推迟一小时时间：" + mydate);
-</script>
-```
-
-
-
-## Math对象
-1. ceil() 向上取整，语法：Math.ceil(x),返回的是大于或者等于x,并且与x最接近的整数。 floor()方法与ceil()相反，它为向下取整。
-2. round() 把一个数字四舍五入为最接近的整数。  语法：Math.round(x)
-    - 返回与x最接近的整数。
-    - 对于0.5,将进行上舍入。（5.5将舍入为6）
-    - 如果x与两侧整数同等接近，则结果接近*正无穷大*方向的数字值。
-
-## Array 数组对象
-数组对象是一个对象的集合，里边的对象可以是不同类型的。
-
-1. concat() 用于连接两个或多个数组，此方法返回一个新数组，不改变原来的数组。
-    > 语法：
-     arrayObject.concat(array1,array2,...,arrayN);
-
-2. join() 用于把数组中的所有元素通过指定的分隔符放入一个字符串。
-    > 语法：
-     arrayObject.join(分隔符);  //如果省略“分隔符”， 则使用逗号作用分隔符。
-
-3. reverse() 用于颠倒数组中元素的顺序。
-    > 语法：
-     arrayObject.reverse()  会改变原来的数组，而不会创建新的数组。
-
-4. slice() 切片函数，与python中的切片功能一样。
-    > 语法：
-     arrayObject.slice(start,end);
-
-5. sort() 排列。默认情况下会调用每个数组项的toString()转型方法，然后比较得到的字符串，从而确定如何排序。***即默认情况下是按字符串进行排序的***
-    > 语法：
-     arrayObject.sort(方法函数);  // “方法函数”可以没有。
-
-6. 栈方法(LIFO后进先出):
-   > push() & pop()
-
-7. 队列方法(FIFO先进先出):
-   > shift()：从数组前端取出一项
-     push()
-     unshift() 在数组前端添加任意个项并返回新数组的长度。
 
 ## Function 类型(函数类型)
 1. 没有重载概念。
