@@ -18,6 +18,8 @@ uint/int
 
 ### `Array`
 
+## `Mapping Types`
+
 # `Function`
 
 Solidity 中有两个关键字， 标识函数的调用不用需要消耗gas: `view`和`pure`。  只有更改状态的时候才支付gas。
@@ -56,3 +58,18 @@ function add() public pure returns(uint256) {
 # `Errors & Warnings`
 
 `Warnings` won't stop your code from working but it's usually a good idea to check them out.
+
+
+# Memory, Storage & Calldata
+
+`EVM` -- `Ethereum Virtual Machine`
+
+部署到`EVM`上的`solidity`程序，可以部署到`Avalanche`、`Fantom`、`Polygon`区块链上。
+
+`EVM` can access and store information in six places:
+- Stack
+- Memory
+- Storage
+- Calldata
+- Code
+- Logs
