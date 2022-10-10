@@ -22,7 +22,79 @@ Solidity is a statically language.
 
 ### Struct
 
+```solidity {.line-numbers}
+struct Car{
+    string model;
+    uint year;
+    address owner;
+}
+
+Car public car;
+Car[] public cars;
+mapping(address => Car[]) public carsByOwner;
+
+function examples() external {
+    Car memory toyota = Car("Toyota", 1990, msg.sender);
+    Car memory lambo = Car({year: 1980, model: "Lamborghini", owner: msg.sender});
+    Car memory tesla;
+    tesla.model = "Tesla";
+    tesla.year = 2010;
+    tesla.owner = msg.sender;
+
+    cars.push(toyota);
+    cars.push(lambo);
+    cars.push(tesla);
+
+    cars.push(Car("Ferrari", 2020, msg.sender));
+
+    //使用memory 定义在内在中的变量，修改是无效的，
+    Car memory _car = cars[0];
+    // 此处的修改不会生效
+    _car.year = 1991;
+
+    // 使用storage定义在存储中的变量，即读取了状态变量，则可以进行修改数据了
+    Car storage _car2 = cars[0];
+    // 此处才能修改
+    _car2.year = 1992;
+
+    // delete 不会将元素从数组中或者变量中删除，只会将其用元素的数据类型的默认值进行替换
+    delete cars[1];
+}
+```
+
+### Enum
+```solidity {.line-numbers}
+enum Status {
+    None,
+    Pending,
+    Shipped,
+    Completed,
+    Rejected,
+    Canceled
+}
+
+Status public status; 
+
+function get() external view returns (Status) {
+    return status;
+}
+
+function set(Status _status) external {
+    status = _status;
+}
+
+function ship() external {
+    status = Status.Shipped; 
+}
+
+// 重置枚举为默认值，即为此枚举的第一个值
+function reset() external {
+    delete status;
+}
+```
 ### Array
+
+动态数组只能用在状态变量中，局部变量只能是定长数组。
 
 ```solidity {.line-numbers}
 //动态数组
@@ -104,7 +176,34 @@ function examples() external {
 
 ### 迭代映射
 ```solidity {.line-numbers}
+//使用循环遍历数组会消耗比较大的GAS费
+mapping(address => uint) public balances;
+mapping(address => bool) public inserted;
+address[] public keys;
 
+function set(address _key, uint _val) external {
+    balances[_key] = _val;
+    if(!inserted[_key]){
+        inserted[_key] = true;
+        keys.push(_key);
+    }
+}
+
+function getSize() external view returns (uint) {
+    return keys.length;
+}
+
+function first() external view returns (uint) {
+    return balances[keys[0]];
+}
+
+function last() external view returns (uint) {
+    return balances[keys[keys.length - 1]];
+}
+
+function get(uint _i) external view returns (uint) {
+    return balances[keys[_i]];
+}
 ```
 
 # Function
@@ -132,12 +231,20 @@ function add() public pure returns(uint256) {
 }
 ```
 
-
 ## Function Visibility Specifiers
 - `public`: 在外部和内部都可见(visible externally and internally)
 - `private`: 表示只对合约内部可见(only visible in the current contract)
-- `external`: 表示只对合约外部可见(only for functions)
 - `internal`: 表示只有这个合约或者继承它的合约可见(only visible internally)
+- `external`: 表示只对合约外部可见(only for functions)，继承合约也看不到，如果在一个合约内部需要访问其external声明的函数，可以通过`this.`来进行访问, 但这种方式会浪费GAS费：
+    ```solidity {.line-numbers}
+    function externalFunc() external pure {
+        // code...
+    }
+    function examples() external view{
+        this.externalFunc();
+    }
+    ```
+
 
 变量和函数如果没有指定可见度标识符，默认为`internal`。
 
@@ -199,7 +306,202 @@ contract ConstructorTest {
 }
 ```
 
+## Fallback 回退函数
+回退函数有两个功能：
+- 当在合约中调动不存在的函数时，会调用回退函数
+- 当向合约中发送主币时，会调用回退函数
 
+## 不可变变量 immutable
+使用`immutable`声明的变量为不可变变量，不可变变量它能节约`GAS费`。它的赋值有2种方式：第一种：在声明时进行赋值，第二种：在构造函数中进行赋值。
+```solidity {.line-numbers}
+contract ImmutableExample {
+    // 第一种：在声明时进行赋值
+    address public immutable owner = msg.sender;
+
+    address public immutable owner2;
+
+    第二种：在构造函数中进行赋值
+    constructor() {
+        owner2 = msg.sender;
+    }
+}
+```
+## payable 关键字
+一个函数如果标注了`payable`关键字，则此函数可以接受以太坊主币的传入。
+
+一个`address`地址变量标注了`payable`关键字，则此地址变量可以发送主币了。
+
+```solidity {.line-numbers}
+contract PayableExample {
+    address payable public owner;
+    
+    constructor() {
+        // 由于msg.sender这个地址，是不具有发送主币的功能
+        // 所以使用payable进行包装，让它具有发送主币的功能
+        owner = payable(msg.sender);
+    }
+
+    // 向合约发送主币
+    function deposit() external payable{}
+
+    // 获取当前合约的余额
+    function getBalance() external view returns (uint) {
+        return address(this).balance;
+    }
+}
+```
+
+# Event 事件
+`Event`事件是一种记录当前智能合约运行状态的方法，但它并不记录在状态变量中,而是会体现在区块链浏览器上或者是体现在交易记录中的logs里。
+
+事件比使用状态变量来存储信息更节约GAS费。
+
+```solidity {.line-numbers}
+// 申明事件
+event Log(string message, uint val);
+// 使用 indexded 进行标识过的参数，在链外是可以进行搜索查询。
+// 注意：在一个事件中，带索引indexed的参数最多为3个，超过3个就会报错。
+event IndexedLog(address indexed sender, uint val); 
+
+event Message(address indexed _from, address indexed _to, string message);
+
+// 带有触发的方法，不能指定为view 或者 pure，因为事件也是需要在链上进行记录的
+function examples() external {
+    //使用 emit 来触发事件
+    // 事件会被汇报到交易记录的logs里，同时也会体现在区块链浏览器上
+    emit Log("foo", 123);
+
+    emit IndexedLog(msg.sender, 1111);
+}
+
+function sendMessage(address _to, string calldata message) external {
+    emit Message(msg.sender, _to, message); 
+}
+```
+
+# Inherit 继承
+
+- 单继承：
+
+```solidity {.line-numbers}
+contract A {
+    // 添加 virtual 表示 子合约可以重写此函数 
+    function foo() public pure virtual returns (string memory) {
+        return "foo-A";
+    }
+
+    function bar() public pure virtual returns (string memory) {
+        return "bar-A";
+    }
+
+    function baz() public pure returns (string memory) {
+        return "baz-A";
+    }
+}
+
+contract B is A {
+    // 需要添加 override 表示重写父合约的函数，不加此项，会报错
+    function foo() public pure override returns (string memory) {
+        return "foo-B";
+    }
+
+    // 如果还需要让其他合约重写，就需要不回virtual，不管这个函数是不是重写自父合约
+    function bar() public pure virtual override returns (string memory) {
+        return "bar-B";
+    }
+}
+
+contract C is B {
+    function bar() public pure override returns (string memory) {
+        return "bar-C";
+    }
+}
+```
+
+- 多继承：
+
+要进行多继承时，一定要将最父级写在前面，然后再写次低级，依以类推下去。
+
+```solidity {.line-numbers}
+contract A {
+    // 添加 virtual 表示 子合约可以重写此函数 
+    function foo() public pure virtual returns (string memory) {
+        return "foo-A";
+    }
+
+    function bar() public pure virtual returns (string memory) {
+        return "bar-A";
+    }
+
+    function baz() public pure returns (string memory) {
+        return "baz-A";
+    }
+}
+
+contract B is A {
+    // 需要添加 override 表示重写父合约的函数，不加此项，会报错
+    function foo() public pure virtual override returns (string memory) {
+        return "foo-B";
+    }
+
+    // 如果还需要让其他合约重写，就需要不回virtual，不管这个函数是不是重写自父合约
+    function bar() public pure virtual override returns (string memory) {
+        return "bar-B";
+    }
+}
+
+contract D is A, B {
+    // override(A,B)  表示要重写哪些父合约的相同函数， 
+    // 如果所有父合约都有，并都写了virtual声明，则都需要加上 
+    function foo() public pure override(A,B) returns (string memory) {
+        return "foo-D";
+    }
+    function bar() public pure override(A,B) returns (string memory) {
+        return "bar-D";
+    }
+}
+```
+- 继承构造函数带参数的父合约
+```solidity {.line-numbers}
+contract A {
+    string public name;
+
+    constructor(string memory _name) {
+        name = _name;
+    }
+}
+
+contract B {
+    string public text;
+
+    constructor(string memory _text) {
+        text = _text;
+    }
+}
+
+// 父级合约中的构造函数执行顺序，是按继承顺序来进行执行
+
+// 第1种 给父级合约中带参数的构造函数传参
+contract C is A("A"), B("B"){
+    //code
+}
+
+// 第2种 给父级合约中带参数的构造函数传参
+contract D is A, B {
+    constructor(string memory _name, string memory _text) A(_name) B(_text) {
+        // code
+    }
+}
+
+// 第2种 给父级合约中带参数的构造函数传参
+contract E is A("A"), B {
+    constructor(string memory _text) B(_text) {
+        //code
+    }
+}
+```
+
+如果要调用父合约中被重写的函数，可以通过**父合约的名称**或者`super`来调用。
 
 # Errors & Warnings
 
@@ -244,7 +546,81 @@ function testCustomErro(uint _i) public view {
 ```
 
 
-# Memory, Storage & Calldata
+# 数据的存储位置Data Locations
+在智能合约中，数据可以存储在：`Memory`、`Storage`、`Calldata`中。
+
+- 存储在`storage`中的是状态变量
+- `memory`中的是局部变量，即在其函数或者其他的作用域内有效，而并不会被写入到链上，离开作用域即失效。
+- `calldata`与`memory`类似，但它只能用在函数的输入参数中。在参数中使用`calldata`可以节约`GAS`费。
+
+```solidity {.line-numbers}
+struct MyStruct {
+    uint foo;
+    string text;
+}
+
+mapping(address => MyStruct) public myStructs;
+
+// calldata 只能用在输入参数中，并且使用calldata可以节约GAS费
+// 在参数中有数组、字符串、结构体时，必须给参数加上calldata或者memory
+function examples(uint[] calldata y, string calldata s, MyStruct calldata _mystruct) external returns (uint[] memory) {
+    myStructs[msg.sender] = MyStruct({foo: 123, text: "bar"});
+    MyStruct storage myStruct = myStructs[msg.sender];
+    // 会修改链上的数据状态
+    myStruct.text = "foo";
+
+    MyStruct memory readOnlyStruct = myStructs[msg.sender];
+    // 并不会修改链上的状态
+    readOnlyStruct.foo = 353;
+
+    uint[] memory memArr = new uint[](3);
+    memArr[0] = 332;
+
+    return memArr;
+}
+```
+```solidity {.line-numbers}
+struct Todo{
+    string text;
+    bool completed;
+}
+
+Todo[] public todos;
+
+function create(string calldata _text) external {
+    todos.push(Todo({
+        text: _text,
+        completed: false
+    })); 
+}
+
+function updateText(uint _index, string calldata _text) external {
+    // 当只有一个数据需要进行更新时，使用这种方法会比较节约GAS费
+    todos[_index].text = _text;
+
+    // // 如果有多个数据需要进行更新，则使用这种方法比较节约GAS费
+    // // 首先将需要更新的对象读取到storage 对象中，再进行更新操作
+    // Todo storage todo = todos[_index];
+    // todo.text = _text; 
+    // todo.text = _text; 
+    // todo.text = _text; 
+}
+
+function get(uint _index) external view returns (string memory, bool){
+    // 这里使用storage比memory更节约GAS费，因为storage时是直接从状态变量中读取出来的，通过一次拷贝即可返回
+    // 使用memory时，则会进行两次拷贝，所以更耗GAS费
+    // Todo memory todo = todos[_index];
+    Todo storage todo = todos[_index];
+    return (todo.text, todo.completed); 
+
+    //比上面的方式进行返回，这种会消耗更多的GAS
+    // return (todos[_index].text, todos[_index].completed);
+}
+
+function toggleCompleted(uint _index) external {
+    todos[_index].completed = !todos[_index].completed;
+}
+```
 
 `EVM` -- `Ethereum Virtual Machine`
 
