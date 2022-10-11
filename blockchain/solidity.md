@@ -566,6 +566,8 @@ function testCustomErro(uint _i) public view {
 ```
 
 
+
+
 # 数据的存储位置Data Locations
 在智能合约中，数据可以存储在：`Memory`、`Storage`、`Calldata`中。
 
@@ -641,6 +643,241 @@ function toggleCompleted(uint _index) external {
     todos[_index].completed = !todos[_index].completed;
 }
 ```
+
+# 合约操作
+
+## 1、合约中发送主币的方法
+- `transfer`: 只会带有2300个GAS，如果失败就会revert
+- `send`: 只会带有2300个GAS，会返回一个bool来标识是否成功
+- `call`: 会发送所有剩余的GAS，会返回一个boolgo标识是否成功，还有一个data。
+
+```solidity {.line-numbers}
+// 用于发送主币的合约
+contract SendEther {
+    //通过构造函数，让在部署合约时，使合约中有一定的主币数量
+    constructor() payable {}
+
+    receive() external payable{}
+
+    // 通过 transfer()函数发送主币
+    function sendViaTransfer(address payable _to) external payable {
+        // 123 表示 123Wei
+        _to.transfer(123);
+    }
+
+    // 通过 send()函数发送主币
+    function sendViaSend(address payable _to) external payable {
+        bool sent =  _to.send(123);
+        require(sent, "send failed");
+    }
+
+    // 通过 call()函数发送主币
+    function sendViaCall(address payable _to) external payable {
+        (bool success,) = _to.call{value: 123}("");
+        require(success, "fall failed");
+    }
+
+    // 返回合约剩余的主币数额， 单位为Wei
+    function getBalance() external view returns (uint) {
+        return address(this).balance;
+    }
+}
+
+// 用于接收主币的合约
+contract EthReceiver {
+    // 通过事件记录，接收到的主币信息
+    /**
+    * amount: 接收到的主币数量(单位为Wei)
+    * gas: 剩余的 gas 
+    */
+    event Log(uint amount, uint gas);
+
+    // 当接收到主币时，会调用receive()
+    receive() external payable {
+        emit Log(msg.value, gasleft());
+    }
+
+    // 返回合约剩余的主币数额， 单位为Wei
+    function getBalance() external view returns (uint) {
+        return address(this).balance;
+    }
+}
+```
+## 2、从合约中提款
+```solidity {.line-numbers}
+
+contract EtherWallet {
+    // 合约拥有者
+    address payable public immutable owner;
+
+    // 通过事件记录，接收到的主币信息
+    /**
+    * amount: 接收到的主币数量(单位为Wei)
+    * gas: 剩余的 gas 
+    */
+    event Log(uint amount, uint gas);
+
+    constructor() payable {
+        // 通过构造函数来设置合约的拥有者
+        owner = payable(msg.sender);
+    }
+
+    // 当合约接收到主币时，会调用
+    receive() external payable {
+        emit Log(msg.value, gasleft());
+    }
+
+    // 从合约中提款
+    function withdraw(uint _amount) external {
+        // 只有合约的拥有者才能进行提款
+        require(msg.sender == owner, "caller is not owner");
+
+        payable(msg.sender).transfer(_amount);
+
+        // // call()函数不需要发送者具有payable属性也可以进行发送主币
+        // (bool success, ) = msg.sender.call{value: _amount}("");
+        // require(success, "Failed to send Ether");
+    }
+
+    // 获取合约中的主币余额,单位为Wei
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+}
+```
+## 调用其他合约
+```solidity {.line-numbers}
+contract CallTestContract {
+
+    // 通过合约的地址来，实例化目标合约对象
+    function setX(address  _test, uint _x) external {
+        TestContract(_test).setX(_x);
+    }
+
+    // 直接将目标合约对象以参数形式进行传递
+    function setX2(TestContract _test, uint _x) external {
+        _test.setX(_x);
+    }
+
+    function getX(address  _test) external view returns (uint) {
+        return TestContract(_test).getX();
+    }
+
+    function getXandValue(address  _test) external view returns (uint, uint) {
+        return TestContract(_test).getXandValue();
+    }
+
+    // 向目标合约操作带发送主币功能
+    function setXandSendEther(address  _test, uint _x) external payable  {
+        TestContract(_test).setXandReceiveEther{value: msg.value}(_x);
+    }
+}
+
+contract TestContract {
+    uint public x;
+    uint public value = 123; 
+
+    function setX(uint _x) external {
+        x = _x;
+    }
+
+    function getX() external view returns (uint) {
+        return x;
+    }
+
+    function setXandReceiveEther(uint _x) external payable {
+        x = _x;
+
+        value = msg.value;
+    }
+
+    function getXandValue() external view returns (uint, uint) {
+        return (x, value);
+    }
+}
+```
+
+## 通过 Interface 接口调用其他合约
+
+有时，我们并不知道一个合约的原代码，或者它的代码非常大，此时，我们可以通过`Interface`来调用。
+
+```solidity {.line-numbers}
+// 目标调用合约
+contract Counter {
+    uint public count;
+
+    function inc() external {
+        count += 1;
+    }
+
+    function dec() external {
+        count -= 1;
+    }
+} 
+
+// 接口
+interface ICounter {
+    function count() external view returns (uint);
+    function inc() external;
+}
+
+contract CallInterface {
+    uint public count;
+
+    // 参数为被调用的合约的地址
+    function examples(address _counter) external {
+        ICounter(_counter).inc();
+        count = ICounter(_counter).count();
+    }
+}
+```
+
+## 通过 call() 调用其他合约
+
+```solidity {.line-numbers}
+contract TestCall {
+    string public message;
+    uint public x;
+
+    event Log(string message);
+
+    // 如果调用了这个合约中不存在的函数，就会触发fallback()回退函数
+    // 如果调用这个合约中的函数时，存在发送主币，此时也会调用fallback()函数
+    fallback() external payable {
+        emit Log("fallback was called");
+    }
+
+    function foo(string memory _message, uint _x) external payable returns (bool, uint) {
+        message = _message;
+        x = _x;
+        return (true, 999);
+    }
+}
+
+contract Call {
+
+    bytes public data;
+
+    /*
+     * 调用一个地址的call()时，通过abi.encodeWithSignature来调用该合约中的函数
+    */
+    function callFoo(address _test) external payable {
+        (bool success, bytes memory _data) = _test.call{value: 111}(abi.encodeWithSignature("foo(string, uint256)", "call foo", 123));
+        require(success, "call failed");
+
+        data = _data;
+    }
+
+    //调用合约中不存在的函数
+    function callDoseNotExitFuc(address _test) external payable {
+        (bool success,) = _test.call(abi.encodeWithSignature("doesNotExitFuc()"));
+        require(success, "call failed");
+    }
+}
+```
+
+
+---
 
 `EVM` -- `Ethereum Virtual Machine`
 
