@@ -308,8 +308,28 @@ contract ConstructorTest {
 
 ## Fallback 回退函数
 回退函数有两个功能：
-- 当在合约中调动不存在的函数时，会调用回退函数
-- 当向合约中发送主币时，会调用回退函数
+- 当在合约中调动不存在的函数时，会调用**回退函数**
+- 当向合约中发送主币时，会调用**回退函数**
+
+回退函数有2种写法：
+
+```solidity {.line-numbers}
+contract Fallback {
+
+    event Log(string func, address sender, uint value, bytes data);
+
+    fallback() external payable {
+        emit Log("fallback", msg.sender, msg.value, msg.data);
+    }
+
+    receive() external payable {
+        emit Log("receive", msg.sender, msg.value, "");
+    }
+}
+```
+2种回退函数的调用关系：
+![2种方法的调用关系](../images/fallback.png)
+
 
 ## 不可变变量 immutable
 使用`immutable`声明的变量为不可变变量，不可变变量它能节约`GAS费`。它的赋值有2种方式：第一种：在声明时进行赋值，第二种：在构造函数中进行赋值。
