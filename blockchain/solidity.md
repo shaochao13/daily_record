@@ -13,6 +13,7 @@ Solidity is a statically language.
 `int`默认为`int256` 它的聚会范围为：-2**255 ~ 2**255 -1。
 
 ### Address
+
 它是一个16进制数字。
 
 ### bytes
@@ -63,6 +64,7 @@ function examples() external {
 ```
 
 ### Enum
+
 ```solidity {.line-numbers}
 enum Status {
     None,
@@ -92,6 +94,7 @@ function reset() external {
     delete status;
 }
 ```
+
 ### Array
 
 动态数组只能用在状态变量中，局部变量只能是定长数组。
@@ -128,6 +131,7 @@ function returnArray() external view returns (uint[] memory) {
 ```
 
 ### 删除数组指定位置的元素
+
 ```solidity {.line-numbers}
 uint[] public arrs = [1,2,3,4,5];
 
@@ -154,6 +158,7 @@ function remove2(uint _index) public lessThanArrLingth(_index) {
 ```
 
 ## Mapping Types
+
 ```solidity {.line-numbers}
 mapping(address => uint) public balances;
 //嵌套Mapping
@@ -175,6 +180,7 @@ function examples() external {
 ```
 
 ### 迭代映射
+
 ```solidity {.line-numbers}
 //使用循环遍历数组会消耗比较大的GAS费
 mapping(address => uint) public balances;
@@ -232,10 +238,12 @@ function add() public pure returns(uint256) {
 ```
 
 ## Function Visibility Specifiers
+
 - `public`: 在外部和内部都可见(visible externally and internally)
 - `private`: 表示只对合约内部可见(only visible in the current contract)
 - `internal`: 表示只有这个合约或者继承它的合约可见(only visible internally)
 - `external`: 表示只对合约外部可见(only for functions)，继承合约也看不到，如果在一个合约内部需要访问其external声明的函数，可以通过`this.`来进行访问, 但这种方式会浪费GAS费：
+
     ```solidity {.line-numbers}
     function externalFunc() external pure {
         // code...
@@ -245,10 +253,10 @@ function add() public pure returns(uint256) {
     }
     ```
 
-
 变量和函数如果没有指定可见度标识符，默认为`internal`。
 
 ## Function Modifier
+
 函数修改器，可以用来将一些公共的函数功能提取到这里。
 
 ```solidity {.line-numbers}
@@ -293,6 +301,7 @@ contract FunctionModifier {
 ## Constructor 构造函数
 
 `constructor`构造函数只在合约部署时会调用一次。
+
 ```solidity {.line-numbers}
 contract ConstructorTest {
     // 表示部署者的地址
@@ -307,7 +316,11 @@ contract ConstructorTest {
 ```
 
 ## Fallback 回退函数
+
+一个合约不存在回退函数，此时让这个合约发送主币时，会报错。
+
 回退函数有两个功能：
+
 - 当在合约中调动不存在的函数时，会调用**回退函数**
 - 当向合约中发送主币时，会调用**回退函数**
 
@@ -327,12 +340,14 @@ contract Fallback {
     }
 }
 ```
+
 2种回退函数的调用关系：
 ![2种方法的调用关系](../images/fallback.png)
 
-
 ## 不可变变量 immutable
+
 使用`immutable`声明的变量为不可变变量，不可变变量它能节约`GAS费`。它的赋值有2种方式：第一种：在声明时进行赋值，第二种：在构造函数中进行赋值。
+
 ```solidity {.line-numbers}
 contract ImmutableExample {
     // 第一种：在声明时进行赋值
@@ -346,7 +361,9 @@ contract ImmutableExample {
     }
 }
 ```
+
 ## payable 关键字
+
 一个函数如果标注了`payable`关键字，则此函数可以接受以太坊主币的传入。
 
 一个`address`地址变量标注了`payable`关键字，则此地址变量可以发送主币了。
@@ -372,6 +389,7 @@ contract PayableExample {
 ```
 
 # Event 事件
+
 `Event`事件是一种记录当前智能合约运行状态的方法，但它并不记录在状态变量中,而是会体现在区块链浏览器上或者是体现在交易记录中的logs里。
 
 事件比使用状态变量来存储信息更节约GAS费。
@@ -481,7 +499,9 @@ contract D is A, B {
     }
 }
 ```
+
 - 继承构造函数带参数的父合约
+
 ```solidity {.line-numbers}
 contract A {
     string public name;
@@ -528,6 +548,7 @@ contract E is A("A"), B {
 `Warnings` won't stop your code from working but it's usually a good idea to check them out.
 
 **3种报错**控制：`require`、`revert`、`assert`，这3种方式都会让`GAS费退回`和各种`状态回滚`。还有`自定义错误`，它可以节约GAS费。
+
 ```solidity {.line-numbers}
 function testRequire(uint _i) public pure{
     // 表示当_i > 10 时，就报错，报错信息为："i > 10"
@@ -536,6 +557,7 @@ function testRequire(uint _i) public pure{
 ```
 
 `revert` 不能包含表达式。
+
 ```solidity {.line-numbers}
 function testRevert(uint _i) public pure {
     if (_i > 10){
@@ -543,7 +565,9 @@ function testRevert(uint _i) public pure {
     }
 }
 ```
+
 `assert` 断言，不能提供报错信息
+
 ```solidity {.line-numbers}
 function testAssert(uint _i) public pure {
     assert(_i <=10);
@@ -551,8 +575,8 @@ function testAssert(uint _i) public pure {
 }
 ```
 
-
 自定义报错：
+
 ```solidity {.line-numbers}
 //使用关键字error进行自定义报错的定义
 //使用自定义报错，可以节约GAS费
@@ -565,10 +589,8 @@ function testCustomErro(uint _i) public view {
 }
 ```
 
-
-
-
 # 数据的存储位置Data Locations
+
 在智能合约中，数据可以存储在：`Memory`、`Storage`、`Calldata`中。
 
 - 存储在`storage`中的是状态变量
@@ -601,6 +623,7 @@ function examples(uint[] calldata y, string calldata s, MyStruct calldata _mystr
     return memArr;
 }
 ```
+
 ```solidity {.line-numbers}
 struct Todo{
     string text;
@@ -647,6 +670,7 @@ function toggleCompleted(uint _index) external {
 # 合约操作
 
 ## 1、合约中发送主币的方法
+
 - `transfer`: 只会带有2300个GAS，如果失败就会revert
 - `send`: 只会带有2300个GAS，会返回一个bool来标识是否成功
 - `call`: 会发送所有剩余的GAS，会返回一个boolgo标识是否成功，还有一个data。
@@ -703,7 +727,9 @@ contract EthReceiver {
     }
 }
 ```
+
 ## 2、从合约中提款
+
 ```solidity {.line-numbers}
 
 contract EtherWallet {
@@ -745,7 +771,9 @@ contract EtherWallet {
     }
 }
 ```
+
 ## 调用其他合约
+
 ```solidity {.line-numbers}
 contract CallTestContract {
 
@@ -862,7 +890,7 @@ contract Call {
      * 调用一个地址的call()时，通过abi.encodeWithSignature来调用该合约中的函数
     */
     function callFoo(address _test) external payable {
-        (bool success, bytes memory _data) = _test.call{value: 111}(abi.encodeWithSignature("foo(string, uint256)", "call foo", 123));
+        (bool success, bytes memory _data) = _test.call{value: 111}(abi.encodeWith Signature("foo(string, uint256)", "call foo", 123));
         require(success, "call failed");
 
         data = _data;
@@ -876,14 +904,171 @@ contract Call {
 }
 ```
 
+## Delegate 委托调用
+
+```solidity {.line-numbers}
+// 被调用的合约
+contract TestDelegateCall {
+    uint public num;
+    address public sender;
+    uint public value;
+
+    function setVars(uint _num) external payable {
+        num = _num;
+        sender = msg.sender;
+        value = msg.value;
+    }
+}
+
+// 委托合约
+/*
+ * 注意几点： 
+ * 第1: 通过委托合约调用时， 它并不会改变被调用合约中的状态变量的值，即，它只会利用被调用的合约的函数功能来改变本身合约中的状态。
+ * 第2: 委托合约中的变量的顺序和类型必须与被调用合约中的保持一致！
+*/
+contract DelegateCall {
+    uint public num;
+    address public sender;
+    uint public value;
+
+    function setVars(address _test, uint _num) external payable {
+        // _test.delegatecall(abi.encodeWithSignature("setVars(uint256)", _num));
+        // 通过委托调用TestDelegateCall合约中的函数
+        (bool success, bytes memory data) = _test.delegatecall(
+            abi.encodeWithSelector(TestDelegateCall.setVars.selector, _num)
+        );
+
+        require(success, "delegatecall failed");
+    }
+}
+```
+
+# Hash 算法
+
+在solidity合约中，使用`keccak256()`函数来进行Hash运算，在运算之前，需要通过`abi.encode`或者`abi.encodePacked`将参数进行打包，然后再传给`keccak256`进行Hash运算。
+
+```solidity {.line-numbers}
+function hash(string memory text, uint num, address addr) external pure returns (bytes32) {
+        // 在进行Hash算法运算时，使用abi.encode()函数对参数进行打包时，会生成一个定长的bytes,并且各参数之间会通过补0的方式来达到定长
+        // 使用abi.encodePacked()函数打包时，只会将各参数生成一个不定长的bytes，只时就有可能存在hash碰撞的可能，所以使用它打包时，
+        // 需要注意这一点，可以将各个参数使用一个数字或者字符串进行隔离，这样就可以避免Hash碰撞
+        return keccak256(abi.encode(text, num, addr));
+        // return keccak256(abi.encodePacked(text, num, addr));
+    }
+```
+
+# 签名验证
+
+```solidity {.line-numbers}
+/*
+ * 验证消息签名的步骤：
+ * 1、 将消息进行签名
+ * 2、 将消息进行Hash， hash(message)
+ * 3、 将消息和私钥进行签名（在链下完成） sign(hash(message), private key)
+ * 4、 恢复签名，通过专门的ecrecover()进行, 它会计算出来一个地址，如果这个地址等于签名人的地址就表示签名是正确的
+ *      ecrecover(hash(message), signature) == signer
+*/
+
+contract VerifySig {
+    /*
+     * 验证签名
+     * _signer --- 签名人的地址
+     * _message --- 被签名的数据
+     * _sig --- 签名的结果
+    */
+    function verify(address _signer, string memory _message, bytes memory _sig) external pure returns (bool){
+        // 对消息进行Hash
+        bytes32 messageHash = getMessageHash(_message);
+        // 
+        bytes32 ethSignedMessageHash = getEthSignedMessagedHash(messageHash);
+
+        return recover(ethSignedMessageHash, _sig) == _signer;
+    }
+
+    // 对消息进行Hash
+    function getMessageHash(string memory _message) public pure returns(bytes32) {
+        return keccak256(abi.encodePacked(_message));
+    }
+
+    // 对消息Hash的结果，再进行一次Eth 签名Hash运算
+    function getEthSignedMessagedHash(bytes32 _messageHash) public pure returns (bytes32){
+        return keccak256(abi.encodePacked(
+            "\x19Ethereum Signed Message:\n32",
+            _messageHash
+        ));
+    }
+
+    // 恢复签名人的地址
+    function recover(bytes32 _ethSignedMessageHash, bytes memory _sig) public pure returns(address) {
+        // r,s,v在非对称加密中
+        (bytes32 r, bytes32 s, uint8 v) = _split(_sig);
+        return ecrecover(_ethSignedMessageHash, v, r, s);
+    }
+
+    // 将签名分割为 r,s,v三个变量
+    function _split(bytes memory _sig) internal pure returns (bytes32 r, bytes32 s, uint8 v){
+        // 签名的长度为65
+        require(_sig.length == 65, "invalid signature length");
+
+        // 使用内联汇编来获取三个变量值
+        assembly{
+            r := mload(add(_sig, 32))
+            s := mload(add(_sig, 64))
+            v := byte(0, mload(add(_sig, 96)))
+        }
+    }
+}
+```
+
+# selfdestruct 自毁合约
+
+合约自毁，通过内置`selfdestruct()`函数执行。
+
+自毁合约会执行以下2个步骤：
+
+1. 删除合约
+2. 将合约中剩余的主币强制地发送到一个指定的地址上
+
+```solidity {.line-numbers}
+// 要被自毁的合约
+contract TestContract {
+    // 使用构造函数，可以在创建合约时，给合约一些主币
+    construct() payable {}
+
+    // 用于自毁的函数
+    function kill() external {
+        // 在进行自毁时，可以对发送自毁的地址进行一些判断，比如，必须是合约创建者才能发起合约的自毁
+        // 传入用于强制接收自毁时，发送合约中剩余主币的地址
+        selfdestruct(payable(msg.sender));
+    }
+
+    function testIfKilled() external pure returns (uint) {
+        return 123;
+    }
+}
+
+contract HelpContract {
+    // 获取当前合约主币的余额
+    function getBalance() external view returns (uint) {
+        return address(this).balance;
+    }
+
+    // 发送使TestContract合约自毁的函数
+    function kill(TestContract _testContract) external {
+        _testContract.kill();
+    }
+}
+
+```
 
 ---
 
-`EVM` -- `Ethereum Virtual Machine`
+# EVM -- `Ethereum Virtual Machine`
 
 部署到`EVM`上的`solidity`程序，可以部署到`Avalanche`、`Fantom`、`Polygon`区块链上。
 
 `EVM` can access and store information in six places:
+
 - Stack
 - Memory
 - Storage
