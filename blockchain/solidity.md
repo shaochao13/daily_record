@@ -943,6 +943,174 @@ contract DelegateCall {
 }
 ```
 
+## Create2部署合约
+
+```solidity {.line-numbers}
+ontract DeployWithCreate2 {
+    address public owner;
+
+    constructor(address _owner){
+        owner = _owner;
+    }
+}
+
+// 使用Create2部署合约，可以在合约部署之前就知道合约的地址
+contract Create2Factory {
+    event Deploy(address addr);
+
+    // 部署合约 , _salt--盐
+    function deploy(uint _salt) external {
+        DeployWithCreate2 _contract = new DeployWithCreate2{
+            salt: bytes32(_salt)
+        }(msg.sender);
+
+        emit Deploy(address(_contract));
+    }
+
+    // 计算出地址
+    function getAddress(bytes memory bytecode, uint _salt) public view returns (address) {
+        bytes32 hash = keccak256(
+            abi.encodePacked(
+                // 固定值，当前合约的地址， 盐， 机器码
+                bytes1(0xff), address(this), _salt, keccak256(bytecode)
+            )
+        );
+
+        return address(uint160(uint(hash)));
+    }
+
+    // 获取机器码
+    function getBytecode(address _owner) public pure returns (bytes memory) {
+        bytes memory bytecode = type(DeployWithCreate2).creationCode;
+
+        return abi.encodePacked(bytecode, abi.encode(_owner));
+    }
+}
+```
+
+## Multi Call 多重调用
+
+`Multi Call`可以同时向一个或者多个合约一次发送调用的功能。这样可以解决一些比如时间同步同时的问题。
+
+```solidity {.line-numbers}
+contract TestMultiCall {
+    function func1() external view returns (uint, uint) {
+        return (1, block.timestamp);
+    }
+
+    function func2() external view returns (uint, uint) {
+        return (2, block.timestamp);
+    }
+
+    //  获取函数1的Data
+    function getData1() external pure returns (bytes memory) {
+        // abi.encodeWithSignature("func1()");
+        return abi.encodeWithSelector(this.func1.selector);
+    }
+
+    //  获取函数2的Data
+    function getData2() external pure returns (bytes memory) {
+        // abi.encodeWithSignature("func2()");
+        return abi.encodeWithSelector(this.func2.selector);
+    }
+}
+
+// 将多个函数调用，打包成一次调用执行
+contract MultiCall {
+    // targets 表示需要调用哪些合约的地址
+    // data 表示与调用的函数Data，必须与targets一一对应
+    function multiCall(address[] calldata targets, bytes[] calldata data) external view returns (bytes[] memory) {
+        require(targets.length == data.length, "target length != data length");
+
+        // 表示每个调用的返回数据集合
+        bytes[] memory results = new bytes[](data.length);
+
+        for(uint i; i < targets.length; i++) {
+            // 使用address上的staticcall函数来执行调用操作
+            (bool success, bytes memory result) = targets[i].staticcall(data[i]);
+            require(success, "call failed");
+            results[i] = result;
+        }
+
+        return results;
+    }
+}
+```
+
+## Multi Delegate Call 多重委托调用
+
+```solidity {.line-numbers}
+// 使用委托调用，只能委托调用自己
+contract MultiDelegatecall {
+
+    error DelegatecallFailed();
+
+    function multiDelegatecall(bytes[] calldata data) external payable returns (bytes[] memory results){
+        results = new bytes[](data.length);
+
+        for(uint i; i < data.length; i++){
+            // 委托调用，只能调用自己，所以地址只能使用调用者自己的，并通过address 的 delegatecall函数进行委托调用
+            (bool ok, bytes memory res) = address(this).delegatecall(data[i]);
+            if (!ok) {
+                revert DelegatecallFailed();
+            } 
+
+            results[i] = res;
+        }
+
+        return results;
+    }
+}
+
+contract TestMultiDelegateCall is MultiDelegatecall {
+    event Log(address caller, string func, uint i);
+
+    function func1(uint x, uint y) external {
+        emit Log(msg.sender, "func1", x + y);
+    }
+
+    function func2() external returns (uint) {
+        emit Log(msg.sender, "func2", 2);
+        return 12;
+    }
+}
+
+// 用来获取调用的函数的Data数据
+contract Helper {
+    function getFunction1Data(uint x, uint y) external pure returns (bytes memory) {
+        return abi.encodeWithSelector(TestMultiDelegateCall.func1.selector, x, y);
+    }
+
+    function getFunction2Data() external pure returns (bytes memory) {
+        return abi.encodeWithSelector(TestMultiDelegateCall.func2.selector);
+    }
+}
+```
+
+## Abi解码
+
+```solidity {.line-numbers}
+contract AbiDecode {
+
+    struct MyStruct {
+        string name;
+        uint[2] nums;
+    }
+
+    // abi编码
+    function encode(uint x, address addr, uint[] calldata arr, MyStruct calldata myStruct) external pure returns (bytes memory) {
+        // 编码时的顺序，在解码时也需要保持一致
+        return abi.encode(x, addr, arr, myStruct);
+    }
+
+    // abi解码
+    function decode(bytes calldata data) external pure returns (uint x, address addr, uint[] memory arr, MyStruct memory myStruct){
+        // 解码时，需要知道进行编码时的各变量的类型顺序
+        (x, addr, arr, myStruct) = abi.decode(data, (uint, address, uint[], MyStruct));
+    }
+}
+```
+
 # Hash 算法
 
 在solidity合约中，使用`keccak256()`函数来进行Hash运算，在运算之前，需要通过`abi.encode`或者`abi.encodePacked`将参数进行打包，然后再传给`keccak256`进行Hash运算。
@@ -1059,6 +1227,373 @@ contract HelpContract {
     }
 }
 
+```
+
+# ERC20合约
+
+```solidity {.line-numbers}
+// ERC20 接口
+interface IERC20 {
+    // 表示当前合约的Token总量
+    function totalSupply() external view returns (uint);
+
+    // 返回某个账户的当前余额
+    function balanceOf(address account) external view returns (uint);
+
+    // 从当前发送者账户发送 amount 数量的主币到 recipient 账户
+    function transfer(address recipient, uint amount) external returns (bool);
+
+    // 检查从owner账户发送到spender账户的主币数量的批准额度
+    function allowance(address owner, address spender) external view returns (uint);
+
+    // 批准 将当前发送者账户中 amount 数量的主币 发送到spender账户
+    function approve(address spender, uint amount) external returns (bool);
+
+    // 转账
+    function transferFrom(address sender, address recipient, uint amount) external returns (bool);
+
+    // 转账事件
+    event Transfer(address indexed from, address indexed to, uint amount);
+    // 批准额度事件
+    event Approve(address indexed owner, address indexed spender, uint amount);
+}
+
+contract ERC20 is IERC20 {
+    // totalSupply 属性为public ,它就默认实现了接口中的totalSupply()函数
+    uint public totalSupply;
+    // 合约中的账本，地址与token数的对应，它默认就实现了接口中的balanceOf()函数
+    mapping(address => uint) public balanceOf;
+    // 批准的对应， 它默认就实现了接口中的allowance()函数
+    mapping(address => mapping(address => uint)) public allowance;
+    // token的名称
+    string public name = "Test";
+    // token的缩写或者token的符号
+    string public symbol = "TEST";
+    // token的精度
+    uint8 public decimals = 18;
+
+    //发送指定数量的主币到recipient地址
+    function transfer(address recipient, uint amount) external returns (bool){
+        // 从发送者中减掉amount的主币
+        balanceOf[msg.sender] -= amount;
+        // 给接收者加上amount的主币
+        balanceOf[recipient] += amount;
+        // 触发转账事件
+        emit Transfer(msg.sender, recipient, amount);
+
+        return true;
+    }
+ 
+
+    // 批准授权额度
+    function approve(address spender, uint amount) external returns (bool){
+        // 批准的额度，如果设置为0，则表示取消批准的额度
+        allowance[msg.sender][spender] = amount;
+        emit Approve(msg.sender, spender, amount);
+        return true;
+    }
+
+    // 
+    function transferFrom(address sender, address recipient, uint amount) external returns (bool){
+        allowance[sender][msg.sender] -= amount;
+        balanceOf[sender] -= amount;
+        balanceOf[recipient] += amount;
+
+        emit Transfer(sender, recipient, amount);
+
+        return true;
+    }
+
+    // 给指定账户注入amount数量的主币
+    // 需要进行权限控制
+    function mint(uint amount) external {
+        balanceOf[msg.sender] += amount;
+        totalSupply += amount;
+
+        emit Transfer(address(0), msg.sender, amount);
+    }
+
+    // 注消 amount 数量的主币
+    function burn(uint amount) external {
+        balanceOf[msg.sender] -= amount;
+        totalSupply -= amount;
+
+        emit Transfer(msg.sender, address(0), amount);
+    }
+}
+```
+
+# 多签名合约
+
+```solidity {.line-numbers}
+contract MultiSigWallet {
+    // 存储事件
+    event Deposit(address indexed sender, uint amount);
+    // 交易申请事件
+    event Submit(uint indexed txId);
+    // 签名人进行批准事件
+    event Approve(address indexed owner, uint indexed txId);
+    // 撤消批准事件
+    event Revoke(address indexed owner, uint indexed txId);
+    // 执行
+    event Execute(uint indexed txId);
+
+    struct Transaction {
+        // 接收方的地址
+        address to;
+        // 发送的主币数量
+        uint value;
+        // 表示如果接收方的地址为一个合约地址，此时还可以执行合约中的一些函数
+        bytes data;
+        // 表示此转账是否已经成功执行
+        bool executed;
+    }
+
+    // 合约的签名人
+    address[] public owners;
+    // 地址是不是合约的签名人的映射，在合约中尽量不用使用for循环，它太消耗GAS费
+    mapping(address => bool) public isOwner;
+    // 表示需要至少多少个签名人确认才能进行转账
+    uint public required;
+    // 记录合约中所有的阎肃
+    Transaction[] public transactions;
+    // 表示某个交易ID号下，签名人地址是否批准了这个交易
+    // 交易的ID -> 签名人的地址 -> 是否批准
+    mapping(uint => mapping(address => bool)) public approved;
+
+    // 通过构造函数传入哪些地址为签名人的地址，并确定至少需要几个签名人对一笔交易进行确认才能转账
+    constructor(address[] memory _owners, uint _required) {
+        require(_owners.length > 0, "owners required");
+        require(_required > 0 && _required <= _owners.length, "invalid required number of owners");
+
+        for(uint i; i < _owners.length; i++){
+            address owner = _owners[i];
+            require(owner != address(0), "invalid owner");
+            require(!isOwner[owner], "owner is not unique");
+            isOwner[owner] = true;
+            owners.push(owner);
+        }
+        required = _required;
+    }
+
+    // 合约能收款函数
+    receive() external payable {
+        emit Deposit(msg.sender, msg.value);
+    }
+
+    // 表示只允许合约签名人才能发起转账功能的函数修改器
+    modifier onlyOwner() {
+        require(isOwner[msg.sender], "not owner");
+        _;
+    }
+
+    // 表示交易的Id是否为存在的交易Id号
+    modifier txExists(uint _txId){
+        require(_txId < transactions.length, "tx does not exist");
+        _;
+    }
+
+    // 用来判断一个签名人是否对这个交易ID已经进行了确认
+    modifier notApproved(uint _txId) {
+        // 避免一个签名人，对一个交易Id，进行多次确认
+        require(!approved[_txId][msg.sender], "tx already approved");
+        _;
+    }
+
+    // 用来判断这个交易Id号是否为已经交易过的Id
+    modifier notExecuted(uint _txId) {
+        require(!transactions[_txId].executed, "tx already executed");
+        _;
+    }
+
+    // 签名人提交交易申请
+    function submit(address _to, uint _value, bytes calldata _data) external onlyOwner {
+        transactions.push(Transaction({
+            to: _to,
+            value: _value,
+            data: _data,
+            executed: false
+        }));
+
+        emit Submit(transactions.length -1);
+    }
+
+    // 批准交易函数
+    function approve(uint _txId) external onlyOwner txExists(_txId) notApproved(_txId) notExecuted(_txId) {
+        approved[_txId][msg.sender]=true;
+        emit Approve(msg.sender, _txId);
+    }
+
+    // 返回交易Id号 _txId有多少签名人已经批准了交易
+    function _getApprovalCount(uint _txId) private view returns (uint count) {
+        for (uint i; i < owners.length; i++) {
+            if (approved[_txId][owners[i]]){
+                count += 1;
+            }
+        }
+    }
+
+    function execute(uint _txId) external txExists(_txId) notExecuted(_txId) {
+        require(_getApprovalCount(_txId) >= required, "approves < required");
+
+        Transaction storage transaction = transactions[_txId];
+        transaction.executed = true;
+
+        (bool success, ) = transaction.to.call{value: transaction.value}(transaction.data);
+        require(success, "failed");
+
+        emit Execute(_txId);
+    }
+
+    // 签名人撤销对交易Id号 _txId 的批准
+    function revoke(uint _txId) external onlyOwner txExists(_txId) notExecuted(_txId) {
+        require(approved[_txId][msg.sender], "tx not approved");
+        approved[_txId][msg.sender] = false;
+        emit Revoke(msg.sender, _txId);
+    }
+}
+```
+
+# ERC721 合约 （NFT合约）
+
+# 众筹合约
+
+```solidity {.line-numbers}
+// ERC20 接口
+interface IERC20 {
+    // 表示当前合约的Token总量
+    function totalSupply() external view returns (uint);
+
+    // 返回某个账户的当前余额
+    function balanceOf(address account) external view returns (uint);
+
+    // 从当前发送者账户发送 amount 数量的主币到 recipient 账户
+    function transfer(address recipient, uint amount) external returns (bool);
+
+    // 检查从owner账户发送到spender账户的主币数量的批准额度
+    function allowance(address owner, address spender) external view returns (uint);
+
+    // 批准 将当前发送者账户中 amount 数量的主币 发送到spender账户
+    function approve(address spender, uint amount) external returns (bool);
+
+    // 转账
+    function transferFrom(address sender, address recipient, uint amount) external returns (bool);
+
+    // 转账事件
+    event Transfer(address indexed from, address indexed to, uint amount);
+    // 批准额度事件
+    event Approve(address indexed owner, address indexed spender, uint amount);
+}
+
+contract CrowdFund {
+
+    event Launch(uint id, address indexed creator, uint goal, uint32 startAt, uint32 endAt);
+    event Cancel(uint id);
+    event Pledge(uint indexed id, address indexed caller, uint amount);
+    event UnPledge(uint indexed id, address indexed caller, uint amount);
+    event Claim(uint id);
+    event Refund(uint indexed id, address indexed caller, uint amountj);
+
+    struct Campaign {
+        address creator;
+        uint goal;
+        uint pledged;
+        uint32 startAt;
+        uint32 endAt;
+        bool claimed;
+    }
+
+    IERC20 public immutable token;
+
+    uint public count;
+    mapping(uint => Campaign) public campaigns;
+    mapping(uint => mapping(address => uint)) public pledgedAmount;
+
+    constructor(address _token) {
+        token = IERC20(_token);
+    }
+
+    // 创建一个众筹
+    function launch(uint _goal, uint32 _startAt, uint32 _endAt) external {
+        require(_startAt >= block.timestamp, "start at < now");
+        require(_endAt >= _startAt, "end at < start at");
+        require(_endAt <= block.timestamp + 90 days, "end at > max duration");
+
+        count += 1;
+        campaigns[count] = Campaign({
+            creator: msg.sender, 
+            goal: _goal,
+            pledged : 0,
+            startAt: _startAt,
+            endAt: _endAt,
+            claimed: false
+        });
+
+        emit Launch(count, msg.sender, _goal, _startAt, _endAt);
+    }
+
+    // 取消一个还没开始的众筹
+    function cancel(uint _id) external {
+        Campaign memory campaign = campaigns[_id];
+        require(msg.sender == campaign.creator, "not creator");
+        require(block.timestamp < campaign.startAt, "started");
+
+        delete campaigns[_id];
+        emit Cancel(_id);
+    }
+
+    // 参与众筹
+    function pledge(uint _id, uint _amount) external {
+        Campaign storage campaign = campaigns[_id];
+        require(block.timestamp >= campaign.startAt, "not started");
+        require(block.timestamp <= campaign.endAt, "ended");
+
+        campaign.pledged += _amount;
+        pledgedAmount[_id][msg.sender] += _amount;
+        token.transferFrom(msg.sender, address(this), _amount);
+
+        emit Pledge(_id, msg.sender, _amount);
+    }
+
+    // 取消指定量的参与众筹
+    function unpledge(uint _id, uint _amount) external {
+        Campaign storage campaign = campaigns[_id]; 
+        require(block.timestamp <= campaign.endAt, "ended");
+
+        campaign.pledged -= _amount;
+        pledgedAmount[_id][msg.sender] -= _amount;
+        token.transfer(msg.sender, _amount);
+
+        emit UnPledge(_id, msg.sender, _amount);
+    }
+
+    // 众筹成功之后，创建者将此个众筹的token全部提取到自己的地址
+    function claim(uint _id) external {
+        Campaign storage campaign = campaigns[_id];
+        require(msg.sender == campaign.creator, "not creator");
+        require(block.timestamp > campaign.endAt, "not ended");
+        require(campaign.pledged >= campaign.goal, "pledged < goal");
+        require(!campaign.claimed, "claimed");
+
+        campaign.claimed = true;
+        token.transfer(msg.sender, campaign.pledged);
+
+        emit Claim(_id);
+    }
+
+    // 众筹未达成，用户取回自己的众筹token
+    function refund(uint _id) external {
+        Campaign storage campaign = campaigns[_id]; 
+        require(block.timestamp > campaign.endAt, "not ended");
+        require(campaign.pledged < campaign.goal, "pledged >= goal");
+
+        uint bal = pledgedAmount[_id][msg.sender];
+        pledgedAmount[_id][msg.sender] = 0;
+        token.transfer(msg.sender, bal);
+
+        emit Refund(_id, msg.sender, bal);
+    }
+}
 ```
 
 ---
