@@ -1,3 +1,30 @@
+# 智能合约
+
+一个最基本的合约例子：
+
+```solidity {.line-numbers}
+// SPDX-License-Identifier: MIT
+
+// 这里表示源代码使用的Solidity版本为0.8.8，并且使用0.8.8以上版本运行也没问题（最高到0.9.0，但不包含0.9.0）
+// 关键字 pragma 的含义是，一般来说，pragmas（编译指令）是告知编译器如何处理源代码的指令
+pragma solidity ^0.8.8;
+
+contract SimpleStorage {
+    uint storedData;
+
+    function set(uint x) public {
+        storedData = x;
+    }
+
+    function get() public view returns (uint) {
+        return storedData;
+    }
+}
+```
+
+**Solidity** 中合约的含义就是一组`代码`（它的函数）和`数据`（它的状态）,它们位于以太坊区块链的一个特定地址上。
+
+在 Solidity 中,所有的标识符（合约名称，函数名称和变量名称）都只能使用 ASCII 字符集。
 
 # Types
 
@@ -10,14 +37,13 @@ Solidity is a statically language.
 ### Integers
 
 `uint`默认为`uint256` 它的取值范围为：0 ～ 2**256-1。
-`int`默认为`int256` 它的聚会范围为：-2**255 ~ 2**255 -1。
+`int`默认为`int256` 它的聚会范围为：-2**255 ~ 2\*\*255 -1。
 
 ### Address
 
-它是一个16进制数字。
+它是一个 16 进制数字。 `address` 类型是一个 160 位的值，且不允许任何算数操作。
 
 ### bytes
-
 
 ## Reference Types
 
@@ -75,7 +101,7 @@ enum Status {
     Canceled
 }
 
-Status public status; 
+Status public status;
 
 function get() external view returns (Status) {
     return status;
@@ -86,7 +112,7 @@ function set(Status _status) external {
 }
 
 function ship() external {
-    status = Status.Shipped; 
+    status = Status.Shipped;
 }
 
 // 重置枚举为默认值，即为此枚举的第一个值
@@ -103,7 +129,7 @@ function reset() external {
 //动态数组
 uint[] public nums = [1,2,3];
 //定长数组
-uint[3] public numsFixed = [4,5,6]; 
+uint[3] public numsFixed = [4,5,6];
 
 function examples() external {
     //往数组未尾添加元素
@@ -150,7 +176,7 @@ function remove(uint _index) public lessThanArrLingth(_index) {
 // 删除数组指定位置的元素
 // 这种方法消耗的GAS费，相对上面的方法会少一些
 // 但这种方法会打乱数组的排序
-function remove2(uint _index) public lessThanArrLingth(_index) { 
+function remove2(uint _index) public lessThanArrLingth(_index) {
     //执行过程： [1,2,3,4,5] -->remove2(1)用最后一个元素的值替换要删除位置上的值--> [1,5,4,5,5] ---> 执行pop()，将最后的元素pop掉 --> [1,5,4,5]
     arrs[_index] = arrs[arrs.length -1];
     arrs.pop();
@@ -214,12 +240,12 @@ function get(uint _i) external view returns (uint) {
 
 # Function
 
-Solidity 中有两个关键字， 标识函数的调用不用需要消耗gas: `view`和`pure`。  只有更改状态的时候才支付gas。
+Solidity 中有两个关键字， 标识函数的调用不用需要消耗 gas: `view`和`pure`。 只有更改状态的时候才支付 gas。
 
-`view` and `pure` functions disallow modification of state.     
+`view` and `pure` functions disallow modification of state.  
 `pure` functions additionally disallow you to read from blockchain state.
 
-If a gas calling function calls a `view` or `pure` function - only then will it cost gas. 如果一个要改变区块链状态的函数调用了`view`或者`pure`函数，才会消耗gas。
+If a gas calling function calls a `view` or `pure` function - only then will it cost gas. 如果一个要改变区块链状态的函数调用了`view`或者`pure`函数，才会消耗 gas。
 
 调用`view`函数是免费的，除非在消耗`gas`的函数中调用它。
 
@@ -242,16 +268,16 @@ function add() public pure returns(uint256) {
 - `public`: 在外部和内部都可见(visible externally and internally)
 - `private`: 表示只对合约内部可见(only visible in the current contract)
 - `internal`: 表示只有这个合约或者继承它的合约可见(only visible internally)
-- `external`: 表示只对合约外部可见(only for functions)，继承合约也看不到，如果在一个合约内部需要访问其external声明的函数，可以通过`this.`来进行访问, 但这种方式会浪费GAS费：
+- `external`: 表示只对合约外部可见(only for functions)，继承合约也看不到，如果在一个合约内部需要访问其 external 声明的函数，可以通过`this.`来进行访问, 但这种方式会浪费 GAS 费：
 
-    ```solidity {.line-numbers}
-    function externalFunc() external pure {
-        // code...
-    }
-    function examples() external view{
-        this.externalFunc();
-    }
-    ```
+  ```solidity {.line-numbers}
+  function externalFunc() external pure {
+      // code...
+  }
+  function examples() external view{
+      this.externalFunc();
+  }
+  ```
 
 变量和函数如果没有指定可见度标识符，默认为`internal`。
 
@@ -276,7 +302,7 @@ contract FunctionModifier {
         _;
     }
 
-    //添加 “whenNotPaused”，表示使用定义好的定义修改器 
+    //添加 “whenNotPaused”，表示使用定义好的定义修改器
     function inc() external whenNotPaused {
         count += 1;
     }
@@ -324,7 +350,7 @@ contract ConstructorTest {
 - 当在合约中调动不存在的函数时，会调用**回退函数**
 - 当向合约中发送主币时，会调用**回退函数**
 
-回退函数有2种写法：
+回退函数有 2 种写法：
 
 ```solidity {.line-numbers}
 contract Fallback {
@@ -341,12 +367,12 @@ contract Fallback {
 }
 ```
 
-2种回退函数的调用关系：
+2 种回退函数的调用关系：
 ![2种方法的调用关系](../images/fallback.png)
 
 ## 不可变变量 immutable
 
-使用`immutable`声明的变量为不可变变量，不可变变量它能节约`GAS费`。它的赋值有2种方式：第一种：在声明时进行赋值，第二种：在构造函数中进行赋值。
+使用`immutable`声明的变量为不可变变量，不可变变量它能节约`GAS费`。它的赋值有 2 种方式：第一种：在声明时进行赋值，第二种：在构造函数中进行赋值。
 
 ```solidity {.line-numbers}
 contract ImmutableExample {
@@ -371,7 +397,7 @@ contract ImmutableExample {
 ```solidity {.line-numbers}
 contract PayableExample {
     address payable public owner;
-    
+
     constructor() {
         // 由于msg.sender这个地址，是不具有发送主币的功能
         // 所以使用payable进行包装，让它具有发送主币的功能
@@ -390,16 +416,16 @@ contract PayableExample {
 
 # Event 事件
 
-`Event`事件是一种记录当前智能合约运行状态的方法，但它并不记录在状态变量中,而是会体现在区块链浏览器上或者是体现在交易记录中的logs里。
+`Event`事件是一种记录当前智能合约运行状态的方法，但它并不记录在状态变量中,而是会体现在区块链浏览器上或者是体现在交易记录中的 logs 里。
 
-事件比使用状态变量来存储信息更节约GAS费。
+事件比使用状态变量来存储信息更节约 GAS 费。
 
 ```solidity {.line-numbers}
 // 申明事件
 event Log(string message, uint val);
 // 使用 indexded 进行标识过的参数，在链外是可以进行搜索查询。
 // 注意：在一个事件中，带索引indexed的参数最多为3个，超过3个就会报错。
-event IndexedLog(address indexed sender, uint val); 
+event IndexedLog(address indexed sender, uint val);
 
 event Message(address indexed _from, address indexed _to, string message);
 
@@ -413,7 +439,7 @@ function examples() external {
 }
 
 function sendMessage(address _to, string calldata message) external {
-    emit Message(msg.sender, _to, message); 
+    emit Message(msg.sender, _to, message);
 }
 ```
 
@@ -423,7 +449,7 @@ function sendMessage(address _to, string calldata message) external {
 
 ```solidity {.line-numbers}
 contract A {
-    // 添加 virtual 表示 子合约可以重写此函数 
+    // 添加 virtual 表示 子合约可以重写此函数
     function foo() public pure virtual returns (string memory) {
         return "foo-A";
     }
@@ -462,7 +488,7 @@ contract C is B {
 
 ```solidity {.line-numbers}
 contract A {
-    // 添加 virtual 表示 子合约可以重写此函数 
+    // 添加 virtual 表示 子合约可以重写此函数
     function foo() public pure virtual returns (string memory) {
         return "foo-A";
     }
@@ -489,8 +515,8 @@ contract B is A {
 }
 
 contract D is A, B {
-    // override(A,B)  表示要重写哪些父合约的相同函数， 
-    // 如果所有父合约都有，并都写了virtual声明，则都需要加上 
+    // override(A,B)  表示要重写哪些父合约的相同函数，
+    // 如果所有父合约都有，并都写了virtual声明，则都需要加上
     function foo() public pure override(A,B) returns (string memory) {
         return "foo-D";
     }
@@ -547,7 +573,7 @@ contract E is A("A"), B {
 
 `Warnings` won't stop your code from working but it's usually a good idea to check them out.
 
-**3种报错**控制：`require`、`revert`、`assert`，这3种方式都会让`GAS费退回`和各种`状态回滚`。还有`自定义错误`，它可以节约GAS费。
+**3 种报错**控制：`require`、`revert`、`assert`，这 3 种方式都会让`GAS费退回`和各种`状态回滚`。还有`自定义错误`，它可以节约 GAS 费。
 
 ```solidity {.line-numbers}
 function testRequire(uint _i) public pure{
@@ -581,7 +607,7 @@ function testAssert(uint _i) public pure {
 //使用关键字error进行自定义报错的定义
 //使用自定义报错，可以节约GAS费
 error MyError(address caller, uint i);
-    
+
 function testCustomErro(uint _i) public view {
     if (_i > 10){
         revert MyError(msg.sender, _i);
@@ -589,7 +615,7 @@ function testCustomErro(uint _i) public view {
 }
 ```
 
-# 数据的存储位置Data Locations
+# 数据的存储位置 Data Locations
 
 在智能合约中，数据可以存储在：`Memory`、`Storage`、`Calldata`中。
 
@@ -636,7 +662,7 @@ function create(string calldata _text) external {
     todos.push(Todo({
         text: _text,
         completed: false
-    })); 
+    }));
 }
 
 function updateText(uint _index, string calldata _text) external {
@@ -646,9 +672,9 @@ function updateText(uint _index, string calldata _text) external {
     // // 如果有多个数据需要进行更新，则使用这种方法比较节约GAS费
     // // 首先将需要更新的对象读取到storage 对象中，再进行更新操作
     // Todo storage todo = todos[_index];
-    // todo.text = _text; 
-    // todo.text = _text; 
-    // todo.text = _text; 
+    // todo.text = _text;
+    // todo.text = _text;
+    // todo.text = _text;
 }
 
 function get(uint _index) external view returns (string memory, bool){
@@ -656,7 +682,7 @@ function get(uint _index) external view returns (string memory, bool){
     // 使用memory时，则会进行两次拷贝，所以更耗GAS费
     // Todo memory todo = todos[_index];
     Todo storage todo = todos[_index];
-    return (todo.text, todo.completed); 
+    return (todo.text, todo.completed);
 
     //比上面的方式进行返回，这种会消耗更多的GAS
     // return (todos[_index].text, todos[_index].completed);
@@ -671,9 +697,9 @@ function toggleCompleted(uint _index) external {
 
 ## 1、合约中发送主币的方法
 
-- `transfer`: 只会带有2300个GAS，如果失败就会revert
-- `send`: 只会带有2300个GAS，会返回一个bool来标识是否成功
-- `call`: 会发送所有剩余的GAS，会返回一个boolgo标识是否成功，还有一个data。
+- `transfer`: 只会带有 2300 个 GAS，如果失败就会 revert
+- `send`: 只会带有 2300 个 GAS，会返回一个 bool 来标识是否成功
+- `call`: 会发送所有剩余的 GAS，会返回一个 boolgo 标识是否成功，还有一个 data。
 
 ```solidity {.line-numbers}
 // 用于发送主币的合约
@@ -712,7 +738,7 @@ contract EthReceiver {
     // 通过事件记录，接收到的主币信息
     /**
     * amount: 接收到的主币数量(单位为Wei)
-    * gas: 剩余的 gas 
+    * gas: 剩余的 gas
     */
     event Log(uint amount, uint gas);
 
@@ -739,7 +765,7 @@ contract EtherWallet {
     // 通过事件记录，接收到的主币信息
     /**
     * amount: 接收到的主币数量(单位为Wei)
-    * gas: 剩余的 gas 
+    * gas: 剩余的 gas
     */
     event Log(uint amount, uint gas);
 
@@ -803,7 +829,7 @@ contract CallTestContract {
 
 contract TestContract {
     uint public x;
-    uint public value = 123; 
+    uint public value = 123;
 
     function setX(uint _x) external {
         x = _x;
@@ -841,7 +867,7 @@ contract Counter {
     function dec() external {
         count -= 1;
     }
-} 
+}
 
 // 接口
 interface ICounter {
@@ -922,7 +948,7 @@ contract TestDelegateCall {
 
 // 委托合约
 /*
- * 注意几点： 
+ * 注意几点：
  * 第1: 通过委托合约调用时， 它并不会改变被调用合约中的状态变量的值，即，它只会利用被调用的合约的函数功能来改变本身合约中的状态。
  * 第2: 委托合约中的变量的顺序和类型必须与被调用合约中的保持一致！
 */
@@ -943,7 +969,7 @@ contract DelegateCall {
 }
 ```
 
-## Create2部署合约
+## Create2 部署合约
 
 ```solidity {.line-numbers}
 ontract DeployWithCreate2 {
@@ -1053,7 +1079,7 @@ contract MultiDelegatecall {
             (bool ok, bytes memory res) = address(this).delegatecall(data[i]);
             if (!ok) {
                 revert DelegatecallFailed();
-            } 
+            }
 
             results[i] = res;
         }
@@ -1087,7 +1113,7 @@ contract Helper {
 }
 ```
 
-## Abi解码
+## Abi 解码
 
 ```solidity {.line-numbers}
 contract AbiDecode {
@@ -1113,7 +1139,7 @@ contract AbiDecode {
 
 # Hash 算法
 
-在solidity合约中，使用`keccak256()`函数来进行Hash运算，在运算之前，需要通过`abi.encode`或者`abi.encodePacked`将参数进行打包，然后再传给`keccak256`进行Hash运算。
+在 solidity 合约中，使用`keccak256()`函数来进行 Hash 运算，在运算之前，需要通过`abi.encode`或者`abi.encodePacked`将参数进行打包，然后再传给`keccak256`进行 Hash 运算。
 
 ```solidity {.line-numbers}
 function hash(string memory text, uint num, address addr) external pure returns (bytes32) {
@@ -1147,7 +1173,7 @@ contract VerifySig {
     function verify(address _signer, string memory _message, bytes memory _sig) external pure returns (bool){
         // 对消息进行Hash
         bytes32 messageHash = getMessageHash(_message);
-        // 
+        //
         bytes32 ethSignedMessageHash = getEthSignedMessagedHash(messageHash);
 
         return recover(ethSignedMessageHash, _sig) == _signer;
@@ -1192,7 +1218,7 @@ contract VerifySig {
 
 合约自毁，通过内置`selfdestruct()`函数执行。
 
-自毁合约会执行以下2个步骤：
+自毁合约会执行以下 2 个步骤：
 
 1. 删除合约
 2. 将合约中剩余的主币强制地发送到一个指定的地址上
@@ -1229,7 +1255,7 @@ contract HelpContract {
 
 ```
 
-# ERC20合约
+# ERC20 合约
 
 ```solidity {.line-numbers}
 // ERC20 接口
@@ -1283,7 +1309,7 @@ contract ERC20 is IERC20 {
 
         return true;
     }
- 
+
 
     // 批准授权额度
     function approve(address spender, uint amount) external returns (bool){
@@ -1293,7 +1319,7 @@ contract ERC20 is IERC20 {
         return true;
     }
 
-    // 
+    //
     function transferFrom(address sender, address recipient, uint amount) external returns (bool){
         allowance[sender][msg.sender] -= amount;
         balanceOf[sender] -= amount;
@@ -1454,7 +1480,7 @@ contract MultiSigWallet {
 }
 ```
 
-# ERC721 合约 （NFT合约）
+# ERC721 合约 （NFT 合约）
 
 # 众筹合约
 
@@ -1521,7 +1547,7 @@ contract CrowdFund {
 
         count += 1;
         campaigns[count] = Campaign({
-            creator: msg.sender, 
+            creator: msg.sender,
             goal: _goal,
             pledged : 0,
             startAt: _startAt,
@@ -1557,7 +1583,7 @@ contract CrowdFund {
 
     // 取消指定量的参与众筹
     function unpledge(uint _id, uint _amount) external {
-        Campaign storage campaign = campaigns[_id]; 
+        Campaign storage campaign = campaigns[_id];
         require(block.timestamp <= campaign.endAt, "ended");
 
         campaign.pledged -= _amount;
@@ -1583,7 +1609,7 @@ contract CrowdFund {
 
     // 众筹未达成，用户取回自己的众筹token
     function refund(uint _id) external {
-        Campaign storage campaign = campaigns[_id]; 
+        Campaign storage campaign = campaigns[_id];
         require(block.timestamp > campaign.endAt, "not ended");
         require(campaign.pledged < campaign.goal, "pledged >= goal");
 
@@ -1610,6 +1636,5 @@ contract CrowdFund {
 - Calldata
 - Code
 - Logs
-
 
 `ABI` -- Application Binary Interface
