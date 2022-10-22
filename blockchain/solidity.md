@@ -26,6 +26,21 @@ contract SimpleStorage {
 
 在 Solidity 中,所有的标识符（合约名称，函数名称和变量名称）都只能使用 ASCII 字符集。
 
+> 注意：在 Solidity 中，不允许创建一个与变量名称相同的 function。因为 solidity 编译器会生成一个与变量名称相同的函数。
+
+```solidity {.line-numbers}
+uint storedData;
+
+// 这个方法是不允许被创建的！！！！！
+function storedData() public view returns(uint){
+    return storedData;
+}
+```
+
+# msg 全局变量
+
+> msg.sender 始终是当前（外部）函数调用的来源地址。
+
 # Types
 
 Solidity is a statically language.
@@ -1625,6 +1640,8 @@ contract CrowdFund {
 ---
 
 # EVM -- `Ethereum Virtual Machine`
+
+以太坊虚拟机 `EVM` 是智能合约的运行环境。它不仅是沙盒封装的，而且是完全隔离的，也就是说在 `EVM` 中运行代码是无法访问网络、文件系统和其他进程的。甚至智能合约之间的访问也是受限的。
 
 部署到`EVM`上的`solidity`程序，可以部署到`Avalanche`、`Fantom`、`Polygon`区块链上。
 

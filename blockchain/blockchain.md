@@ -3,7 +3,8 @@
 它是以密码学算法为基础，能够让人们以去中心化的方式，发生非许可的金融行为。
 
 # Eth
-`Vitalik Buterin` 2015年发布了`以太坊`。
+
+`Vitalik Buterin` 2015 年发布了`以太坊`。
 
 在`以太坊`上，除了可以做去中心化的交易外，还可以签署去中心化的合同，构建去中心化的组织，以及在不需要中心化中介的情况下，以去中心化的方式进行协作。
 
@@ -17,10 +18,9 @@
 
 `智能合约`是部署在`去中心化区块链`上的`一个合约`或者`一组指令`,当这个合约或者这组指令被部署以后，它就`不能被改变`了(Cannot be altered/immutable)，它会`自动执行`(Automatically executes)，`每个人都可以看到合约中的条款`(Everyone sees the terms of the agreement)。
 
-
 `智能合约`: `不可更改 Immutable`、`去中心化 Decentralized`、`透明的 Transparent`。
 
-智能合约做什么(The purpose of Smart Contracts)？ `智能合约`创建了`信任最小化协议`(*Trust Minimized Agreements*)， 简单来讲就是创建`不可违背的承诺`(*Unbreakable Promises*)。
+智能合约做什么(The purpose of Smart Contracts)？ `智能合约`创建了`信任最小化协议`(_Trust Minimized Agreements_)， 简单来讲就是创建`不可违背的承诺`(_Unbreakable Promises_)。
 
 每个合约都有一个地址，就像每个账户都有地址一样。
 
@@ -38,20 +38,19 @@
 
 A Decentralized Oracle Network 一个去中心化的预言机网络。
 
-将链上去中心化逻辑和链下去中心化数据和计算相结合，这个东西就叫做`混合型智能合约`(*Hybrid Smart Contracts*)。
+将链上去中心化逻辑和链下去中心化数据和计算相结合，这个东西就叫做`混合型智能合约`(_Hybrid Smart Contracts_)。
 
-`Dapp` = `Decentralized Application` 
+`Dapp` = `Decentralized Application`
 
-`Web3`是一种观点，它指的是以`区域链`和`智能合约`为基础的下一代的网络。 在Web3中，用户拥有他们所使用的协议，即`拥有者经济`。
+`Web3`是一种观点，它指的是以`区域链`和`智能合约`为基础的下一代的网络。 在 Web3 中，用户拥有他们所使用的协议，即`拥有者经济`。
 
-`DeFi` = `Decentralized Finance` 去中心化金融   
-`DAO` = 去中心化自治组织    
+`DeFi` = `Decentralized Finance` 去中心化金融  
+`DAO` = 去中心化自治组织  
 `NFT` = 非同质化代币，它在某种程度上是一种电子艺术品。
-
 
 # `Gas`
 
-`Gas`: A unit of computational measurement.`gas`是一个计算量的单位   
+`Gas`: A unit of computational measurement.`gas`是一个计算量的单位
 
 The more complex your transaction is the more gas you have to pay. 要使用更多的计算资源，就需要支付更多的`gas`。
 
@@ -63,7 +62,7 @@ The most important thing, is that sending transactions gets more expensive the m
 
 `Block Confirmations` 确认区块。
 
-`确认区块数量`指：在交易被确认之后，有多少个区块被挖出。(Number of blocks mined since).如果看到确认区块是2，就表示在最长的链中，我们交易后面有2个区块。
+`确认区块数量`指：在交易被确认之后，有多少个区块被挖出。(Number of blocks mined since).如果看到确认区块是 2，就表示在最长的链中，我们交易后面有 2 个区块。
 
 `Gas fees` are paid by whoever makes the transaction. `gas fee`是由发起交易的人支付的。
 
@@ -73,15 +72,15 @@ The most important thing, is that sending transactions gets more expensive the m
 
 `Hash Algorithm`: A function that computes data into a unique hash.
 
-`以太坊`用的是 `Keccak-256` 哈希算法。 
+`以太坊`用的是 `Keccak-256` 哈希算法。
 
 # 区块的组成
 
-在`区块`中，把数据分成了：`块高`Block、`Nonce`和`Data` 三部分, 并将这三部分一起使用哈希算法来算出来一个哈希值。  
+在`区块`中，把数据分成了：`块高`Block、`Nonce`和`Data` 三部分, 并将这三部分一起使用哈希算法来算出来一个哈希值。
 
 `Nonce`: A "number" used once" to find the "solution" to the blockchain problem. It's also used to define the transaction number for an account/address.
 
-在区块链中，除了前面三个部分之外，还会多一个`prev`,它用来指向前一个“区块”的Hash。 将这四部分使用哈希算法算出来一个哈希值，这个哈希值就是当前这个“区块”的Hash。
+在区块链中，除了前面三个部分之外，还会多一个`prev`,它用来指向前一个“区块”的 Hash。 将这四部分使用哈希算法算出来一个哈希值，这个哈希值就是当前这个“区块”的 Hash。
 
 `区块链中的区块由块高(Block)，Nonce，交易(Tx)和前一个区块哈希值(Prev)组成。`
 
@@ -91,14 +90,17 @@ Blockchain: A list of transactions mined together.
 
 `看一个区块是否有效最简单的方式：看它的Hash值，是以4个“0”开头的`。
 
-
 `Genesis Block`: The first block in a blockchain。`创世区块`，是区块链中的第一个区块。创世区块的`prev`会指向一个并不存在的区块。
 
-`Mining`: The process of finding the "solution" to the blockchain "problem". `挖矿`是找到区块链“难题”的“答案”的过程。 In our example, the "problem" was to find a hash that starts with `four zeros`. 在我们的例子中， 这个“难题”是找到一个以`4个0`开始的哈希值。  Nodes get paid for mining blocks. 节点通过挖矿来获得收入。
+`Mining`: The process of finding the "solution" to the blockchain "problem". `挖矿`是找到区块链“难题”的“答案”的过程。 In our example, the "problem" was to find a hash that starts with `four zeros`. 在我们的例子中， 这个“难题”是找到一个以`4个0`开始的哈希值。 Nodes get paid for mining blocks. 节点通过挖矿来获得收入。
 
 Decentralized: Having no single point of authority.
 
 `Gas prices` are how much it costs to perform executions on-chain.
+
+区块以一定的时间间隔添加到链上 —— 对于以太坊，这间隔大约是 `17` 秒。
+
+作为“顺序选择机制”（也就是所谓的“挖矿”）的一部分，可能有时会发生块（blocks）被回滚的情况，但仅在链的“末端”。末端增加的块越多，其发生回滚的概率越小。
 
 # Signing Transactions 签名交易
 
@@ -106,16 +108,18 @@ Decentralized: Having no single point of authority.
 
 `Public Key`: Is derived from your `Private Key`. Anyone can "see" it, and use it to verify that a transaction came from you. Anyone can then verify this new transaction hash with your `Public Key`.
 
-ECDSA算法(Elliptic Curve Digital Signature Algorithm)椭圆曲线数字签名算法, 比特币和以太坊使用这个算法来生成Private Key。 它是`DSA`（电子签名算法）的一种，它可以根据`Private Key` 创建出`Public Key`。
+ECDSA 算法(Elliptic Curve Digital Signature Algorithm)椭圆曲线数字签名算法, 比特币和以太坊使用这个算法来生成 Private Key。 它是`DSA`（电子签名算法）的一种，它可以根据`Private Key` 创建出`Public Key`。
 
 用`Private Key` 来对`信息签名`，`Public Key`让别人来`验证签名`是你的。
 
-`以太坊的地址`它是从`Public Key`衍生出来的，为`Public Key`最后的20个字节。但并不是所有的区块链的地址都是这样获取的。
+`以太坊的地址`它是从`Public Key`衍生出来的，为`Public Key`最后的 20 个字节。但并不是所有的区块链的地址都是这样获取的。
 
 # 区块链 Blockchain
 
 每一个节点都保存着链上发生的所有交易记录。
 Blockchain nodes keep lists of the transactions that occur.
+
+区块链是全球共享的`事务性数据库`。 事务一词意味着你想做的（假设您想要同时更改两个值），要么一点没做，要么全部完成。此外，当你的事务被应用到数据库时，其他事务不能修改数据库。
 
 ## Consensus
 
@@ -145,41 +149,42 @@ Blockchain nodes keep lists of the transactions that occur.
 
 第一个找到答案的节点会获得`收入`，收入分两部分：`交易手续费 Transaction Fees` 和 `区块奖励`。
 
-> `交易手续费 Transaction Fees`就是为了写入交易而支付的手续费。     
-> `区块奖励`是由区块链协议自身发给节点的。      
-> `减半`指的是区块奖励减少一半。 比特币是大概每4年减半一次。        
+> `交易手续费 Transaction Fees`就是为了写入交易而支付的手续费。  
+> `区块奖励`是由区块链协议自身发给节点的。  
+> `减半`指的是区块奖励减少一半。 比特币是大概每 4 年减半一次。
 
 在比特币中，会设置一个时间点，过了这个时间点就会取消区块奖励，到时矿工或者节点只能获得交易手续费。
 
-
 `出块时间`是每个区块被发布之间的时间，它和这些算法的难度相关。
 
-挖矿或者是工作量证明算法，是一种抗女巫攻击机制。以太坊2.0之后就不是工作量证明了，而使用权益证明。
+挖矿或者是工作量证明算法，是一种抗女巫攻击机制。以太坊 2.0 之后就不是工作量证明了，而使用权益证明。
 
 两个可能存在的攻击：
+
 1. `Sybil Attack` 女巫攻击，在攻击中，用户会创建很多匿名账户，来影响区块链。
-2. `51% Attack` 作为共识协议的一部分，最长的链会被选择为正确的链，同时要满足和网络的51%相一致。这意味着，如果你有最长的链和51%的网络，那就可以分叉区块链，让整个网络使用你的链
+2. `51% Attack` 作为共识协议的一部分，最长的链会被选择为正确的链，同时要满足和网络的 51%相一致。这意味着，如果你有最长的链和 51%的网络，那就可以分叉区块链，让整个网络使用你的链
 
 #### PoS
 
 `Proof of stake` nodes put up collateral as a sybil resistance mechanism. `权益证明`需要放置一些`抵押物`以保证不作恶。
 
-在以太坊2.0中，节点需要质押以太币以保证自己会诚实运行。如果它们没有诚实运行，它们会被踢出，或者质押会被扣掉。
+在以太坊 2.0 中，节点需要质押以太币以保证自己会诚实运行。如果它们没有诚实运行，它们会被踢出，或者质押会被扣掉。
 
 在权益证明的网络中， 矿工被称作`验证者Validators`。他们不再挖矿了，他们只验证其他节点。 在权益证明的网络中，节点会被直接选举出来，然后提出一个区块，别的节点会验证这个被提出的区块是否有效。
 
 权益证明网络的`优点`：
+
 - 它有很好的抗女巫攻击机制，可以很好决定哪个节点来提议下个区块。
 - `绿色环保`。 获得新的区块所需的计算量大大降低 Proof of stake uses much less energy。只需要一个节点来做计算，其他节点来进行验证。
 
 权益证明网络的`缺点`：
+
 - 它被认为有一些`不够去中心化`。
 - 因为有质押的花费，这是参与权益证明的花费
 
-`Randomness`随机性。 每个区块链选择节点的方式都不同，以太坊2.0使用了`RANDAO`
+`Randomness`随机性。 每个区块链选择节点的方式都不同，以太坊 2.0 使用了`RANDAO`
 
 在权益证明的网络中，也有交易手续费，这个费用是支付给验证者的。
-
 
 ## `Scalability`可扩展性
 
@@ -200,13 +205,12 @@ Blockchain nodes keep lists of the transactions that occur.
 
 `Eth2.0`开始使用`PoS 权益证明`和`Sharding 分片`。
 
-### `Rollup` 
+### `Rollup`
 
-`Rollup`: 把layer2上的它们自己的交易集中起来，然后写入以太坊这样的layer1中。它有点像一个分片的链，它继承了以太坊这样的基础链也就是layer1的安全性。它们都把交易发给layer1。作为一条链，人们在它上面交易就相当于在以太坊上发交易。
+`Rollup`: 把 layer2 上的它们自己的交易集中起来，然后写入以太坊这样的 layer1 中。它有点像一个分片的链，它继承了以太坊这样的基础链也就是 layer1 的安全性。它们都把交易发给 layer1。作为一条链，人们在它上面交易就相当于在以太坊上发交易。
 
 `layer 2 `和`侧链`不同，因为侧链的安全性来自于自身协议，而`Rollup`的安全性来自于基础层。
 
 `Arbitrum`和`Optimism`就是`Rollup`,它们和以太坊是一样安全的。
-
 
 谁得到了交易手续费？是矿工或者叫验证者。在工作量证明的网络中，叫矿工，在权益证明的网络中，叫验证者。
