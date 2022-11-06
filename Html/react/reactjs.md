@@ -724,6 +724,37 @@ class List extends React.Component {
 
 ![react生命周期函数](../../images/react/react-lifecycle-methods-diagram2.png)
 
+## Hooks
+
+### 什么是 Hooks
+
+#### 本质 
+
+一套能够使`函数组件`更强大，更灵活的“钩子”。
+
+#### 注意
+
+- 有了hooks之后，不能再把函数组件当成无状态的了，因为hooks为函数组件提供了状态
+- Hooks 只能在函数组件中使用
+
+#### Hooks解决了什么？
+
+Hooks的出现解决了两个问题：
+
+1. 组件的逻辑复用
+
+在 hooks 出现之前，react 先后尝试了mixins混入、HOC高阶组件、render-props 等模式，但都有各自的问题，比如mixin的数据来源不清晰，高阶组件的嵌套问题等等。
+
+2. class 组件自身的问题
+
+class 组件就像一个厚重的“战舰”， 大而全，提供了很多东西，有不可忽视的学习成本，比如各种生命周期，this指向问题等等。
+
+### useState
+
+ 
+
+
+
 ## 常用函数和属性
 
 - `this.props.children` 表示组件的所有子节点
