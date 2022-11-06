@@ -37,7 +37,94 @@ function storedData() public view returns(uint){
 }
 ```
 
-# msg 全局变量
+## EVM -- `Ethereum Virtual Machine`
+
+以太坊虚拟机 `EVM` 是智能合约的运行环境。它不仅是沙盒封装的，而且是完全隔离的，也就是说在 `EVM` 中运行代码是无法访问网络、文件系统和其他进程的。甚至智能合约之间的访问也是受限的。
+
+部署到`EVM`上的`solidity`程序，可以部署到`Avalanche`、`Fantom`、`Polygon`区块链上。
+
+`EVM` can access and store information in six places:
+
+- Stack
+- Memory
+- Storage
+- Calldata
+- Code
+- Logs
+
+### 以太坊中的账户
+
+以太坊中有`两类`账户（它们共用同一个地址空间）：`外部账户`（由公钥-私钥对控制）；`合约账户`（由和账户一起存储的代码控制）。
+
+`外部账户`的地址是由`公钥决定`的，而`合约账户`的地址是在创建该合约时确定的（这个地址通过合约创建者的地址和从该地址发出过的交易数量计算得到的，也就是所谓的“nonce”）。
+
+每个账户都有一个键值对形式的持久化存储。其中 key 和 value 的长度都是 `256` 位，我们称之为 `存储` 。每个账户有一个以太币余额（ balance ）（单位是“Wei”），余额会因为发送包含以太币的交易而改变。
+
+### 交易
+
+交易可以看作是从一个帐户发送到另一个账户的消息。它能包含一个`二进制数据`（合约负载）和`以太币`。 如果目标账户含有代码，此代码会被执行，并以 `payload` 作为入参。
+
+如果目标账户是`零账户`（账户地址为`0`），此交易将创建一个`新合约`。为创建一个合约，不需要发送实际的合约代码，而是发送能够产生合约代码的代码。
+
+### GAS
+
+一经创建，每笔交易都收取一定数量的 `gas` ，目的是限制执行交易所需要的工作量和为交易支付手续费。EVM 执行交易时，`gas` 将按特定规则逐渐耗尽。
+
+`gas price` 是交易发送者设置的一个值，发送者账户需要预付的 `手续费 = gas_price * gas`。如果交易执行后还有剩余，`gas` 会原路返还。
+
+无论执行到什么位置，一旦 gas 被耗尽（比如降为负值），将会触发一个 `out-of-gas` 异常。当前调用帧（`call frame`）所做的所有状态修改都将被回滚。
+
+### 消息调用
+
+合约可以通过`消息调用`的方式来调用其它合约或者发送以太币到非合约账户。消息调用和交易非常类似，它们都有一个`源、目标、数据、以太币、gas和返回数据`。事实上每个交易都由一个顶层消息调用组成，这个消息调用又可创建更多的消息调用。
+
+### 委托调用/代码调用和库
+
+**委托调用(delegatecall)** 。它和一般的消息调用的区别在于，目标地址的代码将在发起调用的合约的上下文中执行，并且 `msg.sender` 和 `msg.value` 不变。 这意味着一个合约可以在运行时从另外一个地址动态加载代码。存储、当前地址和余额都指向发起调用的合约，只有代码是从被调用地址获取的。 这使得 Solidity 可以实现”库“能力：可复用的代码库可以放在一个合约的存储上，如用来实现复杂的数据结构的库。
+
+### selfdestruct 自毁合约
+
+合约代码从区块链上移除的唯一方式是合约在合约地址上的执行自毁操作 `selfdestruct` 。合约账户上剩余的以太币会发送给指定的目标，然后其存储和代码从状态中被移除。
+
+合约自毁，通过内置`selfdestruct()`函数执行。
+
+自毁合约会执行以下 2 个步骤：
+
+1. 删除合约
+2. 将合约中剩余的主币强制地发送到一个指定的地址上
+
+```solidity {.line-numbers}
+// 要被自毁的合约
+contract TestContract {
+    // 使用构造函数，可以在创建合约时，给合约一些主币
+    construct() payable {}
+
+    // 用于自毁的函数
+    function kill() external {
+        // 在进行自毁时，可以对发送自毁的地址进行一些判断，比如，必须是合约创建者才能发起合约的自毁
+        // 传入用于强制接收自毁时，发送合约中剩余主币的地址
+        selfdestruct(payable(msg.sender));
+    }
+
+    function testIfKilled() external pure returns (uint) {
+        return 123;
+    }
+}
+
+contract HelpContract {
+    // 获取当前合约主币的余额
+    function getBalance() external view returns (uint) {
+        return address(this).balance;
+    }
+
+    // 发送使TestContract合约自毁的函数
+    function kill(TestContract _testContract) external {
+        _testContract.kill();
+    }
+}
+```
+
+## msg 全局变量
 
 > msg.sender 始终是当前（外部）函数调用的来源地址。
 
@@ -1229,47 +1316,6 @@ contract VerifySig {
 }
 ```
 
-# selfdestruct 自毁合约
-
-合约自毁，通过内置`selfdestruct()`函数执行。
-
-自毁合约会执行以下 2 个步骤：
-
-1. 删除合约
-2. 将合约中剩余的主币强制地发送到一个指定的地址上
-
-```solidity {.line-numbers}
-// 要被自毁的合约
-contract TestContract {
-    // 使用构造函数，可以在创建合约时，给合约一些主币
-    construct() payable {}
-
-    // 用于自毁的函数
-    function kill() external {
-        // 在进行自毁时，可以对发送自毁的地址进行一些判断，比如，必须是合约创建者才能发起合约的自毁
-        // 传入用于强制接收自毁时，发送合约中剩余主币的地址
-        selfdestruct(payable(msg.sender));
-    }
-
-    function testIfKilled() external pure returns (uint) {
-        return 123;
-    }
-}
-
-contract HelpContract {
-    // 获取当前合约主币的余额
-    function getBalance() external view returns (uint) {
-        return address(this).balance;
-    }
-
-    // 发送使TestContract合约自毁的函数
-    function kill(TestContract _testContract) external {
-        _testContract.kill();
-    }
-}
-
-```
-
 # ERC20 合约
 
 ```solidity {.line-numbers}
@@ -1638,20 +1684,5 @@ contract CrowdFund {
 ```
 
 ---
-
-# EVM -- `Ethereum Virtual Machine`
-
-以太坊虚拟机 `EVM` 是智能合约的运行环境。它不仅是沙盒封装的，而且是完全隔离的，也就是说在 `EVM` 中运行代码是无法访问网络、文件系统和其他进程的。甚至智能合约之间的访问也是受限的。
-
-部署到`EVM`上的`solidity`程序，可以部署到`Avalanche`、`Fantom`、`Polygon`区块链上。
-
-`EVM` can access and store information in six places:
-
-- Stack
-- Memory
-- Storage
-- Calldata
-- Code
-- Logs
 
 `ABI` -- Application Binary Interface
