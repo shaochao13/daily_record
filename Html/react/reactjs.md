@@ -751,7 +751,459 @@ class 组件就像一个厚重的“战舰”， 大而全，提供了很多东�
 
 ### useState
 
- 
+1. 从 react 中导入 `useState`： 
+
+   ```jsx
+   import React, { useState } from 'react'
+   ```
+
+2. `useState` 函数会返回两个数据，第1个为状态变量的值，第2个为可以用于修改状态变量的函数。
+
+   ```jsx
+   // 可以解析赋值来获取调用useState函数的返回参数值
+   // 得到一个初始值为"John"的状态变量 name, 并能通过setName来给 name状态变量赋新的值
+   const [name, setName] = useState('John')
+   // 进行状态更新, 此时 name 的值会更新为Albert
+   setName("Albert")
+   ```
+
+3. `useState` 函数可以执行多次，每次执行互相独立，每调用一次为函数组件提供一个状态。
+
+   ```jsx
+   function Test() {
+     const [name, setName] = useState('abc')
+     const [list, setList] = useState([1, 2, 3])
+   
+     return (
+       <div>
+         Name: {name}
+         <br />
+         List: {list}
+       </div>
+     )
+   }
+   ```
+
+4. 只能在函数组件中使用 `useState`
+
+5. `不能嵌套`在 `if/for/其它函数`中，（React 按照Hooks的调用顺序识别每一个hook），只能在函数组件的顶层进行执行。
+
+   ```jsx
+   if (num / 2 === 0) {
+       // 这里是会报错的
+       const [count, setCount] = useState(1)
+   }
+   ```
+
+6. 当初始化的数据无法直接得到，需要通过计算才能获取到，则可以使用`useState(()=>{})` ，则可以将一个函数作为参数传递，函数计算之后的返回值会作为useState函数之后的状态变量的值。
+
+   语法：
+
+   ```jsx
+   const [name, setName] = useState(() => { /*计算计算逻辑*/ return '计算之后的值为name的初始值' })
+   ```
+
+   ```jsx
+   function Counter(props) {
+     // useState传入一个函数来进行初始值的计算
+     const [count, setCount] = useState(() => {
+       return props.count
+     })
+   
+     return <button onClick={() => setCount(count + 1)}>{count}</button>
+   }
+   
+   class App extends React.Component {
+     render() {
+       return (
+         <div>
+           <Counter count={10} />
+           <Counter count={20} />
+         </div>
+       )
+     }
+   }
+   ```
+
+### useEffect
+
+`useEffect` 函数的作用就是为react 函数组件提供副作用处理的功能。
+
+常用的副作用：
+
+- 数据请求 ajax发送
+- 手动修改dom
+- `localstorage` 操作
+
+从 react 中导入 useEffect：`import { useEffect } from 'react'`
+
+通过依赖项来控制 `useEffect` 的执行时机：
+
+1. 默认状态（无依赖项）
+
+   组件初始化的时候先执行一次，然后每次状态数据修改、组件更新再次执行。
+
+   ```jsx
+   function Test() {
+     const [count, setCount] = useState(0)
+     useEffect(() => {
+       document.title = count
+     })
+     return (
+       <div>
+         <button onClick={() => setCount(count + 1)}>{count}</button>
+       </div>
+     )
+   }
+   ```
+
+2. 添加一个`空的数组`依赖项
+
+   只在组件初始化的时候执行一次。
+
+   ```jsx
+   function Test() {
+     const [count, setCount] = useState(0)
+     // 通过 useEffect 函数的第2个参数来传入依赖项
+     useEffect(() => {
+       document.title = count
+     }, [])
+     return (
+       <div>
+         <button onClick={() => setCount(count + 1)}>{count}</button>
+       </div>
+     )
+   }
+   ```
+
+3. 依赖特定项
+
+   组件初始化的时候先执行一次，然后只当特定的状态数据依赖项发生变化时，才会再次执行。
+
+   ```jsx
+   function Test() {
+     const [count, setCount] = useState(0)
+     const [name, setName] = useState('John')
+     // 通过 useEffect 函数的第2个参数来传入依赖项
+     useEffect(() => {
+       document.title = count
+       // 因为使用了name，虽然只是打印了一下，但也需要在依赖项上添加上name
+       console.log(name)
+     }, [count, name])
+     return (
+       <div>
+         <button onClick={() => setCount(count + 1)}>{count}</button>
+         <button onClick={() => setName('Albert')}>Name: {name}</button>
+       </div>
+     )
+   }
+   ```
+
+当组件被销毁时，如果有些副作用操作需要被清理，就可以使用 useEffect ,比如定时器等。
+
+语法：
+
+```jsx
+useEffect(() => {
+  console.log('副作用执行')
+
+  return () => {
+    console.log('清理副作用')
+    // 在此处编写清理代码
+  }
+})
+```
+
+### useRef
+
+`useRef` 的作用是用来在函数组件中获取`真实的DOM元素`或者`类组件对象`。
+
+使用步骤：
+
+1. 从`react`中导入`useRef`函数
+2. 执行`useRef`函数并传`null` ，返回值为一个`ref`对象，其内部有一个`current`属性存放绑定的dom对象或者类组件对象
+3. 通过`ref`绑定要获取的`dom`元素或者类组件
+
+```jsx
+class TestC extends React.Component {
+  render() {
+    return <div>this is TestC</div>
+  }
+}
+
+function App() {
+  // 实例化一个ref对象
+  const testCRef = useRef(null)
+  const hRef = useRef(null)
+
+  useEffect(() => {
+    // ref对象上的current属性表示绑定的DOM元素或者类组件
+    console.log(testCRef.current)
+    console.log(hRef.current)
+  }, [])
+
+  return (
+    <div>
+      <TestFun />
+      {/* 通过 ref属性来进行绑定 */}
+      <TestC ref={testCRef} />
+      <h1 ref={hRef}>This is a H1</h1>
+    </div>
+  )
+}
+```
+
+> 注意：函数组件由于没有实例，不能使用ref来进行绑定，如果想获取组件实例，必须是类组件。
+
+### useContext
+
+useContext 可以在hook中实现跨组件通信机制
+
+使用步骤：
+
+1. 使用 `createContext` 创建`Context`对象
+2. 在顶层组件通过`Provider`提供数据
+3. 在底层组件通过`useContext`函数获取数据
+
+```jsx
+import React, { useState, useContext, createContext } from 'react'
+
+const Context = createContext()
+
+function ComA() {
+  // 通过useContext函数来获取数据
+  const count = useContext(Context)
+  return (
+    <div>
+      this is ComA.
+      <br />
+      This is from App Data: {count}
+      <ComC />
+    </div>
+  )
+}
+
+function ComC() {
+  // 通过useContext函数来获取数据
+  const count = useContext(Context)
+  return (
+    <div>
+      this is ComC.
+      <br />
+      This is from App Data: {count}
+    </div>
+  )
+}
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    // 使用Provider 来提供数据源
+    <Context.Provider value={count}>
+      <div>
+        <ComA />
+        <button onClick={() => setCount(count + 1)}>+</button>
+      </div>
+    </Context.Provider>
+  )
+}
+```
+
+## Router
+
+安装 `react-router-dom@v6`
+
+```shell
+yarn add react-router-dom@v6
+```
+
+### 核心组件 BrowerRouter
+
+**作用**： 包裹整个应用，一个React应用只需要使用一次。
+
+两种常用的Router：
+
+- `HashRouter`
+
+  使用URL的哈希值实现 (如：http://localhost:3000/#/first)
+
+- `BrowserRouter` (推荐)
+
+  使用 `H5` 的 `history.pushState API` 实现（如：http://localhost:3000/first）
+
+  ```jsx
+  import { BrowserRouter, Link, Routes, Route } from 'react-router-dom'
+  import Home from './Home'
+  import About from './About'
+  
+  function App() {
+    return (
+      <BrowserRouter>
+        <Link to="/">首页</Link>
+        <Link to="/about">关于</Link>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="about" element={<About />}></Route>
+        </Routes>
+      </BrowserRouter>
+    )
+  }
+  ```
+
+### 核心组件 Link
+
+**作用**：用于指定导航链接，完成路由跳转。
+
+`Link` 组件通过`to`属性指定路由地址，最终会渲染为`a`链接元素。
+
+### 核心组件 Routes
+
+**作用**：提供一个路由出口，满足条件的路由组件会渲染到组件内部。
+
+### 核心组件 Route
+
+**作用**：用于指定导航链接，完成路由匹配。
+
+`Route` 通过 `path` 属性指定匹配的路径地址，通过 `element` 属性指定要渲染的组件。
+
+```jsx
+<Route path="/index" element={ <Home /> } />
+```
+
+### 编程式导航
+
+**作用**：通过编程的方式，根据业务逻辑的需求来确认页面的跳转。
+
+需要使用钩子函数： `useNavigate`
+
+```jsx
+// 导入 useNavigate 钩子函数
+import { useNavigate } from 'react-router-dom'
+
+function Login() {
+  // 执行 useNavigate 得到一个跳转函数
+  const navigate = useNavigate()
+
+  function goAbout() {
+    // 调用跳转函数传入目标路径
+    // 如果提供replace：true, 表示此次跳转不会被写入到浏览器的history中，不能进行回退
+    navigate('/about', { replace: true })
+  }
+
+  return (
+    <div>
+      Login
+      <button onClick={goAbout}>跳转到关于页面</button>
+    </div>
+  )
+}
+```
+
+两种常见的传参方式：
+
+- searchParam 传参
+
+  ```jsx
+  import { useNavigate, useSearchParams } from 'react-router-dom'
+  // 传参
+  navigate('/about?id=100')
+  
+  // 取参
+  let [params] = useSearchParams()
+  let id = params.get('id')
+  ```
+
+- params 传参
+
+  ```jsx
+  import { useNavigate, useParams } from 'react-router-dom'
+  
+  // 传参
+  navigate('/about/100')
+  
+  // 取参
+  let params = useParams()
+  let id = params.id
+  ```
+
+### 嵌套路由
+
+```jsx
+<BrowserRouter>
+  <Routes>
+    <Route path='/' element={<Layout />}>
+      {/* 二级嵌套路由 */}
+      {/* 默认二级，添加一个index,并将path属性去掉,这样即可默认加载的路由 */}
+      <Route index element={<Board />}></Route>
+      <Route path="article" element={<Article/>}></Route>
+    </Route>
+    <Route path='/login' element={<Login />}></Route>
+  </Routes>
+</BrowserRouter>
+
+// Layout.js 中的配置
+import { Outlet } from 'react-router-dom'
+
+function Layout() {
+  return (
+    <div>
+      This is Layout Page.
+      <br />
+      {/* 在需要进行二级页面渲染的地方使用Outlet组件即可 */}
+      <Outlet />
+    </div>
+  )
+}
+```
+
+### 404 路由配置
+
+在各级路由的最后添加 `*号路由` 。
+
+```jsx
+function App() {
+  return (
+    <BrowserRouter>
+      <Link to="/">首页</Link>
+      <Link to="/about/101">关于</Link>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="about/:id" element={<About />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        {/* 当所有路由路径都没有匹配时，会渲染此路由下的页面 */}
+        <Route path="*" element={<NotFound />}></Route>
+      </Routes>
+    </BrowserRouter>
+  )
+}
+```
+
+## Mobx
+
+`Mobx` 是一个可以与React良好配置的`状态管理工具`。Mobx是一个独立的响应式库，可以独立于任何UI框架而存在。
+
+`优势`：
+
+1. 简单
+
+   编写无模板的极简代码来精准描述你的意图
+
+2. 轻松实现最优渲染
+
+   依赖自动追踪最小渲染优化
+
+3. 架构自由
+
+   可移植，可测试
+
+`安装`： 
+
+```sh
+yarn add mobx mobx-react-lite
+# 使用国内源进行安装
+yarn add mobx mobx-react-lite --registry=https://registry.npm.taobao.org/
+```
 
 
 
