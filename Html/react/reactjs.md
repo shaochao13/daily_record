@@ -1205,6 +1205,223 @@ yarn add mobx mobx-react-lite
 yarn add mobx mobx-react-lite --registry=https://registry.npm.taobao.org/
 ```
 
+**注意**：`mobx-react-lite` 是与`函数组件`配合使用，如果要在`类组件`中使用，则使用 `mobx-react` 包。
+
+### Mobx 使用步骤
+
+```jsx
+// 编写一个处理数据的js class 文件
+import { makeAutoObservable } from 'mobx'
+class CounterStore {
+  // 1. 定义数据
+  count = 0
+  constructor() {
+    // 2. 把数据弄成响应式
+    makeAutoObservable(this)
+  }
+
+  // 3. 定义修改数据函数
+  addCount = () => {
+    this.count++
+  }
+}
+
+// 4. 实例化并导出
+const counterStore = new CounterStore()
+export { counterStore }
+```
+
+```jsx
+// 使用mobx
+import { counterStore } from './store/counter'
+// 导入中间件，用于连接mobx react 完成响应式数据的变化
+import { observer } from 'mobx-react-lite'
+function App() {
+  return (
+    <div className="App">
+      <button onClick={counterStore.addCount}>{counterStore.count}</button>
+    </div>
+  )
+}
+
+// 使用 observer 将组件进行包裹
+export default observer(App)
+```
+
+### Mobx 中的计算属性 computed
+
+```jsx
+import { makeAutoObservable } from 'mobx'
+class CounterStore { 
+  // 定义一个原始数据 list
+  list = [1, 2, 3, 4, 5, 6]
+  constructor() {
+    // 2. 把数据弄成响应式
+    makeAutoObservable(this)
+  }
+
+  // 在函数前面添加一个get关键字来定义计算属性
+  get filterList() {
+    return this.list.filter((item) => item > 2)
+  }
+
+  // 修改列表数据
+  addList = () => {
+    this.list.push(7, 9, 8)
+  }
+ 
+// 4. 实例化并导出
+const counterStore = new CounterStore()
+export { counterStore }
+
+```
+
+```jsx
+import { counterStore } from './store/counter'
+// 导入中间件，用于连接mobx react 完成响应式数据的变化
+import { observer } from 'mobx-react-lite'
+function App() {
+  return (
+    <div className="App"> 
+      {/* 使用定义好的计算属性 */}
+      {counterStore.filterList.join('-')}
+      <br />
+      <button onClick={counterStore.addList}>Add</button>
+    </div>
+  )
+}
+
+// 使用 observer 将组件进行包裹
+export default observer(App)
+
+```
+
+### mobx 组件化
+
+将所有的需要进行状态管理的数据逻辑都放在一个统一的地方进行管理。
+
+实现步骤：
+
+1. 将store存放在一个统一的位置，并添加一个index.js文件来进管理文件夹下面的stores。
+
+   ![store文件夹结构](../../images/react/mobx_manager.png)
+
+   ```jsx
+   import React from 'react'
+   import { ListStore } from './list.Store'
+   import { CounterStore } from './counter.Store'
+   
+   // 声明一个rootStore
+   class RootStore {
+     constructor() {
+       // 对子模块进行实例化
+       this.counterStore = new CounterStore()
+       this.listStore = new ListStore()
+     }
+   }
+   // 实例化根store,并注入context
+   // 使用 react context机制，完成统一方法封装
+   // 核心目的： 让每个业务组件可以通过统一的方法获取store中的数据
+   const rootStore = new RootStore()
+   const context = React.createContext(rootStore)
+   
+   // 导出useStore方法, 供组件通过调用该方法来使用
+   const useStore = () => React.useContext(context)
+   // useContext 优先会从Provider 的value找，如果找不到，则会找createContext方法传递过来的参数
+   // 所以，这里通过useContext拿到rootStore实例对象
+   export { useStore }
+   ```
+
+2. 在需要使用的地方，通过index.js中导出的对象使用即可。
+
+   ```jsx
+   import { useStore } from './store/index'
+   // 导入中间件，用于连接mobx react 完成响应式数据的变化
+   import { observer } from 'mobx-react-lite'
+   function App() {
+     // 解构赋值，得到需要使用的store对象
+     const { counterStore } = useStore()
+     return (
+       <div className="App">
+         {counterStore.count}
+         <button onClick={counterStore.addCount}>+</button>
+       </div>
+     )
+   }
+   
+   // 使用 observer 将组件进行包裹
+   export default observer(App)
+   ```
+
+## 配置React 工程项目
+
+CRA 将所有工程化配置，都隐藏在 `react-scripts` 包中，项目中看不到任何配置信息。
+
+如果要修改CRA的默认配置信息，有以下两种方案：
+
+- 执行 `yarn eject` 命令，释放 `react-scripts` 中的所有配置信息到项目中，
+
+> 这种方法为不可逆操作，`慎重操作`。
+
+- 通过第三方库进行修改，如使用 `@craco/craco`。
+
+### craco 使用步骤：
+
+1. 安装修改`CRA`配置的包： `yarn add -D @craco/craco`
+
+2. 在项目根目录中创建craco的配置文件：`craco.config.js` ，文件名为固定的。并在配置文件中配置路径别名
+
+   ```js
+   const path = require('path')
+   
+   module.exports = {
+     webpack: {
+       // 配置别名
+       alias: {
+         // 约定：使用@表示src文件所在路径
+         '@': path.resolve(__dirname, 'src'),
+       },
+     },
+   }
+   ```
+
+3. 修改 `package.json` 中的脚本命令，修改为使用 `craco` 方式：
+
+   ```json
+   "scripts": {
+       "start": "react-scripts start",
+       "build": "react-scripts build",
+       "test": "react-scripts test",
+       "eject": "react-scripts eject"
+   },
+   // 修改成craco方式：
+     "scripts": {
+       "start": "craco start",
+       "build": "craco build",
+       "test": "craco test",
+       "eject": "react-scripts eject"
+     },
+   ```
+
+4. 在代码中，就可以通过 `@` 来表示`src`目录的绝对路径
+
+   如果使用VS Code 编写代码，让vscode 支持 @/ 路径提示，需要在项目的根目录下添加 一个`jsconfig.json` 文件，内容如下：
+
+   ```json
+   {
+     "compilerOptions": {
+       "baseUrl": "./",
+       "paths": {
+         "@/*": ["src/*"]
+       }
+     }
+   }
+   ```
+
+5. 重启项目，让配置生效
+
+
+
 
 
 ## 常用函数和属性
