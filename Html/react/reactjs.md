@@ -724,20 +724,22 @@ class List extends React.Component {
 
 ![react生命周期函数](../../images/react/react-lifecycle-methods-diagram2.png)
 
-## Hooks
 
-### 什么是 Hooks
 
-#### 本质 
+# Hooks
+
+## 什么是 Hooks
+
+### 本质 
 
 一套能够使`函数组件`更强大，更灵活的“钩子”。
 
-#### 注意
+### 注意
 
 - 有了hooks之后，不能再把函数组件当成无状态的了，因为hooks为函数组件提供了状态
 - Hooks 只能在函数组件中使用
 
-#### Hooks解决了什么？
+### Hooks解决了什么？
 
 Hooks的出现解决了两个问题：
 
@@ -749,7 +751,7 @@ Hooks的出现解决了两个问题：
 
 class 组件就像一个厚重的“战舰”， 大而全，提供了很多东西，有不可忽视的学习成本，比如各种生命周期，this指向问题等等。
 
-### useState
+## useState
 
 1. 从 react 中导入 `useState`： 
 
@@ -825,7 +827,7 @@ class 组件就像一个厚重的“战舰”， 大而全，提供了很多东�
    }
    ```
 
-### useEffect
+## useEffect
 
 `useEffect` 函数的作用就是为react 函数组件提供副作用处理的功能。
 
@@ -914,7 +916,7 @@ useEffect(() => {
 })
 ```
 
-### useRef
+## useRef
 
 `useRef` 的作用是用来在函数组件中获取`真实的DOM元素`或者`类组件对象`。
 
@@ -955,7 +957,7 @@ function App() {
 
 > 注意：函数组件由于没有实例，不能使用ref来进行绑定，如果想获取组件实例，必须是类组件。
 
-### useContext
+## useContext
 
 useContext 可以在hook中实现跨组件通信机制
 
@@ -1010,7 +1012,7 @@ function App() {
 }
 ```
 
-## Router
+# Router
 
 安装 `react-router-dom@v6`
 
@@ -1018,7 +1020,7 @@ function App() {
 yarn add react-router-dom@v6
 ```
 
-### 核心组件 BrowerRouter
+## 核心组件 BrowerRouter
 
 **作用**： 包裹整个应用，一个React应用只需要使用一次。
 
@@ -1051,17 +1053,17 @@ yarn add react-router-dom@v6
   }
   ```
 
-### 核心组件 Link
+## 核心组件 Link
 
 **作用**：用于指定导航链接，完成路由跳转。
 
 `Link` 组件通过`to`属性指定路由地址，最终会渲染为`a`链接元素。
 
-### 核心组件 Routes
+## 核心组件 Routes
 
 **作用**：提供一个路由出口，满足条件的路由组件会渲染到组件内部。
 
-### 核心组件 Route
+## 核心组件 Route
 
 **作用**：用于指定导航链接，完成路由匹配。
 
@@ -1071,7 +1073,7 @@ yarn add react-router-dom@v6
 <Route path="/index" element={ <Home /> } />
 ```
 
-### 编程式导航
+## 编程式导航 useNavigate
 
 **作用**：通过编程的方式，根据业务逻辑的需求来确认页面的跳转。
 
@@ -1127,7 +1129,7 @@ function Login() {
   let id = params.id
   ```
 
-### 嵌套路由
+## 嵌套路由
 
 ```jsx
 <BrowserRouter>
@@ -1157,7 +1159,7 @@ function Layout() {
 }
 ```
 
-### 404 路由配置
+## 404 路由配置
 
 在各级路由的最后添加 `*号路由` 。
 
@@ -1179,7 +1181,7 @@ function App() {
 }
 ```
 
-## Mobx
+# Mobx
 
 `Mobx` 是一个可以与React良好配置的`状态管理工具`。Mobx是一个独立的响应式库，可以独立于任何UI框架而存在。
 
@@ -1207,7 +1209,7 @@ yarn add mobx mobx-react-lite --registry=https://registry.npm.taobao.org/
 
 **注意**：`mobx-react-lite` 是与`函数组件`配合使用，如果要在`类组件`中使用，则使用 `mobx-react` 包。
 
-### Mobx 使用步骤
+## Mobx 使用步骤
 
 ```jsx
 // 编写一个处理数据的js class 文件
@@ -1248,7 +1250,7 @@ function App() {
 export default observer(App)
 ```
 
-### Mobx 中的计算属性 computed
+## Mobx 中的计算属性 computed
 
 ```jsx
 import { makeAutoObservable } from 'mobx'
@@ -1296,7 +1298,7 @@ export default observer(App)
 
 ```
 
-### mobx 组件化
+## mobx 组件化
 
 将所有的需要进行状态管理的数据逻辑都放在一个统一的地方进行管理。
 
@@ -1353,7 +1355,7 @@ export default observer(App)
    export default observer(App)
    ```
 
-## 配置React 工程项目
+# 配置React 工程项目
 
 CRA 将所有工程化配置，都隐藏在 `react-scripts` 包中，项目中看不到任何配置信息。
 
@@ -1365,7 +1367,7 @@ CRA 将所有工程化配置，都隐藏在 `react-scripts` 包中，项目中�
 
 - 通过第三方库进行修改，如使用 `@craco/craco`。
 
-### craco 使用步骤：
+## craco 使用步骤：
 
 1. 安装修改`CRA`配置的包： `yarn add -D @craco/craco`
 
@@ -1584,6 +1586,116 @@ function App2() {
 ```html
 <CustomDIV dangerouslySetInnerHTML="{{__html:" this.props.content}}></CustomDIV>
 ```
+
+# React 项目打包
+
+## 项目打包
+
+在项目的根目录下执行：`yarn build` 即可对项目进行打包。
+
+## 项目本地预览
+
+1. 全局安装本地服务包 `yarn global add serve` 。
+2. 在项目根目录中执行命令：`serve -s ./build` ，在`build`目录中开启服务器
+3. 预览项目
+
+## 项目打包体积分析
+
+1. 安装分析打包体积包：`yarn add source-map-explorer`
+
+2. 在package.json中的scripts标签中，添加分析打包体积的命令
+
+   ```json
+   "scripts":{
+     "analyze": "source-map-explorer 'build/static/js/*.js'",
+   }
+   ```
+
+3. 对项目进行打包操作：`yarn build`
+
+4. 运行分析命令：`yarn analyze`
+
+5. 通过浏览器打开的页面，分析图表中的包体积。
+
+## 优化-配置CDN
+
+通过`craco`来修改`webpack`配置，从而实现`CDN`优化。
+
+1. 在项目根目录下的 `craco.config.js` 文件中进行配置：
+
+   ```js
+   const { whenProd, getPlugin, pluginByName } = require('@craco/craco')
+   const { when } = require('mobx')
+   const path = require('path')
+   
+   module.exports = {
+     // webpack配置
+     webpack: {
+       // 配置别名
+       alias: {
+         // 约定：使用@表示src文件所在路径
+         '@': path.resolve(__dirname, 'src'),
+       },
+       // 配置CDN
+       configure: (webpackConfig) => {
+         let cdn = {
+           js: [],
+           css: [],
+         }
+   
+         // 只有生产环境才配置
+         whenProd(() => {
+           webpackConfig.externals = {
+             react: 'React',
+             'react-dom': 'ReactDOM',
+           }
+           cdn = {
+             js: [
+               'https://cdn.bootcdn.net/ajax/libs/react/18.2.0/umd/react.production.min.js',
+               'https://cdn.bootcdn.net/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js',
+             ],
+             css: [],
+           }
+         })
+         const { isFound, match } = getPlugin(
+           webpackConfig,
+           pluginByName('HtmlWebpackPlugin')
+         )
+         if (isFound) {
+           // 找到了HtmlWebpackPlugin的插件
+           match.userOptions.cdn = cdn
+         }
+         return webpackConfig
+       },
+     },
+   }
+   ```
+
+2. 在 `/public/index.html` 文件中进行如下配置：
+
+   ```html
+   <div id="root"></div>
+   <!-- 加载和三发包的CDN链接 -->
+   <% htmlWebpackPlugin.options.cdn.js.forEach(cdnURL=> { %>
+     <script src="<%= cdnURL %>"></script>
+     <% }) %>
+   ```
+
+3. 重新打包，此时，`react`和`react-dom`包就会从CDN服务器进行拉取了。
+
+# 常用第三方包
+
+## 富文本编辑器 react-quill
+
+安装: `yarn add react-quill`
+
+
+
+## UUID 包 react-uuid
+
+
+
+---
 
 ## react-transition-group
 
