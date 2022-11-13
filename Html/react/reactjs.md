@@ -1683,6 +1683,49 @@ function App2() {
 
 3. 重新打包，此时，`react`和`react-dom`包就会从CDN服务器进行拉取了。
 
+## 优化-路由懒加载
+
+```jsx
+// 导入必要组件
+import { lazy, Suspense } from 'react'
+
+// 按需导入路由组件
+const Home = lazy(() => import('@/pages/Home'))
+const Article = lazy(() => import('@/pages/Article'))
+const Publish = lazy(() => import('@/pages/Publish'))
+const IndexLayout = lazy(() => import('@/pages/Layout'))
+
+function App() {
+  return (
+    <HistoryRouter history={history}>
+      {/* 使用Suspense包裹Routes */}
+      <Suspense
+        // fallback用来自定义一个加载中的显示页面
+        fallback={
+          <div style={{ textAlign: 'center', marginTop: 200 }}>loading...</div>
+        }>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <AuthComponent>
+                <IndexLayout />
+              </AuthComponent>
+            }>
+            <Route index element={<Home />}></Route>
+            <Route path="article" element={<Article />}></Route>
+            <Route path="publish" element={<Publish />}></Route>
+          </Route>
+          <Route path="/login" element={<Login />}></Route>
+        </Routes>
+      </Suspense>
+    </HistoryRouter>
+  )
+}
+```
+
+
+
 # 常用第三方包
 
 ## 富文本编辑器 react-quill
