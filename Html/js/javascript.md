@@ -1152,3 +1152,34 @@ withinErrorMargin(0.1 + 0.2, 0.3); // true
 1.1 + 1.3 === 2.4; // false
 withinErrorMargin(1.1 + 1.3, 2.4); // true
 ```
+
+## 数组操作中的几个常用函数
+
+### map
+
+```js
+const arr = [1,2,3,4,5]
+const arr2 = arr.map((item) => `<span>${item}</span>`)
+```
+
+### filter
+
+```jsx
+const arr = [1,2,3,4,5]
+const arr2 = arr.filter((item) => item % 2 === 0) // 返回 [2,4]
+```
+
+### find
+
+```jsx
+const arr = [1,2,3,4,5]
+const result = arr.find((item) => item % === 0)  // 返回 2
+```
+
+### reduce
+
+```js
+const arr = [1,2,3,4,5]
+const result = arr.reduce((prev, current) => prev + current, 0) // 返回 15
+```
+
