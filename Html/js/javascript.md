@@ -10,7 +10,9 @@
 ## Javascript 的特点
 
 - 解释型语言
+- 函数式编程
 - 单线程
+- 面向对象
 - ECMAScript 标准：ECMAScript 是一种由 ECMA 国际（前身为欧洲计算机制造商协会,英文名称是 European Computer Manufacturers Association）制定和发布的脚本语言规范。
 
 一个单独的 `<script>` 标签不能同时有 `src` 特性和内部包裹的代码。如果设置了 `src` 特性， `<script>` 标签内容将会被忽略。
@@ -22,15 +24,15 @@
 ### `confirm()`语句（含确认/取消）
 
 ```js {.line-numbers}
-var result = confirm("你确认吗？");
-console.log(result);
+var result = confirm('你确认吗？')
+console.log(result)
 ```
 
 ### `prompt()`语句：弹出能够让用户输入的对话框。
 
 ```js {.line-numbers}
-var a = prompt("请输入点什么东西");
-console.log(a);
+var a = prompt('请输入点什么东西')
+console.log(a)
 ```
 
 ### `document.write()` 网页内容区域输出
@@ -38,9 +40,9 @@ console.log(a);
 ### `console` 控制台输出
 
 ```js {.line-numbers}
-console.log("1"); //普通打印
-console.warn("2"); //警告打印
-console.error("3"); //错误打印
+console.log('1') //普通打印
+console.warn('2') //警告打印
+console.error('3') //错误打印
 ```
 
 ## Javascript 语法基础
@@ -80,7 +82,7 @@ ES6 中通过`const`来自定义常量。
 
 ## 数据类型
 
-JS 中一共有 8 种数据类型：
+JS 中一共有 `8` 种数据类型：
 
 - **基本数据类型（值类型）**：`String字符串`、`Number 数值`、`BigInt 大型数值`、`Boolean 布尔值`、`Null 空值`、`Undefined 未定义`、`Symbol`。
 - **引用数据类型（引用类型）**：Object 对象。
@@ -95,7 +97,7 @@ JS 中，所有的变量都是保存在栈内存中的。基本数据类型的�
 
 ### String 字符串
 
-字符串型可以是引号中的任意文本，其语法为：双引号 "" 或者单引号 ''。
+字符串型可以是引号中的任意文本，其语法为：双引号 `""` 或者单引号 `''`。
 
 #### 获取字符串的长度
 
@@ -125,57 +127,57 @@ JS 中，所有的变量都是保存在栈内存中的。基本数据类型的�
 ES6 中引入了模板字符串，让我们省去了字符串拼接的烦恼。
 
 ```js {.line-numbers}
-var name = "张三";
-var age = "30";
+var name = '张三'
+var age = '30'
 
-console.log("我是" + name + ",age:" + age); //传统写法
+console.log('我是' + name + ',age:' + age) //传统写法
 // 插入变量
-console.log(`我是${name},age:${age}`); //ES6 写法。注意语法格式
+console.log(`我是${name},age:${age}`) //ES6 写法。注意语法格式
 
-const a = 5;
-const b = 10;
+const a = 5
+const b = 10
 
 // 插入表达式
-console.log(`this is ${a + b} and not ${2 * a + b}.`);
+console.log(`this is ${a + b} and not ${2 * a + b}.`)
 
 // 模板字符串中可以换行
 const result = {
-  name: "张三",
+  name: '张三',
   age: 30,
-  sex: "男",
-};
+  sex: '男',
+}
 
 // 模板字符串支持换行
 const html = `<div>
 	<span>${result.name}</span>
 	<span>${result.age}</span>
 	<span>${result.sex}</span>
-</div>`;
+</div>`
 
-console.log(html); // 打印结果也会换行
+console.log(html) // 打印结果也会换行
 ```
 
 #### 模板字符串中可以调用函数
 
 ```js {.line-numbers}
 function getName() {
-  return "zhangsan";
+  return 'zhangsan'
 }
 
-console.log(`${getName()}`);
+console.log(`${getName()}`)
 ```
 
 #### 模板字符串支持嵌套使用
 
 ```js {.line-numbers}
-const nameList = ["张三", "李四", "王五"];
+const nameList = ['张三', '李四', '王五']
 
 function myTemplate() {
   return `<ul>
-	${nameList.map((item) => `<li>${item}</li>`).join("")}
-	</ul>`;
+	${nameList.map((item) => `<li>${item}</li>`).join('')}
+	</ul>`
 }
-console.log(myTemplate());
+console.log(myTemplate())
 ```
 
 #### 常用方法
@@ -185,9 +187,9 @@ console.log(myTemplate());
    > 语法： 字符 = str.charAt(index);
    ```javascript {.line-numbers}
    //打印字符串一般不会用charAt()
-   const str = "sdfefefefsdw";
+   const str = 'sdfefefefsdw'
    for (var i = 0; i < str.length; i++) {
-     console.log(str.charAt(i));
+     console.log(str.charAt(i))
    }
    ```
 3. `indexOf()` 返回某个指定字符串值在字符串中的首次出现的位置。
@@ -195,16 +197,16 @@ console.log(myTemplate());
    > 语法：stringObject.indexOf(substring, startpos) 如果要检索的字符串值没有出现，则返回-1。
 
    ```javascript {.line-numbers}
-   var str = "efafeafafaewfzfawfdfegasfdsf";
-   var index = str.indexOf("a");
-   var num = 0;
+   var str = 'efafeafafaewfzfawfdfegasfdsf'
+   var index = str.indexOf('a')
+   var num = 0
    while (index !== -1) {
-     console.log(index);
-     num++; // 每打印一次，就计数一次
-     index = str.indexOf("a", index + 1);
+     console.log(index)
+     num++ // 每打印一次，就计数一次
+     index = str.indexOf('a', index + 1)
    }
 
-   console.log("a 出现的次数是: " + num);
+   console.log('a 出现的次数是: ' + num)
    ```
 
 4. `split()` 将字符串分割为字符串数组，并返回此数组。
@@ -232,10 +234,10 @@ console.log(myTemplate());
    > 语法：索引值 = str.search(想要查找的字符串或者正则表达式)
 
    ```javascript {.line-numbers}
-   const name = "aawoiejflakfei";
+   const name = 'aawoiejflakfei'
 
-   console.log(name.search("la")); // 打印结果：8
-   console.log(name.search(/la/i)); // 打印结果：8
+   console.log(name.search('la')) // 打印结果：8
+   console.log(name.search(/la/i)) // 打印结果：8
    ```
 
 8. `includes()` 字符串中是否包含指定的内容
@@ -243,12 +245,12 @@ console.log(myTemplate());
    > 语法：布尔值 = str.includes(想要查找的字符串，[position])。 `position` ：如果不指定，则默认为 0；如果指定，则规定了检索的起始位置。
 
    ```javascript {.line-numbers}
-   const name = "aawoiejflakfei";
+   const name = 'aawoiejflakfei'
 
-   console.log(name.includes("ie")); // 打印结果：true
-   console.log(name.includes("fa")); // 打印结果：false
+   console.log(name.includes('ie')) // 打印结果：true
+   console.log(name.includes('fa')) // 打印结果：false
 
-   console.log(name.includes("wo", 7)); // 打印结果：false
+   console.log(name.includes('wo', 7)) // 打印结果：false
    ```
 
 9. `startsWith()` 字符串是否以指定的内容开头 / `endsWith()` 字符串是否以指定的内容结尾
@@ -261,45 +263,45 @@ console.log(myTemplate());
    - `endsWith()` 如果指定了`position`参数，检索的范围包括：从第一个字符串开始，直到这个指定的位置。即：`[0, position)`。可以简单理解：endsWith() 方法里的 position，表示检索的长度。
 
    ```javascript {.line-numbers}
-   const name = "abcdefg";
-   console.log(name.startsWith("a")); // 打印结果：true
-   console.log(name.startsWith("b")); // 打印结果：false
+   const name = 'abcdefg'
+   console.log(name.startsWith('a')) // 打印结果：true
+   console.log(name.startsWith('b')) // 打印结果：false
    // 因为指定了起始位置为3，所以是在 defg 这个字符串中检索。
-   console.log(name.startsWith("d", 3)); // 打印结果：true
-   console.log(name.startsWith("c", 3)); // 打印结果：false
+   console.log(name.startsWith('d', 3)) // 打印结果：true
+   console.log(name.startsWith('c', 3)) // 打印结果：false
 
-   console.log(name.endsWith("g")); // 打印结果：true
-   console.log(name.endsWith("f")); // 打印结果：false
+   console.log(name.endsWith('g')) // 打印结果：true
+   console.log(name.endsWith('f')) // 打印结果：false
    // 因为指定了截止位置为3，所以是在 abc 这个长度为3字符串中检索
-   console.log(name.endsWith("c", 3)); // 打印结果：true
-   console.log(name.endsWith("d", 3)); // 打印结果：false
+   console.log(name.endsWith('c', 3)) // 打印结果：true
+   console.log(name.endsWith('d', 3)) // 打印结果：false
    ```
 
 10. `charCodeAt(index)` 返回字符串指定位置的字符的 Unicode 编码。
 
     ```javascript {.line-numbers}
-    var str = "我就是我";
-    console.log(str.charCodeAt(1)); // 打印结果： 23601
+    var str = '我就是我'
+    console.log(str.charCodeAt(1)) // 打印结果： 23601
 
     //需求：求一个字符串占有几个字符位。
     //思路；如果是英文，站一个字符位，如果不是英文占两个字符位。
     //技术点：判断该字符是否在0-127之间。（在的话是英文，不在是非英文）
-    alert(getZFWlength(str));
-    alert(str.length);
+    alert(getZFWlength(str))
+    alert(str.length)
 
     //定义方法：字符位
     function getZFWlength(string) {
       //定义一个计数器
-      var count = 0;
+      var count = 0
       for (var i = 0; i < string.length; i++) {
         //对每一位字符串进行判断，如果Unicode编码在0-127，计数器+1；否则+2
         if (string.charCodeAt(i) < 128 && string.charCodeAt(i) >= 0) {
-          count++;
+          count++
         } else {
-          count += 2;
+          count += 2
         }
       }
-      return count;
+      return count
     }
     ```
 
@@ -311,11 +313,11 @@ console.log(myTemplate());
       > 语法： 新字符串 = str.slice(start, end); 索引范围：[start, end)
       ```javascript {.line-numbers}
       // 参数举例说明：
-      str.slice(2, 5); // 截取时，包左不包右。
-      str.slice(2); // 表示从指定的索引位置开始，截取到最后。
-      str.slice(-3); // 表示从倒数第三个开始，截取到最后。
-      str.slice(1, -1); // 表示从第一个截取到倒数第一个。
-      str.slice(5, 2); // 表示前面的大，后面的小，返回值为空。
+      str.slice(2, 5) // 截取时，包左不包右。
+      str.slice(2) // 表示从指定的索引位置开始，截取到最后。
+      str.slice(-3) // 表示从倒数第三个开始，截取到最后。
+      str.slice(1, -1) // 表示从第一个截取到倒数第一个。
+      str.slice(5, 2) // 表示前面的大，后面的小，返回值为空。
       ```
     - `substring()`
 
@@ -330,11 +332,11 @@ console.log(myTemplate());
 12. `String.fromCharCode()` 根据字符的 Unicode 编码获取字符
 
     ```javascript {.line-numbers}
-    var result1 = String.fromCharCode(72);
-    var result2 = String.fromCharCode(20013);
+    var result1 = String.fromCharCode(72)
+    var result2 = String.fromCharCode(20013)
 
-    console.log(result1); // 打印结果：H
-    console.log(result2); // 打印结果：中
+    console.log(result1) // 打印结果：H
+    console.log(result2) // 打印结果：中
     ```
 
 13. `replace()`
@@ -344,29 +346,29 @@ console.log(myTemplate());
     > 注意： 默认只会替换第一个被匹配到的字符。如果要全局替换，需要使用正则。
 
     ```javascript {.line-numbers}
-    var str2 = "Today is fine day,today is fine day !";
-    console.log(str2);
+    var str2 = 'Today is fine day,today is fine day !'
+    console.log(str2)
 
-    console.log(str2.replace("today", "tomorrow")); //只能替换第一个today
-    console.log(str2.replace(/today/gi, "tomorrow")); //这里用到了正则，才能替换所有的today
+    console.log(str2.replace('today', 'tomorrow')) //只能替换第一个today
+    console.log(str2.replace(/today/gi, 'tomorrow')) //这里用到了正则，才能替换所有的today
     ```
 
 14. `repeat()` 将字符串重复指定的次数。
     ```javascript
-    newStr = str.repeat(重复的次数);
+    newStr = str.repeat(重复的次数)
     ```
 
 #### Url 编码与解码
 
 ```javascript {.line-numbers}
-encodeURIComponent(); //把字符串作为 URI 组件进行编码
-decodeURIComponent(); //把字符串作为 URI 组件进行解码
+encodeURIComponent() //把字符串作为 URI 组件进行编码
+decodeURIComponent() //把字符串作为 URI 组件进行解码
 ```
 
 ```javascript {.line-numbers}
-var url = "http://www.baidu.com/?q=我是网页";
-var str = encodeURIComponent(url); // 打印：'http%3A%2F%2Fwww.baidu.com%2F%3Fq%3D%E6%88%91%E6%98%AF%E7%BD%91%E9%A1%B5'
-url = decodeURIComponent(str); //打印： 'http://www.baidu.com/?q=我是网页'
+var url = 'http://www.baidu.com/?q=我是网页'
+var str = encodeURIComponent(url) // 打印：'http%3A%2F%2Fwww.baidu.com%2F%3Fq%3D%E6%88%91%E6%98%AF%E7%BD%91%E9%A1%B5'
+url = decodeURIComponent(str) //打印： 'http://www.baidu.com/?q=我是网页'
 ```
 
 ### Boolean 布尔值类型
@@ -405,8 +407,8 @@ url = decodeURIComponent(str); //打印： 'http://www.baidu.com/?q=我是网页
 `"2"+1` 得到的结果其实是`字符串`，但是`"2"-1`得到的结果却是数值`1`，这是因为计算机自动帮我们进行了“隐式转换”。
 
 ```js {.line-numbers}
-var a = "4" + 3 - 6;
-console.log(a);
+var a = '4' + 3 - 6
+console.log(a)
 // 输出：37
 ```
 
@@ -426,17 +428,17 @@ console.log(a);
 1. `Number.isInteger()` 判断是否为整数
    > 语法：布尔值 = Number.isInteger(数字);
    ```javascript {.line-numbers}
-   console.log(Number.isInteger(13.2)); //false
-   console.log(Number.isInteger(13)); //true
+   console.log(Number.isInteger(13.2)) //false
+   console.log(Number.isInteger(13)) //true
    ```
 2. `toFixed()` 小数点后面保留多少位
    > 语法：字符串 = 数字.toFixed(num);  
    > 将数字的小数点后面保留 num 位小数（四舍五入），并返回。不会改变原数字。返回结果是字符串。
    ```javascript {.line-numbers}
-   let num = 3.1456;
-   let str = num.toFixed(3);
-   console.log(str); // 3.146
-   console.log(typeof str); //string
+   let num = 3.1456
+   let str = num.toFixed(3)
+   console.log(str) // 3.146
+   console.log(typeof str) //string
    ```
 
 ### `Null` 空对象
@@ -457,9 +459,9 @@ null 专门用来定义一个空对象。
 - 变量已声明，未赋值时
 
 ```js {.line-numbers}
-let name;
-console.log(name); // 打印结果：undefined
-console.log(typeof name); // 打印结果：undefined
+let name
+console.log(name) // 打印结果：undefined
+console.log(typeof name) // 打印结果：undefined
 ```
 
 - 变量未声明（未定义）时
@@ -468,8 +470,8 @@ console.log(typeof name); // 打印结果：undefined
 // 如果从未声明一个变量，就去使用它，则会报错（这个大家都知道）；
 // 如果用 typeof 检查这个变量时，会返回 undefined。
 
-console.log(typeof a); // undefined
-console.log(a); // 打印结果：Uncaught ReferenceError: a is not defined
+console.log(typeof a) // undefined
+console.log(a) // 打印结果：Uncaught ReferenceError: a is not defined
 ```
 
 - 函数无返回值时
@@ -477,7 +479,7 @@ console.log(a); // 打印结果：Uncaught ReferenceError: a is not defined
 ```js {.line-numbers}
 //如果一个函数没有返回值，那么，这个函数的返回值就是 undefined。
 function foo() {}
-console.log(foo()); // 打印结果：undefined
+console.log(foo()) // 打印结果：undefined
 ```
 
 - 调用函数时，未传参
@@ -485,20 +487,20 @@ console.log(foo()); // 打印结果：undefined
 ```js {.line-numbers}
 //调用函数时，如果没有传参，那么，这个参数的值就是 undefined。
 function foo(name) {
-  console.log(name);
+  console.log(name)
 }
 
-foo(); // 调用函数时，未传参。执行函数后的打印结果：undefined
+foo() // 调用函数时，未传参。执行函数后的打印结果：undefined
 ```
 
 ```js {.line-numbers}
 //实际开发中，如果调用函数时没有传参，我们可以根据需要给形参设置一个默认值
 function foo(name) {
-  name = name || "Zhangsan";
+  name = name || 'Zhangsan'
 }
 
 //ES6
-function foo(name = "Zhangsan") {}
+function foo(name = 'Zhangsan') {}
 ```
 
 #### null 和 undefind 区别
@@ -534,19 +536,19 @@ function foo(name = "Zhangsan") {}
 | Math.sqrt()       | 开方：对一个数进行开方运算                 |
 
 ```javascript {.line-numbers}
-console.log(Math.round(-0.6)); // -1
-console.log(Math.abs("-2"));
-console.log(Math.abs("hello")); // NaN
+console.log(Math.round(-0.6)) // -1
+console.log(Math.abs('-2'))
+console.log(Math.abs('hello')) // NaN
 
 // 生成 [x, y) 之间的随机数
-Math.round(Math.random() * (y - x) + x);
+Math.round(Math.random() * (y - x) + x)
 
 // 生成 [x, y]之间的随机整数
 /*
  * 生成两个整数之间的随机整数，并且要包含这两个整数
  */
 function getRandom(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 ```
 
@@ -559,35 +561,35 @@ function getRandom(min, max) {
    - 如果`Date()`传入参数，就返回传入的时间对象。参数中既可以传递字符串，也可以传递数字，也可以传递时间戳。
 
 ```javascript {.line-numbers}
-const date11 = new Date("2020/02/17 21:00:00");
-console.log(date11); // Mon Feb 17 2020 21:00:00 GMT+0800 (中国标准时间)
+const date11 = new Date('2020/02/17 21:00:00')
+console.log(date11) // Mon Feb 17 2020 21:00:00 GMT+0800 (中国标准时间)
 
-const date12 = new Date("2020/04/19"); // 返回的就是四月
-console.log(date12); // Sun Apr 19 2020 00:00:00 GMT+0800 (中国标准时间)
+const date12 = new Date('2020/04/19') // 返回的就是四月
+console.log(date12) // Sun Apr 19 2020 00:00:00 GMT+0800 (中国标准时间)
 
-const date13 = new Date("2020-05-20");
-console.log(date13); // Wed May 20 2020 08:00:00 GMT+0800 (中国标准时间)
+const date13 = new Date('2020-05-20')
+console.log(date13) // Wed May 20 2020 08:00:00 GMT+0800 (中国标准时间)
 
-const date14 = new Date("Wed Jan 27 2017 12:00:00 GMT+0800 (中国标准时间)");
-console.log(date14); // Fri Jan 27 2017 12:00:00 GMT+0800 (中国标准时间)
+const date14 = new Date('Wed Jan 27 2017 12:00:00 GMT+0800 (中国标准时间)')
+console.log(date14) // Fri Jan 27 2017 12:00:00 GMT+0800 (中国标准时间)
 
-const date21 = new Date(2020, 2, 18); // 注意，第二个参数返回的是三月，不是二月
-console.log(date21); // Wed Mar 18 2020 00:00:00 GMT+0800 (中国标准时间)
+const date21 = new Date(2020, 2, 18) // 注意，第二个参数返回的是三月，不是二月
+console.log(date21) // Wed Mar 18 2020 00:00:00 GMT+0800 (中国标准时间)
 
-const date22 = new Date(2020, 3, 18, 22, 59, 58);
-console.log(date22); // Sat Apr 18 2020 22:59:58 GMT+0800 (中国标准时间)
+const date22 = new Date(2020, 3, 18, 22, 59, 58)
+console.log(date22) // Sat Apr 18 2020 22:59:58 GMT+0800 (中国标准时间)
 
-const params = [2020, 06, 12, 16, 20, 59];
-const date23 = new Date(...params);
-console.log(date23); // Sun Jul 12 2020 16:20:59 GMT+0800 (中国标准时间)
+const params = [2020, 06, 12, 16, 20, 59]
+const date23 = new Date(...params)
+console.log(date23) // Sun Jul 12 2020 16:20:59 GMT+0800 (中国标准时间)
 
-const date31 = new Date(1591950413388);
-console.log(date31); // Fri Jun 12 2020 16:26:53 GMT+0800 (中国标准时间)
+const date31 = new Date(1591950413388)
+console.log(date31) // Fri Jun 12 2020 16:26:53 GMT+0800 (中国标准时间)
 
 // 先把时间对象转换成时间戳，然后把时间戳转换成时间对象
-const timestamp = new Date().getTime();
-const date32 = new Date(timestamp);
-console.log(date32); // Fri Jun 12 2020 16:28:21 GMT+0800 (中国标准时间)
+const timestamp = new Date().getTime()
+const date32 = new Date(timestamp)
+console.log(date32) // Fri Jun 12 2020 16:28:21 GMT+0800 (中国标准时间)
 ```
 
 2. `Date`对象上的一些常用方法
@@ -606,26 +608,26 @@ console.log(date32); // Fri Jun 12 2020 16:28:21 GMT+0800 (中国标准时间)
 
 ```javascript {.line-numbers}
 // 如果将目前日期对象的时间推迟1小时
-var myDate = new Date();
-document.write("当前时间：" + myDate + "<br>");
-myDate.setTime(myDate.getTime() + 60 * 60 * 1000);
-document.write("推迟一小时时间：" + myDate);
+var myDate = new Date()
+document.write('当前时间：' + myDate + '<br>')
+myDate.setTime(myDate.getTime() + 60 * 60 * 1000)
+document.write('推迟一小时时间：' + myDate)
 ```
 
 3. 获取`Date`对象的时间戳
 
 ```javascript {.line-numbers}
 // 方式一：获取 Date 对象的时间戳（最常用的写法）
-const t1 = +new Date();
-console.log(t1);
+const t1 = +new Date()
+console.log(t1)
 
 // 方式二：获取 Date 对象的时间戳（较常用的写法）
-const t2 = new Date().getTime();
-console.log(t2);
+const t2 = new Date().getTime()
+console.log(t2)
 
 // 获取当前时间的时间戳（很常用的写法）
 // Date.now()是H5标准中新增的特性
-console.log(Date.now());
+console.log(Date.now())
 ```
 
 4. 将`Date`对象转换为指定格式
@@ -634,32 +636,32 @@ console.log(Date.now());
 // 为Date原型添加`format`方法
 Date.prototype.format = function (fmt) {
   var o = {
-    "M+": this.getMonth() + 1, //月份
-    "d+": this.getDate(), //日
-    "h+": this.getHours(), //小时
-    "m+": this.getMinutes(), //分
-    "s+": this.getSeconds(), //秒
-    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    'M+': this.getMonth() + 1, //月份
+    'd+': this.getDate(), //日
+    'h+': this.getHours(), //小时
+    'm+': this.getMinutes(), //分
+    's+': this.getSeconds(), //秒
+    'q+': Math.floor((this.getMonth() + 3) / 3), //季度
     S: this.getMilliseconds(), //毫秒
-  };
+  }
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(
       RegExp.$1,
-      (this.getFullYear() + "").substr(4 - RegExp.$1.length)
-    );
+      (this.getFullYear() + '').substr(4 - RegExp.$1.length)
+    )
   }
   for (var k in o) {
-    if (new RegExp("(" + k + ")").test(fmt)) {
+    if (new RegExp('(' + k + ')').test(fmt)) {
       fmt = fmt.replace(
         RegExp.$1,
-        RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
-      );
+        RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
+      )
     }
   }
-  return fmt;
-};
+  return fmt
+}
 
-var time1 = new Date().format("yyyy-MM-dd hh:mm:ss");
+var time1 = new Date().format('yyyy-MM-dd hh:mm:ss')
 ```
 
 5. 日期处理库：[`Day.js`](https://day.js.org/) 和 [`Moment.js`](http://momentjs.cn/)
@@ -732,8 +734,8 @@ var time1 = new Date().format("yyyy-MM-dd hh:mm:ss");
 
 ```javascript
 //该方法不会影响到原变量，它会将转换的结果返回。
-变量.toString();
-var result = 变量.toString();
+变量.toString()
+var result = 变量.toString()
 //
 ```
 
@@ -752,7 +754,7 @@ a = a.toString(2);  // 1100100
 语法：
 
 ```javascript
-String(变量);
+String(变量)
 ```
 
 - 对于 `Number`、`Boolean`、`Object` 而言，本质上就是调用 toString()方法。
@@ -794,31 +796,31 @@ String(变量);
 - 带两个参数时，表示在转换时，包含了进制转换。无论 parseInt() 里面的进制参数是多少，最终的转换结果是`十进制`。
 
 ```javascript {.line-numbers}
-var a = "110";
+var a = '110'
 
-var num = parseInt(a, 16); // 【重要】将 a 当成 十六进制 来看待，转换成 十进制 的 num
+var num = parseInt(a, 16) // 【重要】将 a 当成 十六进制 来看待，转换成 十进制 的 num
 
-console.log(num);
+console.log(num)
 ```
 
 ```javascript {.line-numbers}
-var a = 168.23;
-console.log(parseInt(a)); //打印结果：168  （因为是先将 a 转为字符串"168.23"，然后然后再操作）
+var a = 168.23
+console.log(parseInt(a)) //打印结果：168  （因为是先将 a 转为字符串"168.23"，然后然后再操作）
 
-var b = true;
-console.log(parseInt(b)); //打印结果：NaN （因为是先将 b 转为字符串"true"，然后然后再操作）
+var b = true
+console.log(parseInt(b)) //打印结果：NaN （因为是先将 b 转为字符串"true"，然后然后再操作）
 
-var c = null;
-console.log(parseInt(c)); //打印结果：NaN  （因为是先将 c 转为字符串"null"，然后然后再操作）
+var c = null
+console.log(parseInt(c)) //打印结果：NaN  （因为是先将 c 转为字符串"null"，然后然后再操作）
 
-var d = undefined;
-console.log(parseInt(d)); //打印结果：NaN  （因为是先将 d 转为字符串"undefined"，然后然后再操作）
+var d = undefined
+console.log(parseInt(d)) //打印结果：NaN  （因为是先将 d 转为字符串"undefined"，然后然后再操作）
 
-console.log(parseInt("2017在公众号上写了6篇文章")); //打印结果：2017
+console.log(parseInt('2017在公众号上写了6篇文章')) //打印结果：2017
 
-console.log(parseInt("2017.01在公众号上写了6篇文章")); //打印结果仍是：2017   （说明只会取整数）
+console.log(parseInt('2017.01在公众号上写了6篇文章')) //打印结果仍是：2017   （说明只会取整数）
 
-console.log(parseInt("aaa2017.01在公众号上写了6篇文章")); //打印结果：NaN （因为不是以数字开头）
+console.log(parseInt('aaa2017.01在公众号上写了6篇文章')) //打印结果：NaN （因为不是以数字开头）
 ```
 
 5.`parseFloat()` 函数
@@ -826,8 +828,8 @@ console.log(parseInt("aaa2017.01在公众号上写了6篇文章")); //打印结�
 parseFloat() 的作用是：将字符串转换为浮点数。`parseFloat()`和 `parseInt()`的作用类似，不同的是，parseFloat()可以获得`小数部分`。
 
 ```javascript {.line-numbers}
-var a = "123.456.789px";
-console.log(parseFloat(a)); // 打印结果：123.456
+var a = '123.456.789px'
+console.log(parseFloat(a)) // 打印结果：123.456
 ```
 
 6.转换为 `Boolean` 类型
@@ -875,11 +877,11 @@ console.log(parseFloat(a)); // 打印结果：123.456
   > 如果第一个值为 true，则继续执行第二条语句，并返回第二个值（如果所有的值都为 true， 则返回的是最后一个值）。
 
   ```javascript {.line-numbers}
-  var a = 2 && 3; // 运算过程： true && true
-  console.log(a); // 输出：3
+  var a = 2 && 3 // 运算过程： true && true
+  console.log(a) // 输出：3
 
-  var a = 0 && 2; //运算过程： false && true
-  console.log(a); // 输出：0
+  var a = 0 && 2 //运算过程： false && true
+  console.log(a) // 输出：0
   ```
 
 - `或`运算的返回结果：
@@ -888,11 +890,11 @@ console.log(parseFloat(a)); // 打印结果：123.456
   > 如果第一个值为 false，则继续执行第二条语句，并返回第二个值（如果所有的值都为 false，则返回的是最后一个值）。
 
   ```javascript {.line-numbers}
-  var a = 2 || 3; // 运算过程： true || true
-  console.log(a); // 输出：2
-  
-  var a = 0 || 2; //运算过程： false || true
-  console.log(a); // 输出：2
+  var a = 2 || 3 // 运算过程： true || true
+  console.log(a) // 输出：2
+
+  var a = 0 || 2 //运算过程： false || true
+  console.log(a) // 输出：2
   ```
 
 在实际开发中，经常用来做“容错、容灾、降级”：
@@ -903,18 +905,18 @@ console.log(parseFloat(a)); // 打印结果：123.456
 if (result.resultCode == 0) {
   var a =
     (result && result.data && result.data.imgUrl) ||
-    "http://img.smyhvae.com/20160401_01.jpg";
+    'http://img.smyhvae.com/20160401_01.jpg'
 }
 ```
 
 ```javascript {.line-numbers}
-const a1 = "qianguyihao";
+const a1 = 'qianguyihao'
 // 第一个值为true，会继续执行后面的内容
-a1 && alert("看 a1 出不出来"); // 可以弹出 alert 框
+a1 && alert('看 a1 出不出来') // 可以弹出 alert 框
 
-const a2 = undefined;
+const a2 = undefined
 // 第一个值为false，不会继续执行后面的内容
-a2 && alert("看 a2 出不出来"); // 不会弹出 alert 框
+a2 && alert('看 a2 出不出来') // 不会弹出 alert 框
 ```
 
 ```javascript {.line-numbers}
@@ -937,23 +939,23 @@ if (!result) {
 - 对于非数值进行比较时，会将其转换为数字然后再比较。
 
 ```javascript {.line-numbers}
-console.log(1 > true); //false
-console.log(1 >= true); //true
-console.log(1 > "0"); //true
+console.log(1 > true) //false
+console.log(1 >= true) //true
+console.log(1 > '0') //true
 
 //console.log(10 > null); //true
 
 //任何值和NaN做任何比较都是false
 
-console.log(10 <= "hello"); //false
-console.log(true > false); //true
+console.log(10 <= 'hello') //false
+console.log(true > false) //true
 ```
 
 - 特殊情况：如果符号两侧的值都是字符串时，不会将其转换为数字进行比较。比较两个字符串时，比较的是字符串的 Unicode 编码。【`非常注意`】
 
 ```javascript {.line-numbers}
 // 比较两个字符串时，比较的是字符串的字符编码，所以可能会得到不可预期的结果
-console.log("56" > "123"); // true
+console.log('56' > '123') // true
 ```
 
 > 当比较两个`字符串型的数字`时，一定一定要`先转型`再比较大小，比如 `parseInt()`。
@@ -965,25 +967,25 @@ console.log("56" > "123"); // true
 `==` 这个符号并不严谨，会做隐式转换，将不同的数据类型，转为相同类型进行比较（大部分情况下，都是转换为数字）。
 
 ```javascript {.line-numbers}
-console.log("6" == 6); // 打印结果：true。这里的字符串"6"会先转换为数字6，然后再进行比较
-console.log(true == "1"); // 打印结果：true
-console.log(0 == -0); // 打印结果：true
+console.log('6' == 6) // 打印结果：true。这里的字符串"6"会先转换为数字6，然后再进行比较
+console.log(true == '1') // 打印结果：true
+console.log(0 == -0) // 打印结果：true
 
-console.log(null == 0); // 打印结果：false
+console.log(null == 0) // 打印结果：false
 ```
 
 `undefined` 衍生自 `null`，所以这两个值做相等判断时，会返回 `true`。
 
 ```javascript {.line-numbers}
-console.log(undefined == null); //打印结果：    true。
-console.log(undefined === null); //打印结果：   false。
+console.log(undefined == null) //打印结果：    true。
+console.log(undefined === null) //打印结果：   false。
 ```
 
 `NaN` 不和任何值相等，包括他本身:
 
 ```javascript {.line-numbers}
-console.log(NaN == NaN); //false
-console.log(NaN === NaN); //false
+console.log(NaN == NaN) //false
+console.log(NaN === NaN) //false
 ```
 
 `===`全等符号,不会做类型转换。如果要保证`绝对等于`（完全等于），我们就要用三个等号`===`。
@@ -996,9 +998,9 @@ console.log(NaN === NaN); //false
 ```js {.line-numbers}
 function factorial(num) {
   if (num <= 1) {
-    return 1;
+    return 1
   } else {
-    return num * arguments.callee(num - 1);
+    return num * arguments.callee(num - 1)
   }
 }
 ```
@@ -1007,30 +1009,30 @@ caller 保存着调用当前函数的函数的引用，如果是在全局作用�
 
 ```js {.line-numbers}
 function outer() {
-  inner();
+  inner()
 }
 function inner() {
-  alert(arguments.callee.caller);
+  alert(arguments.callee.caller)
 }
-outer();
+outer()
 ```
 
 3. 每个函数都包含: **_length_** 表示函数希望接收的命名参数的个数。
 
 ```js {.line-numbers}
 function sayName(name) {
-  alert(name);
+  alert(name)
 }
 function sum(num1, num2) {
-  return num1 + num2;
+  return num1 + num2
 }
 function sayHi() {
-  albert("hi");
+  albert('hi')
 }
 
-albert(sayName.length); //1
-albert(sum.length); //2
-albert(sayHi.length); //0
+albert(sayName.length) //1
+albert(sum.length) //2
+albert(sayHi.length) //0
 ```
 
 4. 每个函数都包含两个非继承而来的方法：apply() & call()
@@ -1038,28 +1040,28 @@ albert(sayHi.length); //0
 
 ```js {.line-numbers}
 function sum(sum1, sum2) {
-  return num1 + num2;
+  return num1 + num2
 }
 function callSum1(num1, num2) {
-  return sum.apply(this, arguments); //传入arguments对象
+  return sum.apply(this, arguments) //传入arguments对象
 }
 function callSum2(num1, num2) {
-  return sum.apply(this, [num1, num2]); //传入数组
+  return sum.apply(this, [num1, num2]) //传入数组
 }
-alert(callSum1(10, 10)); //20
-alert(callSum2(10, 10)); //20
+alert(callSum1(10, 10)) //20
+alert(callSum2(10, 10)) //20
 ```
 
     - call() 一个参数也是作用域，其余参数都直接传递给函数。传递给函数的参数必须逐个列举出来。
 
 ```js {.line-numbers}
 function sum(sum1, sum2) {
-  return num1 * num2;
+  return num1 * num2
 }
 function callSum(num1, num2) {
-  return sum.call(this, num1, num2);
+  return sum.call(this, num1, num2)
 }
-albert(callSum(10, 10)); //20
+albert(callSum(10, 10)) //20
 ```
 
 apply() & call()真正的用武之地，是能够扩充函数赖以运行的用途域,这样对象不需要与函数有任何耦合关系。
@@ -1090,29 +1092,29 @@ sayColor.call(o);       //blue
 
 ```js {.line-numbers}
 var constantize = (obj) => {
-  Object.freeze(obj);
+  Object.freeze(obj)
   Object.keys(obj).forEach((key, i) => {
-    if (typeof obj[key] === "object") {
-      constantize(obj[key]);
+    if (typeof obj[key] === 'object') {
+      constantize(obj[key])
     }
-  });
-};
+  })
+}
 ```
 
 - 变量解析赋值时， 默认值的条件是 `对象的属性值严格等于 undefined `
 
 ```javascript {.line-numbers}
-let [x = 1] = [undefined];
-x; // 1
+let [x = 1] = [undefined]
+x // 1
 
-let [x = 1] = [null];
-x; // null
+let [x = 1] = [null]
+x // null
 
-var { x = 3 } = { x: undefined };
-x; // 3
+var { x = 3 } = { x: undefined }
+x // 3
 
-var { x = 3 } = { x: null };
-x; // null
+var { x = 3 } = { x: null }
+x // null
 //如果x属性等于null，就不严格相等于undefined，导致默认值不会生效。
 ```
 
@@ -1121,19 +1123,19 @@ x; // null
 ```javascript {.line-numbers}
 function is32Bit(c) {
   //返回true,表示为由四个字节组成的字符
-  return c.codePointAt(0) > 0xffff;
+  return c.codePointAt(0) > 0xffff
 }
 
-is32Bit("𠮷"); // true
-is32Bit("a"); // false
+is32Bit('𠮷') // true
+is32Bit('a') // false
 ```
 
 - 正确返回字符串长度
 
 ```javascript {.line-numbers}
 function codePointLength(text) {
-  var result = text.match(/[\s\S]/gu);
-  return result ? result.length : 0;
+  var result = text.match(/[\s\S]/gu)
+  return result ? result.length : 0
 }
 ```
 
@@ -1143,14 +1145,14 @@ function codePointLength(text) {
 
 ```javascript {.line-numbers}
 function withinErrorMargin(left, right) {
-  return Math.abs(left - right) < Number.EPSILON * Math.pow(2, 2);
+  return Math.abs(left - right) < Number.EPSILON * Math.pow(2, 2)
 }
 
-0.1 + 0.2 === 0.3; // false
-withinErrorMargin(0.1 + 0.2, 0.3); // true
+0.1 + 0.2 === 0.3 // false
+withinErrorMargin(0.1 + 0.2, 0.3) // true
 
-1.1 + 1.3 === 2.4; // false
-withinErrorMargin(1.1 + 1.3, 2.4); // true
+1.1 + 1.3 === 2.4 // false
+withinErrorMargin(1.1 + 1.3, 2.4) // true
 ```
 
 ## 数组操作中的几个常用函数
@@ -1158,14 +1160,14 @@ withinErrorMargin(1.1 + 1.3, 2.4); // true
 ### map
 
 ```js
-const arr = [1,2,3,4,5]
+const arr = [1, 2, 3, 4, 5]
 const arr2 = arr.map((item) => `<span>${item}</span>`)
 ```
 
 ### filter
 
 ```jsx
-const arr = [1,2,3,4,5]
+const arr = [1, 2, 3, 4, 5]
 const arr2 = arr.filter((item) => item % 2 === 0) // 返回 [2,4]
 ```
 
@@ -1179,7 +1181,6 @@ const result = arr.find((item) => item % === 0)  // 返回 2
 ### reduce
 
 ```js
-const arr = [1,2,3,4,5]
+const arr = [1, 2, 3, 4, 5]
 const result = arr.reduce((prev, current) => prev + current, 0) // 返回 15
 ```
-
