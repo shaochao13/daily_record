@@ -1,3 +1,83 @@
+## WEB DESIGN
+
+### Web Design Ingredients (Web 设计因素)
+
+- Typography (排版设计)
+  `Typography` is the art and technique of arranging type to make written language **legible**, **readable** and **appealing** when displayed.
+  It is about formatting and designing text, making texts beautiful and easy to read.
+
+  **RULES (GUIDELINES) OF TYPOGRAPHY**:
+
+  - `Use Good Typefaces`
+
+    1. Use only good and popular typeface and play it safe.
+    2. It's okay to use just one typeface per page! If you want more, limit to 2 typefaces.
+    3. Choose the **right typeface** according to your website personality.
+
+    <img src="../imgs/use-good-typefaces.png" />
+
+  - `Use Good Font Size and Weights`
+
+    4.  When choosing font-size, **limit choices**! Use a "type scale" tool or other pre-defined range.
+    5.  Use a font size between `16px` and `32px` for **"normal" text**.
+    6.  For **long text** (like a blog post), try a size of `20px` or even bigger.
+    7.  For **headlines**, you can go really big (50px+) and bold(600+), **depending on personality**.
+    8.  For any text, don't use a font weight under 400 (regular).
+
+    **SPACING SYSTEM (px)**: 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+
+    **FONT SIZE SYSTEM (px)**: 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+    <img src="../imgs/use-good-font-size-and-weights.png" />
+
+  - `Create A Good Reading Experience`
+
+    9. Use less than 75 characters per line.
+    10. For **normal-sized text**, use a line height between `1.5` and `2`. For big text, go below `1.5` (The smaller or longer the text, the larger the line height needs to be!)
+    11. Decrease letter spacing in headlines, if it looks unnatural (this will come from experience).
+    12. Experiment with all caps for short titles. Make them small and bold and increase letter-spacing.
+    13. Usually, don't justify text.
+    14. Don't center long text blocks. Small blocks are fine.
+
+  <img  src="../imgs/create-a-good-reading-experience.png" />
+
+- Colors
+
+  **CHOOSE THE RIGHT COLOR**
+
+  - Make the main color match your website's personality: `colors convey meaning`.
+
+    1. `Red` draws a lot of attention, and symbolizes power, passion, and excitement.
+    2. `Orange` is less aggressive, and conveys happiness, cheerfulness, and creativity.
+    3. `Yellow` means joy, brightness, and intelligence.
+    4. `Green` represents harmony, nature, growth, and health.
+    5. `Blue` is associated with peace, trustworthiness, and professionalism.
+    6. `Purple` conveys wealth, wisdom, and magic.
+    7. `Pink` represents romance, care, and affection.
+    8. `Brown` is associated with nature, durability and comfort.
+    9. `Black` symbolizes power, elegance and minimalism, but also grief and sorrow.
+
+    <img  src="../imgs/choose-the-right-color.png" />
+
+- Images / Illustrations
+- Icons
+- Shadows
+- Border-radius
+- Whitespace
+- Visual Hierarchy
+- User Experience
+- Components / Layout
+
+### Overview of Website Personalities
+
+- Serious / Elegant
+- Minimalist / Simple
+- Plain / Neutral
+- Bold / Confident
+- Calm / Peaceful
+- Startup / Upbeat
+- Playful / Fun
+
 ## CSS 书写顺序
 
 <img src="../../images/css_order.png"/>
