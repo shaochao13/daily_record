@@ -59,8 +59,61 @@
 
     <img  src="../imgs/choose-the-right-color.png" />
 
+  - Use a **good color tone**! Don't choose a random tone or CSS named colors.
+
+  **ESTABLISH A COLOR SYSTEM**
+
+  1. You need at least two types of colors in your color palette: a **main color** and a **grey color**.
+  2. With more experience, you can add more colors: **accent colors** (use a tool).
+  3. For diversity, create lighter and darker "versions" (**tints and shades**).
+
+  <img  src="../imgs/establish-a-color-system.png" />
+
+  **WHEN AND HOW TO USE COLORS**
+
+  1. Use your main color to **draw attention** to the most important elements on the page.
+  2. Use colors to add **interesting accents** or make **entire components** or **sections** stand out.
+  3. You can try to use your color strategically in **images** and **illustrations**.
+
+  **COLORS AND TYPOGRAPHY**
+
+  1. On dark colored backgrounds, try to use a **tint of the background**("lighter version") for text.
+  2. Text should usually not be completely black. **Lighten if up** it looks heavy and uninviting.
+  3. **Don't make text too light!** Use a tool to check contrast between text and background colors.
+
 - Images / Illustrations
+
+  **USE GOOD IMAGES**
+
+  1. Different types of images: product photos, storytelling photos, illustrations, patterns.
+  2. Use images to support your website's message and story. So only use **relevant images**!
+  3. Prefer **original images**. If mot possible, use original-looking stock images (not generic ones!).
+  4. Try to show **real people** to trigger user's emotions.
+  5. If necessary, **crop images** to fit your message.
+  6. Experiment **combining** photos, illustrations and patterns.
+
+  **HANDLING TEXT ON IMAGES**
+
+  7. Darker or brighten image (completely or partially, using a gradient).
+  8. Position text into neutral image area.
+  9. Put text in a box.
+
+  **SOME TECHNICAL DETAILS**
+
+  10. To account for high-res screens, make image dimensions **2x as big** as their displayed size.
+      <img src="../imgs/high-res-screens.png" />
+
+  11. **Compress images** for a lower file size and better performance.
+  12. When using multiple images side-by-side, make sure they have the **exact same dimensions**.
+
 - Icons
+
+  **USE ICONS WELL**
+
+  1. To keep icons neutral, **use same color as text**. To draw more attention, use different color.
+  2. Don't confuse your users: icons need to make sense and **fit the text or action**!
+  3. Don't make icons larger than what they **were designed for**. If needed, enclose them in a shape.
+
 - Shadows
 - Border-radius
 - Whitespace
