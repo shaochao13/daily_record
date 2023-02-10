@@ -2,124 +2,199 @@
 
 ### Web Design Ingredients (Web 设计因素)
 
-- Typography (排版设计)
-  `Typography` is the art and technique of arranging type to make written language **legible**, **readable** and **appealing** when displayed.
-  It is about formatting and designing text, making texts beautiful and easy to read.
+#### Typography (排版设计)
 
-  **RULES (GUIDELINES) OF TYPOGRAPHY**:
+`Typography` is the art and technique of arranging type to make written language **legible**, **readable** and **appealing** when displayed.
+It is about formatting and designing text, making texts beautiful and easy to read.
 
-  - `Use Good Typefaces`
+**RULES (GUIDELINES) OF TYPOGRAPHY**:
 
-    1. Use only good and popular typeface and play it safe.
-    2. It's okay to use just one typeface per page! If you want more, limit to 2 typefaces.
-    3. Choose the **right typeface** according to your website personality.
+- `Use Good Typefaces`
 
-    <img src="../imgs/use-good-typefaces.png" />
+  1. Use only good and popular typeface and play it safe.
+  2. It's okay to use just one typeface per page! If you want more, limit to 2 typefaces.
+  3. Choose the **right typeface** according to your website personality.
 
-  - `Use Good Font Size and Weights`
+  <img src="../imgs/use-good-typefaces.png" />
 
-    4.  When choosing font-size, **limit choices**! Use a "type scale" tool or other pre-defined range.
-    5.  Use a font size between `16px` and `32px` for **"normal" text**.
-    6.  For **long text** (like a blog post), try a size of `20px` or even bigger.
-    7.  For **headlines**, you can go really big (50px+) and bold(600+), **depending on personality**.
-    8.  For any text, don't use a font weight under 400 (regular).
+- `Use Good Font Size and Weights`
 
-    **SPACING SYSTEM (px)**: 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+  4. When choosing font-size, **limit choices**! Use a "type scale" tool or other pre-defined range.
+  5. Use a font size between `16px` and `32px` for **"normal" text**.
+  6. For **long text** (like a blog post), try a size of `20px` or even bigger.
+  7. For **headlines**, you can go really big (50px+) and bold(600+), **depending on personality**.
+  8. For any text, don't use a font weight under 400 (regular).
 
-    **FONT SIZE SYSTEM (px)**: 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+  **SPACING SYSTEM (px)**: 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
 
-    <img src="../imgs/use-good-font-size-and-weights.png" />
+  **FONT SIZE SYSTEM (px)**: 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
 
-  - `Create A Good Reading Experience`
+  <img src="../imgs/use-good-font-size-and-weights.png" />
 
-    9. Use less than 75 characters per line.
-    10. For **normal-sized text**, use a line height between `1.5` and `2`. For big text, go below `1.5` (The smaller or longer the text, the larger the line height needs to be!)
-    11. Decrease letter spacing in headlines, if it looks unnatural (this will come from experience).
-    12. Experiment with all caps for short titles. Make them small and bold and increase letter-spacing.
-    13. Usually, don't justify text.
-    14. Don't center long text blocks. Small blocks are fine.
+- `Create A Good Reading Experience`
+
+  9. Use less than 75 characters per line.
+  10. For **normal-sized text**, use a line height between `1.5` and `2`. For big text, go below `1.5` (The smaller or longer the text, the larger the line height needs to be!)
+  11. Decrease letter spacing in headlines, if it looks unnatural (this will come from experience).
+  12. Experiment with all caps for short titles. Make them small and bold and increase letter-spacing.
+  13. Usually, don't justify text.
+  14. Don't center long text blocks. Small blocks are fine.
 
   <img  src="../imgs/create-a-good-reading-experience.png" />
 
-- Colors
+#### Colors
 
-  **CHOOSE THE RIGHT COLOR**
+**CHOOSE THE RIGHT COLOR**
 
-  - Make the main color match your website's personality: `colors convey meaning`.
+- Make the main color match your website's personality: `colors convey meaning`.
 
-    1. `Red` draws a lot of attention, and symbolizes power, passion, and excitement.
-    2. `Orange` is less aggressive, and conveys happiness, cheerfulness, and creativity.
-    3. `Yellow` means joy, brightness, and intelligence.
-    4. `Green` represents harmony, nature, growth, and health.
-    5. `Blue` is associated with peace, trustworthiness, and professionalism.
-    6. `Purple` conveys wealth, wisdom, and magic.
-    7. `Pink` represents romance, care, and affection.
-    8. `Brown` is associated with nature, durability and comfort.
-    9. `Black` symbolizes power, elegance and minimalism, but also grief and sorrow.
+  1. `Red` draws a lot of attention, and symbolizes power, passion, and excitement.
+  2. `Orange` is less aggressive, and conveys happiness, cheerfulness, and creativity.
+  3. `Yellow` means joy, brightness, and intelligence.
+  4. `Green` represents harmony, nature, growth, and health.
+  5. `Blue` is associated with peace, trustworthiness, and professionalism.
+  6. `Purple` conveys wealth, wisdom, and magic.
+  7. `Pink` represents romance, care, and affection.
+  8. `Brown` is associated with nature, durability and comfort.
+  9. `Black` symbolizes power, elegance and minimalism, but also grief and sorrow.
 
-    <img  src="../imgs/choose-the-right-color.png" />
+  <img  src="../imgs/choose-the-right-color.png" />
 
-  - Use a **good color tone**! Don't choose a random tone or CSS named colors.
+- Use a **good color tone**! Don't choose a random tone or CSS named colors.
 
-  **ESTABLISH A COLOR SYSTEM**
+**ESTABLISH A COLOR SYSTEM**
 
-  1. You need at least two types of colors in your color palette: a **main color** and a **grey color**.
-  2. With more experience, you can add more colors: **accent colors** (use a tool).
-  3. For diversity, create lighter and darker "versions" (**tints and shades**).
+1. You need at least two types of colors in your color palette: a **main color** and a **grey color**.
+2. With more experience, you can add more colors: **accent colors** (use a tool).
+3. For diversity, create lighter and darker "versions" (**tints and shades**).
 
   <img  src="../imgs/establish-a-color-system.png" />
 
-  **WHEN AND HOW TO USE COLORS**
+**WHEN AND HOW TO USE COLORS**
 
-  1. Use your main color to **draw attention** to the most important elements on the page.
-  2. Use colors to add **interesting accents** or make **entire components** or **sections** stand out.
-  3. You can try to use your color strategically in **images** and **illustrations**.
+1. Use your main color to **draw attention** to the most important elements on the page.
+2. Use colors to add **interesting accents** or make **entire components** or **sections** stand out.
+3. You can try to use your color strategically in **images** and **illustrations**.
 
-  **COLORS AND TYPOGRAPHY**
+**COLORS AND TYPOGRAPHY**
 
-  1. On dark colored backgrounds, try to use a **tint of the background**("lighter version") for text.
-  2. Text should usually not be completely black. **Lighten if up** it looks heavy and uninviting.
-  3. **Don't make text too light!** Use a tool to check contrast between text and background colors.
+1. On dark colored backgrounds, try to use a **tint of the background**("lighter version") for text.
+2. Text should usually not be completely black. **Lighten if up** it looks heavy and uninviting.
+3. **Don't make text too light!** Use a tool to check contrast between text and background colors.
 
-- Images / Illustrations
+#### Images / Illustrations
 
-  **USE GOOD IMAGES**
+**USE GOOD IMAGES**
 
-  1. Different types of images: product photos, storytelling photos, illustrations, patterns.
-  2. Use images to support your website's message and story. So only use **relevant images**!
-  3. Prefer **original images**. If mot possible, use original-looking stock images (not generic ones!).
-  4. Try to show **real people** to trigger user's emotions.
-  5. If necessary, **crop images** to fit your message.
-  6. Experiment **combining** photos, illustrations and patterns.
+1. Different types of images: product photos, storytelling photos, illustrations, patterns.
+2. Use images to support your website's message and story. So only use **relevant images**!
+3. Prefer **original images**. If mot possible, use original-looking stock images (not generic ones!).
+4. Try to show **real people** to trigger user's emotions.
+5. If necessary, **crop images** to fit your message.
+6. Experiment **combining** photos, illustrations and patterns.
 
-  **HANDLING TEXT ON IMAGES**
+**HANDLING TEXT ON IMAGES**
 
-  7. Darker or brighten image (completely or partially, using a gradient).
-  8. Position text into neutral image area.
-  9. Put text in a box.
+7. Darker or brighten image (completely or partially, using a gradient).
+8. Position text into neutral image area.
+9. Put text in a box.
 
-  **SOME TECHNICAL DETAILS**
+**SOME TECHNICAL DETAILS**
 
-  10. To account for high-res screens, make image dimensions **2x as big** as their displayed size.
-      <img src="../imgs/high-res-screens.png" />
+10. To account for high-res screens, make image dimensions **2x as big** as their displayed size.
+    <img src="../imgs/high-res-screens.png" />
 
-  11. **Compress images** for a lower file size and better performance.
-  12. When using multiple images side-by-side, make sure they have the **exact same dimensions**.
+11. **Compress images** for a lower file size and better performance.
+12. When using multiple images side-by-side, make sure they have the **exact same dimensions**.
 
-- Icons
+#### Icons
 
-  **USE ICONS WELL**
+**USE ICONS WELL**
 
-  1. To keep icons neutral, **use same color as text**. To draw more attention, use different color.
-  2. Don't confuse your users: icons need to make sense and **fit the text or action**!
-  3. Don't make icons larger than what they **were designed for**. If needed, enclose them in a shape.
+1. To keep icons neutral, **use same color as text**. To draw more attention, use different color.
+2. Don't confuse your users: icons need to make sense and **fit the text or action**!
+3. Don't make icons larger than what they **were designed for**. If needed, enclose them in a shape.
 
-- Shadows
-- Border-radius
-- Whitespace
-- Visual Hierarchy
-- User Experience
-- Components / Layout
+#### Shadows
+
+**USE SHADOWS WELL**
+
+1. You don't have to use shadows! Only use them if it makes sense for the **website personality**.
+2. Use shadows **in small doses**: don't add shadows to every element!
+3. Go light on shadows, don't make them **too dark**!
+
+**USE SHADOWS IN THE RIGHT SITUATION**
+
+4. Use **small shadows** for smaller elements that should stand out(to draw attention).
+5. Use **medium-sized shadows** for larger areas that should stand out a bit more.
+6. Use **large shadows** for elements that should really **float above** the interface.
+7. Experiment with **changing shadows** on mouse interaction(click and hover).
+8. Bonus: Experiment with **glows**(colored shadows).
+   <img src="../imgs/glows_shadows.png" />
+
+#### Border-radius
+
+**USE BORDER-RADIUS WELL**
+
+1. Use border-radius to **increase the playfulness** and fun of the design, to make it less serious.
+2. Typefaces have a certain roundness: make sure that border-radius **matches that roundness**!
+3. Use border-radius on buttons, images, around icons, standout sections and other elements.
+
+#### Whitespace
+
+**WHERE TO USE WHITESPACE**
+
+1. Use tons of whitespace between sections.
+2. Use a lot of whitespace between groups of elements.
+3. Use whitespace between elements.
+4. Inside groups of elements, try to use whitespace instead of lines.
+
+**HOW MUCH WHITESPACE**
+
+5. The more some elements(or groups of elements) belong together, the closer they should be.
+6. Start with a lot of whitespace, maybe event too much! Then remove whitespace from there.(Too much whitespace looks detached, too little looks too crammed)
+7. Match other design choices. If you have big text or big icons, you need more whitespace.
+8. Try a hard value, such as using **multiples of 16px** for all spacing.
+   <img src="../imgs/whitespace_value.png" />
+
+#### Visual Hierarchy
+
+**WHAT IS VISUAL HIERARCHY**
+
+1. Visual hierarchy is about establishing which elements of a design are the most important ones.
+2. Visual hierarchy is about drawing attention to these most important elements.
+3. Visual hierarchy is about defining a "path" for users, to guide them through the page.
+4. We use a combination of position, size, colors, spacing, borders, and shadows to establish a meaningful visual hierarchy between elements/components.
+
+**VISUAL HIERARCHY FUNDAMENTALS**
+
+1. Position important elements **closer to the top the page**, where they get more attention.
+2. Use images mindfully, as they draw a lot of attention (larger images get more attention).
+3. Whitespace creates separation, so **use whitespace strategically** to emphasize elements.
+
+**VISUAL HIERARCHY FOR TEXT ELEMENTS**
+
+4. For text elements, use **font size**, **font weight**, **color**, and **whitespace** to convey importance.
+
+5. What text elements to emphasize? **Titles**, **sub-titles**, **links**, **buttons**, **data points**, **icons**, also can **de-emphasize** less important text, like **labels** or **secondary/additional information**.
+
+**VISUAL HIERARCHY BETWEEN COMPONENTS**
+
+6. Emphasize an important component using **background color**, **shadow**, or **border** (or multiple).
+7. Try emphasizing some component A over component B by de-emphasizing component B.
+   <img src="../imgs/deemphasizing_b.png" />
+8. What components to emphasize? **Testimonials**, **call-to-action sections**, **highlight sections**, **preview cards**, **forms**, **pricing tables**, **important rows/columns in tables**, etc.
+
+#### User Experience
+
+**UX RULES FOR USABILITY**
+
+1. Don't design complicated layouts. Don't reinvent the wheel. Use patterns that users know.
+2. Make your call-to-action the most prominent element, and make the text descriptive.
+3. Use **blue text** and **underlined text** only for **links**!
+4. Animations should have a **purpose** and be **fast**: **between 200 and 500 ms**.
+
+#### Components / Layout
 
 ### Overview of Website Personalities
 
@@ -250,7 +325,7 @@ p {
 }
 ```
 
-#box3 最近，所以听它的。
+<!-- box3 最近，所以听它的 -->
 
 ```html
 <div id="box1">
@@ -462,7 +537,7 @@ box-shadow: 3px 3px 3px 3px #666 inset;
 
 ### 文字换行
 
-#### `overflow-wrap` 通用属性。
+#### `overflow-wrap` 通用属性
 
 用来说明当一个不能被分开的字符串（单词）太长而不能填充其包裹盒时，为防止其溢出，浏览器是否允许这样的单词**中断换行**。
 
@@ -482,7 +557,7 @@ box-shadow: 3px 3px 3px 3px #666 inset;
 
 指定盒子宽度和高度的计算方式。其值可以是：`content-box`、`border-box`。
 
-#### 外加模式（默认方式）：
+#### 外加模式（默认方式）
 
 ```css
 box-sizing: content-box;
@@ -490,7 +565,7 @@ box-sizing: content-box;
 
 此时设置的 width 和 height 是**内容区域**的宽高。`盒子的实际宽度 = 设置的 width + padding + border`。此时改变 padding 和 border 的大小，也不会改变内容的宽高，而是盒子的总宽高发生变化。
 
-#### 内减模式：
+#### 内减模式
 
 ```css
 box-sizing: border-box;
@@ -514,7 +589,7 @@ box-sizing: border-box;
 
 ### 3. 盒模型的各个部分
 
-​ CSS 中组成一个块级盒子需要:
+CSS 中组成一个块级盒子需要:
 
 - **Content box**: 这个区域是用来显示内容，大小可以通过设置 [`width`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width) 和 [`height`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/height).
 - **Padding box**: 包围在内容区域外部的空白区域； 大小通过 [`padding`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/padding) 相关属性设置。
@@ -523,13 +598,13 @@ box-sizing: border-box;
 
 ### 4. 标准盒模型
 
-​ 在标准模型中，如果你给盒设置 `width` 和 `height`，实际设置的是 _content box_。 padding 和 border 再加上设置的宽高一起决定整个盒子的大小。
+在标准模型中，如果你给盒设置 `width` 和 `height`，实际设置的是 _content box_。 padding 和 border 再加上设置的宽高一起决定整个盒子的大小。
 
 ### 5. 替代(IE) 盒模型
 
-​ 这个模型，所有宽度都是可见宽度，所以内容宽度是该宽度减去边框和填充部分。
+这个模型，所有宽度都是可见宽度，所以内容宽度是该宽度减去边框和填充部分。
 
-​ 通过为其设置 `box-sizing: border-box` 来实现。
+通过为其设置 `box-sizing: border-box` 来实现。
 
 ### margin 外边距
 
@@ -582,7 +657,7 @@ box-sizing: border-box;
 
 如果我们不给父容器写`flex-direction`这个属性，那么，子元素默认就是从左到右排列的。
 
-### `flex-wrap` 控制子元素溢出时的换行处理。
+### `flex-wrap` 控制子元素溢出时的换行处理
 
 ### `justify-content` 设置子元素在主轴上的对齐方式
 
@@ -647,7 +722,7 @@ box-sizing: border-box;
 - 微调元素
 - 做绝对定位的参考，子绝父相
 
-#### 子绝父相:
+#### 子绝父相
 
 一个绝对定位的元素，如果父辈元素中也出现了已定位（无论是绝对定位、相对定位，还是固定定位）的元素，那么将以父辈这个元素，为参考点。这里说的是父辈元素，不一定需要是直接的父元素，也可以是爷爷辈的元素。哪个忆定位的父辈元素离此子元素最近，则以这个父辈元素作为参考。
 
@@ -732,7 +807,7 @@ div {
 
 ## 书写模式
 
-​ `writing-mode`的三个值分别是：
+`writing-mode`的三个值分别是：
 
 - `horizontal-tb`: 块流向从上至下。对应的文本方向是横向的。
 - `vertical-rl`: 块流向从右向左。对应的文本方向是纵向的。
@@ -912,7 +987,7 @@ background-image: radial-gradient(100px 50px at center, yellow, green);
 
 ## 动画
 
-### 过渡：`transition`
+### 过渡：transition
 
 实现元素**不同状态间的平滑过渡**（`补间动画`），经常用来制作动画效果。
 
@@ -933,9 +1008,9 @@ transition: 让哪些属性进行过度 过渡的持续时间 运动曲线 延�
 - 补间动画：自动完成从起始状态到终止状态的的过渡。不用管中间的状态。
 - 帧动画：通过一帧一帧的画面按照固定顺序和速度播放。如电影胶片。
 
-### 转换：`transform`
+### 转换：transform
 
-#### 1. 缩放 `scale`
+#### 1. 缩放 scale
 
 格式：
 
@@ -946,7 +1021,7 @@ transform: scale(2, 0.5);
 
 x：表示水平方向的缩放倍数。y：表示垂直方向的缩放倍数。如果只写一个值就是等比例缩放。
 
-#### 2. 位移 `translate`
+#### 2. 位移 translate
 
 格式：
 
@@ -974,7 +1049,7 @@ div {
 
 3D 移动： `translateX`、`translateY`、`translateZ`
 
-#### 3. 旋转 `rotate`
+#### 3. 旋转 rotate
 
 格式：
 
@@ -994,7 +1069,7 @@ transform-origin: center bottom; /*旋转时，以盒子底部的中心为坐标
 
 3D 旋转： `rotateX`、`rotateY`、`rotateZ`。
 
-#### 4. 透视 `perspective`
+#### 4. 透视 perspective
 
 只是视觉呈现出 3d 效果，并不是正真的 3d。
 格式有两种写法：
@@ -1002,7 +1077,7 @@ transform-origin: center bottom; /*旋转时，以盒子底部的中心为坐标
 - 作为一个属性，设置给父元素，作用于所有 3D 转换的子元素。
 - 作为 transform 属性的一个值，做用于元素自身。
 
-#### 5. 3D 呈现 `transform-style`
+#### 5. 3D 呈现 transform-style
 
 ```css
 transform-style: preserve-3d; /* 让 子盒子 位于三维空间里 */
@@ -1094,10 +1169,10 @@ transform-style: flat; /* 让子盒子位于此元素所在的平面内（子盒
 
 ```
 定义动画：
-	@keyframes 动画名{
-		from{ 初始状态 }
-		to{ 结束状态 }
-	}
+ @keyframes 动画名{
+  from{ 初始状态 }
+  to{ 结束状态 }
+ }
 
  调用：
   animation: 动画名称 持续时间；
@@ -1254,7 +1329,7 @@ textarea {
 
 ## 浏览器的兼容性问题
 
-### 第 1 条: 解决微型盒子问题：
+### 第 1 条: 解决微型盒子问题
 
 IE6 不支持小于 12px 的盒子，任何小于 12px 的盒子，在 IE6 中看都大。即：IE 6 不支持微型盒子。解决办法很简单，就是将盒子的字号大小，设置为**小于盒子的高**，比如，如果盒子的高为 5px，那就把 font-size 设置为 0px(0px < 5px)。
 
