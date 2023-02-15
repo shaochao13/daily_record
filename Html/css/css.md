@@ -196,15 +196,27 @@ It is about formatting and designing text, making texts beautiful and easy to re
 
 #### Components / Layout
 
-### Overview of Website Personalities
+### Website Personalities Framework
 
 - Serious / Elegant
+  <img src="../imgs/serious_elegant.website_personality.png" />
 - Minimalist / Simple
+  <img src="../imgs/minimalist_simple_website_personality.png" />
 - Plain / Neutral
+  <img src="../imgs/plain_neutral_website_personality.png"/>
 - Bold / Confident
+  <img src="../imgs/bold_confident_website_personality.png" />
 - Calm / Peaceful
+  <img src="../imgs/calm_peaceful_website_personality.png" />
 - Startup / Upbeat
+  <img src="../imgs/startup_upbeat_website_personality.png" />
 - Playful / Fun
+  <img src="../imgs/playful_fun_website_personality.png" />
+
+COMBINING PLAYFULNESS AND BOLDNESS
+<img src="../imgs/combining_playfulness_boldness.png" />
+
+<img src="../imgs/getting_inspired_and_stealing_like_artist.png" />
 
 ## CSS 书写顺序
 
