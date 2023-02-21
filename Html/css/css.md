@@ -218,6 +218,36 @@ COMBINING PLAYFULNESS AND BOLDNESS
 
 <img src="../imgs/getting_inspired_and_stealing_like_artist.png" />
 
+## Responsive Design
+
+### Responsive Design Ingredients
+
+#### 1. Fluid Layouts
+
+- To all webpage to adapt to the current viewport width(or even heigh)
+- Use % (or vh / vw) unit instead of px for elements that should adapt to viewport(usually layout)
+- use max-width instead of width
+  <img src="../imgs/fluid_layouts.png" />
+
+#### 2. Responsive Units
+
+- Use rem unit instead of px for most lengths.
+- To make it easy to scale the entire layout down (or up) automatically.
+- **Helpful trick**: setting 1rem to 10px for easy calculations.
+  <img src="../imgs/responsive_units.png" />
+
+#### 3.Flexible Images
+
+- By default, images don't scale automatically as we change the viewport, so we need to fix that.
+- Always use % for image dimensions, together with the max-width property.
+  <img src="../imgs/flexible_images.png" />
+
+#### 4. Media Queries
+
+- Bring responsive sites to life!
+- To changes CSS styles on certain viewport widths(called breakpoints)
+  <img src="../imgs/media_queries.png"/>
+
 ## CSS 书写顺序
 
 <img src="../../images/css_order.png"/>
