@@ -511,6 +511,22 @@ li[class^='a' i] {
 
 ## 文本
 
+### font-face 加载字体文件
+
+```css
+@font-face {
+  font-family: '指定一个font-family名,以便使用';
+  src: url('字体的url地址'),
+    url('可以指定多地址，一般一个地址表示一个字体的一种类型的字体文件，浏览器会找到最适合自己浏览器的第一个进行下载'),
+    url('');
+}
+```
+
+`.woff`: Web open font format,web 开放字体格式，建立在 TrueType 基础之上。
+`.ttf`: TrueType 字体。
+`.oft`: OpenType 字体，建立在 TrueType 基础之上。
+`.eot`: Embedded OpenType 字体，是 OpenType 的一种压缩形式，是 Microsoft 专用，仅 IE 提供支持。
+
 ### text-shadow 设置文本的阴影
 
 > 参数格式：水平位移 垂直位移 模糊程度 阴影颜色。
@@ -673,6 +689,37 @@ CSS 中组成一个块级盒子需要:
 
 > padding 不能设置为负值。
 > 会将盒子的宽和高“充”大。
+
+## 指定媒体类型
+
+通过`media`来使用媒体查询，来指定适用于指定设备的样式或者样式文件。
+**注**: IE8 及以前版本不支持*媒体查询*。
+
+- 在样式文件中使用`media`:
+
+```html
+<link
+  href="example.css"
+  rel="stylesheet"
+  media="screen and (max-device-width: 1200px)" />
+<link href="example.css" rel="stylesheet" media="print" />
+```
+
+- 在 CSS 中使用`media`:
+
+```css
+@media screen and (max-device-width: 1200px) {
+  /*具体的样式*/
+}
+
+@media (max-width: 1200px) {
+  /*具体的样式*/
+}
+
+@media print {
+  /*具体的样式*/
+}
+```
 
 ## Flex 布局
 
