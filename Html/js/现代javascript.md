@@ -340,3 +340,32 @@ symbol 类型用于创建对象的唯一标识符。
 ### Object 类型
 
 object 类型用于储存数据集合和更为复杂的数据实体。
+
+### typeof 运算符
+
+typeof 运算符 返回参数的类型。 typeof 是一个操作符，不是一个函数。
+
+| typeof 的代码写法 | 返回结果  |
+| :---------------- | :-------- |
+| typeof 数字       | number    |
+| typeof 字符串     | string    |
+| typeof 布尔型     | boolean   |
+| typeof 对象       | object    |
+| typeof 方法       | function  |
+| typeof null       | object    |
+| typeof undefined  | undefined |
+| typeof []         | object    |
+| typeof {}         | object    |
+
+```js
+typeof undefined; // "undefined"
+typeof NaN; // "number"   NaN 是一个特殊的数字
+typeof null; // "object"  官方承认的 typeof 的错误，这个问题来自于 JavaScript 语言的早期阶段，并为了兼容性而保留了下来。null 绝对不是一个 object。null 有自己的类型，它是一个特殊值。typeof 的行为在这里是错误的。
+typeof 100; // "number"
+typeof 100n; // "bigint"
+typeof false; // "boolean"
+typeof 'Tom'; // "string"
+typeof Symbol('example'); // "symbol"
+typeof Math; // "object"  Math 是一个提供数学运算的内建 object
+typeof console.log; // "function"
+```
