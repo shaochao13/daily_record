@@ -324,3 +324,19 @@ let name = null; // 表示name是未知的
 ```
 
 ### Undefined 值
+
+`undefined` 表示 “**未被赋值**”。
+如果一个变量已经被声明，但未被赋值，那么它的值就是 `undefined` 。
+
+```js
+let name;
+console.log(name); // undefined
+```
+
+### Symbol 类型
+
+symbol 类型用于创建对象的唯一标识符。
+
+### Object 类型
+
+object 类型用于储存数据集合和更为复杂的数据实体。
