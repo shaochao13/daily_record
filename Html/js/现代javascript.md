@@ -310,3 +310,17 @@ console.log(`1 + 2 = ${1 + 2}`); //输出：1 + 2 = 3
 ```
 
 在 javascript 中没有 character 类型，一个字符串可以包含零个（为空）、一个或者多个字符。
+
+### Boolean 类型
+
+boolean 类型仅包含两个值： `true` 和 `false` 。
+
+### Null 值
+
+javascript 中的 `null` ，仅仅表示 “**无**” 、 “**空**” 或者 “**值未知**” 的特殊值，它不是一个“对不存在的 object 的引用” 或者 ”null 指针”。
+
+```js
+let name = null; // 表示name是未知的
+```
+
+### Undefined 值
