@@ -292,3 +292,21 @@ const bigN = 90071992547409919007199254740991n;
 ```
 
 ### String 类型
+
+在 javascript 中，有 3 种表示字符串的方式：
+
+- 双引号： "Hello,World"。
+- 单引号： 'Hello,World'。
+- 反引号： \`Hello,World\`。
+
+双引号和单引号没有什么区别。 `反引号`是 **功能扩展** 引号，通过它可以将变量或者表达式包装在`${...}`中，嵌入到字符串，方便字符串的操作。
+
+```js
+let firstName = 'Tom';
+let lastName = 'Wu';
+let fullName = `${firstName} ${lastName}`; // fullName = ："Tom Wu"
+
+console.log(`1 + 2 = ${1 + 2}`); //输出：1 + 2 = 3
+```
+
+在 javascript 中没有 character 类型，一个字符串可以包含零个（为空）、一个或者多个字符。
