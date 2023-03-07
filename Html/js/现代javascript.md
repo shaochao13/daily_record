@@ -596,3 +596,58 @@ let num = (10 + 20, 30 + 40); // num = 70
 ```
 
 逗号运算符的优先级非常低，比赋值运算符 = 还要低。
+
+## 值的比较
+
+### 字符串比较
+
+当两个值都为字符串时，是按字符（母）逐个进行比较。
+
+```js
+console.log('B' > 'A'); // true
+console.log('Black' > 'Blue'); // false
+console.log('Back' > 'Ba'); // true
+```
+
+### 不同类型间的比较
+
+当不同类型的值进行比较时，javascript 首先会将其转化为 **数字(Number)** ，再进行比较大小。
+
+```js
+console.log('1' > 1); // false
+console.log('01' == 1); // true
+```
+
+对于布尔类型值: `true` 会被转化为 `1`、`false` 转化为 `0`。
+
+### 严格相等
+
+严格相等运算符 `===` 在进行比较时，不会做任何的类型转换。
+相等运算符`==` 在进行比较时，如果是不同类型的数据，首先会其进行类型转换。
+
+```js
+console.log(false === 0); //  false
+console.log(false == 0); //  true
+```
+
+### null 和 undefined
+
+```js
+// 当使用非严格相等 == 比较二者时
+console.log(null == undefined); //true
+
+// 当使用严格相等 === 比较二者时
+console.log(null === undefined); // false
+```
+
+- 在进行相等性检查`==`时，`null`和`undefined`不会进行任何的类型转换。
+- 在进行普通的比较运算`>`、`<`、`>=`、`<=`检查时，`null`会转化为 `0` ， `undefined` 会转换为 `NaN`。
+- 在进行相等性检查`==`时，`undefined` 只与 `null` 相等，不与其他任何值相等。
+
+```js
+console.log(null == 0); //  false
+console.log(null >= 0); //  true
+
+console.log(undefined == 0); // false
+console.log(undefined >= 0); // false  此时undefined会转换为NaN
+```
