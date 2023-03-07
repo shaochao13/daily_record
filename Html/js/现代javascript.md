@@ -620,7 +620,7 @@ console.log('01' == 1); // true
 
 对于布尔类型值: `true` 会被转化为 `1`、`false` 转化为 `0`。
 
-### 严格相等
+### 严格相等 ===
 
 严格相等运算符 `===` 在进行比较时，不会做任何的类型转换。
 相等运算符`==` 在进行比较时，如果是不同类型的数据，首先会其进行类型转换。
@@ -650,4 +650,48 @@ console.log(null >= 0); //  true
 
 console.log(undefined == 0); // false
 console.log(undefined >= 0); // false  此时undefined会转换为NaN
+```
+
+## 条件分支：if 和 "?"
+
+`?`它被称为“三元运算符”。
+
+```js
+let result = condition ? value1 : value2;
+// 计算条件结果，如果结果为真，则返回 value1，否则返回 value2。
+```
+
+```js
+let age = prompt('请问你多大了？', '');
+if (age >= 18) {
+  alert('恭喜你，已成年');
+} else {
+  alert('对不起，你还未成年，不能进入。');
+}
+
+// 使用 ？重写
+let result = age > 18 ? '恭喜你，已成年' : '对不起，你还未成年，不能进入。';
+```
+
+```js
+let age = prompt('请问你多大了？', '');
+if (age < 3) {
+  alert('你还是一个小baby呢');
+} else if (age < 18) {
+  alert('你还是一个青少年呢');
+} else if (age < 70) {
+  alert('你还很年轻呢');
+} else {
+  alert('老头，一起打牌不');
+}
+
+// 使用 ？重写
+let result =
+  age < 3
+    ? '你还是一个小baby呢'
+    : age < 18
+    ? '你还是一个青少年呢'
+    : age < 70
+    ? '你还很年轻呢'
+    : '老头，一起打牌不';
 ```
