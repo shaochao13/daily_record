@@ -1,8 +1,8 @@
-## JavaScript 基础知识
+# JavaScript 基础知识
 
-### Hello,World!
+## Hello,World!
 
-#### script 标签
+### script 标签
 
 可以使用 &lt;script&gt; 标签将 javascript 程序插入到 html 文档中的任何位置。当浏览器遇到 &lt;script&gt; 标签时，代码会自动运行。
 
@@ -13,7 +13,7 @@
 </script>
 ```
 
-#### 外部脚本
+### 外部脚本
 
 可以 &lt;script&gt; 标签的`src`属性来添加外部的 js 文件。
 
@@ -40,9 +40,9 @@
 
 在&lt;script&gt;标签中，不要同时有 src 属性和内部包裹的代码。
 
-### 代码结构
+## 代码结构
 
-#### 语句
+### 语句
 
 语句是执行行为的语法结构和命令。
 在代码中，可以编写任意数量的语句。 语句之间可以使用分号来进行分开。
@@ -55,7 +55,7 @@ console.log('World.');
 console.log('Hello, '); \ console.log('World.');
 ```
 
-#### 分号
+### 分号
 
 在大多数情况下，当存在换行符时，语句后面的分号可以省略不写，此时，javascript 引擎会将换行符理解成”分号“，称为`自动分号插入（Automatic Semicolon Insertion）`。
 
@@ -88,7 +88,7 @@ console.log('hello')[1,2].forEach(alert)
 - "prettier.semi"
   此属性值为 true 时，安装了 prettier 时就会自动添加分号。
 
-#### 注释
+### 注释
 
 - 单行注释
   以两个正斜杠字符 // 开始。
@@ -96,7 +96,7 @@ console.log('hello')[1,2].forEach(alert)
   以一个正斜杠和星号开始 “/\*” 并以一个星号和正斜杠结束 “\*/”。
   多行注释不支持嵌套。可以在多行注释中插入单行注释。
 
-#### "use strict"
+### "use strict"
 
 从`ES5`开始，增加了一些新的语言特性，并且修改了一些已经慧的特性。为了保证旧的功能能够使用，大部分的修改是默认不生效的。需要使用一个特殊的指令来激活这些新的特性：`"use strict"`。
 
@@ -135,7 +135,7 @@ console.log('hello')[1,2].forEach(alert)
   - 在 `class`中`module`中，会自动启用`use strict`
     当代码都写在`class`和`module`中时，它们会自动启用严格模式，不需要手动添加`"use strict"`指令。
 
-### 变量
+## 变量
 
 `变量`是存储数据值的一个容器。
 使用 `let` 关键字来定义一个变量。
@@ -165,7 +165,7 @@ let msg = 'abc';
 let msg = 123;
 ```
 
-#### 变量命名
+### 变量命名
 
 javascript 的变量命名的一些规则：
 
@@ -192,7 +192,7 @@ let first-name; // “-”不能用于变量名称中
 let let = 'let是一个关键字'; // 不能用 "let" 来命名一个变量！
 ```
 
-#### 未使用`use strict`情况下赋值
+### 未使用`use strict`情况下赋值
 
 一般情况下，都是先声明、赋值，再使用。但在早期，可以简单地通过赋值创建一个变量。
 
@@ -209,7 +209,7 @@ name = 'Tom'; // 此时会报错， num 未定义
 
 有时还会看到使用`var`来命名变量的写法。但在现代的 javascript 中，已经不再推荐使用它了。
 
-#### 常量
+### 常量
 
 声明一个不变的变量，使用`const`。 使用`const`声明的变量称为“常量”，即它一旦赋值就不能被修改。并且声明和赋值须一起完成。
 
@@ -225,7 +225,7 @@ name = 'Albert'; // 不能修改常量的值，会报错
 const MAIN_COLOR = '#343434';
 ```
 
-### alert、prompt 和 confirm
+## alert、prompt 和 confirm
 
 alert、prompt 和 confirm 为与用户交互的 3 个浏览器的特定函数。它们弹出的窗口称为“**模态窗(modal)**”， 它们会暂停脚本的执行,并且用户不能与页面的其他部分进行交互，直到模态窗口关闭。
 
@@ -234,7 +234,7 @@ alert、prompt 和 confirm 为与用户交互的 3 个浏览器的特定函数�
 - 模态窗口的确切位置由浏览器决定。通常在页面中心。
 - 窗口的确切外观也取决于浏览器。我们不能修改它。
 
-#### alert
+### alert
 
 用来弹出一些提示信息。
 
@@ -242,7 +242,7 @@ alert、prompt 和 confirm 为与用户交互的 3 个浏览器的特定函数�
 alert('Hello, World.');
 ```
 
-#### prompt
+### prompt
 
 `prompt` 浏览器会显示一个带有文本消息的模态窗口，还有 `input` 框和确定/取消按钮。
 
@@ -269,7 +269,7 @@ console.log(result === null);
 
 在 IE 浏览器中，如果未提供第二个参数，它会默认将“undefined”插入到 prompt，所以最好每次都为 prompt 函数提供第二个参数。
 
-#### confirm
+### confirm
 
 `confirm` 弹出显示信息等待用户点击确定或取消。点击确定返回 `true` ，点击取消或按下 Esc 键返回 `false` 。
 
@@ -927,3 +927,5 @@ outer: for (let i = 0; i < 3; i++) {
   console.log(`i:${i}`);
 }
 ```
+
+## switch 语句
