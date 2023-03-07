@@ -695,3 +695,121 @@ let result =
     ? '你还很年轻呢'
     : '老头，一起打牌不';
 ```
+
+## 逻辑运算符
+
+javascript 中有四个逻辑运算符：`||(或)`、`&&(与)`、`!(非)`、`??(空值合并运算符)`
+
+在传统的编程中，逻辑运算符仅能操作布尔值， 并且返回的结果也是布尔值。
+但在 javascript 中，逻辑运算符可以操作任意类型。如果操作也是布尔值，那么与传统的编程中一样，如果操作的不是布尔值，则返回的就是按各个逻辑运算符的规则进行返回相应的初始值。
+
+```js
+// 操作的参数都是布尔值时，与其他编程语言中一样的逻辑
+console.log(true || false); // true
+console.log(false && false); // false
+console.log(!false); // true
+```
+
+### 逻辑或 `||`
+
+`逻辑或||`它的任务就是**寻找第一个真值**。
+简单来说：**一个或运算 `||` 的链，将返回第一个"真值"，如果不存在"真值"，就返回该链的最后一个值**。
+
+```js
+let result = value1 || value2 || value3;
+```
+
+- 从左至右依次计算各个参数。
+- 处理每一个操作数时，都将其转化为布尔值，如果结果是 `true` ，就停止计算，并返回这个操作数的初始值。
+- 如果所有的操作数都被计算了，则返回最后一个操作数的初始值。
+- 返回的值是操作数的初始形式，不会做布尔转换。
+
+```js
+console.log(0 || 1); // 1
+console.log(null || 10); // 10
+console.log(0 || null || undefined); // undefined 返回最后一个数
+console.log(null || 'tom'); // tom
+
+true || console.log('为false时才会执行console.log函数');
+```
+
+### 逻辑与 `&&`
+
+`逻辑与&&`它的任务就是**寻找第一个假值**。
+简单来说：**一个与运算 `&&` 的链，将返回第一个"假值"，如果不存在"假值"，就返回该链的最后一个值**。
+
+```js
+let result = value1 || value2 || value3;
+```
+
+- 从左至右依次计算各个操作数。
+- 处理每一个操作数时，都将其转化为布尔值，如果结果是 `false` ，就停止计算，并返回这个操作数的初始值。
+- 如果所有的操作数都被计算了，则返回最后一个操作数的初始值。
+- 返回的值是操作数的初始形式，不会做布尔转换。
+
+```js
+console.log(0 && 1); // 0
+console.log(null && 10); // null
+console.log(0 && null && undefined); // 0
+console.log(null && 'tom'); // null
+console.log(1 && 'tom' && undefined); // undefined 返回最后一个数
+
+true && console.log('为 true 时才会执行console.log函数');
+```
+
+**`与运算&&` 的优先级比`或运算||` 要高**:
+
+```js
+// 建议加上圆括号
+console.log((10 && 50) || (null && 20)); // 50
+console.log((null && 20) || (10 && 50)); // 50
+```
+
+### 逻辑非`!`
+
+逻辑非`!` 运算符接受一个参数，并将操作数转化布尔类型（true/false），然后返回相反的值。
+
+```js
+console.log(!false); // true
+console.log(!0); // true
+console.log(!null); // true
+console.log(!undefined); // true
+```
+
+使用两个非运算`!!`，可以将值转为其对应的布尔类型，与 Boolean(value) 一样的效果：
+
+```js
+console.log(!!'Tom'); // true
+console.log(!!null); // false
+console.log(!!undefined); // false
+console.log(!!NaN); // false
+```
+
+非运算符`!` 的优先级在所有逻辑运算符里面`最高`，总是在 `&&` 和 `||` 之前执行。
+
+### 空值合并运算符`??`
+
+空值合并运算符`??` 是新添加到 javascript 中的特性，如果旧老浏览器中使用它，可能需要 `polyfills`。
+
+```js
+let result = value1 ?? value2;
+
+// 与上面同逻辑
+let result = value1 !== null && value1 !== undefined ? value1 : value2;
+```
+
+如果 `value1` 不是 `null` 和 `undefined` ，则返回 `value1`, 否则就返回 `value2` 。
+
+`??` 常见的使用场景是用来提供`默认值`。
+
+```js
+let name;
+// let name = 'John';
+console.log(name ?? 'Tom');
+```
+
+`??`与`||`的区别：
+
+- `||` 无法区分 `false`、`0`、空字符串"" 和 `null` / `undefined`, 它们都一样为“假值”。
+- `??` 只针对 `null` / `undefined`。
+- 使用`??`时，如果没有明确添加括号，不能将其与 `||` 或 `&&` 一起使用。
