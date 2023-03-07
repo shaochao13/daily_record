@@ -421,3 +421,72 @@ typeof Symbol('example'); // "symbol"
 typeof Math; // "object"  Math 是一个提供数学运算的内建 object
 typeof console.log; // "function"
 ```
+
+### 类型转换
+
+在大多数情况下，运算符和函数会自动将赋予给它们的值转换为正确的类型。
+
+#### 字符串转换
+
+可以调用`String(value)`来将`value`转换为字符串类型
+
+```js
+let v = true;
+let vStr = String(v); // "true"
+
+v = null;
+vStr = String(v); // "null"
+```
+
+#### 数字型转换
+
+可以调用`Number(value)`来将`value`转换为 number 类型
+
+```js
+let str = '   100   ';
+let n = Number(str); // 100
+
+str = '';
+n = Number(str); // 0
+
+str = undefined;
+n = Number(str); // NaN
+
+str = null;
+n = Number(str); // 0
+
+str = true;
+n = Number(str); // 1
+
+str = '100abcd';
+n = Number(str); // NaN
+```
+
+**Number()** 类型转换规则：
+
+| 值            | 转换之后的结果                                                                                                                                                                           |
+| :------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| undefined     | NaN                                                                                                                                                                                      |
+| null          | 0                                                                                                                                                                                        |
+| true 和 false | 1 和 0                                                                                                                                                                                   |
+| string        | 去掉首尾空白字符（空格、换行符 \n、制表符 \t 等）后的纯数字字符串中含有的数字。如果剩余字符串为空，则转换结果为 0。否则，将会从剩余字符串中“读取”数字。当类型转换出现 error 时返回 NaN。 |
+
+#### 布尔型转换
+
+可以调用`Boolean(value)`来将`value`转换为 boolean 类型
+
+转换规则：
+
+- 直观上为“空”的值（0、空字符串、null、undefined、NaN）将变为`false`
+- 其他值变成`true`
+
+```js
+console.log(Boolean(1)); // true
+console.log(Boolean(0)); // false
+console.log(Boolean('Tom')); // true
+
+console.log(Boolean('')); // false
+console.log(Boolean(' ')); // true
+
+console.log(Boolean('0')); // true
+```
