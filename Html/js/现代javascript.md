@@ -815,3 +815,115 @@ let result =
 ```
 
 ## 循环： while 和 for
+
+### while
+
+语法：
+
+```js {.line-numbers}
+// 当 condition 为真时， 执行循环体的代码
+while (condition) {
+  //循环体
+}
+```
+
+```js {.line-numbers}
+let n = 1;
+while (n < 10) {
+  console.log(n);
+  n++; // 需要能改变循环条件的语句
+}
+```
+
+### do...while
+
+`do...while`循环语句的循环体至少会执行一次。
+
+语法：
+
+```js {.line-numbers}
+do {
+  //循环体
+} while (condition);
+// 当condition为真时，重复执行循环体中的代码
+```
+
+```js {.line-numbers}
+let n = 1;
+do {
+  console.log(n);
+  n++; // 需要能改变循环条件的语句
+} while (n < 10);
+```
+
+### for
+
+语法：
+
+```js {.line-numbers}
+for (begin; condition; step) {
+  // 循环体
+}
+// begin，condition，step可以进行省略
+
+for (;;) {
+  // 无限循环模式
+  // 两个 ; 必须存在，否则会出现语法错误。
+}
+```
+
+```js {.line-numbers}
+for (let i = 0; i < 10; i++) {
+  console.log(i);
+}
+```
+
+### 跳出循环 break
+
+`break` 用于终止当前循环。
+
+```js {.line-numbers}
+for (let i = 0; i < 10; i++) {
+  if (i % 2 == 0) {
+    break;
+  }
+  console.log(i);
+}
+```
+
+### 继续下一次迭代 continue
+
+`continue` 用于停止当前这一次的迭代，强制启动新一轮的循环迭代。
+
+```js {.line-numbers}
+for (let i = 0; i < 10; i++) {
+  if (i % 2 == 0) {
+    continue;
+  }
+  console.log(i);
+}
+```
+
+### 标签 label
+
+使用标签，可以让代码跳转至标签处执行
+
+```js {.line-numbers}
+for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    console.log(`i:${i},j:${j}`);
+    if (j == 1) break; // 此时只会跳出结束内层的for循环，外层的for循环还会继续进行迭代
+  }
+
+  console.log(`i:${i}`);
+}
+
+outer: for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    console.log(`i:${i},j:${j}`);
+    if (j == 1) break outer; // 此处通过指定跳转至标签处，则会跳至外层循环，结束两个for循环
+  }
+
+  console.log(`i:${i}`);
+}
+```
