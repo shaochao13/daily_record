@@ -929,3 +929,61 @@ outer: for (let i = 0; i < 3; i++) {
 ```
 
 ## switch 语句
+
+`switch`语句 可以代替多个`if`判断。
+
+语法：
+switch 语句至少有一个 `case` 代码块和一个可选的 `default` 代码块。
+
+```js
+switch (v) {
+  case value1: // 表示 if (v === value1)
+    // 逻辑代码
+    break;
+  case value2:
+    // 逻辑代码
+    break;
+  //...
+  case valueN:
+    // 逻辑代码
+    break;
+  default:
+    // 逻辑代码
+    break;
+}
+```
+
+- `switch` 语句进行的是 `严格相等` 比较，不会进行类型转换，被比较的值必须是相同的类型才能进行匹配。
+
+  ```js
+  let n = 10;
+  switch (n) {
+    case 10:
+      console.log(n);
+      break;
+    case '10': // 因为类型不对，所以永远都不会执行到此处的case中去
+      console.log(n);
+      break;
+    default:
+      break;
+  }
+  ```
+
+- 每个 case 和 default 代码块中，最后都有一个 break 语句。如果没有 break 话，就会执行完一个 case 代码块后，接着进入下一个 case 代码块的执行。
+- 如果想让几个 case 执行同样的代码逻辑，就可以对它们进行“分组”
+  ```js
+  let n = 10;
+  switch (n) {
+    case 5:
+    case 10:
+    case 15:
+      console.log(n);
+      break;
+    case 20:
+      console.log(20);
+      break;
+    default:
+      console.log(n);
+      break;
+  }
+  ```
