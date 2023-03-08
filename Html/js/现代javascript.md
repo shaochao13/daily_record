@@ -935,7 +935,7 @@ outer: for (let i = 0; i < 3; i++) {
 语法：
 switch 语句至少有一个 `case` 代码块和一个可选的 `default` 代码块。
 
-```js
+```js {.line-numbers}
 switch (v) {
   case value1: // 表示 if (v === value1)
     // 逻辑代码
@@ -955,7 +955,7 @@ switch (v) {
 
 - `switch` 语句进行的是 `严格相等` 比较，不会进行类型转换，被比较的值必须是相同的类型才能进行匹配。
 
-  ```js
+  ```js {.line-numbers}
   let n = 10;
   switch (n) {
     case 10:
@@ -971,7 +971,7 @@ switch (v) {
 
 - 每个 case 和 default 代码块中，最后都有一个 break 语句。如果没有 break 话，就会执行完一个 case 代码块后，接着进入下一个 case 代码块的执行。
 - 如果想让几个 case 执行同样的代码逻辑，就可以对它们进行“分组”
-  ```js
+  ```js {.line-numbers}
   let n = 10;
   switch (n) {
     case 5:
@@ -987,3 +987,184 @@ switch (v) {
       break;
   }
   ```
+
+## 函数 Function
+
+函数是程序的主要“构建模块”，函数可以使一段代码重复执行，避免代码重复。
+
+### 函数声明
+
+函数以 function 关键字开头，然后是函数的名称，然后是括号之间的“参数”，各个“参数”之间使用逗号分隔。
+
+```js {.line-numbers}
+function funcName(parameter1, parameter2,..., parameterN) {
+  // 函数体
+}
+```
+
+### 局部变量
+
+在函数中声明的变量只在该函数体内为可见，也称为局部变量。
+
+```js {.line-numbers}
+function showMsg() {
+  let msg = 'Hello, World.'; // 局部变量
+  console.log(msg);
+}
+
+showMsg(); // 执行函数， 输出： Hello, World.
+
+console.log(msg); // 错误！ msg 是 showMsg中的局部变量，外部不能访问
+```
+
+### 外部变量（全局变量）
+
+函数对外部变量拥有全部的访问权限。可以对外部变量进行修改。
+
+```js {.line-numbers}
+let msg = 'Hello, World.';
+function showMsg() {
+  msg = 'Hello, javascript';
+  console.log(msg);
+}
+
+// 函数执行之前
+console.log(msg); // Hello, World.
+// 执行函数
+showMsg(); // Hello, javascript
+// 外部变量msg的值被函数修改
+console.log(msg); // Hello, javascript
+```
+
+函数只有在没有与外部变量同名的局部变量时，才会使用外部变量。如果存在同名的局部变量，则会忽略掉外部变量。
+
+```js {.line-numbers}
+let msg = 'Hello, World.';
+
+function showMsg() {
+  let msg = 'Hello, javascript';
+  console.log(msg);
+}
+
+// 函数执行之前
+console.log(msg); // Hello, World.
+// 执行函数
+showMsg(); // Hello, javascript
+// 外部变量未被修改
+console.log(msg); // Hello, World.
+```
+
+### 参数
+
+可以通过参数的形式，将任意数据传递给函数。
+
+```js {.line-numbers}
+let firstName = 'John';
+let lastName = 'Li';
+
+function getFullName(firstName, lastName) {
+  // 此处的firstName,lastName为函数参数中的变量，它们的值为通过执行函数传入的变量的一个局部副本，
+  // 它们在函数内部的改变，不会影响到外部变量的值
+  // 对于引用类型的数据，有时会改变外部变量的值
+  let fullName = `${firstName} ${lastName}`;
+  return fullName;
+}
+
+let fullName = getFullName(firstName, lastName);
+```
+
+两个参数要搞清楚：
+
+- 参数（**parameter**），是函数声明中括号内列出的变量，它是函数声明时的术语
+- 参数（**argument**），是函数调用时传递给函数的值，它是函数调用时的术语。
+
+### 默认值
+
+在调用函数时，如果有参数 argument 未被提供，那么相应的值就会变成 `undefined` 。
+可以通过在函数声明时，使用 `=` 为参数指定一个“默认”值。
+
+```js {.line-numbers}
+// 如果未传递msg的值，则会使用默认的“Javascript”
+function showMsg(msg = 'Javascript') {
+  console.log(`Hi, ${msg} !`);
+}
+
+showMsg('Python'); // Hi, Python !
+showMsg(); // Hi, Javascript !
+```
+
+默认值可以是更为复杂的表达式，并且只有在当缺少参数时，表达式才会被计算和使用。
+
+```js {.line-numbers}
+function showMsg(msg = anotherFun()) {
+  //函数体
+}
+// 此处的anotherFun()只有在执行 showMsg()函数时，msg参数缺少的情况下被执行
+```
+
+检查参数是否传递了值:
+
+```js {.line-numbers}
+function showMsg(msg) {
+  if (msg === undefined) {
+    // msg 未传递
+  }
+  // ...
+}
+
+function showMsg(msg) {
+  msg = msg || 'no msg given';
+  // ...
+}
+// 使用||时，下面函数调用需要注意！！！！！！
+showMsg(0); // no msg given
+showMsg(null); // no msg given
+showMsg(NaN); // no msg given
+
+function showMsg(msg) {
+  // 使用 ?? 更能表示参数是否传递了
+  msg = msg ?? 'no msg given';
+  // ...
+}
+```
+
+### 返回值
+
+函数可以将一个值返回到调用它的代码处。
+
+```js {.line-numbers}
+function sum(a, b) {
+  return a + b;
+}
+
+let result = sum('1', '2'); // 12
+console.log(result);
+
+result = sum(1, 2); // 3
+console.log(result);
+```
+
+如果函数体中没有 return 或者 return 后未跟任何返回值，此时函数的返回值为 **undefined** 。
+
+```js {.line-numbers}
+function doSomething() {
+  // 函数体中没有 return
+}
+
+console.log(doSomething() === undefined); // true
+
+function doSomething2() {
+  // 函数体中的 return 后没有带任何值
+  return;
+}
+console.log(doSomething2() === undefined); // true
+```
+
+### 函数的命名
+
+函数其实就是执行一些行为。所以一种普遍的做法就是用`动词前缀`来开始一个函数，如：
+
+- "get…" —— 返回一个值 , getFullName(...)
+- "calc…" —— 计算某些内容 , calcSum(...)
+- "create…" —— 创建某些内容, createForm(...)
+- "check…" —— 检查某些内容并返回 boolean 值, checkPermission(...)
