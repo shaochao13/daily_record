@@ -1168,3 +1168,97 @@ console.log(doSomething2() === undefined); // true
 - "calc…" —— 计算某些内容 , calcSum(...)
 - "create…" —— 创建某些内容, createForm(...)
 - "check…" —— 检查某些内容并返回 boolean 值, checkPermission(...)
+
+### 函数表达式
+
+另一种创建函数的语法称为 **函数表达式**
+
+```js {.line-numbers}
+//注意： function 关键字后面没有函数名
+let showMsg = function () {
+  console.log('Hello, javascript');
+};
+
+showMsg();
+```
+
+在 javascript 中，函数是一个**值**
+
+```js {.line-numbers}
+// 创建
+function showMsg() {
+  console.log('Say, Hello.');
+}
+
+let func = showMsg; // 将showMsg赋值给 func变量
+
+func();
+showMsg();
+```
+
+- 函数表达式是在代码执行到达时才被创建，并且仅从那一刻起才可用。
+- 严格模式下，当一个函数声明在一个代码块内时，它在该代码块内的任何位置都是可见的。但在代码块外不可见。
+
+### 回调函数
+
+可以将函数作为值来传递
+
+```js {.line-numbers}
+function isPermission(isPermission, yes, no) {
+  if (isPermission) {
+    yes();
+  } else {
+    no();
+  }
+}
+
+isPermission(
+  true,
+  // 匿名函数
+  function () {
+    console.log('我已经有权限了');
+  },
+  function () {
+    console.log('对不起，我的权限暂时不够');
+  }
+);
+```
+
+### 箭头函数 =>
+
+```js {.line-numbers}
+// 创建了一个箭头函数 func，它接受参数 arg1..argN个参数，然后使用参数对右侧的 expression 求值并返回其结果。
+let func = (arg1, arg2, ..., argN) => expression;
+
+// 与上面等同
+let func = function (arg1, arg2, ..., argN){
+  return expression;
+}
+```
+
+- 如果只有一个参数，可以省略掉参数外的圆括号
+
+```js {.line-numbers}
+let getDouble = (n) => n * 2;
+
+getDouble(10); // 20
+```
+
+- 如果没有参数，圆括号必须保留
+
+```js {.line-numbers}
+let showMsg = () => console.log('Hello,javascript');
+
+showMsg();
+```
+
+- 如果箭头函数的函数体，不止一行语句时，需要把函数体放在花括号中
+
+```js {.line-numbers}
+let sum = (a, b) => {
+  let result = a + b;
+  return result;
+};
+
+sum(10, 20); // 30
+```
